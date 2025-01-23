@@ -26,6 +26,14 @@ raw <- read_csv("made_up_data.csv")
 data <- raw %>%
   group_by(team) %>%
   summarize(
-    matches = n()
+    matches = n(),
+    close_pct = sum(start == "Close" , na.rm = TRUE) / matches,
+    middle_pct = sum(start == "Middle", na.rm = TRUE) / matches,
+    far_pct = sum(start == "Far" , na.rm = TRUE) / matches
   )
+
+
+```
+
+```{}
 ```
