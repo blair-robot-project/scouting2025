@@ -1,0 +1,328 @@
+{
+  "title": "QRScout",
+  "page_title": "Reefscape",
+  "delimiter": "\t",
+  "teamNumber": 449,
+  "theme": {
+    "light": {
+      "background": "0 0% 100%",
+      "foreground": "0 0% 3.9%",
+      "card": "0 0% 100%",
+      "card_foreground": "0 0% 3.9%",
+      "popover": "0 0% 100%",
+      "popover_foreground": "0 0% 3.9%",
+      "primary": "1 100% 33%",
+      "primary_foreground": "0 85.7% 97.3%",
+      "secondary": "0 0% 96.1%",
+      "secondary_foreground": "0 0% 9%",
+      "muted": "0 0% 96.1%",
+      "muted_foreground": "0 0% 45.1%",
+      "accent": "0 0% 96.1%",
+      "accent_foreground": "0 0% 9%",
+      "destructive": "195 56% 79%",
+      "destructive_foreground": "0 0% 98%",
+      "border": "0 0% 89.8%",
+      "input": "0 0% 89.8%",
+      "ring": "354.44 71.3% 47.9%",
+      "chart_1": "12 76% 61%",
+      "chart_2": "173 58% 39%",
+      "chart_3": "197 37% 24%",
+      "chart_4": "43 74% 66%",
+      "chart_5": "27 87% 67%"
+    },
+    "dark": {
+      "background": "0 0% 3.9%",
+      "foreground": "0 0% 98%",
+      "card": "0 0% 3.9%",
+      "card_foreground": "0 0% 98%",
+      "popover": "0 0% 3.9%",
+      "popover_foreground": "0 0% 98%",
+      "primary": "1 100% 33%",
+      "primary_foreground": "0 85.7% 97.3%",
+      "secondary": "0 0% 14.9%",
+      "secondary_foreground": "0 0% 98%",
+      "muted": "0 0% 14.9%",
+      "muted_foreground": "0 0% 63.9%",
+      "accent": "0 0% 14.9%",
+      "accent_foreground": "0 0% 98%",
+      "destructive": "195 100% 34%",
+      "destructive_foreground": "0 0% 98%",
+      "border": "0 0% 14.9%",
+      "input": "0 0% 14.9%",
+      "ring": "354.44 71.3% 47.9%",
+      "chart_1": "220 70% 50%",
+      "chart_2": "160 60% 45%",
+      "chart_3": "30 80% 55%",
+      "chart_4": "280 65% 60%",
+      "chart_5": "340 75% 55%"
+    }
+  },
+  "sections": [
+    {
+      "name": "Prematch",
+      "preserveDataOnReset": true,
+      "fields": [
+        {
+          "title": "Scouter Initials",
+          "description": "Enter the initials of the scouter.",
+          "type": "text",
+          "required": true,
+          "code": "scouter",
+          "defaultValue": ""
+        },
+        {
+          "title": "Match Number",
+          "description": "Enter the match number.",
+          "type": "number",
+          "required": true,
+          "code": "matchNumber",
+          "defaultValue": 1,
+          "autoIncrementOnReset": true
+        },
+        {
+          "title": "Robot",
+          "description": "The robot you are scouting this match, based on driver station position.",
+          "type": "select",
+          "required": true,
+          "code": "robot",
+          "defaultValue": "R1",
+          "choices": {
+            "R1": "Red 1",
+            "R2": "Red 2",
+            "R3": "Red 3",
+            "B1": "Blue 1",
+            "B2": "Blue 2",
+            "B3": "Blue 3"
+          }
+        },
+        {
+          "title": "Team Number",
+          "description": "The team number of the robot you're scouting.",
+          "type": "number",
+          "required": true,
+          "code": "teamNumber",
+          "defaultValue": 0,
+          "min": 0,
+          "max": 19999
+        },
+        {
+          "title": "Starting Position",
+          "description": "The starting position of the robot.",
+          "type": "select",
+          "required": false,
+          "code": "Prsp",
+          "defaultValue": "",
+          "choices": {
+            "R1": "Far",
+            "R2": "Middle",
+            "R3": "Close"
+          }
+        },
+        {
+          "title": "No Show",
+          "description": "Check if the robot did not show up for the match.",
+          "type": "boolean",
+          "required": false,
+          "code": "noShow",
+          "defaultValue": false
+        }
+      ]
+    },
+    {
+      "name": "Autonomous",
+      "fields": [
+        {
+          "title": "Moved?",
+          "description": "Check if the robot moved during autonomous.",
+          "type": "boolean",
+          "required": false,
+          "code": "Mved",
+          "defaultValue": false
+        },
+        {
+          "title": "Auto Coral Scored",
+          "type": "counter",
+          "required": false,
+          "code": "acs",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Highest Auto Coral Scored",
+          "type": "select",
+          "required": false,
+          "code": "hacs",
+          "defaultValue": "",
+          "choices": {
+            "1": "Coral L1",
+            "2": "Coral L2",
+            "3": "Coral L3",
+            "4": "Coral L4"
+          },
+          "multiSelect": true
+        }
+      ]
+    },
+    {
+      "name": "Algae",
+      "fields": [
+        {
+          "title": "Robot Net Scored",
+          "type": "counter",
+          "required": false,
+          "code": "ns",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Robot Net Missed",
+          "type": "counter",
+          "required": false,
+          "code": "nm",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Processor Shots",
+          "type": "counter",
+          "required": false,
+          "code": "ps",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "HP Net Scored",
+          "type": "counter",
+          "required": false,
+          "code": "ns",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "HP Net Missed",
+          "type": "counter",
+          "required": false,
+          "code": "nm",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "name": "Coral",
+      "fields": [
+        {
+          "title": "Telo-op Coral Scored L1",
+          "type": "counter",
+          "required": false,
+          "code": "tcs1",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Telo-op Coral Scored L2",
+          "type": "counter",
+          "required": false,
+          "code": "tcs2",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Telo-op Coral Scored L3",
+          "type": "counter",
+          "required": false,
+          "code": "tcs3",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Telo-op Coral Scored L4",
+          "type": "counter",
+          "required": false,
+          "code": "tcs4",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "name": "Endgame",
+      "fields": [
+        {
+          "title": "End Position",
+          "type": "select",
+          "required": true,
+          "code": "epo",
+          "defaultValue": "No",
+          "choices": {
+            "No": "None",
+            "P": "Park",
+            "F": "Failed",
+            "S": "Shallow",
+            "D": "Deep"
+          }
+        },
+        {
+          "title": "Climb over 5 Seconds",
+          "type": "boolean",
+          "required": false,
+          "code": "climb",
+          "defaultValue": false
+        }
+      ]
+    },
+    {
+      "name": "Postmatch",
+      "fields": [
+        {
+          "title": "Driver Ranking",
+          "type": "range",
+          "required": false,
+          "code": "or",
+          "defaultValue": 3,
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+        {
+          "title": "Died/Tipped Over",
+          "type": "boolean",
+          "required": false,
+          "code": "dto",
+          "defaultValue": false
+        },
+        {
+          "title": "Yellow/Red Card",
+          "type": "select",
+          "required": true,
+          "code": "yc",
+          "defaultValue": "No Card",
+          "choices": {
+            "No Card": "No Card",
+            "Yellow": "Yellow Card",
+            "Red": "Red Card"
+          }
+        },
+        {
+          "title": "Comments",
+          "type": "text",
+          "required": false,
+          "code": "co",
+          "defaultValue": "",
+          "min": 0,
+          "max": 50
+        }
+      ]
+    }
+  ]
+}
