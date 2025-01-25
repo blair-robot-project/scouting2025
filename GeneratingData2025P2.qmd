@@ -10,7 +10,9 @@ n <- 200
 scout_id <- sample(c("gabriel", "tinbite", "mitchell", "sophia"), size = n, replace = TRUE)
 match_num <- sample(1:20, size = n, replace = TRUE) #make not random when gabriel comes back
 robot_num <- sample(c("R1", "R2", "R3", "B1", "B2", "B3"), size = n, replace = TRUE)
-team_num <- sample(1:9999, size = n, replace = TRUE)
+
+team_num <- sample(rep(449:498, times = 4))
+
 start_loc <- sample(c("Far", "Middle", "Close"), size = n, replace = TRUE)
 no_show <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(10, 90))
 move_bool <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))

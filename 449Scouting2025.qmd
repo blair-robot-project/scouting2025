@@ -3,12 +3,12 @@ title: "449 Scouting 2025"
 format: html
 editor: visual
 params:
-    red1: 1712
-    red2: 6672
-    red3: 3504
-    blue1: 449
-    blue2: 4821
-    blue3: 9072
+    red1: 449
+    red2: 451
+    red3: 456
+    blue1: 487
+    blue2: 563
+    blue3: 452
 ---
 
 ```{r setup, message=FALSE, warning=FALSE}
@@ -27,13 +27,53 @@ data <- raw %>%
   group_by(team) %>%
   summarize(
     matches = n(),
+    
     close_pct = sum(start == "Close" , na.rm = TRUE) / matches,
     middle_pct = sum(start == "Middle", na.rm = TRUE) / matches,
-    far_pct = sum(start == "Far" , na.rm = TRUE) / matches
-  )
+    far_pct = sum(start == "Far" , na.rm = TRUE) / matches,
+    
+    show_pct = sum(show == "TRUE", na.rm = TRUE) / matches,
+    move_pct = sum(move == "TRUE", na.rm = TRUE) / matches,
+    
+    l1coralnum = mean(coral_L1_score),
+    l2coralnum = mean(coral_L2_score),
+    l3coralnum = mean(coral_L3_score),
+    l4coralnum = mean(coral_L4_score),
+    
+    l1coralscore = mean(coral_L1_score*2),
+    l2coralscore = mean(coral_L2_score*3),
+    l3coralscore = mean(coral_L3_score*4),
+    l4coralscore = mean(coral_L4_score*5),
+    
+    
+    coralNum = sum(coral_L1_score,coral_L2_score,coral_L3_score,coral_L4_score, na.rm = TRUE)/ matches,
+    coralScore = sum(coral_L1_score*2, coral_L2_score*3, coral_L3_score*4, coral_L4_score*5, na.rm =TRUE)/matches)
 
+
+red_alliance <- c(params$red1, params$red2, params$red3)
+blue_alliance <- c(params$blue1, params$blue2, params$blue3)
+
+data <- data %>%
+  filter(team %in% c(red_alliance, blue_alliance))
 
 ```
 
-```{}
+```{r}
+graph <- data
+graph <- graph %>%
+    pivot_longer(cols = c(l4coralscore, l3coralscore, l2coralscore,l1coralscore), 
+                 names_to = "level", 
+                 values_to = "score")
+
+graph$level <- factor(graph$level, levels = c("l4coralscore", "l3coralscore", "l2coralscore","l1coralscore"), 
+                    labels = c("L4", "L3", "L2","L1"))
+
+ggplot(graph, aes(x = `team`, y = score, 
+                fill = level)) + 
+    geom_bar(position = "stack", stat = "identity") + 
+    labs(title = "Level Summary", 
+         x = "Team", y = "Average # of Game Pieces", fill = "Level") +
+    theme_bw()
+
+
 ```
