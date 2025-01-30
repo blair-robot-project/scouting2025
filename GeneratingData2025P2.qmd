@@ -26,10 +26,11 @@ hp_net_scored <- sample(0:proc_scored, size = n, replace = TRUE) #if we want to 
 #This is a really bad comment, we can discuss next meeting.
 hp_net_missed <- as.integer((sample(0:hp_net_scored/2, size=n, replace = TRUE)))
 
-coral_L1_scored <- sample(0:24, size = n, replace = TRUE)
-coral_L2_scored <- sample(0:12, size = n, replace = TRUE)
-coral_L3_scored <- sample(0:12, size = n, replace = TRUE)
-coral_L4_scored <- sample(0:12, size = n, replace = TRUE)
+coral_L1_num <- sample(0:24, size = n, replace = TRUE)
+coral_L2_num <- sample(0:12, size = n, replace = TRUE)
+coral_L3_num <- sample(0:12, size = n, replace = TRUE)
+coral_L4_num <- sample(0:12, size = n, replace = TRUE)
+total_coral_score <- sum(coral_L1_num*2, coral_L2_num*3, coral_L3_num*4, coral_L4_num*5)
 end_pos <- sample(c("No", "F", "P", "S", "D"), size = n, replace = TRUE)
 climb_timing <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
@@ -52,10 +53,11 @@ df <- data.frame(
   proc_score = proc_scored,
   hp_net_score = hp_net_scored,
   hp_net_miss = hp_net_missed,
-  coral_L1_score = coral_L1_scored,
-  coral_L2_score = coral_L2_scored,
-  coral_L3_score = coral_L3_scored,
-  coral_L4_score = coral_L4_scored,
+  coral_L1_num = coral_L1_num,
+  coral_L2_num = coral_L2_num,
+  coral_L3_num = coral_L3_num,
+  coral_L4_num = coral_L4_num,
+  total_coral_score = total_coral_score,
   ending = end_pos,
   climb_time = climb_timing,
   driver = driver_ranking,
@@ -66,5 +68,11 @@ df <- data.frame(
 )
 
 write_csv(df, file = "made_up_data.csv")
+
+```
+
+```{r}
+library(rJava)
+.jinit()
 
 ```
