@@ -140,27 +140,40 @@
           "defaultValue": false
         },
         {
-          "title": "Auto Coral Scored",
+          "title": "Auto Coral Scored L1",
           "type": "counter",
           "required": false,
-          "code": "acs",
+          "code": "al1",
           "defaultValue": 0,
           "min": 0,
           "step": 1
         },
         {
-          "title": "Highest Auto Coral Scored",
-          "type": "select",
+          "title": "Auto Coral Scored L2",
+          "type": "counter",
           "required": false,
-          "code": "hacs",
-          "defaultValue": "",
-          "choices": {
-            "1": "Coral L1",
-            "2": "Coral L2",
-            "3": "Coral L3",
-            "4": "Coral L4"
-          },
-          "multiSelect": true
+          "code": "al2",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Auto Coral Scored L3",
+          "type": "counter",
+          "required": false,
+          "code": "al3",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Auto Coral Scored L4",
+          "type": "counter",
+          "required": false,
+          "code": "al4",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
         }
       ]
     },
@@ -190,24 +203,6 @@
           "type": "counter",
           "required": false,
           "code": "ps",
-          "defaultValue": 0,
-          "min": 0,
-          "step": 1
-        },
-        {
-          "title": "HP Net Scored",
-          "type": "counter",
-          "required": false,
-          "code": "ns",
-          "defaultValue": 0,
-          "min": 0,
-          "step": 1
-        },
-        {
-          "title": "HP Net Missed",
-          "type": "counter",
-          "required": false,
-          "code": "nm",
           "defaultValue": 0,
           "min": 0,
           "step": 1
