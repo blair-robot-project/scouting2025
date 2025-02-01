@@ -60,7 +60,6 @@
   "sections": [
     {
       "name": "Prematch",
-      "preserveDataOnReset": true,
       "fields": [
         {
           "title": "Scouter Initials",
@@ -68,6 +67,7 @@
           "type": "text",
           "required": true,
           "code": "scouter",
+          "formResetBehavior": "reset",
           "defaultValue": ""
         },
         {
@@ -76,8 +76,8 @@
           "type": "number",
           "required": true,
           "code": "matchNumber",
-          "defaultValue": 1,
-          "autoIncrementOnReset": true
+          "formResetBehavior": "reset",
+          "defaultValue": 1
         },
         {
           "title": "Robot",
@@ -85,6 +85,7 @@
           "type": "select",
           "required": true,
           "code": "robot",
+          "formResetBehavior": "reset",
           "defaultValue": "R1",
           "choices": {
             "R1": "Red 1",
@@ -101,6 +102,7 @@
           "type": "number",
           "required": true,
           "code": "teamNumber",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "max": 19999
@@ -110,7 +112,8 @@
           "description": "The starting position of the robot.",
           "type": "select",
           "required": false,
-          "code": "Prsp",
+          "code": "startPos",
+          "formResetBehavior": "reset",
           "defaultValue": "",
           "choices": {
             "R1": "Far",
@@ -124,6 +127,7 @@
           "type": "boolean",
           "required": false,
           "code": "noShow",
+          "formResetBehavior": "reset",
           "defaultValue": false
         }
       ]
@@ -137,6 +141,7 @@
           "type": "boolean",
           "required": false,
           "code": "Mved",
+          "formResetBehavior": "reset",
           "defaultValue": false
         },
         {
@@ -144,6 +149,7 @@
           "type": "counter",
           "required": false,
           "code": "al1",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -153,6 +159,7 @@
           "type": "counter",
           "required": false,
           "code": "al2",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -162,6 +169,7 @@
           "type": "counter",
           "required": false,
           "code": "al3",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -171,6 +179,7 @@
           "type": "counter",
           "required": false,
           "code": "al4",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -182,27 +191,33 @@
       "fields": [
         {
           "title": "Robot Net Scored",
+          "description": "Applies to both Tele-op and Auto",
           "type": "counter",
           "required": false,
           "code": "ns",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
         },
         {
           "title": "Robot Net Missed",
+          "description": "Applies to both Tele-op and Auto",
           "type": "counter",
           "required": false,
           "code": "nm",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
         },
         {
           "title": "Processor Shots",
+          "description": "Applies to both Tele-op and Auto",
           "type": "counter",
           "required": false,
           "code": "ps",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -217,6 +232,7 @@
           "type": "counter",
           "required": false,
           "code": "tcs1",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -226,6 +242,7 @@
           "type": "counter",
           "required": false,
           "code": "tcs2",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -235,6 +252,7 @@
           "type": "counter",
           "required": false,
           "code": "tcs3",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -244,6 +262,7 @@
           "type": "counter",
           "required": false,
           "code": "tcs4",
+          "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
           "step": 1
@@ -258,6 +277,7 @@
           "type": "select",
           "required": true,
           "code": "epo",
+          "formResetBehavior": "reset",
           "defaultValue": "No",
           "choices": {
             "No": "None",
@@ -272,6 +292,7 @@
           "type": "boolean",
           "required": false,
           "code": "climb",
+          "formResetBehavior": "reset",
           "defaultValue": false
         }
       ]
@@ -284,6 +305,7 @@
           "type": "range",
           "required": false,
           "code": "or",
+          "formResetBehavior": "reset",
           "defaultValue": 3,
           "min": 1,
           "max": 5,
@@ -294,6 +316,7 @@
           "type": "boolean",
           "required": false,
           "code": "dto",
+          "formResetBehavior": "reset",
           "defaultValue": false
         },
         {
@@ -301,6 +324,7 @@
           "type": "select",
           "required": true,
           "code": "yc",
+          "formResetBehavior": "reset",
           "defaultValue": "No Card",
           "choices": {
             "No Card": "No Card",
@@ -313,6 +337,7 @@
           "type": "text",
           "required": false,
           "code": "co",
+          "formResetBehavior": "reset",
           "defaultValue": "",
           "min": 0,
           "max": 50
