@@ -5,6 +5,10 @@ editor: visual
 ---
 
 ```{r}
+library(tidyverse)
+```
+
+```{r}
 n <- 200
 
 scout_id <- sample(c("gabriel", "tinbite", "mitchell", "sophia"), size = n, replace = TRUE)
