@@ -34,9 +34,6 @@ coral_L1_num <- sample(0:24, size = n, replace = TRUE)
 coral_L2_num <- sample(0:12, size = n, replace = TRUE)
 coral_L3_num <- sample(0:12, size = n, replace = TRUE)
 coral_L4_num <- sample(0:12, size = n, replace = TRUE)
-total_coral_score <- sum(coral_L1_num*2, coral_L2_num*3, coral_L3_num*4, coral_L4_num*5)
-#feex later
-
 end_pos <- sample(c("No", "F", "P", "S", "D"), size = n, replace = TRUE)
 climb_timing <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
