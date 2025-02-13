@@ -12,7 +12,7 @@ params:
 ---
 
 ```{r setup, message=FALSE, warning=FALSE}
-rm(list = setdiff(ls(),"params"))
+#rm(list = setdiff(ls(),"params"))
 
 library(tidyverse)
 
@@ -21,9 +21,7 @@ blair_red <- "#a7000a"
 red_alliance <- c(params$red1, params$red2, params$red3)
 blue_alliance <- c(params$blue1, params$blue2, params$blue3)
 
-raw <- read_csv("made_up_data.csv")%>%
-filter(team %in% c(red_alliance, blue_alliance)) %>%
-  mutate(team = factor(team, c(red_alliance,blue_alliance) ))
+ raw <- read_csv("made_up_data.csv")
 
 ```
 
@@ -31,7 +29,9 @@ BOX PLOT OF ALL TOTAL POINTS
 
 ```{r}
 boxplot <- raw %>%
-  
+  filter(team %in% c(red_alliance, blue_alliance)) %>%
+ mutate(team = factor(team, c(red_alliance,blue_alliance) ))%>%
+   
   mutate(total_coral_score = 
            (coral_L1_num*2) + (coral_L2_num*3) + 
            (coral_L3_num*4) + (coral_L4_num*5) + 
@@ -49,14 +49,14 @@ boxplot <- raw %>%
 
 
  ggplot(boxplot,aes(x = total, y = as.character(team)))+
- geom_boxplot(position = "dodge2", fill = "azure", ) +
+ geom_boxplot(position = "dodge2", fill = "azure2", ) +
    stat_boxplot(geom = "errorbar")+
    stat_summary(fun.y = mean, geom="point", size=3, color="orange",)+
 #   geom_point(aes(x =total_mean, y = team ), color = 'orange', size = 2)
   
     
-       labs(title = "Level Summary",
-          x = "Team", y = "Coral score")+
+       labs(title = "Total points scored",
+          x = "Point", y = "Team")+
     
   theme_bw()
 ```
@@ -77,26 +77,22 @@ bubble <- raw%>%
          
        endgame_score = sum(
            ifelse(ending =="D", 12, ifelse(ending =="S",6,ifelse(ending =="P", 2, 0)))),
-    
-    total_auto_coral_score = sum(
-        (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7)),
-        
-    end_auto = sum(total_coral_score+endgame_score),
-    
 )
 
-ggplot(bubble, aes(x=total_coral_score, y=total_algea_score, size = end_auto, color=team )) +
-    geom_point(alpha=0.7)+
-  geom_text( aes(label=team, size=450, vjust = 1.7, nudge_y = 0.5 ))+
+ggplot(bubble, aes(x=total_coral_score, y=total_algea_score, size = endgame_score)) +
+    geom_point( color = "lightblue2")+
+  geom_text( aes(label=team, vjust = 1.7 ))+
   labs(title = "Teams Performance Summary", 
-          x = "Auto + Tele Coral", y = "Total Algea", fill = "end_auto")
+          x = "Auto + Tele Coral Points", y = "Total Algea Points", fill = "Auto+End", size = "Endgame")
 ```
 
 CORAL LEVEL SCORING
 
 ```{r}
  bar <- raw %>%
-   
+     filter(team %in% c(red_alliance, blue_alliance)) %>%
+    mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+
   group_by(team) %>%
   summarize(
     l1 = mean(coral_L1_num),
@@ -128,6 +124,8 @@ CORAL SCORED DURING AUTO AND TELEOP
 
 ```{r}
  auto_tele <- raw %>%
+   filter(team %in% c(red_alliance, blue_alliance)) %>%
+    mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
    
   group_by(team) %>%
   summarize(
@@ -159,9 +157,6 @@ CORAL SCORED DURING AUTO AND TELEOP
 
 )
 
-
-
-
   ggplot(auto_tele, aes(x = `team`, y = (level_score), fill = level)) + 
      geom_bar(position = "stack", stat = "identity") + 
      labs(title = "Level Summary", 
@@ -177,31 +172,31 @@ ENDGAME SCORING
 
 ```{r}
 end <- raw %>%
-  group_by(team, ending) %>%
+   filter(team %in% c(red_alliance, blue_alliance)) %>%
+    mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+
+    group_by(team, ending) %>%
   summarise(count = n())
 
-end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0)
+end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0, "F" = 0)
 
 #compute the total end game score from all matches
 end$total_points <- end$count * end$points
 
-end$ending <- factor(end$ending, levels = c("D", "S", "P", "No", "F")) 
+end$ending <- factor(end$ending, levels = c("D", "S","P","F","No"))
 
 ggplot(end, aes(x =team, y = total_points, fill = ending)) +
   geom_bar(position= "stack", stat = "identity") +
   
   labs(title = "Endgame Score",
-       x = "Team Number",
-       y = "Total Points Scored") +
+       x = "Team",
+       y = "Points") +
   scale_fill_manual(
-    values = c("D" = "dodgerblue4", "S" = "dodgerblue3", "P" = "dodgerblue"),
-    labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park")
+    values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
+    labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"),
   )
 ```
 
-```{r}
-
-```
 
 ```{r}
 proc <- read_csv("procReturns.csv")
