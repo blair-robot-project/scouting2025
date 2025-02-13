@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.IOException;
 
 
@@ -9,15 +10,38 @@ import java.io.IOException;
   //net vs processor scoring
   
 public class Main {
+	
+	static double robotAccuracy = 0.9;
+	static double bounceOut = 0.66; //bounces out n/1.0 of the time
+	
 	public static void main(String[] args) {
-		double[][] result = run();
-		writeToCSV(result, "/Users/mitchellhung/scouting2025/probabilities.csv");
+		printFormattedArray(run(robotAccuracy,18, 12));	
+		double[][] result = run(robotAccuracy, 18, 12);
+		double[] expectedOutput = avgNet(result);
+		
+		System.out.println(Arrays.toString(expectedOutput));
+		//writeToCSV(result, "/Users/mitchellhung/scouting2025/probabilities.csv");
+		writeToCSV(expectedOutput, "/Users/mitchellhung/scouting2025/netReturns.csv");
 	}
 	
-    public static double[][] run() {
-    	double P = 0.9;
-    	int totalNumberOfTries = 13;
-    	int goal = 9;
+	public static double[] avgNet(double[][] arr) {
+		double[] expectedOutput = new double[arr.length];
+		int index = 0;
+		for (double[] row: arr) {
+			
+			for (int i = 0; i < row.length; i++) {
+				expectedOutput[index]+=((row[i]/100.0)*(i+1)*4);
+			}
+			index++;
+		}
+		return expectedOutput;
+	}
+	
+	
+	
+    public static double[][] run(double P, int attempts, int goals) {
+    	int totalNumberOfTries = attempts;
+    	int goal = goals;
     	double[][] tableOfProbabilities = new double[totalNumberOfTries][goal];
     	
     	for (int a = 1; a <= totalNumberOfTries; a++) {
@@ -48,6 +72,25 @@ public class Main {
         }
     }
     
+    public static void writeToCSV(double[] data, String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            // Write header
+            writer.write("Value\n");
+            
+            // Write data rows
+            for (double value : data) {
+                writer.write(String.format("%.3f\n", value));
+            }
+            
+            System.out.println("CSV file written successfully: " + filename);
+        } catch (IOException e) {
+            System.err.println("Error writing CSV: " + e.getMessage());
+        }
+    }
+    
+    
+    
+    
     
     public static double run2(int numberOfTries, int goal, double P) {
     	return sum(createProbability(createWinLossPattern(numberOfTries, goal), P));
@@ -71,12 +114,12 @@ public class Main {
     		double percentage = 1.0;
     		for (int i = 0; i < letters.length; i++) {
     			if (letters[i].equals("W")) {
-    				percentage = percentage * P * (1-numWins/9.0);
+    				percentage = percentage * (P * (1-numWins/9.0)+P*(numWins/9.0*bounceOut));
     				numWins++;
     			} else if (letters[i].equals("L")) {
-    				percentage = percentage * (1-P*(1-numWins/9.0));
+    				percentage = percentage * (1-(P*(1-numWins/9.0)+P*(numWins/9.0*bounceOut)));
     			} else {
-    				System.out.println("WTF WHAT HAPPENED CHATGPT YOU LIED TO ME AHHHHHHHH");
+    				System.out.println("yes");
     			}
     		}  		
     		result.add(percentage);
