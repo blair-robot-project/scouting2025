@@ -185,6 +185,7 @@ end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0)
 #compute the total end game score from all matches
 end$total_points <- end$count * end$points
 
+end$ending <- factor(end$ending, levels = c("D", "S", "P", "No", "F")) 
 
 ggplot(end, aes(x =team, y = total_points, fill = ending)) +
   geom_bar(position= "stack", stat = "identity") +
@@ -196,4 +197,25 @@ ggplot(end, aes(x =team, y = total_points, fill = ending)) +
     values = c("D" = "dodgerblue4", "S" = "dodgerblue3", "P" = "dodgerblue"),
     labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park")
   )
+```
+
+```{r}
+
+```
+
+```{r}
+proc <- read_csv("procReturns.csv")
+net <- read_csv("netReturns.csv")
+
+both <- data.frame(Processor = proc[[1]], Net = net[[1]])
+both$Index <- seq_len(nrow(both))  
+
+ggplot(both, aes(x = Processor, y = Net, label = Index)) +
+  geom_point(color = blair_red) +     
+  geom_line(color = blair_red) +     
+  geom_text(vjust = -0.5, hjust = 1.2, color = "black") +  
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "blue") +  
+  labs(x = "Processor Returns", y = "Net Returns", title = "Net Vs Processor") +
+  theme_minimal()
+
 ```
