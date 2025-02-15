@@ -189,6 +189,28 @@
     {
       "name": "Algae",
       "fields": [
+          {
+          "title": "Reef Removed Algae",
+          "description": "Applies to both Tele-op and Auto",
+          "type": "counter",
+          "required": false,
+          "code": "ps",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+         {
+          "title": "Ground Intake Algae",
+          "description": "Applies to both Tele-op and Auto",
+          "type": "counter",
+          "required": false,
+          "code": "ps",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
         {
           "title": "Robot Net Scored",
           "description": "Applies to both Tele-op and Auto",
@@ -222,7 +244,7 @@
           "min": 0,
           "step": 1
         }
-      ]
+        ]
     },
     {
       "name": "Coral",
