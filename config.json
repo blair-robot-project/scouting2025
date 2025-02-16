@@ -67,7 +67,7 @@
           "type": "text",
           "required": true,
           "code": "scouter",
-          "formResetBehavior": "reset",
+          "formResetBehavior": "preserve",
           "defaultValue": ""
         },
         {
@@ -76,7 +76,7 @@
           "type": "number",
           "required": true,
           "code": "matchNumber",
-          "formResetBehavior": "reset",
+          "formResetBehavior": "increment",
           "defaultValue": 1
         },
         {
@@ -85,7 +85,7 @@
           "type": "select",
           "required": true,
           "code": "robot",
-          "formResetBehavior": "reset",
+          "formResetBehavior": "preserve",
           "defaultValue": "R1",
           "choices": {
             "R1": "Red 1",
@@ -109,7 +109,7 @@
         },
         {
           "title": "Starting Position",
-          "description": "The starting position of the robot.",
+          "description": "The starting position of the robot relative to the processor",
           "type": "select",
           "required": false,
           "code": "startPos",
@@ -191,7 +191,7 @@
       "fields": [
           {
           "title": "Reef Removed Algae",
-          "description": "Applies to both Tele-op and Auto",
+          "description": "How many algae the robot remove from the reef",
           "type": "counter",
           "required": false,
           "code": "ps",
@@ -202,7 +202,7 @@
         },
          {
           "title": "Ground Intake Algae",
-          "description": "Applies to both Tele-op and Auto",
+          "description": "How many times did the robot intake algae from the ground",
           "type": "counter",
           "required": false,
           "code": "ps",
@@ -213,7 +213,7 @@
         },
         {
           "title": "Robot Net Scored",
-          "description": "Applies to both Tele-op and Auto",
+          "description": "How many times did the robot score into the net",
           "type": "counter",
           "required": false,
           "code": "ns",
@@ -224,7 +224,7 @@
         },
         {
           "title": "Robot Net Missed",
-          "description": "Applies to both Tele-op and Auto",
+          "description": "How many times did the robot attempt to score into the net and fail",
           "type": "counter",
           "required": false,
           "code": "nm",
@@ -235,7 +235,7 @@
         },
         {
           "title": "Processor Shots",
-          "description": "Applies to both Tele-op and Auto",
+          "description": "How many times did the robot score in the processor",
           "type": "counter",
           "required": false,
           "code": "ps",
