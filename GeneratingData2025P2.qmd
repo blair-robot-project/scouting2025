@@ -26,8 +26,8 @@ auto_coral_L2 <-sample(0:2, size = n, replace = TRUE)
 auto_coral_L3 <- sample(0:2, size = n, replace = TRUE)
 auto_coral_L4 <- sample(0:2, size = n, replace = TRUE)
 
-robot_reef_removed <- sample(0:6, size = n, replace = TRUE)
-robot_algae_intake <- sample(0:9, size = n, replace = TRUE)
+robot_reef_removed <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
+robot_algae_intake <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 robot_net_scored <- sample(0:9, size = n, replace = TRUE) #add later maybe
 robot_net_missed <- as.integer((sample(0:robot_net_scored/2, size=n, replace = TRUE)))
 proc_scored <- sample(0:9, size = n, replace = TRUE)
@@ -37,10 +37,12 @@ coral_L3_num <- sample(0:12, size = n, replace = TRUE)
 coral_L4_num <- sample(0:12, size = n, replace = TRUE)
 #feex later
 
-end_pos <- sample(c("No", "F", "P", "S", "D"), size = n, replace = TRUE)
+
+climb_attempt <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))
+end_pos <- sample(c("No", "P", "S", "D"), size = n, replace = TRUE)
 climb_timing <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
-died_tipped <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
+died_tipped <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))
 card_color <- sample(c("Yellow", "No Card", "Red"), size = n, replace = TRUE, prob = c(10, 85, 5))
 
 
@@ -52,26 +54,25 @@ df <- data.frame(
   start = start_loc,
   show = no_show,
   move = move_bool,
+  auto_coral_L1_num = auto_coral_L1,
+  auto_coral_L2_num = auto_coral_L2,
+  auto_coral_L3_num = auto_coral_L3,
+  auto_coral_L4_num = auto_coral_L4,
   robot_reef_removal = robot_reef_removed,
   robot_algae_picked = robot_algae_intake,
   robot_net_score = robot_net_scored,
   robot_net_miss = robot_net_missed,
   proc_score = proc_scored,
-  auto_coral_L1_num = auto_coral_L1,
-  auto_coral_L2_num = auto_coral_L2,
-  auto_coral_L3_num = auto_coral_L3,
-  auto_coral_L4_num = auto_coral_L4,
   coral_L1_num = coral_L1_num,
   coral_L2_num = coral_L2_num,
   coral_L3_num = coral_L3_num,
   coral_L4_num = coral_L4_num,
+  climb_attempt = climb_attempt,
   ending = end_pos,
   climb_time = climb_timing,
   driver = driver_ranking,
   dead = died_tipped,
   card = card_color
-
-  
 )
 
 write_csv(df, file = "made_up_data.csv")

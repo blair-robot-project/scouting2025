@@ -21,7 +21,7 @@ blair_red <- "#a7000a"
 red_alliance <- c(params$red1, params$red2, params$red3)
 blue_alliance <- c(params$blue1, params$blue2, params$blue3)
 
- raw <- read_csv("made_up_data.csv")
+raw <- read_csv("made_up_data.csv")
 
 ```
 
@@ -42,7 +42,7 @@ boxplot <- raw %>%
            (robot_net_score*4) + (proc_score*2.5),
          
          total_endgame_score = 
-           ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0)))
+           ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
            )
 
   boxplot$total = boxplot$total_algea_score + boxplot$total_coral_score+boxplot$total_endgame_score
@@ -70,13 +70,14 @@ bubble <- raw%>%
     match = n(),
             total_coral_score = sum(
         (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + 
-         (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5)),
+         (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5))/n(),
       
        total_algea_score = sum(
-           (robot_net_score*4) + (proc_score*2.5)),
+           (robot_net_score*4) + (proc_score*2.5))/n(),
          
        endgame_score = sum(
-           ifelse(ending =="D", 12, ifelse(ending =="S",6,ifelse(ending =="P", 2, 0)))),
+           ifelse(ending =="D", 12, ifelse(ending =="S",6,ifelse(ending =="P", 2, 0))))/n(),
+      avg_score = total_algea_score+total_coral_score+endgame_score,
 )
 
 ggplot(bubble, aes(x=total_coral_score, y=total_algea_score, size = endgame_score)) +
@@ -178,12 +179,12 @@ end <- raw %>%
     group_by(team, ending) %>%
   summarise(count = n())
 
-end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0, "F" = 0)
+end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0)
 
 #compute the total end game score from all matches
 end$total_points <- end$count * end$points
 
-end$ending <- factor(end$ending, levels = c("D", "S","P","F","No"))
+end$ending <- factor(end$ending, levels = c("D", "S","P","No"))
 
 ggplot(end, aes(x =team, y = total_points, fill = ending)) +
   geom_bar(position= "stack", stat = "identity") +
@@ -210,7 +211,7 @@ ggplot(both, aes(x = Processor, y = Net, label = Index)) +
   geom_line(color = blair_red) +     
   geom_text(vjust = -0.5, hjust = 1.2, color = "black") +  
   geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "blue") +  
-  labs(x = "Processor Returns", y = "Net Returns", title = "Net Vs Processor") +
+  labs(x = "Processor Returns", y = "Net Returns", title = "Net Vs Processor (Points)") +
   theme_minimal()
 
 ```
