@@ -191,25 +191,21 @@
       "fields": [
           {
           "title": "Reef Removed Algae",
-          "description": "How many algae the robot remove from the reef",
-          "type": "counter",
+          "description": "Has the robot removed algae from the reef",
+          "type": "boolean",
           "required": false,
-          "code": "ps",
+          "code": "ra",
           "formResetBehavior": "reset",
-          "defaultValue": 0,
-          "min": 0,
-          "step": 1
+          "defaultValue": false
         },
          {
           "title": "Ground Intake Algae",
-          "description": "How many times did the robot intake algae from the ground",
-          "type": "counter",
+          "description": "Has the robot picked up any algae from the ground",
+          "type": "boolean",
           "required": false,
-          "code": "ps",
+          "code": "ga",
           "formResetBehavior": "reset",
-          "defaultValue": 0,
-          "min": 0,
-          "step": 1
+          "defaultValue": false
         },
         {
           "title": "Robot Net Scored",
@@ -295,7 +291,17 @@
       "name": "Endgame",
       "fields": [
         {
+          "title": "Attempted a Climb",
+          "description": "Has the robot made an effort to climb onto a cage",
+          "type": "boolean",
+          "required": false,
+          "code": "ac",
+          "formResetBehavior": "reset",
+          "defaultValue": false
+        },
+        {
           "title": "End Position",
+          "description": "What the final endgame position of the robot scores for",
           "type": "select",
           "required": true,
           "code": "epo",
@@ -304,7 +310,6 @@
           "choices": {
             "No": "None",
             "P": "Park",
-            "F": "Failed",
             "S": "Shallow",
             "D": "Deep"
           }
