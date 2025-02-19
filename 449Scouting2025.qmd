@@ -38,14 +38,14 @@ boxplot <- raw %>%
            (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
            (auto_coral_L3_num*5)+ (auto_coral_L4_num*7),
          
-         total_algea_score = 
+         total_algae_score = 
            (robot_net_score*4) + (proc_score*2.5),
          
          total_endgame_score = 
            ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
            )
 
-  boxplot$total = boxplot$total_algea_score + boxplot$total_coral_score+boxplot$total_endgame_score
+  boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score
 
 
  ggplot(boxplot,aes(x = total, y = as.character(team)))+
@@ -72,19 +72,19 @@ bubble <- raw%>%
         (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + 
          (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5))/n(),
       
-       total_algea_score = sum(
+       total_algae_score = sum(
            (robot_net_score*4) + (proc_score*2.5))/n(),
          
        endgame_score = sum(
            ifelse(ending =="D", 12, ifelse(ending =="S",6,ifelse(ending =="P", 2, 0))))/n(),
-      avg_score = total_algea_score+total_coral_score+endgame_score,
+      avg_score = total_algae_score+total_coral_score+endgame_score,
 )
 
-ggplot(bubble, aes(x=total_coral_score, y=total_algea_score, size = endgame_score)) +
+ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_score)) +
     geom_point( color = "lightblue2")+
   geom_text( aes(label=team, vjust = 1.7 ))+
   labs(title = "Teams Performance Summary", 
-          x = "Auto + Tele Coral Points", y = "Total Algea Points", fill = "Auto+End", size = "Endgame")
+          x = "Auto + Tele Coral Points", y = "Total algae Points", fill = "Auto+End", size = "Endgame")
 ```
 
 CORAL LEVEL SCORING
@@ -197,7 +197,6 @@ ggplot(end, aes(x =team, y = total_points, fill = ending)) +
     labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"),
   )
 ```
-
 
 ```{r}
 proc <- read_csv("procReturns.csv")
