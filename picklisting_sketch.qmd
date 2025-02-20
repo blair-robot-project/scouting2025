@@ -1,0 +1,105 @@
+---
+title: "picklist_df_sketch"
+format: html
+---
+
+```{r}
+# What variables do we want to consider for picklisting? 
+# 
+# big picture summaries: total score mean, median, min, max, and std dev
+# coral level summary, endgame summary, pct matches removed algae, 
+# pct matches ground intake algae, algae scoring summary
+
+# individual graphs: 
+# - density graph showing distribution of overall score
+# - radar graph
+```
+
+```{r}
+# clear the environment
+rm(list = ls())
+
+library(tidyverse)
+
+blair_red <- "#a7000a"
+raw <- read_csv("made_up_data.csv")
+
+# mldf - "match level data frame"
+mldf <- raw %>%
+  mutate(
+    auto_coral_l1_pts = auto_coral_L1_num * 3, 
+    auto_coral_l2_pts = auto_coral_L2_num * 4, 
+    auto_coral_l3_pts = auto_coral_L3_num * 6, 
+    auto_coral_l4_pts = auto_coral_L4_num * 7, 
+    net_pts = robot_net_score * 4, 
+    processor_value = proc_score * 2.5, 
+    coral_l1_pts = coral_L1_num * 2, 
+    coral_l2_pts = coral_L2_num * 3, 
+    coral_l3_pts = coral_L3_num * 4, 
+    coral_l4_pts = coral_L4_num * 5, 
+    endgame_pts = case_when(
+      ending == "P" ~ 2, 
+      ending == "S" ~ 6, 
+      ending == "D" ~ 12, 
+      .default = 0
+    ), 
+    total_pts = (3 * move) + auto_coral_l1_pts + auto_coral_l2_pts + 
+      auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
+      coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts
+  )
+
+# tldf - "team level data frame"
+tldf <- mldf %>%
+  group_by(team) %>%
+  summarize(
+    total_pts_mean = mean(total_pts, na.rm = TRUE), 
+    total_pts_median = median(total_pts, na.rm = TRUE), 
+    total_pts_sd = sd(total_pts, na.rm = TRUE), 
+    total_pts_max = max(total_pts, na.rm = TRUE), 
+    endgame_pts_mean = mean(endgame_pts, na.rm = TRUE), 
+    coral_pts_mean = mean(
+      coral_l1_pts + coral_l2_pts + coral_l3_pts + coral_l4_pts, na.rm = TRUE
+    ), 
+    algae_pts_mean = mean(net_pts + processor_value, na.rm = TRUE)
+    # you would put many more calculations here!
+  )
+```
+
+This plot looks kinda shapeless and uninteresting bc the made-up data only has 4 example matches for each team, but hopefully you can see how this might be interesting with real data!
+
+```{r}
+team_score_density <- function(mldf, n, fill = blair_red){
+  filtered <- mldf %>%
+    filter(team == n)
+  
+  plt <- ggplot(filtered, aes(x = total_pts)) + 
+    geom_density(fill = fill) + 
+    labs(title = paste("Score distribution for team", n), 
+         x = "Score") + 
+    theme_bw()
+  
+  # when plotting from a function you need to explicitly `print()` it
+  print(plt)
+}
+
+team_score_density(mldf, 449)
+```
+
+Doing the radar plot is actually quite complicated! I think we probably won't pull this off for Glen Allen, but we if do that **awesome**. The key difficulty is that a radar plot requires *scaled* data. 
+
+```{r}
+library(ggradar)
+
+radar_plot <- function(tldf, n, color = blair_red){
+  viz <- tldf %>%
+    filter(team == n) %>%
+    select(team, endgame_pts_mean, coral_pts_mean, algae_pts_mean)
+  
+  plt <- ggradar(viz)
+  
+  print(plt)
+}
+
+radar_plot(tldf, 449)
+```
+
