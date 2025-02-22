@@ -74,59 +74,65 @@ tldf <- mldf %>%
   summarize(
     
     #total points
-    total_pts_mean = mean(total_pts, na.rm = TRUE), 
-    total_pts_median = median(total_pts, na.rm = TRUE), 
-    total_pts_sd = sd(total_pts, na.rm = TRUE), 
-    total_pts_max = max(total_pts, na.rm = TRUE), 
+    total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
+    total_pts_median = round(median(total_pts, na.rm = TRUE), digits =2),
+    total_pts_sd = round(sd(total_pts, na.rm = TRUE), digits =2), 
+    total_pts_max = round(max(total_pts, na.rm = TRUE), digits =2),
        
     
     #coral
-     coral_pts_mean = mean(coral_l1_pts + coral_l2_pts + coral_l3_pts + coral_l4_pts, na.rm = TRUE), 
-     l1_pts_mean = mean(coral_l1_pts, na.rm = TRUE), 
-     l2_pts_mean = mean(coral_l2_pts, na.rm = TRUE), 
-     l3_pts_mean = mean(coral_l3_pts, na.rm = TRUE), 
-     l4_pts_mean = mean(coral_l4_pts, na.rm = TRUE), 
+     coral_pts_mean = round(mean(coral_l1_pts + coral_l2_pts + coral_l3_pts + 
+                             coral_l4_pts, na.rm = TRUE), digits =2), 
+    
+     l1_pts_mean = round(mean(coral_l1_pts, na.rm = TRUE), digits = 2), 
+     l2_pts_mean = round(mean(coral_l2_pts, na.rm = TRUE), digits = 2), 
+     l3_pts_mean = round(mean(coral_l3_pts, na.rm = TRUE), digits = 2), 
+     l4_pts_mean = round(mean(coral_l4_pts, na.rm = TRUE), digits = 2), 
       # % in levels
-     l1_pct_mean = mean(coral_l1_pts, na.rm = TRUE)/coral_pts_mean*100, 
-     l2_pct_mean = mean(coral_l2_pts, na.rm = TRUE)/coral_pts_mean*100, 
-     l3_pct_mean = mean(coral_l3_pts, na.rm = TRUE)/coral_pts_mean*100, 
-     l4_pct_mean = mean(coral_l4_pts, na.rm = TRUE)/coral_pts_mean*100, 
+     l1_pct_mean = round(mean(coral_l1_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
+     l2_pct_mean = round(mean(coral_l2_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
+     l3_pct_mean = round(mean(coral_l3_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
+     l4_pct_mean = round(mean(coral_l4_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
     
     
     #teleop
-    tele_pts_mean = mean(total_tele_pts, na.rm = TRUE), 
-    tele_pts_median = median(total_tele_pts, na.rm = TRUE), 
-    tele_pts_sd = sd(total_tele_pts, na.rm = TRUE), 
-    tele_pts_max = max(total_tele_pts, na.rm = TRUE), 
+    tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
+    tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
+    tele_pts_sd = round(sd(total_tele_pts, na.rm = TRUE), digits = 2), 
+    tele_pts_max = round(max(total_tele_pts, na.rm = TRUE), digits = 2), 
                
     
     #auto
-    auto_pts_mean = mean(total_auto_pts, na.rm = TRUE), 
-    auto_pts_median = median(total_auto_pts, na.rm = TRUE), 
-    auto_pts_sd = sd(total_auto_pts, na.rm = TRUE), 
-    auto_pts_max = max(total_auto_pts, na.rm = TRUE),  
+    auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
+    auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
+    auto_pts_sd = round(sd(total_auto_pts, na.rm = TRUE), digits = 2),
+    auto_pts_max = round(max(total_auto_pts, na.rm = TRUE),digits =2),  
       
     
     #algae
-    algae_pts_mean = mean(net_pts + processor_value, na.rm = TRUE),
-    algae_pts_median = median(net_pts + processor_value, na.rm = TRUE), 
-    algae_pts_sd = sd(net_pts + processor_value, na.rm = TRUE), 
-    algae_pts_max = max(net_pts + processor_value, na.rm = TRUE), 
+    algae_pts_mean =round(mean(net_pts + processor_value, na.rm = TRUE), digits=2),
+    algae_pts_median = round(median(net_pts + processor_value, na.rm = TRUE), digits = 2),
+    algae_pts_sd = round(sd(net_pts + processor_value, na.rm = TRUE), digits =2),
+    algae_pts_max = round(max(net_pts + processor_value, na.rm = TRUE), digits =2), 
 
 
     
     #endgame
-    endgame_pts_mean = mean(endgame_pts, na.rm = TRUE), 
-    endgame_pts_median = median(endgame_pts, na.rm = TRUE), 
-    endgame_pts_sd = sd(endgame_pts, na.rm = TRUE), 
-    endgame_pts_max = max(endgame_pts, na.rm = TRUE), 
+    endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
+    endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
+    endgame_pts_sd = round(sd(endgame_pts, na.rm = TRUE), digits =2),
+    endgame_pts_max = round(max(endgame_pts, na.rm = TRUE), digits =2),
     
-  
     
     # you would put many more calculations here!
     #algae net pct
     #algae remove data?
+    
+    algae_remove_pct = sum(c(robot_reef_removal))/n()
+    
   )
+gt(tldf)
+
 ```
 
 This plot looks kinda shapeless and uninteresting bc the made-up data only has 4 example matches for each team, but hopefully you can see how this might be interesting with real data!

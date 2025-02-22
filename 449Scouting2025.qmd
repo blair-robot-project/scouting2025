@@ -14,6 +14,8 @@ params:
 ```{r setup, message=FALSE, warning=FALSE}
 #rm(list = setdiff(ls(),"params"))
 
+library(plotly)
+library(gt)
 library(tidyverse)
 
 blair_red <- "#a7000a"
@@ -28,13 +30,14 @@ raw <- read_csv("made_up_data.csv")
 BOX PLOT OF ALL TOTAL POINTS
 
 ```{r}
-boxplot_graph <- function(raw, team_red_alliance, team_blue_alliance) {
+boxplot_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3),
+                          team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
 
 boxplot <- raw %>%
-  filter(team %in% c(red_alliance, blue_alliance)) %>%
- mutate(team = factor(team, c(red_alliance,blue_alliance) ))%>%
+    filter(team %in% c(red_alliance, blue_alliance)) %>%
+    mutate(team = factor(team, c(red_alliance,blue_alliance) ))%>%
    
-  mutate(total_coral_score = 
+    mutate(total_coral_score = 
            (coral_L1_num*2) + (coral_L2_num*3) + 
            (coral_L3_num*4) + (coral_L4_num*5) + 
            (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
@@ -50,26 +53,20 @@ boxplot <- raw %>%
   boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score
 
 
- ggplot(boxplot,aes(x = total, y = as.character(team)))+
- geom_boxplot(position = "dodge2", fill = "azure2", ) +
-   stat_boxplot(geom = "errorbar")+
-   stat_summary(fun.y = mean, geom="point", size=3, color="orange",)+
-#   geom_point(aes(x =total_mean, y = team ), color = 'orange', size = 2)
-  
-    
-       labs(title = "Total points scored",
-          x = "Point", y = "Team")+
-    
-  theme_bw()
+ ggplot(boxplot,aes(x = total, y = as.character(team)))+    
+    geom_boxplot(position = "dodge2", fill = "azure2", ) +
+    stat_boxplot(geom = "errorbar") + 
+    stat_summary(fun.y = mean, geom="point", size=3, color="orange",)+
+    labs(title = "Total points scored",x = "Point", y = "Team")+
+    theme_bw()
 }
-boxplot_graph(raw,red_alliance,blue_alliance)
-
+(boxplot_graph(raw,red_alliance,blue_alliance))
 ```
 
 BUBBLE GRAPH OF EVERYTHING
 
 ```{r}
-bubble_graph <- function(raw, team_red_alliance, team_blue_alliance) {
+bubble_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
 
 bubble <- raw%>%
   group_by(team)%>%
@@ -94,14 +91,14 @@ ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_scor
           x = "Auto + Tele Coral Points", y = "Total algae Points", fill = "Auto+End", size = "Endgame")
 
 }
-bubble_graph(raw,red_alliance,blue_alliance)
+ggplotly(bubble_graph(raw,red_alliance,blue_alliance))
 
 ```
 
 CORAL LEVEL SCORING
 
 ```{r}
-bar_graph <- function(raw, team_red_alliance, team_blue_alliance) {
+bar_graph <- function(raw,team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
 
  bar <- raw %>%
      filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -133,13 +130,13 @@ bar$level_score <- case_when(
     scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy"))+
      theme_bw()
   }
-bar_graph(raw,red_alliance,blue_alliance)
+ggplotly(bar_graph(raw,red_alliance,blue_alliance))
 ```
 
 CORAL SCORED DURING AUTO AND TELEOP
 
 ```{r}
-tele_auto_graph <- function(raw, team_red_alliance, team_blue_alliance) {
+tele_auto_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
 
  auto_tele <- raw %>%
    filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -183,7 +180,7 @@ tele_auto_graph <- function(raw, team_red_alliance, team_blue_alliance) {
    
    theme_bw() 
 }
-tele_auto_graph(raw,red_alliance,blue_alliance)
+ggplotly(tele_auto_graph(raw,red_alliance,blue_alliance))
   
 
 ```
@@ -191,7 +188,7 @@ tele_auto_graph(raw,red_alliance,blue_alliance)
 ENDGAME SCORING
 
 ```{r}
-endgame_graph <- function(raw, team_red_alliance, team_blue_alliance) {
+endgame_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
 
 end <- raw %>%
    filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -218,7 +215,7 @@ ggplot(end, aes(x =team, y = total_points, fill = ending)) +
     labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"),
   )
 }
- endgame_graph(raw,red_alliance,blue_alliance)
+ggplotly( endgame_graph(raw,red_alliance,blue_alliance))
 ```
 
 ```{r}
