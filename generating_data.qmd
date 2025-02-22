@@ -11,8 +11,8 @@ library(tidyverse)
 ```{r}
 n <- 200
 
-scout_id <- sample(c("gabriel", "tinbite", "mitchell", "sophia"), size = n, replace = TRUE)
-match_num <- sample(1:20, size = n, replace = TRUE) #make not random when gabriel comes back
+scout_id <- sample(c("gabriel", "tinbite", "mitchell", "sophia", "jack"), size = n, replace = TRUE)
+match_num <- rep(1:34, length.out = n, each = 6) #make not random when gabriel comes back
 robot_num <- sample(c("R1", "R2", "R3", "B1", "B2", "B3"), size = n, replace = TRUE)
 
 team_num <- sample(rep(449:498, times = 4))
@@ -29,7 +29,7 @@ auto_coral_L4 <- sample(0:2, size = n, replace = TRUE)
 robot_reef_removed <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 robot_algae_intake <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 robot_net_scored <- sample(0:9, size = n, replace = TRUE) #add later maybe
-robot_net_missed <- as.integer((sample(0:robot_net_scored/2, size=n, replace = TRUE)))
+robot_net_missed <- floor(sample((1:50)/100, size = n, replace = TRUE) * robot_net_scored)
 proc_scored <- sample(0:9, size = n, replace = TRUE)
 coral_L1_num <- sample(0:24, size = n, replace = TRUE)
 coral_L2_num <- sample(0:12, size = n, replace = TRUE)
@@ -42,7 +42,7 @@ climb_attempt <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 1
 end_pos <- sample(c("No", "P", "S", "D"), size = n, replace = TRUE)
 climb_timing <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
-died_tipped <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))
+died_tipped <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(10, 90))
 card_color <- sample(c("Yellow", "No Card", "Red"), size = n, replace = TRUE, prob = c(10, 85, 5))
 
 
