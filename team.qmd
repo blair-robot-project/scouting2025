@@ -1,0 +1,22 @@
+---
+title: "radar_sketch"
+format: html
+---
+
+```{r}
+team_score_density <- function(mldf, n, fill = blair_red){
+  filtered <- mldf %>%
+    filter(team == n)
+  
+  plt <- ggplot(filtered, aes(x = total_pts)) + 
+    geom_density(fill = fill) + 
+    labs(title = paste("Score distribution for team", n), 
+         x = "Score") + 
+    theme_bw()
+  
+  # when plotting from a function you need to explicitly `print()` it
+  print(plt)
+}
+
+team_score_density(mldf, 449)
+```
