@@ -29,7 +29,7 @@ auto_coral_L4 <- sample(0:2, size = n, replace = TRUE)
 robot_reef_removed <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 robot_algae_intake <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 robot_net_scored <- sample(0:9, size = n, replace = TRUE) #add later maybe
-robot_net_missed <- as.integer((sample(0:robot_net_scored/2, size=n, replace = TRUE)))
+robot_net_missed <- floor(sample((1:50)/100, size = n, replace = TRUE) * robot_net_scored)
 proc_scored <- sample(0:9, size = n, replace = TRUE)
 coral_L1_num <- sample(0:24, size = n, replace = TRUE)
 coral_L2_num <- sample(0:12, size = n, replace = TRUE)
