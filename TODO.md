@@ -7,5 +7,7 @@
     - Bonus points: `roxygen`
 - Explicit plot statement
     - Use iris shinyapp to motivate
+- Default params for red/blue alliance
+- Consider ggplotly
     
 ## Shinyapp integration
