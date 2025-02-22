@@ -32,6 +32,7 @@ mldf <- raw %>%
     auto_coral_l3_pts = auto_coral_L3_num * 6, 
     auto_coral_l4_pts = auto_coral_L4_num * 7, 
     net_pts = robot_net_score * 4, 
+    net_missed = robot_net_miss*4,
     processor_value = proc_score * 2.5, 
     coral_l1_pts = coral_L1_num * 2, 
     coral_l2_pts = coral_L2_num * 3, 
@@ -42,26 +43,89 @@ mldf <- raw %>%
       ending == "S" ~ 6, 
       ending == "D" ~ 12, 
       .default = 0
-    ), 
+      ),
+    
     total_pts = (3 * move) + auto_coral_l1_pts + auto_coral_l2_pts + 
       auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
-      coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts
+      coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts,
+    
+    #auto
+    total_auto_pts = auto_coral_l1_pts + auto_coral_l2_pts + 
+      auto_coral_l3_pts + auto_coral_l4_pts +(3 * move),
+    
+    
+    #tele
+    total_algae_pts = net_pts + processor_value,
+    
+    total_tele_coral_pts =  coral_l1_pts + coral_l2_pts + 
+      coral_l3_pts + coral_l4_pts,
+    
+  total_tele_pts =  total_tele_coral_pts +total_algae_pts,
+  
+  #algae
+  algae_net_shots = sum(net_pts + net_missed)
+  
+  
   )
 
 # tldf - "team level data frame"
 tldf <- mldf %>%
   group_by(team) %>%
   summarize(
+    
+    #total points
     total_pts_mean = mean(total_pts, na.rm = TRUE), 
     total_pts_median = median(total_pts, na.rm = TRUE), 
     total_pts_sd = sd(total_pts, na.rm = TRUE), 
     total_pts_max = max(total_pts, na.rm = TRUE), 
+       
+    
+    #coral
+     coral_pts_mean = mean(coral_l1_pts + coral_l2_pts + coral_l3_pts + coral_l4_pts, na.rm = TRUE), 
+     l1_pts_mean = mean(coral_l1_pts, na.rm = TRUE), 
+     l2_pts_mean = mean(coral_l2_pts, na.rm = TRUE), 
+     l3_pts_mean = mean(coral_l3_pts, na.rm = TRUE), 
+     l4_pts_mean = mean(coral_l4_pts, na.rm = TRUE), 
+      # % in levels
+     l1_pct_mean = mean(coral_l1_pts, na.rm = TRUE)/coral_pts_mean*100, 
+     l2_pct_mean = mean(coral_l2_pts, na.rm = TRUE)/coral_pts_mean*100, 
+     l3_pct_mean = mean(coral_l3_pts, na.rm = TRUE)/coral_pts_mean*100, 
+     l4_pct_mean = mean(coral_l4_pts, na.rm = TRUE)/coral_pts_mean*100, 
+    
+    
+    #teleop
+    tele_pts_mean = mean(total_tele_pts, na.rm = TRUE), 
+    tele_pts_median = median(total_tele_pts, na.rm = TRUE), 
+    tele_pts_sd = sd(total_tele_pts, na.rm = TRUE), 
+    tele_pts_max = max(total_tele_pts, na.rm = TRUE), 
+               
+    
+    #auto
+    auto_pts_mean = mean(total_auto_pts, na.rm = TRUE), 
+    auto_pts_median = median(total_auto_pts, na.rm = TRUE), 
+    auto_pts_sd = sd(total_auto_pts, na.rm = TRUE), 
+    auto_pts_max = max(total_auto_pts, na.rm = TRUE),  
+      
+    
+    #algae
+    algae_pts_mean = mean(net_pts + processor_value, na.rm = TRUE),
+    algae_pts_median = median(net_pts + processor_value, na.rm = TRUE), 
+    algae_pts_sd = sd(net_pts + processor_value, na.rm = TRUE), 
+    algae_pts_max = max(net_pts + processor_value, na.rm = TRUE), 
+
+
+    
+    #endgame
     endgame_pts_mean = mean(endgame_pts, na.rm = TRUE), 
-    coral_pts_mean = mean(
-      coral_l1_pts + coral_l2_pts + coral_l3_pts + coral_l4_pts, na.rm = TRUE
-    ), 
-    algae_pts_mean = mean(net_pts + processor_value, na.rm = TRUE)
+    endgame_pts_median = median(endgame_pts, na.rm = TRUE), 
+    endgame_pts_sd = sd(endgame_pts, na.rm = TRUE), 
+    endgame_pts_max = max(endgame_pts, na.rm = TRUE), 
+    
+  
+    
     # you would put many more calculations here!
+    #algae net pct
+    #algae remove data?
   )
 ```
 
@@ -85,7 +149,7 @@ team_score_density <- function(mldf, n, fill = blair_red){
 team_score_density(mldf, 449)
 ```
 
-Doing the radar plot is actually quite complicated! I think we probably won't pull this off for Glen Allen, but we if do that **awesome**. The key difficulty is that a radar plot requires *scaled* data. 
+Doing the radar plot is actually quite complicated! I think we probably won't pull this off for Glen Allen, but we if do that **awesome**. The key difficulty is that a radar plot requires *scaled* data.
 
 ```{r}
 library(ggradar)
@@ -102,4 +166,3 @@ radar_plot <- function(tldf, n, color = blair_red){
 
 radar_plot(tldf, 449)
 ```
-
