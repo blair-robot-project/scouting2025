@@ -5,3 +5,7 @@
 - Clean up the spacing
 - Document functions
     - Bonus points: `roxygen`
+- Explicit plot statement
+    - Use iris shinyapp to motivate
+    
+## Shinyapp integration
