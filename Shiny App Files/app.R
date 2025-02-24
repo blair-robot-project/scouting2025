@@ -5,6 +5,7 @@ library(ggplot2)
 library(dplyr)
 library(shinyWidgets)
 library(tidyverse)
+library(shinythemes)
 
 data_dir <- "data files"
 data_file <- paste0(data_dir, "/made_up_data.csv")
@@ -122,7 +123,8 @@ consolidated_team_data <- mldf %>%
 
 #UI
 ui <- fluidPage(
-  tabsetPanel(
+  navbarPage(theme = shinytheme("sandstone"),  
+             "449 Scouting",
     tabPanel("Picklisting",
              #sidebarLayout(
              #  sidebarPanel(
@@ -171,10 +173,10 @@ ui <- fluidPage(
                sidebarPanel(
                  selectInput("team_select", "Select Team", choices = unique(raw$team)),
                  selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 imageOutput("team_image_output")
               ),
                mainPanel(
                  plotOutput("team_graph_output"),
-                 imageOutput("team_image_output"),
                  DTOutput("team_data_row")
                )
              )
@@ -219,7 +221,7 @@ server <- function(input, output, session) {
   })
   
   output$picklist_table <- renderDT({
-    datatable(consolidated_team_data)
+    datatable(consolidated_team_data, options = list(scrollX = TRUE))
   })
   
   #observeEvent(input$graph_btn, {
@@ -381,44 +383,46 @@ server <- function(input, output, session) {
       )
   }
   
+
+  
   #Server logic for generating alliance graph
   observeEvent(input$generate_graph, {
     #Backend team splitting based on user input
     if (input$match_or_teams == "Match Number") {
       match_num <- input$match_num
-      
+
       #Get the specific row first
       match_row <- match_schedule[match_schedule$Match == match_num, ]
-      
+
       #Extract teams as vectors
       selected_red_teams <- c(
         match_row$R1,
         match_row$R2,
         match_row$R3
       )
-      
+
       selected_blue_teams <- c(
         match_row$B1,
         match_row$B2,
         match_row$B3
       )
-      
-      print("Selected match number:")
-      print(match_num)
-      print("Red teams:")
-      print(selected_red_teams)
-      print("Blue teams:")
-      print(selected_blue_teams)
+
+#       print("Selected match number:")
+#       print(match_num)
+#       print("Red teams:")
+#       print(selected_red_teams)
+#       print("Blue teams:")
+#       print(selected_blue_teams)
     } else {
-      selected_red_teams <- input$red_teams 
+      selected_red_teams <- input$red_teams
       selected_blue_teams <- input$blue_teams
-      
+
       #Check for fewer than 3 teams for either alliance
       if (length(selected_red_teams) != 3 || length(selected_blue_teams) != 3) {
         showNotification("Please select exactly 3 teams for both the red and blue alliances.", type = "error")
         return()
       }
-      
+
       #Check for duplicate teams
       all_selected_teams <- c(selected_red_teams, selected_blue_teams)
       if (length(unique(all_selected_teams)) != length(all_selected_teams)) {
@@ -426,10 +430,10 @@ server <- function(input, output, session) {
         return()
       }
     }
-    
+
     output$alliance_graph_output <- renderPlot({
       if (input$alliance_graph == "Overall Points Box Plot"){
-      
+
       #Call the boxplot_graph function with the selected teams
       boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
       } else if (input$alliance_graph == "Coral Level Bar Graph"){
@@ -441,7 +445,7 @@ server <- function(input, output, session) {
       }
     })
   })
-
+  
   #Single Team Tab
   #GRAPH GEN LOGIC-------------------------------------------
   
@@ -473,8 +477,8 @@ server <- function(input, output, session) {
       labs(title = paste("Total points scored by Team", team_num),
            x = "Points", 
            y = "Team") +
-      theme_bw() + 
-      coord_fixed(ratio = 30)
+      theme_bw() 
+      #coord_fixed(ratio = 20)
   }
   
   #CORAL LEVEL
@@ -501,7 +505,7 @@ server <- function(input, output, session) {
     )
     
     p <- ggplot(bar, aes(x = factor(team), y = level_score, fill = level)) + 
-      geom_bar(position = "stack", stat = "identity", width = 0.5) + 
+      geom_bar(position = "stack", stat = "identity", width = 0.3) + 
       labs(title = paste("Level Summary for Team", team_num), 
            x = "Team", y = "Coral score", fill = "Level") +
       scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy")) +
@@ -544,7 +548,7 @@ server <- function(input, output, session) {
     )
     
     ggplot(auto_tele, aes(x = factor(team), y = level_score, fill = level)) + 
-      geom_bar(position = "stack", stat = "identity", width = 0.5) + 
+      geom_bar(position = "stack", stat = "identity", width = 0.3) + 
       labs(title = paste("Level Summary for Team", team_num), 
            x = "Team", y = "Coral score", fill = "Level") +
       scale_fill_manual(values=c("plum1","plum2","plum3","plum4",
@@ -567,7 +571,7 @@ server <- function(input, output, session) {
     end$ending <- factor(end$ending, levels = c("D", "S", "P", "No"))
     
     ggplot(end, aes(x = factor(team), y = total_points, fill = ending)) +
-      geom_bar(position = "stack", stat = "identity", width = 0.5) +
+      geom_bar(position = "stack", stat = "identity", width = 0.3) +
       labs(title = paste("Endgame Score for Team", team_num),
            x = "Team",
            y = "Points") +
@@ -595,26 +599,35 @@ server <- function(input, output, session) {
   output$team_image_output <- renderImage({
     teamnum <- input$team_select
     img_src <- paste0("images/", teamnum, ".png")  #Path to the image
+    no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
     
     #Check if the image file exists
     if (file.exists(img_src)) {
       return(list(
         src = img_src,
         contentType = "image/png",
-        width = 500,
-        height = 500,
-        alt = paste("Robot Image for Team", teamnum)
+        width = 350,
+        height = 350,
+        alt = paste("Robot Image for Team", teamnum),
+        style="display: block; margin-left: auto; margin-right: auto;"
       ))
       #tags$img(src = img_src, alt = paste("Robot Image for Team", teamnum), height = "300px")
     } else {
-      return(NULL)
+      return(list(
+        src = no_img_available_src,
+        contentType = "image/jpg",
+        width = 350,
+        height = 350,
+        alt = paste("No Image Available"),
+        style="display: block; margin-left: auto; margin-right: auto;"
+      ))
     }
   }, deleteFile = FALSE)
   
   output$team_data_row <- renderDT({
     selected_team <- input$team_select
     team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team, ]
-    datatable(team_data_row)
+    datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1))
   })
 }
 
