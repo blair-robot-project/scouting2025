@@ -158,11 +158,14 @@ ui <- fluidPage(
                    pickerInput("red_teams", "Red Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3)),
                    pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3))
                  ),
-                 selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  actionButton("generate_graph", "Generate Graph", class = "btn btn-primary")
                ),
                mainPanel(
-                 plotOutput("alliance_graph_output"),
+                 plotOutput("alliance_box_plot_output"),
+                 plotOutput("alliance_coral_graph_output"),
+                 plotOutput("alliance_tele_auto_graph_output"),
+                 plotOutput("alliance_endgame_graph_output"),
                  DTOutput("alliance_table")
                )
              )
@@ -221,7 +224,7 @@ server <- function(input, output, session) {
   })
   
   output$picklist_table <- renderDT({
-    datatable(consolidated_team_data, options = list(scrollX = TRUE))
+    datatable(consolidated_team_data, options = list(lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(consolidated_team_data)))
   })
   
   #observeEvent(input$graph_btn, {
@@ -431,20 +434,32 @@ server <- function(input, output, session) {
       }
     }
 
-    output$alliance_graph_output <- renderPlot({
-      if (input$alliance_graph == "Overall Points Box Plot"){
-
-      #Call the boxplot_graph function with the selected teams
+    output$alliance_box_plot_output <- renderPlot({
       boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
-      } else if (input$alliance_graph == "Coral Level Bar Graph"){
-        bar_graph_alliance(raw, selected_red_teams, selected_blue_teams)
-      } else if (input$alliance_graph == "Coral Auto + Tele Bar Graph"){
-        tele_auto_graph(raw, selected_red_teams, selected_blue_teams)
-      } else if (input$alliance_graph == "Endgame Bar Graph"){
-        endgame_graph(raw, selected_red_teams, selected_blue_teams)
-      }
     })
-  })
+    
+    output$alliance_coral_graph_output <- renderPlot({
+        bar_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+      })
+    
+    output$alliance_tele_auto_graph_output <- renderPlot({
+      tele_auto_graph(raw, selected_red_teams, selected_blue_teams)
+      }) 
+    
+    output$alliance_endgame_graph_output <- renderPlot({
+      endgame_graph(raw, selected_red_teams, selected_blue_teams)
+      })
+    
+    output$alliance_table <- renderDT({
+      alliance_dt_subset <- consolidated_team_data[consolidated_team_data$team %in% c(selected_red_teams, selected_blue_teams), ]
+      #team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team]
+      datatable(alliance_dt_subset, options = list(scrollX = TRUE, dom = 't'))
+    })
+    
+    })
+  
+  
+
   
   #Single Team Tab
   #GRAPH GEN LOGIC-------------------------------------------
@@ -627,7 +642,7 @@ server <- function(input, output, session) {
   output$team_data_row <- renderDT({
     selected_team <- input$team_select
     team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team, ]
-    datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1))
+    datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1, dom = 't'))
   })
 }
 
