@@ -32,32 +32,34 @@ BOX PLOT OF ALL TOTAL POINTS
 ```{r}
 boxplot_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3),
                           team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
-
-boxplot <- raw %>%
+  boxplot <- raw %>%
     filter(team %in% c(red_alliance, blue_alliance)) %>%
-    mutate(team = factor(team, c(red_alliance,blue_alliance) ))%>%
-   
-    mutate(total_coral_score = 
-           (coral_L1_num*2) + (coral_L2_num*3) + 
-           (coral_L3_num*4) + (coral_L4_num*5) + 
-           (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
-           (auto_coral_L3_num*5)+ (auto_coral_L4_num*7),
-         
-         total_algae_score = 
-           (robot_net_score*4) + (proc_score*2.5),
-         
-         total_endgame_score = 
-           ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
-           )
-
-  boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score
-
-
- ggplot(boxplot,aes(x = total, y = as.character(team)))+    
+      mutate(team = factor(team, c(red_alliance,blue_alliance) ))%>%
+        mutate(
+          total_coral_score = coral_L1_num*2 + 
+                              coral_L2_num*3 + 
+                              coral_L3_num*4 + 
+                              coral_L4_num*5 + 
+                              auto_coral_L1_num*3 + 
+                              auto_coral_L2_num*4 + 
+                              auto_coral_L3_num*5 + 
+                              auto_coral_L4_num*7,
+          total_algae_score = robot_net_score*4 + proc_score*2.5,
+          total_endgame_score = ifelse(ending =="D", 12, 
+                                            ifelse(ending=="S", 6,
+                                                   ifelse(ending=="P", 2, 0))
+                                       ),
+               )
+  
+  boxplot$total = boxplot$total_algae_score +
+                  boxplot$total_coral_score +
+                  boxplot$total_endgame_score
+  
+  ggplot(boxplot,aes(x = total, y = as.character(team)))+    
     geom_boxplot(position = "dodge2", fill = "azure2", ) +
     stat_boxplot(geom = "errorbar") + 
-    stat_summary(fun.y = mean, geom="point", size=3, color="orange",)+
-    labs(title = "Total points scored",x = "Point", y = "Team")+
+    stat_summary(fun.y = mean, geom="point", size=3, color="orange",) +
+    labs(title = "Total points scored",x = "Point", y = "Team") +
     theme_bw()
 }
 (boxplot_graph(raw,red_alliance,blue_alliance))
@@ -67,29 +69,37 @@ BUBBLE GRAPH OF EVERYTHING
 
 ```{r}
 bubble_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
-
-bubble <- raw%>%
-  group_by(team)%>%
-  summarise(
-    match = n(),
-            total_coral_score = sum(
-        (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + 
-         (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5))/n(),
-      
-       total_algae_score = sum(
-           (robot_net_score*4) + (proc_score*2.5))/n(),
-         
-       endgame_score = sum(
-           ifelse(ending =="D", 12, ifelse(ending =="S",6,ifelse(ending =="P", 2, 0))))/n(),
-      avg_score = total_algae_score+total_coral_score+endgame_score,
-)
-
-ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_score)) +
-    geom_point( color = "lightblue2")+
-  geom_text( aes(label=team, vjust = 1.7 ))+
-  labs(title = "Teams Performance Summary", 
-          x = "Auto + Tele Coral Points", y = "Total algae Points", fill = "Auto+End", size = "Endgame")
-
+  bubble <- raw%>%
+    group_by(team)%>%
+    summarise(
+      match = n(),
+      total_coral_score = sum(auto_coral_L1_num*3 + 
+                              auto_coral_L2_num*4 + 
+                              auto_coral_L3_num*6 + 
+                              auto_coral_L4_num*7 + 
+                              coral_L1_num*2 +
+                              coral_L2_num*3 + 
+                              coral_L3_num*4 + 
+                              coral_L4_num*5
+                              )/n(),
+        
+      total_algae_score = sum(robot_net_score*4 + proc_score*6)/n(),
+           
+      endgame_score = sum(ifelse(ending =="D", 12, 
+                                 ifelse(ending =="S", 6,
+                                        ifelse(ending =="P", 2, 0)))
+                          )/n(),
+      avg_score = total_algae_score+total_coral_score+endgame_score
+  )
+  
+  ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_score)) +
+      geom_point( color = "lightblue2")+
+    geom_text( aes(label=team, vjust = 1.7 ))+
+    labs(title = "Teams Performance Summary", 
+         x = "Auto + Tele Coral Points", 
+         y = "Total algae Points", 
+         fill = "Auto+End", 
+         size = "Endgame")
 }
 ggplotly(bubble_graph(raw,red_alliance,blue_alliance))
 
@@ -99,37 +109,33 @@ CORAL LEVEL SCORING
 
 ```{r}
 bar_graph <- function(raw,team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
-
- bar <- raw %>%
-     filter(team %in% c(red_alliance, blue_alliance)) %>%
-    mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
-
-  group_by(team) %>%
-  summarize(
-    l1 = mean(coral_L1_num),
-    l2 = mean(coral_L2_num),
-    l3 = mean(coral_L3_num),
-    l4 = mean(coral_L4_num)
   
-  )%>%
-    pivot_longer(cols = c(l4, l3, l2,l1), 
-                    names_to = "level", 
-                 values_to = "coral_num")
- 
-bar$level_score <- case_when(
-  bar$level == "l1" ~ bar$coral_num*2, 
-  bar$level == "l2" ~ bar$coral_num*3, 
-  bar$level == "l3" ~ bar$coral_num*4, 
-  bar$level == "l4" ~ bar$coral_num*5, 
-)
-
+  bar <- raw %>%
+    filter(team %in% c(red_alliance, blue_alliance)) %>%
+      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+        group_by(team) %>%
+          summarize(l1 = mean(coral_L1_num),
+                    l2 = mean(coral_L2_num),
+                    l3 = mean(coral_L3_num),
+                    l4 = mean(coral_L4_num)) %>%
+            pivot_longer(cols = c(l4, l3, l2,l1), 
+                         names_to = "level", 
+                         values_to = "coral_num")
+   
+  bar$level_score <- case_when(
+    bar$level == "l1" ~ bar$coral_num*2, 
+    bar$level == "l2" ~ bar$coral_num*3, 
+    bar$level == "l3" ~ bar$coral_num*4, 
+    bar$level == "l4" ~ bar$coral_num*5, 
+  )
+  
   ggplot(bar, aes(x = `team`, y = level_score, fill = level)) + 
-     geom_bar(position = "stack", stat = "identity") + 
-     labs(title = "Level Summary", 
-          x = "Team", y = "Coral score", fill = "Level") +
+    geom_bar(position = "stack", stat = "identity") + 
+    labs(title = "Level Summary", 
+         x = "Team", y = "Coral score", fill = "Level") +
     scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy"))+
-     theme_bw()
-  }
+    theme_bw()
+}
 ggplotly(bar_graph(raw,red_alliance,blue_alliance))
 ```
 
@@ -158,9 +164,10 @@ tele_auto_graph <- function(raw, team_red_alliance = c(params$red1, params$red2,
   )%>%
 
        pivot_longer(cols = c(l4, l3, l2,l1,autol1,autol2,autol3,autol4), 
-                 names_to = "level", 
-                 values_to = "coral_num")
- auto_tele$level_score <- case_when(
+                    names_to = "level", 
+                    values_to = "coral_num")
+ 
+auto_tele$level_score <- case_when(
   auto_tele$level == "l1" ~ auto_tele$coral_num*2, 
   auto_tele$level == "l2" ~ auto_tele$coral_num*3, 
   auto_tele$level == "l3" ~ auto_tele$coral_num*4, 
@@ -169,15 +176,21 @@ tele_auto_graph <- function(raw, team_red_alliance = c(params$red1, params$red2,
   auto_tele$level == "autol2" ~ auto_tele$coral_num*4,
   auto_tele$level == "autol3" ~ auto_tele$coral_num*6,
   auto_tele$level == "autol4" ~ auto_tele$coral_num*7
-
 )
 
-  ggplot(auto_tele, aes(x = `team`, y = (level_score), fill = level)) + 
-     geom_bar(position = "stack", stat = "identity") + 
-     labs(title = "Level Summary", 
-          x = "Team", y = "Coral score", fill = "Level") +
-    scale_fill_manual(values=c("plum1","plum2","plum3","plum4","steelblue2","steelblue3","steelblue","steelblue4"))+
-   
+ggplot(auto_tele, aes(x = `team`, y = (level_score), fill = level)) + 
+  geom_bar(position = "stack", stat = "identity") + 
+  labs(title = "Level Summary", 
+       x = "Team", y = "Coral score", fill = "Level") +
+       scale_fill_manual(values=c("plum1",
+                                  "plum2",
+                                  "plum3",
+                                  "plum4",
+                                  "steelblue2",
+                                  "steelblue3",
+                                  "steelblue",
+                                  "steelblue4")
+                         )+
    theme_bw() 
 }
 ggplotly(tele_auto_graph(raw,red_alliance,blue_alliance))
@@ -189,33 +202,29 @@ ENDGAME SCORING
 
 ```{r}
 endgame_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
-
-end <- raw %>%
-   filter(team %in% c(red_alliance, blue_alliance)) %>%
-    mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
-
-    group_by(team, ending) %>%
-  summarise(count = n())
-
-end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0)
-
-#compute the total end game score from all matches
-end$total_points <- end$count * end$points
-
-end$ending <- factor(end$ending, levels = c("D", "S","P","No"))
-
-ggplot(end, aes(x =team, y = total_points, fill = ending)) +
-  geom_bar(position= "stack", stat = "identity") +
+  end <- raw %>%
+    filter(team %in% c(red_alliance, blue_alliance)) %>%
+      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+        group_by(team, ending) %>%
+          summarise(count = n())
   
-  labs(title = "Endgame Score",
-       x = "Team",
-       y = "Points") +
-  scale_fill_manual(
-    values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
-    labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"),
-  )
+  end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0)
+  
+  #compute the total end game score from all matches
+  end$total_points <- end$count * end$points
+  
+  end$ending <- factor(end$ending, levels = c("D", "S","P","No"))
+  
+  ggplot(end, aes(x =team, y = total_points, fill = ending)) +
+    geom_bar(position= "stack", stat = "identity") +
+    labs(title = "Endgame Score",
+         x = "Team",
+         y = "Points") +
+    scale_fill_manual(
+      values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
+      labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"))
 }
-ggplotly( endgame_graph(raw,red_alliance,blue_alliance))
+ggplotly(endgame_graph(raw,red_alliance,blue_alliance))
 ```
 
 ```{r}
@@ -232,5 +241,264 @@ ggplot(both, aes(x = Processor, y = Net, label = Index)) +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "blue") +  
   labs(x = "Processor Returns", y = "Net Returns", title = "Net Vs Processor (Points)") +
   theme_minimal()
+
+```
+
+```{r}
+#Just testing stuff out
+column <- raw %>%
+  group_by(team)%>%
+  summarise(
+    match = n(),
+    total_auto_score = sum(auto_coral_L1_num*3 + 
+                           auto_coral_L2_num*4 + 
+                           auto_coral_L3_num*6 + 
+                           auto_coral_L4_num*7
+                           )/n(),
+      
+    total_algae_score = sum(robot_net_score*4 + proc_score*6)/n(),
+         
+    endgame_score = sum(ifelse(ending =="D", 12, 
+                              ifelse(ending =="S", 6,
+                                    ifelse(ending =="P", 2, 0)))
+                        )/n(),
+    avg_score = total_algae_score + total_auto_score + endgame_score
+    
+  )%>%
+  
+  pivot_longer(cols = c(total_auto_score, total_algae_score, endgame_score), 
+               names_to = "level", 
+               values_to = "score")
+
+
+column <- column[order(column$avg_score, decreasing = TRUE),]
+
+column$level_score <- case_when(
+  column$level == "total_auto_score" ~ column$score,
+  column$level == "total_algae_score" ~ column$score, 
+  column$level == "endgame_score" ~ column$score
+)
+
+column$team <- factor(column$team[order(column$avg_score, decreasing = TRUE)], 
+                      levels = column$team[order(column$avg_score, decreasing = TRUE)], 
+                      labels = column$team[order(column$avg_score, decreasing = TRUE)])
+
+ggplot(column, aes(x = `team`, y = level_score, fill = level)) + 
+  geom_bar(position = "stack", stat = "identity") + 
+  labs(title = "Level Summary", 
+       x = "Team", y = "Total Score w/o Coral", fill = "Level") +
+  scale_fill_manual(values=c("#dfd6d5","#9dbee7","#d73213"),
+                    labels = c("total_algae_score" = "Algae Score", 
+                               "endgame_score" = "Endgame", 
+                               "total_auto_score" = "Auto Score")
+                    )+
+  theme_bw()+
+  coord_flip()
+    
+
+
+
+
+```
+
+```{r}
+
+column2 <- raw %>%
+  group_by(team)%>%
+  summarise(
+    match = n(),
+    total_coral_auto_score = sum(auto_coral_L1_num*3 + 
+                                 auto_coral_L2_num*4 + 
+                                 auto_coral_L3_num*6 + 
+                                 auto_coral_L4_num*7 + 
+                                 coral_L1_num*2 + 
+                                 coral_L2_num*3 + 
+                                 coral_L3_num*4 + 
+                                 coral_L4_num*5
+                                 )/n(),
+      
+    total_algae_score = sum(robot_net_score*4 + proc_score*6)/n(),
+         
+    endgame_score = sum(ifelse(ending =="D", 12, 
+                              ifelse(ending =="S", 6,
+                                    ifelse(ending =="P", 2, 0)))
+                        )/n(),
+    avg_score = total_algae_score + total_coral_auto_score + endgame_score
+    
+  )%>%
+  
+  pivot_longer(cols = c(total_coral_auto_score, total_algae_score, endgame_score), 
+               names_to = "level", 
+               values_to = "score")
+
+column2 <- column2[order(column2$avg_score, decreasing = TRUE),]
+
+column2$level_score <- case_when(
+  column2$level == "total_coral_auto_score" ~ column2$score,
+  column2$level == "total_algae_score" ~ column2$score, 
+  column2$level == "endgame_score" ~ column2$score
+)
+
+column2$team <- factor(column2$team[order(column2$avg_score, decreasing = TRUE)], 
+                       levels = column2$team[order(column$avg_score, decreasing = TRUE)], 
+                       labels = column2$team[order(column$avg_score, decreasing = TRUE)])
+
+ggplot(column2, aes(x = `team`, y = level_score, fill = level)) + 
+  geom_bar(position = "stack", stat = "identity") + 
+  labs(title = "Level Summary", x = "Team", y = "Total Score", fill = "Level") +
+  scale_fill_manual(values=c("#FF746C","#dfd6d5","#9dbee7"),
+                    labels = c("total_algae_score" = "Algae Score", 
+                               "endgame_score" = "Endgame", 
+                               "total_coral_auto_score" = "Coral + Auto Score")
+                    ) +
+  theme_bw() +
+  coord_flip()
+```
+
+```{r}
+
+column3 <- raw %>%
+  group_by(team)%>%
+  summarise(
+    match = n(),
+    auto_coral = sum(auto_coral_L1_num*3)/n()+
+                 sum(auto_coral_L2_num*4)/n()+
+                 sum(auto_coral_L1_num*6)/n()+
+                 sum(auto_coral_L1_num*7)/n(),
+    robot_net_score = sum(robot_net_score*4)/n(),
+    robot_proc_score = sum(proc_score*6)/n(),
+         
+       endgame_score = sum(
+           ifelse(ending =="D", 12, 
+                  ifelse(ending =="S",6,
+                         ifelse(ending =="P", 2, 0))))
+            /n(),
+    
+      avg_score = auto_coral +
+                  robot_net_score + robot_proc_score +
+                  endgame_score,
+  )%>%
+  pivot_longer(cols = c(auto_coral,
+                        robot_net_score, 
+                        robot_proc_score,
+                        endgame_score
+                        ), 
+               names_to = "level", 
+               values_to = "score")
+
+
+column3 <- column3[order(column3$avg_score, decreasing = TRUE),]
+
+column3$level_score <- case_when(
+  column3$level == "auto_coral" ~ column3$score,
+  column3$level == "robot_proc_score" ~ column3$score, 
+  column3$level == "robot_net_score" ~ column3$score, 
+  column3$level == "endgame_score" ~ column3$score
+)
+
+column3$team <- factor(column3$team[order(column3$avg_score, decreasing = TRUE)], 
+       levels = column3$team[order(column3$avg_score, decreasing = TRUE)], 
+       labels = column3$team[order(column3$avg_score, decreasing = TRUE)])
+
+ggplot(column3, aes(x = `team`, y = level_score, fill = level)) + 
+  geom_bar(position = "stack", stat = "identity") + 
+  labs(title = "Level Summary", 
+       x = "Team", y = "Total Score w/o Coral", fill = "Level") +
+  scale_fill_manual(values=c("plum2", "#EFF68F", "olivedrab3", "springgreen4"),
+                    labels = c("auto_coral" = "Auto Coral", 
+                               "endgame_score" = "Endgame", 
+                               "robot_net_score" = "Net", 
+                               "robot_proc_score" = "Processor")
+                    )+
+  theme_bw()+
+  coord_flip()
+```
+
+```{r}
+
+column4 <- raw %>%
+  group_by(team)%>%
+  summarise(
+    match = n(),
+    auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+    auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+    auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+    auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+    tele_coral_L1 = sum(coral_L1_num*2)/n(),
+    tele_coral_L2 = sum(coral_L2_num*3)/n(),
+    tele_coral_L3 = sum(coral_L3_num*4)/n(),
+    tele_coral_L4 = sum(coral_L4_num*5)/n(),
+    robot_net_score = sum(robot_net_score*4)/n(),
+    robot_proc_score = sum(proc_score*6)/n(),
+         
+    endgame_score = sum(ifelse(ending =="D", 12,
+                               ifelse(ending =="S", 6,
+                                      ifelse(ending =="P", 1, 0)))
+                        )/n(),
+    
+    avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 +
+                tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
+                robot_net_score + robot_proc_score +
+                endgame_score
+  )%>%
+  
+  pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4,
+                        tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+                        robot_net_score, robot_proc_score,
+                        endgame_score), 
+        names_to = "level", 
+        values_to = "score")
+
+
+column4 <- column4[order(column4$avg_score, decreasing = TRUE),]
+
+column4$level_score <- case_when(
+  column4$level == "auto_coral_L1" ~ column4$score,
+  column4$level == "auto_coral_L2" ~ column4$score,
+  column4$level == "auto_coral_L3" ~ column4$score,
+  column4$level == "auto_coral_L4" ~ column4$score,
+  column4$level == "tele_coral_L1" ~ column4$score,
+  column4$level == "tele_coral_L2" ~ column4$score,
+  column4$level == "tele_coral_L3" ~ column4$score,
+  column4$level == "tele_coral_L4" ~ column4$score,
+  column4$level == "robot_proc_score" ~ column4$score, 
+  column4$level == "robot_net_score" ~ column4$score, 
+  column4$level == "endgame_score" ~ column4$score
+)
+
+column4$team <- factor(column4$team[order(column4$avg_score, decreasing = TRUE)], 
+       levels = column4$team[order(column4$avg_score, decreasing = TRUE)], 
+       labels = column4$team[order(column4$avg_score, decreasing = TRUE)])
+
+ggplot(column4, aes(x = `team`, y = level_score, fill = level)) + 
+  geom_bar(position = "stack", stat = "identity") + 
+  labs(title = "Scoring Summary", 
+       x = "Team", y = "Total Score with Coral", fill = "Level") +
+  scale_fill_manual(values = c("plum1",
+                               "plum2",
+                               "plum3",
+                               "plum4", 
+                               "#FFF68F", 
+                               "olivedrab3",
+                               "springgreen4", 
+                               "steelblue2",
+                               "steelblue3",
+                               "steelblue",
+                               "steelblue4"),
+                    labels = c("auto_coral_L1" = "Auto Coral L1", 
+                               "auto_coral_L2" = "Auto Coral L2",
+                               "auto_coral_L3" = "Auto Coral L3", 
+                               "auto_coral_L4" = "Auto Coral L4", 
+                               "tele_coral_L1" = "Tele Coral L1", 
+                               "tele_coral_L2" = "Tele Coral L2", 
+                               "tele_coral_L3" = "Tele Coral L3", 
+                               "tele_coral_L4" = "Tele Coral L4", 
+                               "endgame_score" = "Endgame", 
+                               "robot_net_score" = "Net", 
+                               "robot_proc_score" = "Processor")
+                    )+
+  theme_bw()+
+  coord_flip()
+
 
 ```
