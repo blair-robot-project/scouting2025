@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>449 Scouting 2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="prematch_summary_files/libs/clipboard/clipboard.min.js"></script>
+<script src="prematch_summary_files/libs/quarto-html/quarto.js"></script>
+<script src="prematch_summary_files/libs/quarto-html/popper.min.js"></script>
+<script src="prematch_summary_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="prematch_summary_files/libs/quarto-html/anchor.min.js"></script>
+<link href="prematch_summary_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="prematch_summary_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="prematch_summary_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="prematch_summary_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="prematch_summary_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="prematch_summary_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="prematch_summary_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="prematch_summary_files/libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="prematch_summary_files/libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="prematch_summary_files/libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="prematch_summary_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="prematch_summary_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="prematch_summary_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="prematch_summary_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">449 Scouting 2025</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#rm(list = setdiff(ls(),"params"))</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>blair_red <span class="ot">&lt;-</span> <span class="st">"#a7000a"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>red_alliance <span class="ot">&lt;-</span> <span class="fu">c</span>(params<span class="sc">$</span>red1, params<span class="sc">$</span>red2, params<span class="sc">$</span>red3)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>blue_alliance <span class="ot">&lt;-</span> <span class="fu">c</span>(params<span class="sc">$</span>blue1, params<span class="sc">$</span>blue2, params<span class="sc">$</span>blue3)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"made_up_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>BOX PLOT OF ALL TOTAL POINTS</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>boxplot_graph <span class="ot">&lt;-</span> <span class="cf">function</span>(raw, <span class="at">team_red_alliance =</span> <span class="fu">c</span>(params<span class="sc">$</span>red1, params<span class="sc">$</span>red2, params<span class="sc">$</span>red3),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">team_blue_alliance=</span> <span class="fu">c</span>(params<span class="sc">$</span>blue1, params<span class="sc">$</span>blue2, params<span class="sc">$</span>blue3)) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  boxplot <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(team <span class="sc">%in%</span> <span class="fu">c</span>(red_alliance, blue_alliance)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">team =</span> <span class="fu">factor</span>(team, <span class="fu">c</span>(red_alliance,blue_alliance) ))<span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">total_coral_score =</span> coral_L1_num<span class="sc">*</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                              coral_L2_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                              coral_L3_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                              coral_L4_num<span class="sc">*</span><span class="dv">5</span> <span class="sc">+</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L1_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L2_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L3_num<span class="sc">*</span><span class="dv">5</span> <span class="sc">+</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L4_num<span class="sc">*</span><span class="dv">7</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">total_algae_score =</span> robot_net_score<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> proc_score<span class="sc">*</span><span class="fl">2.5</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">total_endgame_score =</span> <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"D"</span>, <span class="dv">12</span>, </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">ifelse</span>(ending<span class="sc">==</span><span class="st">"S"</span>, <span class="dv">6</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                                                   <span class="fu">ifelse</span>(ending<span class="sc">==</span><span class="st">"P"</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                                       ),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  boxplot<span class="sc">$</span>total <span class="ot">=</span> boxplot<span class="sc">$</span>total_algae_score <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                  boxplot<span class="sc">$</span>total_coral_score <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                  boxplot<span class="sc">$</span>total_endgame_score</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(boxplot,<span class="fu">aes</span>(<span class="at">x =</span> total, <span class="at">y =</span> <span class="fu">as.character</span>(team)))<span class="sc">+</span>    </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">position =</span> <span class="st">"dodge2"</span>, <span class="at">fill =</span> <span class="st">"azure2"</span>, ) <span class="sc">+</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>) <span class="sc">+</span> </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.y =</span> mean, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">"orange"</span>,) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total points scored"</span>,<span class="at">x =</span> <span class="st">"Point"</span>, <span class="at">y =</span> <span class="st">"Team"</span>) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>(<span class="fu">boxplot_graph</span>(raw,red_alliance,blue_alliance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
+ℹ Please use the `fun` argument instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prematch_summary_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>BUBBLE GRAPH OF EVERYTHING</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bubble_graph <span class="ot">&lt;-</span> <span class="cf">function</span>(raw, <span class="at">team_red_alliance =</span> <span class="fu">c</span>(params<span class="sc">$</span>red1, params<span class="sc">$</span>red2, params<span class="sc">$</span>red3), <span class="at">team_blue_alliance=</span> <span class="fu">c</span>(params<span class="sc">$</span>blue1, params<span class="sc">$</span>blue2, params<span class="sc">$</span>blue3)) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  bubble <span class="ot">&lt;-</span> raw<span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(team)<span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">match =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">total_coral_score =</span> <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L2_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L3_num<span class="sc">*</span><span class="dv">6</span> <span class="sc">+</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                              auto_coral_L4_num<span class="sc">*</span><span class="dv">7</span> <span class="sc">+</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                              coral_L1_num<span class="sc">*</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                              coral_L2_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                              coral_L3_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                              coral_L4_num<span class="sc">*</span><span class="dv">5</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                              )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">total_algae_score =</span> <span class="fu">sum</span>(robot_net_score<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> proc_score<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>           </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">endgame_score =</span> <span class="fu">sum</span>(<span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"D"</span>, <span class="dv">12</span>, </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"S"</span>, <span class="dv">6</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"P"</span>, <span class="dv">2</span>, <span class="dv">0</span>)))</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                          )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">avg_score =</span> total_algae_score<span class="sc">+</span>total_coral_score<span class="sc">+</span>endgame_score</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(bubble, <span class="fu">aes</span>(<span class="at">x=</span>total_coral_score, <span class="at">y=</span>total_algae_score, <span class="at">size =</span> endgame_score)) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>( <span class="at">color =</span> <span class="st">"lightblue2"</span>)<span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="fu">aes</span>(<span class="at">label=</span>team, <span class="at">vjust =</span> <span class="fl">1.7</span> ))<span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Teams Performance Summary"</span>, </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Auto + Tele Coral Points"</span>, </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Total algae Points"</span>, </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill =</span> <span class="st">"Auto+End"</span>, </span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="st">"Endgame"</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(<span class="fu">bubble_graph</span>(raw,red_alliance,blue_alliance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-e11b87089389edeaa017" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e11b87089389edeaa017">{"x":{"data":[{"x":[110,116.5,113.5,91.75,115.75,126.25,111.25,126.25,121.5,93,124.5,112.25,119.25,126.75,123.75,119,128.5,109.5,112,124.75,115.5,120.5,126.5,139,128,128.25,137.25,88.75,93,85.5,112.25,122.5,128,107.5,124.25,98.25,110.75,128,138.25,116.5,109.25,125,95.75,87,111.25,118,118,136.25,120,124.75],"y":[39.5,36.5,22.5,47,51.5,25.5,53,59.5,43.5,38.5,48,57,58,64,57,49.5,54.5,60.5,61,34,42,41.5,47,22.5,75,63,51.5,47.5,52,40.5,48.5,50.5,45,29.5,55,39,44.5,46,63.5,37,39,37,40.5,24.5,48,49.5,38.5,58,34,49.5],"text":["total_coral_score: 110.00<br />total_algae_score: 39.5<br />endgame_score:  6.0","total_coral_score: 116.50<br />total_algae_score: 36.5<br />endgame_score:  3.5","total_coral_score: 113.50<br />total_algae_score: 22.5<br />endgame_score:  4.5","total_coral_score:  91.75<br />total_algae_score: 47.0<br />endgame_score:  7.5","total_coral_score: 115.75<br />total_algae_score: 51.5<br />endgame_score:  5.5","total_coral_score: 126.25<br />total_algae_score: 25.5<br />endgame_score:  9.0","total_coral_score: 111.25<br />total_algae_score: 53.0<br />endgame_score:  4.0","total_coral_score: 126.25<br />total_algae_score: 59.5<br />endgame_score:  3.5","total_coral_score: 121.50<br />total_algae_score: 43.5<br />endgame_score:  6.5","total_coral_score:  93.00<br />total_algae_score: 38.5<br />endgame_score:  3.0","total_coral_score: 124.50<br />total_algae_score: 48.0<br />endgame_score:  6.0","total_coral_score: 112.25<br />total_algae_score: 57.0<br />endgame_score:  5.5","total_coral_score: 119.25<br />total_algae_score: 58.0<br />endgame_score:  7.5","total_coral_score: 126.75<br />total_algae_score: 64.0<br />endgame_score:  5.0","total_coral_score: 123.75<br />total_algae_score: 57.0<br />endgame_score:  2.5","total_coral_score: 119.00<br />total_algae_score: 49.5<br />endgame_score:  1.5","total_coral_score: 128.50<br />total_algae_score: 54.5<br />endgame_score:  5.0","total_coral_score: 109.50<br />total_algae_score: 60.5<br />endgame_score:  4.0","total_coral_score: 112.00<br />total_algae_score: 61.0<br />endgame_score:  4.5","total_coral_score: 124.75<br />total_algae_score: 34.0<br />endgame_score:  6.5","total_coral_score: 115.50<br />total_algae_score: 42.0<br />endgame_score:  3.5","total_coral_score: 120.50<br />total_algae_score: 41.5<br />endgame_score: 10.5","total_coral_score: 126.50<br />total_algae_score: 47.0<br />endgame_score:  6.5","total_coral_score: 139.00<br />total_algae_score: 22.5<br />endgame_score:  6.0","total_coral_score: 128.00<br />total_algae_score: 75.0<br />endgame_score:  2.5","total_coral_score: 128.25<br />total_algae_score: 63.0<br />endgame_score:  5.0","total_coral_score: 137.25<br />total_algae_score: 51.5<br />endgame_score:  3.5","total_coral_score:  88.75<br />total_algae_score: 47.5<br />endgame_score:  5.0","total_coral_score:  93.00<br />total_algae_score: 52.0<br />endgame_score:  5.0","total_coral_score:  85.50<br />total_algae_score: 40.5<br />endgame_score:  4.5","total_coral_score: 112.25<br />total_algae_score: 48.5<br />endgame_score:  8.0","total_coral_score: 122.50<br />total_algae_score: 50.5<br />endgame_score: 10.5","total_coral_score: 128.00<br />total_algae_score: 45.0<br />endgame_score:  4.5","total_coral_score: 107.50<br />total_algae_score: 29.5<br />endgame_score:  7.5","total_coral_score: 124.25<br />total_algae_score: 55.0<br />endgame_score:  3.5","total_coral_score:  98.25<br />total_algae_score: 39.0<br />endgame_score:  4.0","total_coral_score: 110.75<br />total_algae_score: 44.5<br />endgame_score:  6.0","total_coral_score: 128.00<br />total_algae_score: 46.0<br />endgame_score:  5.0","total_coral_score: 138.25<br />total_algae_score: 63.5<br />endgame_score:  1.0","total_coral_score: 116.50<br />total_algae_score: 37.0<br />endgame_score:  2.0","total_coral_score: 109.25<br />total_algae_score: 39.0<br />endgame_score:  5.0","total_coral_score: 125.00<br />total_algae_score: 37.0<br />endgame_score:  7.0","total_coral_score:  95.75<br />total_algae_score: 40.5<br />endgame_score:  3.0","total_coral_score:  87.00<br />total_algae_score: 24.5<br />endgame_score:  3.0","total_coral_score: 111.25<br />total_algae_score: 48.0<br />endgame_score:  5.5","total_coral_score: 118.00<br />total_algae_score: 49.5<br />endgame_score:  2.0","total_coral_score: 118.00<br />total_algae_score: 38.5<br />endgame_score:  6.0","total_coral_score: 136.25<br />total_algae_score: 58.0<br />endgame_score:  0.5","total_coral_score: 120.00<br />total_algae_score: 34.0<br />endgame_score:  4.5","total_coral_score: 124.75<br />total_algae_score: 49.5<br />endgame_score:  7.5"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(178,223,238,1)","opacity":1,"size":[17.794390841755586,14.130190063089751,15.731443125045846,19.590425698281742,17.142175392501688,21.202288738191285,14.959520849952032,14.130190063089751,18.417574851807561,13.228346456692915,17.794390841755586,17.142175392501688,19.590425698281742,16.456448376376763,12.230808103936214,9.7554853420504823,16.456448376376763,14.959520849952032,15.731443125045846,18.417574851807561,14.130190063089751,22.677165354330711,18.417574851807561,17.794390841755586,12.230808103936214,16.456448376376763,14.130190063089751,16.456448376376763,16.456448376376763,15.731443125045846,20.145361961280731,22.677165354330711,15.731443125045846,19.590425698281742,14.130190063089751,14.959520849952032,17.794390841755586,16.456448376376763,8.0051678314956654,11.09855120543134,16.456448376376763,19.015290233005139,13.228346456692915,13.228346456692915,17.142175392501688,11.09855120543134,17.794390841755586,3.7795275590551185,15.731443125045846,19.590425698281742],"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(178,223,238,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[110,116.5,113.5,91.75,115.75,126.25,111.25,126.25,121.5,93,124.5,112.25,119.25,126.75,123.75,119,128.5,109.5,112,124.75,115.5,120.5,126.5,139,128,128.25,137.25,88.75,93,85.5,112.25,122.5,128,107.5,124.25,98.25,110.75,128,138.25,116.5,109.25,125,95.75,87,111.25,118,118,136.25,120,124.75],"y":[39.5,36.5,22.5,47,51.5,25.5,53,59.5,43.5,38.5,48,57,58,64,57,49.5,54.5,60.5,61,34,42,41.5,47,22.5,75,63,51.5,47.5,52,40.5,48.5,50.5,45,29.5,55,39,44.5,46,63.5,37,39,37,40.5,24.5,48,49.5,38.5,58,34,49.5],"text":[449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498],"hovertext":["total_coral_score: 110.00<br />total_algae_score: 39.5<br />endgame_score:  6.0<br />team: 449<br />vjust: 1.7","total_coral_score: 116.50<br />total_algae_score: 36.5<br />endgame_score:  3.5<br />team: 450<br />vjust: 1.7","total_coral_score: 113.50<br />total_algae_score: 22.5<br />endgame_score:  4.5<br />team: 451<br />vjust: 1.7","total_coral_score:  91.75<br />total_algae_score: 47.0<br />endgame_score:  7.5<br />team: 452<br />vjust: 1.7","total_coral_score: 115.75<br />total_algae_score: 51.5<br />endgame_score:  5.5<br />team: 453<br />vjust: 1.7","total_coral_score: 126.25<br />total_algae_score: 25.5<br />endgame_score:  9.0<br />team: 454<br />vjust: 1.7","total_coral_score: 111.25<br />total_algae_score: 53.0<br />endgame_score:  4.0<br />team: 455<br />vjust: 1.7","total_coral_score: 126.25<br />total_algae_score: 59.5<br />endgame_score:  3.5<br />team: 456<br />vjust: 1.7","total_coral_score: 121.50<br />total_algae_score: 43.5<br />endgame_score:  6.5<br />team: 457<br />vjust: 1.7","total_coral_score:  93.00<br />total_algae_score: 38.5<br />endgame_score:  3.0<br />team: 458<br />vjust: 1.7","total_coral_score: 124.50<br />total_algae_score: 48.0<br />endgame_score:  6.0<br />team: 459<br />vjust: 1.7","total_coral_score: 112.25<br />total_algae_score: 57.0<br />endgame_score:  5.5<br />team: 460<br />vjust: 1.7","total_coral_score: 119.25<br />total_algae_score: 58.0<br />endgame_score:  7.5<br />team: 461<br />vjust: 1.7","total_coral_score: 126.75<br />total_algae_score: 64.0<br />endgame_score:  5.0<br />team: 462<br />vjust: 1.7","total_coral_score: 123.75<br />total_algae_score: 57.0<br />endgame_score:  2.5<br />team: 463<br />vjust: 1.7","total_coral_score: 119.00<br />total_algae_score: 49.5<br />endgame_score:  1.5<br />team: 464<br />vjust: 1.7","total_coral_score: 128.50<br />total_algae_score: 54.5<br />endgame_score:  5.0<br />team: 465<br />vjust: 1.7","total_coral_score: 109.50<br />total_algae_score: 60.5<br />endgame_score:  4.0<br />team: 466<br />vjust: 1.7","total_coral_score: 112.00<br />total_algae_score: 61.0<br />endgame_score:  4.5<br />team: 467<br />vjust: 1.7","total_coral_score: 124.75<br />total_algae_score: 34.0<br />endgame_score:  6.5<br />team: 468<br />vjust: 1.7","total_coral_score: 115.50<br />total_algae_score: 42.0<br />endgame_score:  3.5<br />team: 469<br />vjust: 1.7","total_coral_score: 120.50<br />total_algae_score: 41.5<br />endgame_score: 10.5<br />team: 470<br />vjust: 1.7","total_coral_score: 126.50<br />total_algae_score: 47.0<br />endgame_score:  6.5<br />team: 471<br />vjust: 1.7","total_coral_score: 139.00<br />total_algae_score: 22.5<br />endgame_score:  6.0<br />team: 472<br />vjust: 1.7","total_coral_score: 128.00<br />total_algae_score: 75.0<br />endgame_score:  2.5<br />team: 473<br />vjust: 1.7","total_coral_score: 128.25<br />total_algae_score: 63.0<br />endgame_score:  5.0<br />team: 474<br />vjust: 1.7","total_coral_score: 137.25<br />total_algae_score: 51.5<br />endgame_score:  3.5<br />team: 475<br />vjust: 1.7","total_coral_score:  88.75<br />total_algae_score: 47.5<br />endgame_score:  5.0<br />team: 476<br />vjust: 1.7","total_coral_score:  93.00<br />total_algae_score: 52.0<br />endgame_score:  5.0<br />team: 477<br />vjust: 1.7","total_coral_score:  85.50<br />total_algae_score: 40.5<br />endgame_score:  4.5<br />team: 478<br />vjust: 1.7","total_coral_score: 112.25<br />total_algae_score: 48.5<br />endgame_score:  8.0<br />team: 479<br />vjust: 1.7","total_coral_score: 122.50<br />total_algae_score: 50.5<br />endgame_score: 10.5<br />team: 480<br />vjust: 1.7","total_coral_score: 128.00<br />total_algae_score: 45.0<br />endgame_score:  4.5<br />team: 481<br />vjust: 1.7","total_coral_score: 107.50<br />total_algae_score: 29.5<br />endgame_score:  7.5<br />team: 482<br />vjust: 1.7","total_coral_score: 124.25<br />total_algae_score: 55.0<br />endgame_score:  3.5<br />team: 483<br />vjust: 1.7","total_coral_score:  98.25<br />total_algae_score: 39.0<br />endgame_score:  4.0<br />team: 484<br />vjust: 1.7","total_coral_score: 110.75<br />total_algae_score: 44.5<br />endgame_score:  6.0<br />team: 485<br />vjust: 1.7","total_coral_score: 128.00<br />total_algae_score: 46.0<br />endgame_score:  5.0<br />team: 486<br />vjust: 1.7","total_coral_score: 138.25<br />total_algae_score: 63.5<br />endgame_score:  1.0<br />team: 487<br />vjust: 1.7","total_coral_score: 116.50<br />total_algae_score: 37.0<br />endgame_score:  2.0<br />team: 488<br />vjust: 1.7","total_coral_score: 109.25<br />total_algae_score: 39.0<br />endgame_score:  5.0<br />team: 489<br />vjust: 1.7","total_coral_score: 125.00<br />total_algae_score: 37.0<br />endgame_score:  7.0<br />team: 490<br />vjust: 1.7","total_coral_score:  95.75<br />total_algae_score: 40.5<br />endgame_score:  3.0<br />team: 491<br />vjust: 1.7","total_coral_score:  87.00<br />total_algae_score: 24.5<br />endgame_score:  3.0<br />team: 492<br />vjust: 1.7","total_coral_score: 111.25<br />total_algae_score: 48.0<br />endgame_score:  5.5<br />team: 493<br />vjust: 1.7","total_coral_score: 118.00<br />total_algae_score: 49.5<br />endgame_score:  2.0<br />team: 494<br />vjust: 1.7","total_coral_score: 118.00<br />total_algae_score: 38.5<br />endgame_score:  6.0<br />team: 495<br />vjust: 1.7","total_coral_score: 136.25<br />total_algae_score: 58.0<br />endgame_score:  0.5<br />team: 496<br />vjust: 1.7","total_coral_score: 120.00<br />total_algae_score: 34.0<br />endgame_score:  4.5<br />team: 497<br />vjust: 1.7","total_coral_score: 124.75<br />total_algae_score: 49.5<br />endgame_score:  7.5<br />team: 498<br />vjust: 1.7"],"textfont":{"size":[17.794390841755586,14.130190063089751,15.731443125045846,19.590425698281742,17.142175392501688,21.202288738191285,14.959520849952032,14.130190063089751,18.417574851807561,13.228346456692915,17.794390841755586,17.142175392501688,19.590425698281742,16.456448376376763,12.230808103936214,9.7554853420504823,16.456448376376763,14.959520849952032,15.731443125045846,18.417574851807561,14.130190063089751,22.677165354330711,18.417574851807561,17.794390841755586,12.230808103936214,16.456448376376763,14.130190063089751,16.456448376376763,16.456448376376763,15.731443125045846,20.145361961280731,22.677165354330711,15.731443125045846,19.590425698281742,14.130190063089751,14.959520849952032,17.794390841755586,16.456448376376763,8.0051678314956654,11.09855120543134,16.456448376376763,19.015290233005139,13.228346456692915,13.228346456692915,17.142175392501688,11.09855120543134,17.794390841755586,3.7795275590551185,15.731443125045846,19.590425698281742],"color":"rgba(0,0,0,1)"},"type":"scatter","mode":"text","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826498,"l":37.260273972602747},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Teams Performance Summary","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[82.825000000000003,141.67500000000001],"tickmode":"array","ticktext":["100","120","140"],"tickvals":[100,120,140],"categoryorder":"array","categoryarray":["100","120","140"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Auto + Tele Coral Points","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[19.875,77.625],"tickmode":"array","ticktext":["20","30","40","50","60","70"],"tickvals":[20,30,40,50,60,70],"categoryorder":"array","categoryarray":["20","30","40","50","60","70"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Total algae Points","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Endgame","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"15ab95716a7ef":{"x":{},"y":{},"size":{},"type":"scatter"},"15ab9106b6894":{"x":{},"y":{},"size":{},"label":{},"vjust":{}}},"cur_data":"15ab95716a7ef","visdat":{"15ab95716a7ef":["function (y) ","x"],"15ab9106b6894":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>CORAL LEVEL SCORING</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bar_graph <span class="ot">&lt;-</span> <span class="cf">function</span>(raw,<span class="at">team_red_alliance =</span> <span class="fu">c</span>(params<span class="sc">$</span>red1, params<span class="sc">$</span>red2, params<span class="sc">$</span>red3), <span class="at">team_blue_alliance=</span> <span class="fu">c</span>(params<span class="sc">$</span>blue1, params<span class="sc">$</span>blue2, params<span class="sc">$</span>blue3)) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  bar <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(team <span class="sc">%in%</span> <span class="fu">c</span>(red_alliance, blue_alliance)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">team =</span> <span class="fu">factor</span>(team, <span class="fu">c</span>(red_alliance,blue_alliance) )) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(team) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarize</span>(<span class="at">l1 =</span> <span class="fu">mean</span>(coral_L1_num),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">l2 =</span> <span class="fu">mean</span>(coral_L2_num),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">l3 =</span> <span class="fu">mean</span>(coral_L3_num),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">l4 =</span> <span class="fu">mean</span>(coral_L4_num)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(l4, l3, l2,l1), </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"level"</span>, </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"coral_num"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  bar<span class="sc">$</span>level_score <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    bar<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l1"</span> <span class="sc">~</span> bar<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">2</span>, </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    bar<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l2"</span> <span class="sc">~</span> bar<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">3</span>, </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    bar<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l3"</span> <span class="sc">~</span> bar<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">4</span>, </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    bar<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l4"</span> <span class="sc">~</span> bar<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">5</span>, </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(bar, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">team</span><span class="st">`</span>, <span class="at">y =</span> level_score, <span class="at">fill =</span> level)) <span class="sc">+</span> </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Level Summary"</span>, </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Team"</span>, <span class="at">y =</span> <span class="st">"Coral score"</span>, <span class="at">fill =</span> <span class="st">"Level"</span>) <span class="sc">+</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"lightskyblue"</span>,<span class="st">"royalblue1"</span>,<span class="st">"royalblue3"</span>,<span class="st">"navy"</span>))<span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(<span class="fu">bar_graph</span>(raw,red_alliance,blue_alliance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-643a1a5f96e328eefb70" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-643a1a5f96e328eefb70">{"x":{"data":[{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[60,64.5,77.5,72.25,77.75,75.5],"x":[1,2,3,4,5,6],"y":[26.5,24,29.5,34,27,21],"text":["team: 449<br />level_score: 26.50<br />level: l1","team: 451<br />level_score: 24.00<br />level: l1","team: 456<br />level_score: 29.50<br />level: l1","team: 487<br />level_score: 34.00<br />level: l1","team: 483<br />level_score: 27.00<br />level: l1","team: 453<br />level_score: 21.00<br />level: l1"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(135,206,250,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l1","legendgroup":"l1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[49.5,42,67.75,53.5,55.25,56],"x":[1,2,3,4,5,6],"y":[10.5,22.5,9.75,18.75,22.5,19.5],"text":["team: 449<br />level_score: 10.50<br />level: l2","team: 451<br />level_score: 22.50<br />level: l2","team: 456<br />level_score:  9.75<br />level: l2","team: 487<br />level_score: 18.75<br />level: l2","team: 483<br />level_score: 22.50<br />level: l2","team: 453<br />level_score: 19.50<br />level: l2"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(72,118,255,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l2","legendgroup":"l2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[32.5,35,38.75,27.5,36.25,35],"x":[1,2,3,4,5,6],"y":[17,7,29,26,19,21],"text":["team: 449<br />level_score: 17.00<br />level: l3","team: 451<br />level_score:  7.00<br />level: l3","team: 456<br />level_score: 29.00<br />level: l3","team: 487<br />level_score: 26.00<br />level: l3","team: 483<br />level_score: 19.00<br />level: l3","team: 453<br />level_score: 21.00<br />level: l3"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(58,95,205,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l3","legendgroup":"l3","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[0,0,0,0,0,0],"x":[1,2,3,4,5,6],"y":[32.5,35,38.75,27.5,36.25,35],"text":["team: 449<br />level_score: 32.50<br />level: l4","team: 451<br />level_score: 35.00<br />level: l4","team: 456<br />level_score: 38.75<br />level: l4","team: 487<br />level_score: 27.50<br />level: l4","team: 483<br />level_score: 36.25<br />level: l4","team: 453<br />level_score: 35.00<br />level: l4"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,0,128,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l4","legendgroup":"l4","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826498,"l":37.260273972602747},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Level Summary","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,6.5999999999999996],"tickmode":"array","ticktext":["449","451","456","487","483","453"],"tickvals":[1,2,3,3.9999999999999996,5,6],"categoryorder":"array","categoryarray":["449","451","456","487","483","453"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Team","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-5.3500000000000005,112.34999999999999],"tickmode":"array","ticktext":["0","30","60","90"],"tickvals":[0,30,59.999999999999993,90],"categoryorder":"array","categoryarray":["0","30","60","90"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Coral score","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Level","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"15ab97b60575e":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"15ab97b60575e","visdat":{"15ab97b60575e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>CORAL SCORED DURING AUTO AND TELEOP</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tele_auto_graph <span class="ot">&lt;-</span> <span class="cf">function</span>(raw, <span class="at">team_red_alliance =</span> <span class="fu">c</span>(params<span class="sc">$</span>red1, params<span class="sc">$</span>red2, params<span class="sc">$</span>red3), <span class="at">team_blue_alliance=</span> <span class="fu">c</span>(params<span class="sc">$</span>blue1, params<span class="sc">$</span>blue2, params<span class="sc">$</span>blue3)) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a> auto_tele <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(team <span class="sc">%in%</span> <span class="fu">c</span>(red_alliance, blue_alliance)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">team =</span> <span class="fu">factor</span>(team, <span class="fu">c</span>(red_alliance,blue_alliance) )) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(team) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">matches =</span> <span class="fu">n</span>(),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">l1 =</span> <span class="fu">mean</span>(coral_L1_num),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">l2 =</span> <span class="fu">mean</span>(coral_L2_num),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">l3 =</span> <span class="fu">mean</span>(coral_L3_num),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">l4 =</span> <span class="fu">mean</span>(coral_L4_num),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">autol1 =</span> <span class="fu">mean</span>(auto_coral_L1_num),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">autol2 =</span> <span class="fu">mean</span>(auto_coral_L2_num),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">autol3 =</span> <span class="fu">mean</span>(auto_coral_L3_num),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">autol4 =</span> <span class="fu">mean</span>(auto_coral_L4_num)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>       <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(l4, l3, l2,l1,autol1,autol2,autol3,autol4), </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">"level"</span>, </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">"coral_num"</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>auto_tele<span class="sc">$</span>level_score <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l1"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">2</span>, </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l2"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">3</span>, </span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l3"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">4</span>, </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"l4"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">5</span>,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"autol1"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">3</span>,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"autol2"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">4</span>,</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"autol3"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">6</span>,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  auto_tele<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"autol4"</span> <span class="sc">~</span> auto_tele<span class="sc">$</span>coral_num<span class="sc">*</span><span class="dv">7</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(auto_tele, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">team</span><span class="st">`</span>, <span class="at">y =</span> (level_score), <span class="at">fill =</span> level)) <span class="sc">+</span> </span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Level Summary"</span>, </span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Team"</span>, <span class="at">y =</span> <span class="st">"Coral score"</span>, <span class="at">fill =</span> <span class="st">"Level"</span>) <span class="sc">+</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>       <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"plum1"</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"plum2"</span>,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"plum3"</span>,</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"plum4"</span>,</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"steelblue2"</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"steelblue3"</span>,</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"steelblue"</span>,</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"steelblue4"</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                         )<span class="sc">+</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_bw</span>() </span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(<span class="fu">tele_auto_graph</span>(raw,red_alliance,blue_alliance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-7205bd8143b2dd04d9b9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-7205bd8143b2dd04d9b9">{"x":{"data":[{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[107,109.75,125.5,136,120.5,114.25],"x":[1,2,3,4,5,6],"y":[3,3.75,0.75,2.25,3.75,1.5],"text":["team: 449<br />(level_score):  3.00<br />level: autol1","team: 451<br />(level_score):  3.75<br />level: autol1","team: 456<br />(level_score):  0.75<br />level: autol1","team: 487<br />(level_score):  2.25<br />level: autol1","team: 483<br />(level_score):  3.75<br />level: autol1","team: 453<br />(level_score):  1.50<br />level: autol1"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,187,255,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"autol1","legendgroup":"autol1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[103,103.75,121.5,129,117.5,109.25],"x":[1,2,3,4,5,6],"y":[4,6,4,7,3,5],"text":["team: 449<br />(level_score):  4.00<br />level: autol2","team: 451<br />(level_score):  6.00<br />level: autol2","team: 456<br />(level_score):  4.00<br />level: autol2","team: 487<br />(level_score):  7.00<br />level: autol2","team: 483<br />(level_score):  3.00<br />level: autol2","team: 453<br />(level_score):  5.00<br />level: autol2"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(238,174,238,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"autol2","legendgroup":"autol2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[97,100.75,114,118.5,110,101.75],"x":[1,2,3,4,5,6],"y":[6,3,7.5,10.5,7.5,7.5],"text":["team: 449<br />(level_score):  6.00<br />level: autol3","team: 451<br />(level_score):  3.00<br />level: autol3","team: 456<br />(level_score):  7.50<br />level: autol3","team: 487<br />(level_score): 10.50<br />level: autol3","team: 483<br />(level_score):  7.50<br />level: autol3","team: 453<br />(level_score):  7.50<br />level: autol3"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(205,150,205,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"autol3","legendgroup":"autol3","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[86.5,88.5,107,106.25,104.75,96.5],"x":[1,2,3,4,5,6],"y":[10.5,12.25,7,12.25,5.25,5.25],"text":["team: 449<br />(level_score): 10.50<br />level: autol4","team: 451<br />(level_score): 12.25<br />level: autol4","team: 456<br />(level_score):  7.00<br />level: autol4","team: 487<br />(level_score): 12.25<br />level: autol4","team: 483<br />(level_score):  5.25<br />level: autol4","team: 453<br />(level_score):  5.25<br />level: autol4"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(139,102,139,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"autol4","legendgroup":"autol4","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[60,64.5,77.5,72.25,77.75,75.5],"x":[1,2,3,4,5,6],"y":[26.5,24,29.5,34,27,21],"text":["team: 449<br />(level_score): 26.50<br />level: l1","team: 451<br />(level_score): 24.00<br />level: l1","team: 456<br />(level_score): 29.50<br />level: l1","team: 487<br />(level_score): 34.00<br />level: l1","team: 483<br />(level_score): 27.00<br />level: l1","team: 453<br />(level_score): 21.00<br />level: l1"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(92,172,238,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l1","legendgroup":"l1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[49.5,42,67.75,53.5,55.25,56],"x":[1,2,3,4,5,6],"y":[10.5,22.5,9.75,18.75,22.5,19.5],"text":["team: 449<br />(level_score): 10.50<br />level: l2","team: 451<br />(level_score): 22.50<br />level: l2","team: 456<br />(level_score):  9.75<br />level: l2","team: 487<br />(level_score): 18.75<br />level: l2","team: 483<br />(level_score): 22.50<br />level: l2","team: 453<br />(level_score): 19.50<br />level: l2"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(79,148,205,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l2","legendgroup":"l2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[32.5,35,38.75,27.5,36.25,35],"x":[1,2,3,4,5,6],"y":[17,7,29,26,19,21],"text":["team: 449<br />(level_score): 17.00<br />level: l3","team: 451<br />(level_score):  7.00<br />level: l3","team: 456<br />(level_score): 29.00<br />level: l3","team: 487<br />(level_score): 26.00<br />level: l3","team: 483<br />(level_score): 19.00<br />level: l3","team: 453<br />(level_score): 21.00<br />level: l3"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,130,180,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l3","legendgroup":"l3","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[0,0,0,0,0,0],"x":[1,2,3,4,5,6],"y":[32.5,35,38.75,27.5,36.25,35],"text":["team: 449<br />(level_score): 32.50<br />level: l4","team: 451<br />(level_score): 35.00<br />level: l4","team: 456<br />(level_score): 38.75<br />level: l4","team: 487<br />(level_score): 27.50<br />level: l4","team: 483<br />(level_score): 36.25<br />level: l4","team: 453<br />(level_score): 35.00<br />level: l4"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(54,100,139,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"l4","legendgroup":"l4","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826498,"l":43.105022831050235},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Level Summary","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,6.5999999999999996],"tickmode":"array","ticktext":["449","451","456","487","483","453"],"tickvals":[1,2,3,3.9999999999999996,5,6],"categoryorder":"array","categoryarray":["449","451","456","487","483","453"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Team","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-6.9125000000000005,145.16249999999999],"tickmode":"array","ticktext":["0","50","100"],"tickvals":[0,50,100],"categoryorder":"array","categoryarray":["0","50","100"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Coral score","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"Level","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"15ab97819a9e8":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"15ab97819a9e8","visdat":{"15ab97819a9e8":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>ENDGAME SCORING</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>endgame_graph <span class="ot">&lt;-</span> <span class="cf">function</span>(raw, <span class="at">team_red_alliance =</span> <span class="fu">c</span>(params<span class="sc">$</span>red1, params<span class="sc">$</span>red2, params<span class="sc">$</span>red3), <span class="at">team_blue_alliance=</span> <span class="fu">c</span>(params<span class="sc">$</span>blue1, params<span class="sc">$</span>blue2, params<span class="sc">$</span>blue3)) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  end <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(team <span class="sc">%in%</span> <span class="fu">c</span>(red_alliance, blue_alliance)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">team =</span> <span class="fu">factor</span>(team, <span class="fu">c</span>(red_alliance,blue_alliance) )) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(team, ending) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  end<span class="sc">$</span>points <span class="ot">&lt;-</span> <span class="fu">recode</span>(end<span class="sc">$</span>ending,  <span class="st">"P"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"S"</span> <span class="ot">=</span> <span class="dv">6</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="dv">12</span>, <span class="st">"No"</span> <span class="ot">=</span> <span class="dv">0</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#compute the total end game score from all matches</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  end<span class="sc">$</span>total_points <span class="ot">&lt;-</span> end<span class="sc">$</span>count <span class="sc">*</span> end<span class="sc">$</span>points</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  end<span class="sc">$</span>ending <span class="ot">&lt;-</span> <span class="fu">factor</span>(end<span class="sc">$</span>ending, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"D"</span>, <span class="st">"S"</span>,<span class="st">"P"</span>,<span class="st">"No"</span>))</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(end, <span class="fu">aes</span>(<span class="at">x =</span>team, <span class="at">y =</span> total_points, <span class="at">fill =</span> ending)) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">position=</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Endgame Score"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Team"</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Points"</span>) <span class="sc">+</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"D"</span> <span class="ot">=</span> <span class="st">"springgreen4"</span>, <span class="st">"S"</span> <span class="ot">=</span> <span class="st">"olivedrab3"</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="st">"#FFF68F"</span>),</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"D"</span> <span class="ot">=</span> <span class="st">"Deep"</span>, <span class="st">"S"</span> <span class="ot">=</span> <span class="st">"Shallow"</span>, <span class="st">"P"</span> <span class="ot">=</span> <span class="st">"Park"</span>, <span class="st">"ending"</span> <span class="ot">=</span> <span class="st">"Cage"</span>))</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(<span class="fu">endgame_graph</span>(raw,red_alliance,blue_alliance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'team'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-0eeb2c9d16fd64eb67d5" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-0eeb2c9d16fd64eb67d5">{"x":{"data":[{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[12,6,2,2,10],"x":[1,2,3,5,6],"y":[12,12,12,12,12],"text":["team: 449<br />total_points: 12<br />ending: D","team: 451<br />total_points: 12<br />ending: D","team: 456<br />total_points: 12<br />ending: D","team: 483<br />total_points: 12<br />ending: D","team: 453<br />total_points: 12<br />ending: D"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"D","legendgroup":"D","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036],"base":[0,0,4],"x":[1,2,6],"y":[12,6,6],"text":["team: 449<br />total_points: 12<br />ending: S","team: 451<br />total_points:  6<br />ending: S","team: 453<br />total_points:  6<br />ending: S"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(154,205,50,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"S","legendgroup":"S","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.90000000000000036,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[0,0,0,0],"x":[3,4,5,6],"y":[2,4,2,4],"text":["team: 456<br />total_points:  2<br />ending: P","team: 487<br />total_points:  4<br />ending: P","team: 483<br />total_points:  2<br />ending: P","team: 453<br />total_points:  4<br />ending: P"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,246,143,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"P","legendgroup":"P","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999991,0.90000000000000013,0.90000000000000036,0.90000000000000036,0.90000000000000036],"base":[0,0,0,0,0],"x":[1,2,3,4,5],"y":[0,0,0,0,0],"text":["team: 449<br />total_points:  0<br />ending: No","team: 451<br />total_points:  0<br />ending: No","team: 456<br />total_points:  0<br />ending: No","team: 487<br />total_points:  0<br />ending: No","team: 483<br />total_points:  0<br />ending: No"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(127,127,127,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"No","legendgroup":"No","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.762557077625573,"r":7.3059360730593621,"b":40.182648401826498,"l":37.260273972602747},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Endgame Score","font":{"color":"rgba(0,0,0,1)","family":"","size":17.534246575342465},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,6.5999999999999996],"tickmode":"array","ticktext":["449","451","456","487","483","453"],"tickvals":[1,2,3,3.9999999999999996,5,6],"categoryorder":"array","categoryarray":["449","451","456","487","483","453"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Team","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1.2000000000000002,25.199999999999999],"tickmode":"array","ticktext":["0","5","10","15","20","25"],"tickvals":[0,5,10,15,20,25],"categoryorder":"array","categoryarray":["0","5","10","15","20","25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"Points","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"ending","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"15ab93ae16815":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"15ab93ae16815","visdat":{"15ab93ae16815":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>proc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"procReturns.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 18 Columns: 1
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (1): Value
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"netReturns.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 18 Columns: 1
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (1): Value
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>both <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Processor =</span> proc[[<span class="dv">1</span>]], <span class="at">Net =</span> net[[<span class="dv">1</span>]])</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>both<span class="sc">$</span>Index <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(both))  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(both, <span class="fu">aes</span>(<span class="at">x =</span> Processor, <span class="at">y =</span> Net, <span class="at">label =</span> Index)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> blair_red) <span class="sc">+</span>     </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> blair_red) <span class="sc">+</span>     </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="fl">1.2</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span>  </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span>  </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Processor Returns"</span>, <span class="at">y =</span> <span class="st">"Net Returns"</span>, <span class="at">title =</span> <span class="st">"Net Vs Processor (Points)"</span>) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prematch_summary_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Just testing stuff out</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>column <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(team)<span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">match =</span> <span class="fu">n</span>(),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_auto_score =</span> <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                           auto_coral_L2_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                           auto_coral_L3_num<span class="sc">*</span><span class="dv">6</span> <span class="sc">+</span> </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                           auto_coral_L4_num<span class="sc">*</span><span class="dv">7</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                           )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_algae_score =</span> <span class="fu">sum</span>(robot_net_score<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> proc_score<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">endgame_score =</span> <span class="fu">sum</span>(<span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"D"</span>, <span class="dv">12</span>, </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"S"</span>, <span class="dv">6</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"P"</span>, <span class="dv">2</span>, <span class="dv">0</span>)))</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>                        )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_score =</span> total_algae_score <span class="sc">+</span> total_auto_score <span class="sc">+</span> endgame_score</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(total_auto_score, total_algae_score, endgame_score), </span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"level"</span>, </span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"score"</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>column <span class="ot">&lt;-</span> column[<span class="fu">order</span>(column<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>column<span class="sc">$</span>level_score <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  column<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"total_auto_score"</span> <span class="sc">~</span> column<span class="sc">$</span>score,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>  column<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"total_algae_score"</span> <span class="sc">~</span> column<span class="sc">$</span>score, </span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>  column<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"endgame_score"</span> <span class="sc">~</span> column<span class="sc">$</span>score</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>column<span class="sc">$</span>team <span class="ot">&lt;-</span> <span class="fu">factor</span>(column<span class="sc">$</span>team[<span class="fu">order</span>(column<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>                      <span class="at">levels =</span> column<span class="sc">$</span>team[<span class="fu">order</span>(column<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> column<span class="sc">$</span>team[<span class="fu">order</span>(column<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)])</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(column, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">team</span><span class="st">`</span>, <span class="at">y =</span> level_score, <span class="at">fill =</span> level)) <span class="sc">+</span> </span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Level Summary"</span>, </span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Team"</span>, <span class="at">y =</span> <span class="st">"Total Score w/o Coral"</span>, <span class="at">fill =</span> <span class="st">"Level"</span>) <span class="sc">+</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#dfd6d5"</span>,<span class="st">"#9dbee7"</span>,<span class="st">"#d73213"</span>),</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"total_algae_score"</span> <span class="ot">=</span> <span class="st">"Algae Score"</span>, </span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"endgame_score"</span> <span class="ot">=</span> <span class="st">"Endgame"</span>, </span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"total_auto_score"</span> <span class="ot">=</span> <span class="st">"Auto Score"</span>)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>                    )<span class="sc">+</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prematch_summary_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>column2 <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(team)<span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">match =</span> <span class="fu">n</span>(),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_coral_auto_score =</span> <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                                 auto_coral_L2_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                 auto_coral_L3_num<span class="sc">*</span><span class="dv">6</span> <span class="sc">+</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                 auto_coral_L4_num<span class="sc">*</span><span class="dv">7</span> <span class="sc">+</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                 coral_L1_num<span class="sc">*</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                                 coral_L2_num<span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                                 coral_L3_num<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                                 coral_L4_num<span class="sc">*</span><span class="dv">5</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>                                 )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_algae_score =</span> <span class="fu">sum</span>(robot_net_score<span class="sc">*</span><span class="dv">4</span> <span class="sc">+</span> proc_score<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">endgame_score =</span> <span class="fu">sum</span>(<span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"D"</span>, <span class="dv">12</span>, </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"S"</span>, <span class="dv">6</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"P"</span>, <span class="dv">2</span>, <span class="dv">0</span>)))</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>                        )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_score =</span> total_algae_score <span class="sc">+</span> total_coral_auto_score <span class="sc">+</span> endgame_score</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(total_coral_auto_score, total_algae_score, endgame_score), </span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"level"</span>, </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"score"</span>)</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>column2 <span class="ot">&lt;-</span> column2[<span class="fu">order</span>(column2<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>column2<span class="sc">$</span>level_score <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  column2<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"total_coral_auto_score"</span> <span class="sc">~</span> column2<span class="sc">$</span>score,</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  column2<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"total_algae_score"</span> <span class="sc">~</span> column2<span class="sc">$</span>score, </span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  column2<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"endgame_score"</span> <span class="sc">~</span> column2<span class="sc">$</span>score</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>column2<span class="sc">$</span>team <span class="ot">&lt;-</span> <span class="fu">factor</span>(column2<span class="sc">$</span>team[<span class="fu">order</span>(column2<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> column2<span class="sc">$</span>team[<span class="fu">order</span>(column<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> column2<span class="sc">$</span>team[<span class="fu">order</span>(column<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)])</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(column2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">team</span><span class="st">`</span>, <span class="at">y =</span> level_score, <span class="at">fill =</span> level)) <span class="sc">+</span> </span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Level Summary"</span>, <span class="at">x =</span> <span class="st">"Team"</span>, <span class="at">y =</span> <span class="st">"Total Score"</span>, <span class="at">fill =</span> <span class="st">"Level"</span>) <span class="sc">+</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#FF746C"</span>,<span class="st">"#dfd6d5"</span>,<span class="st">"#9dbee7"</span>),</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"total_algae_score"</span> <span class="ot">=</span> <span class="st">"Algae Score"</span>, </span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"endgame_score"</span> <span class="ot">=</span> <span class="st">"Endgame"</span>, </span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"total_coral_auto_score"</span> <span class="ot">=</span> <span class="st">"Coral + Auto Score"</span>)</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">+</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prematch_summary_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>column3 <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(team)<span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">match =</span> <span class="fu">n</span>(),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">auto_coral =</span> <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">3</span>)<span class="sc">/</span><span class="fu">n</span>()<span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">sum</span>(auto_coral_L2_num<span class="sc">*</span><span class="dv">4</span>)<span class="sc">/</span><span class="fu">n</span>()<span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>()<span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">7</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">robot_net_score =</span> <span class="fu">sum</span>(robot_net_score<span class="sc">*</span><span class="dv">4</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">robot_proc_score =</span> <span class="fu">sum</span>(proc_score<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">endgame_score =</span> <span class="fu">sum</span>(</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"D"</span>, <span class="dv">12</span>, </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"S"</span>,<span class="dv">6</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"P"</span>, <span class="dv">2</span>, <span class="dv">0</span>))))</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>            <span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">avg_score =</span> auto_coral <span class="sc">+</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                  robot_net_score <span class="sc">+</span> robot_proc_score <span class="sc">+</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                  endgame_score,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(auto_coral,</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>                        robot_net_score, </span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                        robot_proc_score,</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                        endgame_score</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>                        ), </span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"level"</span>, </span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"score"</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>column3 <span class="ot">&lt;-</span> column3[<span class="fu">order</span>(column3<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>column3<span class="sc">$</span>level_score <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  column3<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"auto_coral"</span> <span class="sc">~</span> column3<span class="sc">$</span>score,</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>  column3<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"robot_proc_score"</span> <span class="sc">~</span> column3<span class="sc">$</span>score, </span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  column3<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"robot_net_score"</span> <span class="sc">~</span> column3<span class="sc">$</span>score, </span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>  column3<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"endgame_score"</span> <span class="sc">~</span> column3<span class="sc">$</span>score</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>column3<span class="sc">$</span>team <span class="ot">&lt;-</span> <span class="fu">factor</span>(column3<span class="sc">$</span>team[<span class="fu">order</span>(column3<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>       <span class="at">levels =</span> column3<span class="sc">$</span>team[<span class="fu">order</span>(column3<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> column3<span class="sc">$</span>team[<span class="fu">order</span>(column3<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)])</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(column3, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">team</span><span class="st">`</span>, <span class="at">y =</span> level_score, <span class="at">fill =</span> level)) <span class="sc">+</span> </span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Level Summary"</span>, </span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Team"</span>, <span class="at">y =</span> <span class="st">"Total Score w/o Coral"</span>, <span class="at">fill =</span> <span class="st">"Level"</span>) <span class="sc">+</span></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"plum2"</span>, <span class="st">"#EFF68F"</span>, <span class="st">"olivedrab3"</span>, <span class="st">"springgreen4"</span>),</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"auto_coral"</span> <span class="ot">=</span> <span class="st">"Auto Coral"</span>, </span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"endgame_score"</span> <span class="ot">=</span> <span class="st">"Endgame"</span>, </span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"robot_net_score"</span> <span class="ot">=</span> <span class="st">"Net"</span>, </span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"robot_proc_score"</span> <span class="ot">=</span> <span class="st">"Processor"</span>)</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>                    )<span class="sc">+</span></span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prematch_summary_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>column4 <span class="ot">&lt;-</span> raw <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(team)<span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">match =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">auto_coral_L1 =</span> <span class="fu">sum</span>(auto_coral_L1_num<span class="sc">*</span><span class="dv">3</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">auto_coral_L2 =</span> <span class="fu">sum</span>(auto_coral_L2_num<span class="sc">*</span><span class="dv">4</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">auto_coral_L3 =</span> <span class="fu">sum</span>(auto_coral_L3_num<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">auto_coral_L4 =</span> <span class="fu">sum</span>(auto_coral_L4_num<span class="sc">*</span><span class="dv">7</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">tele_coral_L1 =</span> <span class="fu">sum</span>(coral_L1_num<span class="sc">*</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">tele_coral_L2 =</span> <span class="fu">sum</span>(coral_L2_num<span class="sc">*</span><span class="dv">3</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">tele_coral_L3 =</span> <span class="fu">sum</span>(coral_L3_num<span class="sc">*</span><span class="dv">4</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">tele_coral_L4 =</span> <span class="fu">sum</span>(coral_L4_num<span class="sc">*</span><span class="dv">5</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">robot_net_score =</span> <span class="fu">sum</span>(robot_net_score<span class="sc">*</span><span class="dv">4</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">robot_proc_score =</span> <span class="fu">sum</span>(proc_score<span class="sc">*</span><span class="dv">6</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">endgame_score =</span> <span class="fu">sum</span>(<span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"D"</span>, <span class="dv">12</span>,</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"S"</span>, <span class="dv">6</span>,</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">ifelse</span>(ending <span class="sc">==</span><span class="st">"P"</span>, <span class="dv">1</span>, <span class="dv">0</span>)))</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                        )<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_score =</span> auto_coral_L1 <span class="sc">+</span> auto_coral_L2 <span class="sc">+</span> auto_coral_L3 <span class="sc">+</span> auto_coral_L4 <span class="sc">+</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>                tele_coral_L1 <span class="sc">+</span> tele_coral_L2 <span class="sc">+</span> tele_coral_L3 <span class="sc">+</span> tele_coral_L4 <span class="sc">+</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>                robot_net_score <span class="sc">+</span> robot_proc_score <span class="sc">+</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>                endgame_score</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4,</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>                        tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>                        robot_net_score, robot_proc_score,</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>                        endgame_score), </span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"level"</span>, </span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"score"</span>)</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>column4 <span class="ot">&lt;-</span> column4[<span class="fu">order</span>(column4<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>column4<span class="sc">$</span>level_score <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"auto_coral_L1"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"auto_coral_L2"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"auto_coral_L3"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"auto_coral_L4"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"tele_coral_L1"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"tele_coral_L2"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"tele_coral_L3"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"tele_coral_L4"</span> <span class="sc">~</span> column4<span class="sc">$</span>score,</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"robot_proc_score"</span> <span class="sc">~</span> column4<span class="sc">$</span>score, </span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"robot_net_score"</span> <span class="sc">~</span> column4<span class="sc">$</span>score, </span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>  column4<span class="sc">$</span>level <span class="sc">==</span> <span class="st">"endgame_score"</span> <span class="sc">~</span> column4<span class="sc">$</span>score</span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>column4<span class="sc">$</span>team <span class="ot">&lt;-</span> <span class="fu">factor</span>(column4<span class="sc">$</span>team[<span class="fu">order</span>(column4<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>       <span class="at">levels =</span> column4<span class="sc">$</span>team[<span class="fu">order</span>(column4<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)], </span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>       <span class="at">labels =</span> column4<span class="sc">$</span>team[<span class="fu">order</span>(column4<span class="sc">$</span>avg_score, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)])</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(column4, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">team</span><span class="st">`</span>, <span class="at">y =</span> level_score, <span class="at">fill =</span> level)) <span class="sc">+</span> </span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scoring Summary"</span>, </span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Team"</span>, <span class="at">y =</span> <span class="st">"Total Score with Coral"</span>, <span class="at">fill =</span> <span class="st">"Level"</span>) <span class="sc">+</span></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"plum1"</span>,</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"plum2"</span>,</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"plum3"</span>,</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"plum4"</span>, </span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"#FFF68F"</span>, </span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"olivedrab3"</span>,</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"springgreen4"</span>, </span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"steelblue2"</span>,</span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"steelblue3"</span>,</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"steelblue"</span>,</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"steelblue4"</span>),</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"auto_coral_L1"</span> <span class="ot">=</span> <span class="st">"Auto Coral L1"</span>, </span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"auto_coral_L2"</span> <span class="ot">=</span> <span class="st">"Auto Coral L2"</span>,</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"auto_coral_L3"</span> <span class="ot">=</span> <span class="st">"Auto Coral L3"</span>, </span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"auto_coral_L4"</span> <span class="ot">=</span> <span class="st">"Auto Coral L4"</span>, </span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"tele_coral_L1"</span> <span class="ot">=</span> <span class="st">"Tele Coral L1"</span>, </span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"tele_coral_L2"</span> <span class="ot">=</span> <span class="st">"Tele Coral L2"</span>, </span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"tele_coral_L3"</span> <span class="ot">=</span> <span class="st">"Tele Coral L3"</span>, </span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"tele_coral_L4"</span> <span class="ot">=</span> <span class="st">"Tele Coral L4"</span>, </span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"endgame_score"</span> <span class="ot">=</span> <span class="st">"Endgame"</span>, </span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"robot_net_score"</span> <span class="ot">=</span> <span class="st">"Net"</span>, </span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"robot_proc_score"</span> <span class="ot">=</span> <span class="st">"Processor"</span>)</span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>                    )<span class="sc">+</span></span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prematch_summary_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
