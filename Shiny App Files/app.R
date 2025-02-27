@@ -139,6 +139,7 @@ ui <- fluidPage(
              fluidRow(
                column(12,
                       plotOutput("picklist_graph"),
+                      plotOutput("long_column_output"),
                       DTOutput("picklist_table")
                )
              )
@@ -159,7 +160,7 @@ ui <- fluidPage(
                    pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3))
                  ),
                  #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
-                 actionButton("generate_graph", "Generate Graph", class = "btn btn-primary")
+                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary")
                ),
                mainPanel(
                  plotOutput("alliance_box_plot_output"),
@@ -218,13 +219,96 @@ server <- function(input, output, session) {
     
   }
   
+  long_column <- function(raw) {
+    column4 <- raw %>%
+      group_by(team) %>%
+      summarise(
+        match = n(),
+        auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+        auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+        auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+        auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+        tele_coral_L1 = sum(coral_L1_num*2)/n(),
+        tele_coral_L2 = sum(coral_L2_num*3)/n(),
+        tele_coral_L3 = sum(coral_L3_num*4)/n(),
+        tele_coral_L4 = sum(coral_L4_num*5)/n(),
+        robot_net_score = sum(robot_net_score*4)/n(),
+        robot_proc_score = sum(proc_score*6)/n(),
+        
+        endgame_score = sum(ifelse(ending =="D", 12,
+                                   ifelse(ending =="S", 6,
+                                          ifelse(ending =="P", 1, 0)))
+        )/n(),
+        
+        avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 +
+          tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
+          robot_net_score + robot_proc_score +
+          endgame_score
+      ) %>%
+      
+      pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4,
+                            tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+                            robot_net_score, robot_proc_score,
+                            endgame_score), 
+                   names_to = "level", 
+                   values_to = "score")
+    
+    # Sort data by avg_score first to get unique teams in order
+    unique_teams <- column4 %>%
+      select(team, avg_score) %>%
+      distinct() %>%
+      arrange(desc(avg_score))
+    
+    # Use the unique sorted teams to create a proper factor
+    column4$team <- factor(column4$team, 
+                           levels = unique_teams$team, 
+                           ordered = TRUE)
+    
+    column4$level_score <- column4$score  # Simplified since case_when wasn't changing values
+    
+    ggplot(column4, aes(x = team, y = level_score, fill = level)) + 
+      geom_bar(position = "stack", stat = "identity") + 
+      labs(title = "Scoring Summary", 
+           x = "Team", y = "Total Score with Coral", fill = "Level") +
+      scale_fill_manual(values = c("plum1",
+                                   "plum2",
+                                   "plum3",
+                                   "plum4", 
+                                   "#FFF68F", 
+                                   "olivedrab3",
+                                   "springgreen4", 
+                                   "steelblue2",
+                                   "steelblue3",
+                                   "steelblue",
+                                   "steelblue4"),
+                        labels = c("auto_coral_L1" = "Auto Coral L1", 
+                                   "auto_coral_L2" = "Auto Coral L2",
+                                   "auto_coral_L3" = "Auto Coral L3", 
+                                   "auto_coral_L4" = "Auto Coral L4", 
+                                   "tele_coral_L1" = "Tele Coral L1", 
+                                   "tele_coral_L2" = "Tele Coral L2", 
+                                   "tele_coral_L3" = "Tele Coral L3", 
+                                   "tele_coral_L4" = "Tele Coral L4", 
+                                   "endgame_score" = "Endgame", 
+                                   "robot_net_score" = "Net", 
+                                   "robot_proc_score" = "Processor")
+      )+
+      theme_bw()+
+      coord_flip()
+  }
+  
+  output$long_column_output <- renderPlot({
+    #Bubble graph logic
+    long_column(raw)
+  })
+  
   output$picklist_graph <- renderPlot({
     #Bubble graph logic
     bubble_graph(raw)
   })
   
   output$picklist_table <- renderDT({
-    datatable(consolidated_team_data, options = list(lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(consolidated_team_data)))
+    datatable(consolidated_team_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(consolidated_team_data)))
   })
   
   #observeEvent(input$graph_btn, {
