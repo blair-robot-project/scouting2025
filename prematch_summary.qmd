@@ -1,6 +1,9 @@
 ---
 title: "449 Scouting 2025"
-format: html
+format: 
+  html:
+    code-fold: true
+    code-summary: "Show code"
 editor: visual
 params:
     red1: 449
