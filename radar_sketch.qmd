@@ -12,6 +12,8 @@ format: html
 
 ```{r}
 # clear the environment
+rm(list = ls())
+
 
 library(tidyverse)
 
@@ -134,20 +136,24 @@ tldf <- mldf %>%
 library(ggradar)
 
 
-radar_plot <- function(tldf, n, color = blair_red){
-# browser()
+radar_plot <- tldf
    viz <- tldf %>%
-    filter(team == n) %>%
+    filter(team == 449) %>%
     select(auto_pts_mean, endgame_pts_mean, algae_pts_mean, algae_remove_pct, coral_pts_mean)
   
-
-  plt <- ggradar(viz)
+   standardize <- function(v){
+    return(v - mean(v)/ sd(v))
+  } 
+ 
+     
+   viz2 <- apply(viz, 2, standardize)
+   
+   
+    plt <- ggradar(viz2)
   
   
   print(plt)
-}
 
-radar_plot(tldf, 449)
 
 
 ```
