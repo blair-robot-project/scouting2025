@@ -8,9 +8,9 @@ library(tidyverse)
 library(shinythemes)
 
 data_dir <- "data files"
-data_file <- paste0(data_dir, "/match_data.csv")
-event_schedule_file <- paste0(data_dir, "/event_schedule.csv")
-teams_file <- paste0(data_dir, "/teams.csv")
+data_file <- paste0(data_dir, "/match_data_glen_allen.csv")
+event_schedule_file <- paste0(data_dir, "/event_schedule_glen_allen.csv")
+teams_file <- paste0(data_dir, "/teams_glen_allen.csv")
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
@@ -496,12 +496,12 @@ server <- function(input, output, session) {
         match_row$B3
       )
 
-#       print("Selected match number:")
-#       print(match_num)
-#       print("Red teams:")
-#       print(selected_red_teams)
-#       print("Blue teams:")
-#       print(selected_blue_teams)
+      print("Selected match number:")
+      print(match_num)
+      print("Red teams:")
+      print(selected_red_teams)
+      print("Blue teams:")
+      print(selected_blue_teams)
     } else {
       selected_red_teams <- input$red_teams
       selected_blue_teams <- input$blue_teams
