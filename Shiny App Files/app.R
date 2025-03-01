@@ -9,7 +9,7 @@ library(shinythemes)
 
 data_dir <- "data files"
 data_file <- paste0(data_dir, "/match_data_glen_allen.csv")
-event_schedule_file <- paste0(data_dir, "/event_schedule_glen_allen.csv")
+event_schedule_file <- paste0(data_dir, "/2025vagle_match_info.csv")
 teams_file <- paste0(data_dir, "/teams_glen_allen.csv")
 
 #Load team data and event schedule
