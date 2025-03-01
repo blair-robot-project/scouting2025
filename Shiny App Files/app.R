@@ -8,7 +8,7 @@ library(tidyverse)
 library(shinythemes)
 
 data_dir <- "data files"
-data_file <- paste0(data_dir, "/made_up_data.csv")
+data_file <- paste0(data_dir, "/match_data.csv")
 event_schedule_file <- paste0(data_dir, "/event_schedule.csv")
 
 #Load team data and event schedule
