@@ -8,12 +8,14 @@ library(tidyverse)
 library(shinythemes)
 
 data_dir <- "data files"
-data_file <- paste0(data_dir, "/made_up_data.csv")
-event_schedule_file <- paste0(data_dir, "/event_schedule.csv")
+data_file <- paste0(data_dir, "/match_data_glen_allen.csv")
+event_schedule_file <- paste0(data_dir, "/event_schedule_glen_allen.csv")
+teams_file <- paste0(data_dir, "/teams_glen_allen.csv")
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
 match_schedule <- read.csv(event_schedule_file, fill = TRUE)
+teams <- read.csv(teams_file)
 
 mldf <- raw %>%
   mutate(
@@ -156,8 +158,8 @@ ui <- fluidPage(
                  ),
                  conditionalPanel(
                    condition = "input.match_or_teams == 'Select 6 Teams'",
-                   pickerInput("red_teams", "Red Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3)),
-                   pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3))
+                   pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
+                   pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
                  ),
                  #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary")
@@ -175,7 +177,7 @@ ui <- fluidPage(
     tabPanel("Single Team",
              sidebarLayout(
                sidebarPanel(
-                 selectInput("team_select", "Select Team", choices = unique(raw$team)),
+                 selectInput("team_select", "Select Team", choices = unique(teams$team)),
                  selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  imageOutput("team_image_output")
               ),
@@ -494,12 +496,12 @@ server <- function(input, output, session) {
         match_row$B3
       )
 
-#       print("Selected match number:")
-#       print(match_num)
-#       print("Red teams:")
-#       print(selected_red_teams)
-#       print("Blue teams:")
-#       print(selected_blue_teams)
+      print("Selected match number:")
+      print(match_num)
+      print("Red teams:")
+      print(selected_red_teams)
+      print("Blue teams:")
+      print(selected_blue_teams)
     } else {
       selected_red_teams <- input$red_teams
       selected_blue_teams <- input$blue_teams
