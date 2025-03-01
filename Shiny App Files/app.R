@@ -106,8 +106,6 @@ consolidated_team_data <- mldf %>%
     algae_pts_sd = round(sd(net_pts + processor_value, na.rm = TRUE), digits =2),
     algae_pts_max = round(max(net_pts + processor_value, na.rm = TRUE), digits =2), 
     
-    
-    
     #endgame
     endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
     endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
