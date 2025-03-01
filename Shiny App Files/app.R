@@ -10,10 +10,12 @@ library(shinythemes)
 data_dir <- "data files"
 data_file <- paste0(data_dir, "/match_data.csv")
 event_schedule_file <- paste0(data_dir, "/event_schedule.csv")
+teams_file <- paste0(data_dir, "/teams.csv")
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
 match_schedule <- read.csv(event_schedule_file, fill = TRUE)
+teams <- read.csv(teams_file)
 
 mldf <- raw %>%
   mutate(
@@ -156,8 +158,8 @@ ui <- fluidPage(
                  ),
                  conditionalPanel(
                    condition = "input.match_or_teams == 'Select 6 Teams'",
-                   pickerInput("red_teams", "Red Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3)),
-                   pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(raw$team), multiple = TRUE, options = list(maxOptions = 3))
+                   pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
+                   pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
                  ),
                  #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary")
@@ -175,7 +177,7 @@ ui <- fluidPage(
     tabPanel("Single Team",
              sidebarLayout(
                sidebarPanel(
-                 selectInput("team_select", "Select Team", choices = unique(raw$team)),
+                 selectInput("team_select", "Select Team", choices = unique(teams$team)),
                  selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  imageOutput("team_image_output")
               ),
