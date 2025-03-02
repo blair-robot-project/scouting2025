@@ -352,7 +352,7 @@ server <- function(input, output, session) {
     boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score
     
     
-    ggplot(boxplot,aes(x = total, y = as.character(team)))+    
+    ggplot(boxplot,aes(x = total, y = team))+    
       geom_boxplot(position = "dodge2", fill = "azure2", ) +
       stat_boxplot(geom = "errorbar") + 
       stat_summary(fun = mean, geom="point", size=3, color="orange",)+
