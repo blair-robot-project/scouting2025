@@ -233,7 +233,7 @@ server <- function(input, output, session) {
         tele_coral_L3 = sum(coral_L3_num*4)/n(),
         tele_coral_L4 = sum(coral_L4_num*5)/n(),
         robot_net_score = sum(robot_net_score*4)/n(),
-        robot_proc_score = sum(proc_score*6)/n(),
+        robot_proc_score = sum(proc_score*2.5)/n(),
         
         endgame_score = sum(ifelse(ending =="D", 12,
                                    ifelse(ending =="S", 6,
