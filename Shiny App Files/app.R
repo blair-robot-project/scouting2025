@@ -23,8 +23,9 @@ mldf <- raw %>%
     auto_coral_l2_pts = auto_coral_L2_num * 4, 
     auto_coral_l3_pts = auto_coral_L3_num * 6, 
     auto_coral_l4_pts = auto_coral_L4_num * 7, 
+    move_pts = move * 3,
     net_pts = robot_net_score * 4, 
-    net_missed = robot_net_miss*4,
+    net_missed = robot_net_miss * 4,
     processor_value = proc_score * 2.5, 
     coral_l1_pts = coral_L1_num * 2, 
     coral_l2_pts = coral_L2_num * 3, 
@@ -37,13 +38,13 @@ mldf <- raw %>%
       .default = 0
     ),
     
-    total_pts = (3 * move) + auto_coral_l1_pts + auto_coral_l2_pts + 
+    total_pts = move_pts + auto_coral_l1_pts + auto_coral_l2_pts + 
       auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
       coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts,
     
     #auto
     total_auto_pts = auto_coral_l1_pts + auto_coral_l2_pts + 
-      auto_coral_l3_pts + auto_coral_l4_pts +(3 * move),
+      auto_coral_l3_pts + auto_coral_l4_pts + move_pts,
     
     
     #tele
@@ -98,6 +99,7 @@ consolidated_team_data <- mldf %>%
     auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
     auto_pts_sd = round(sd(total_auto_pts, na.rm = TRUE), digits = 2),
     auto_pts_max = round(max(total_auto_pts, na.rm = TRUE),digits =2),  
+    auto_move = round(mean(move_pts, na.rm = TRUE), digits = 2),
     
     
     #algae
@@ -115,7 +117,7 @@ consolidated_team_data <- mldf %>%
     
     #you would put many more calculations here!
     #algae net pct
-    #algae remove data?
+  #algae remove data?
     
     algae_remove_pct = sum(c(robot_reef_removal))/n()
     
@@ -228,6 +230,7 @@ server <- function(input, output, session) {
         auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
         auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
         auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+        move_pts = sum(move*3)/n(),
         tele_coral_L1 = sum(coral_L1_num*2)/n(),
         tele_coral_L2 = sum(coral_L2_num*3)/n(),
         tele_coral_L3 = sum(coral_L3_num*4)/n(),
@@ -237,16 +240,16 @@ server <- function(input, output, session) {
         
         endgame_score = sum(ifelse(ending =="D", 12,
                                    ifelse(ending =="S", 6,
-                                          ifelse(ending =="P", 1, 0)))
+                                          ifelse(ending =="P", 2, 0)))
         )/n(),
         
-        avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 +
+        avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
           tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
           robot_net_score + robot_proc_score +
           endgame_score
       ) %>%
       
-      pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4,
+      pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
                             tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
                             robot_net_score, robot_proc_score,
                             endgame_score), 
@@ -273,8 +276,9 @@ server <- function(input, output, session) {
       scale_fill_manual(values = c("plum1",
                                    "plum2",
                                    "plum3",
-                                   "plum4", 
-                                   "#FFF68F", 
+                                   "plum4",
+                                   "#FFF68F",
+                                   "#FFC156", 
                                    "olivedrab3",
                                    "springgreen4", 
                                    "steelblue2",
@@ -284,8 +288,9 @@ server <- function(input, output, session) {
                         labels = c("auto_coral_L1" = "Auto Coral L1", 
                                    "auto_coral_L2" = "Auto Coral L2",
                                    "auto_coral_L3" = "Auto Coral L3", 
-                                   "auto_coral_L4" = "Auto Coral L4", 
-                                   "tele_coral_L1" = "Tele Coral L1", 
+                                   "auto_coral_L4" = "Auto Coral L4",
+                                   "move_pts" = "Move",
+                                    "tele_coral_L1" = "Tele Coral L1", 
                                    "tele_coral_L2" = "Tele Coral L2", 
                                    "tele_coral_L3" = "Tele Coral L3", 
                                    "tele_coral_L4" = "Tele Coral L4", 
