@@ -189,7 +189,7 @@
     {
       "name": "Algae",
       "fields": [
-          {
+        {
           "title": "Reef Removed Algae",
           "description": "Has the robot removed algae from the reef",
           "type": "boolean",
@@ -198,7 +198,7 @@
           "formResetBehavior": "reset",
           "defaultValue": false
         },
-         {
+        {
           "title": "Ground Intake Algae",
           "description": "Has the robot picked up any algae from the ground",
           "type": "boolean",
@@ -240,7 +240,7 @@
           "min": 0,
           "step": 1
         }
-        ]
+      ]
     },
     {
       "name": "Coral",
@@ -280,6 +280,17 @@
           "type": "counter",
           "required": false,
           "code": "tcs4",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "title": "Telo-op Coral Missed",
+          "description": "How many coral the robot missed and didn't score in a lower level(L1)",
+          "type": "counter",
+          "required": false,
+          "code": "tcm",
           "formResetBehavior": "reset",
           "defaultValue": 0,
           "min": 0,
@@ -325,15 +336,61 @@
       ]
     },
     {
+      "name": "Defense",
+      "fields": [
+        {
+          "title": "Defense Delay Times",
+          "description": "Time each time your robot delays another from getting a coral and for how long",
+          "type": "timer",
+          "required": false,
+          "code": "dt",
+          "formResetBehavior": "reset",
+          "defaultValue": 0
+        },
+        {
+          "title": "Defendee Gave Up",
+          "description": "How many times the defended robot went to opposite coral station",
+          "type": "counter",
+          "required": false,
+          "code": "dgu",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "step": 1
+        },
+        {
+          "title": "Defendee Won",
+          "description": "How many times the defended robot got a coral from the defended station",
+          "type": "counter",
+          "required": false,
+          "code": "dw",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "step": 1
+        },
+        {
+          "title": "Defense Rating",
+          "description": "Driver rating but for defense",
+          "type": "range",
+          "required": false,
+          "code": "dr",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "min": 1,
+          "max": 5,
+          "step": 1
+        }
+      ]
+    },
+    {
       "name": "Postmatch",
       "fields": [
         {
           "title": "Driver Ranking",
           "type": "range",
-          "required": false,
+          "required": true,
           "code": "or",
           "formResetBehavior": "reset",
-          "defaultValue": 3,
+          "defaultValue": 0,
           "min": 1,
           "max": 5,
           "step": 1
@@ -360,7 +417,26 @@
           }
         },
         {
-          "title": "Comments",
+          "title": "General Comments",
+          "type": "multi-select",
+          "required": false,
+          "code": "scoringLocations",
+          "choices": {
+            "D": "Played Defense",
+            "C": "Clumsy",
+            "WB": "Wobbly Bot",
+            "WM": "Wobbly Manip",
+            "PP": "Penalty Proccer",
+            "W": "Whiffs",
+            "XLC": "Extra Long Climb",
+            "BI": "Bad Intake",
+            "GI": "Good Intake",
+            "BD": "Bad Driver"
+          },
+          "formResetBehavior": "reset"
+        },
+        {
+          "title": "Specific Comments",
           "type": "text",
           "required": false,
           "code": "co",
