@@ -203,7 +203,7 @@ server <- function(input, output, session) {
         match = n(),
         total_coral_score = sum(
           (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + 
-            (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5))/n(),
+            (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5)+move*3)/n(),
         
         total_algae_score = sum(
           (robot_net_score*4) + (proc_score*2.5))/n(),
