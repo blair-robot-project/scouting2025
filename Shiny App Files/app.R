@@ -792,7 +792,8 @@ server <- function(input, output, session) {
       geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
       labs(title = "Scouter Summary", 
            x = "Scouters", y = "Times Scouted") +
-    theme_bw()
+    theme_bw() + 
+      
   }
   
 }
