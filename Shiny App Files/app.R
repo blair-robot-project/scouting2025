@@ -222,7 +222,7 @@ server <- function(input, output, session) {
         
         endgame_score = sum(
           ifelse(ending =="D", 12, ifelse(ending =="S",6,ifelse(ending =="P", 2, 0))))/n(),
-        avg_score = total_algae_score+total_coral_score+endgame_score,
+        avg_score = total_algae_score+total_coral_score+endgame_score
       )
     
     ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_score)) +
@@ -363,16 +363,16 @@ server <- function(input, output, session) {
                (robot_net_score*4) + (proc_score*2.5),
              
              total_endgame_score = 
-               ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+               ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0)))
       )
     
     boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score
     
     
     ggplot(boxplot,aes(x = total, y = team))+    
-      geom_boxplot(position = "dodge2", fill = "azure2", ) +
+      geom_boxplot(position = "dodge2", fill = "azure2") +
       stat_boxplot(geom = "errorbar") + 
-      stat_summary(fun = mean, geom="point", size=3, color="orange",)+
+      stat_summary(fun = mean, geom="point", size=3, color="orange")+
       labs(title = "Total points scored",x = "Points", y = "Team")+
       theme_bw()
   }
@@ -483,7 +483,7 @@ server <- function(input, output, session) {
            y = "Points") +
       scale_fill_manual(
         values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
-        labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"),
+        labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage")
       )
   }
   
@@ -581,7 +581,7 @@ server <- function(input, output, session) {
                (robot_net_score*4) + (proc_score*2.5),
              
              total_endgame_score = 
-               ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+               ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0)))
       )
     
     boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score + boxplot$total_endgame_score
@@ -792,7 +792,7 @@ server <- function(input, output, session) {
       geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
       labs(title = "Scouter Summary", 
            x = "Scouters", y = "Times Scouted") +
-    theme_bw() + 
+    theme_bw()
       
   }
   
