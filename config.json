@@ -345,6 +345,7 @@
           "required": false,
           "code": "dt",
           "formResetBehavior": "reset",
+          "outputType": "average",
           "defaultValue": 0
         },
         {
@@ -423,20 +424,23 @@
           "code": "scoringLocations",
           "choices": {
             "D": "Played Defense",
-            "C": "Clumsy",
             "WB": "Wobbly Bot",
             "WM": "Wobbly Manip",
+            "CSR": "Coral Stuck For Rest of Match",
+            "CSS": "Coral Stuck For Some of Match",
             "PP": "Penalty Proccer",
             "W": "Whiffs",
-            "XLC": "Extra Long Climb",
             "BI": "Bad Intake",
             "GI": "Good Intake",
-            "BD": "Bad Driver"
+            "BD": "Bad Driver",
+            "GD": "Good Driver"
+            "XLC": "Extra Long Climb(~15-20 secs)"
           },
           "formResetBehavior": "reset"
         },
         {
           "title": "Specific Comments",
+          "description": "Comments that are still important for us to know, please only include relevant info and not insults of their drive team or statements about owing people skittles"
           "type": "text",
           "required": false,
           "code": "co",
