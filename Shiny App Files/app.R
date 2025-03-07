@@ -189,18 +189,18 @@ ui <- fluidPage(
     ),
     
     tabPanel("Scouters",
-             sidebarLayout(
-               sidebarPanel(
-                 selectInput("Scouter_Select", "Select Scouter", choices = unique(raw$scout)),
+             #sidebarLayout(
+            #   sidebarPanel(
+            #     selectInput("Scouter_Select", "Select Scouter", choices = unique(raw$scout)),
                  #selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  #imageOutput("team_image_output")
-               ),
+            #   ),
                mainPanel(
                  plotOutput("scouter_graph_output")
                )
           )
   )
-))
+)
 
 #Server
 server <- function(input, output, session) {
@@ -712,6 +712,11 @@ server <- function(input, output, session) {
     }
   })
   
+  output$scouter_graph_output <- renderPlot({
+    #selected_team <- input$team_select
+    scouter_graph_output(raw)
+  })
+  
   output$team_image_output <- renderImage({
     teamnum <- input$team_select
     img_src <- paste0("images/", teamnum, ".png")  #Path to the image
@@ -783,7 +788,7 @@ server <- function(input, output, session) {
     
     scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
     
-    ggplot(scout_df, aes(x = `scout`, y = count)) + 
+    ggplot(scout_df, aes(x = `scout`, count)) + 
       geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
       labs(title = "Scouter Summary", 
            x = "Scouters", y = "Times Scouted") +
