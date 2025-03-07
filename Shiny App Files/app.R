@@ -795,7 +795,5 @@ server <- function(input, output, session) {
     theme_bw()
       
   }
-  
 }
-
 shinyApp(ui, server)
