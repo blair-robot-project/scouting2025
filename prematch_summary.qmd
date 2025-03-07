@@ -561,3 +561,22 @@ ggplot(column4, aes(x = `team`, y = level_score, fill = level)) +
 
 
 ```
+
+```{r}
+scouter_graph_output <- function(raw){
+  scout_df <- raw %>%
+    group_by(scout) %>%
+    summarise(count = n()) %>%
+    arrange(desc(count))
+  
+  scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
+  
+  ggplot(scout_df, aes(x = `scout`, y = count)) + 
+    geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
+      labs(title = "Scouter Summary", 
+           x = "Scouters", y = "Times Scouted") +
+      theme_bw()
+}
+ggplotly(scouter_graph_output(raw))
+
+```
