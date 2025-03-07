@@ -66,7 +66,7 @@ boxplot_graph <- function(raw, team_red_alliance =
     labs(title = "Total points scored", x = "Points", y = "Team") +
     theme_bw() +
     theme(
-      axis.text.y = element_text(color = ifelse(levels(boxplot$team) == team_red_alliance, "red", "blue"))
+      axis.text.y = element_text(color = ifelse(levels(boxplot$team) %in% team_red_alliance, "red", "blue"))
     )
 }
 
@@ -210,28 +210,39 @@ ggplotly(tele_auto_graph(raw,red_alliance,blue_alliance))
 ENDGAME SCORING
 
 ```{r}
-endgame_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+endgame_graph <- function(raw, 
+                          team_red_alliance = c(params$red1, params$red2, params$red3), 
+                          team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+  #browser()
   end <- raw %>%
-    filter(team %in% c(red_alliance, blue_alliance)) %>%
-      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
-        group_by(team, ending) %>%
-          summarise(count = n())
+    filter(team %in% c(team_red_alliance, team_blue_alliance)) %>%
+    mutate(team = factor(team, c(team_red_alliance, team_blue_alliance))) %>%
+    group_by(team, ending) %>%
+    summarise(count = n(), .groups = "keep")
+  
   end$points <- recode(end$ending,  "P" = 2, "S" = 6, "D" = 12, "No" = 0)
+  end$alliance <- ifelse(end$team %in% team_blue_alliance, "blue", "red")
   
   #compute the total end game score from all matches
   end$total_points <- end$count * end$points
-  end$ending <- factor(end$ending, levels = c("D", "S","P","No"))
-  team_colors <- ifelse(end$team %in% team_red_alliance, "red", "blue")
-  
-  ggplot(end, aes(x =team, y = total_points, fill = ending)) +
+  end$ending <- factor(end$ending, levels = c("D", "S","P"))
+  ggplot(end, aes(x = team, y = total_points, fill = ending, color = alliance)) +
     geom_bar(position= "stack", stat = "identity") +
-    labs(title = "Endgame Score",x = "Team",y = "Points") +
+    labs(title = "Endgame Score", x = "Team", y = "Points") +
+    scale_color_manual(
+      values = c("blue", "red")
+    ) +
     scale_fill_manual(
       values = c("D" = "#008B8B", "S" = "#00CDCD", "P" = "darkslategray1"),
-      labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage"))+
-     theme(axis.text.x = element_text(color = team_colors, size = 15))
-}
-ggplotly(endgame_graph(raw,red_alliance,blue_alliance))
+      breaks = c("Deep", "Shallow", "Park", "N/A")
+      #theme(axis.text.x = element_text(colour = c(rep("red", 3), rep("blue", 3)))
+    )+
+    guides(color = "none")
+
+  #variable with alliance per team
+  }
+ggplotly(endgame_graph(raw, red_alliance, blue_alliance))
+#endgame_graph(raw, red_alliance, blue_alliance)
 ```
 
 ```{r}
