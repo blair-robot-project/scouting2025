@@ -186,9 +186,21 @@ ui <- fluidPage(
                  DTOutput("team_data_row")
                )
              )
-    )
+    ),
+    
+    tabPanel("Scouters",
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("Scouter_Select", "Select Scouter", choices = unique(raw$scout)),
+                 #selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 #imageOutput("team_image_output")
+               ),
+               mainPanel(
+                 plotOutput("scouter_graph_output")
+               )
+          )
   )
-)
+))
 
 #Server
 server <- function(input, output, session) {
@@ -728,11 +740,56 @@ server <- function(input, output, session) {
     }
   }, deleteFile = FALSE)
   
+  output$team_field_output <- renderImage({
+    teamnum <- input$team_select
+    img_src <- paste0("images/", teamnum, ".png")  #Path to the image
+    no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
+    
+    #Check if the image file exists
+    if (file.exists(img_src)) {
+      return(list(
+        src = img_src,
+        contentType = "image/png",
+        width = 350,
+        height = 350,
+        alt = paste("Robot Image for Team", teamnum),
+        style="display: block; margin-left: auto; margin-right: auto;"
+      ))
+      #tags$img(src = img_src, alt = paste("Robot Image for Team", teamnum), height = "300px")
+    } else {
+      return(list(
+        src = no_img_available_src,
+        contentType = "image/jpg",
+        width = 350,
+        height = 350,
+        alt = paste("No Image Available"),
+        style="display: block; margin-left: auto; margin-right: auto;"
+      ))
+    }
+  }, deleteFile = FALSE)
+  
   output$team_data_row <- renderDT({
     selected_team <- input$team_select
     team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team, ]
     datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1, dom = 't'))
   })
+  
+  #SCOUTERS
+  scouter_graph_output <- function(raw){
+    scout_df <- raw %>%
+      group_by(scout) %>%
+      summarise(count = n()) %>%
+      arrange(desc(count))
+    
+    scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
+    
+    ggplot(scout_df, aes(x = `scout`, y = count)) + 
+      geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
+      labs(title = "Scouter Summary", 
+           x = "Scouters", y = "Times Scouted") +
+    theme_bw()
+  }
+  
 }
 
 shinyApp(ui, server)
