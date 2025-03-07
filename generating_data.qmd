@@ -11,7 +11,7 @@ library(tidyverse)
 ```{r}
 n <- 200
 
-scout_id <- sample(c("gabriel", "tinbite", "mitchell", "sophia", "jack"), size = n, replace = TRUE)
+scout_id <- sample(c("Gabriel", "Tinbite", "Mitchell", "Sophia", "Jack"), size = n, replace = TRUE)
 match_num <- rep(1:34, length.out = n, each = 6) #make not random when gabriel comes back
 robot_num <- sample(c("R1", "R2", "R3", "B1", "B2", "B3"), size = n, replace = TRUE)
 
