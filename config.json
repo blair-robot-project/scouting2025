@@ -433,7 +433,7 @@
             "BI": "Bad Intake",
             "GI": "Good Intake",
             "BD": "Bad Driver",
-            "GD": "Good Driver"
+            "GD": "Good Driver",
             "XLC": "Extra Long Climb(~15-20 secs)"
           },
           "formResetBehavior": "reset"
