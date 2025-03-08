@@ -178,7 +178,7 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(
                  selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  imageOutput("team_image_output")
               ),
                mainPanel(
@@ -192,7 +192,7 @@ ui <- fluidPage(
              #sidebarLayout(
             #   sidebarPanel(
             #     selectInput("Scouter_Select", "Select Scouter", choices = unique(raw$scout)),
-                 #selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 #selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Endgame Bar Graph")),
                  #imageOutput("team_image_output")
             #   ),
                mainPanel(
@@ -715,7 +715,7 @@ server <- function(input, output, session) {
       boxplot_graph_single(raw, selected_team)
     } else if (input$team_graph == "Coral Level Bar Graph"){
       bar_graph_single(raw, selected_team)
-    } else if (input$team_graph == "Coral Auto + Tele Bar Graph"){
+    } else if (input$team_graph == "Auto + Tele Bar Graph"){
       tele_auto_graph_single(raw, selected_team)
     } else if (input$team_graph == "Endgame Bar Graph"){
       endgame_graph_single(raw, selected_team)
