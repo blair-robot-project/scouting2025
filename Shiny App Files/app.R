@@ -166,8 +166,9 @@ ui <- fluidPage(
                ),
                mainPanel(
                  plotOutput("alliance_box_plot_output"),
-                 plotOutput("alliance_coral_graph_output"),
-                 plotOutput("alliance_tele_auto_graph_output"),
+                 plotOutput("alliance_tele_coral_graph_output"),
+                 plotOutput("alliance_auto_coral_graph_output"),
+                 plotOutput("alliance_algae_bar_graph_output"),
                  plotOutput("alliance_endgame_graph_output"),
                  DTOutput("alliance_table")
                )
@@ -374,11 +375,15 @@ server <- function(input, output, session) {
       stat_boxplot(geom = "errorbar") + 
       stat_summary(fun = mean, geom="point", size=3, color="orange")+
       labs(title = "Total points scored",x = "Points", y = "Team")+
-      theme_bw()
+      theme_bw()+
+      theme(
+        axis.text.y = element_text(color = ifelse(levels(boxplot$team) %in% red_alliance, "red", "blue"),
+                                   size = 15)
+      )
   }
   
   #CORAL LEVEL GRAPH ALLIANCE
-  bar_graph_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
+  tele_coral_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
                         blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
     
     bar <- raw %>%
@@ -403,8 +408,10 @@ server <- function(input, output, session) {
     )
     
     p <- ggplot(bar, aes(x = factor(team), y = level_score, fill = level)) + 
-      geom_bar(position = "stack", stat = "identity") + 
-      labs(title = "Level Summary", 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(bar$team %in% red_alliance, "red", "blue"),
+               size = 0.5) + 
+      labs(title = "Tele Coral Summary", 
            x = "Team", y = "Coral score", fill = "Level") +
       scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy")) +
       theme_bw()
@@ -412,51 +419,77 @@ server <- function(input, output, session) {
     return(p)
   }
   
-  #CORAL TELE AUTO
-  tele_auto_graph <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+  #CORAL  AUTO  
+  auto_coral_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
+                                  blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
     
-    auto_tele <- raw %>%
+    auto <- raw %>%
       filter(team %in% c(red_alliance, blue_alliance)) %>%
       mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
       
       group_by(team) %>%
       summarize(
         matches = n(),
-        
-        l1 = mean(coral_L1_num),
-        l2 = mean(coral_L2_num),
-        l3 = mean(coral_L3_num),
-        l4 = mean(coral_L4_num),
-        autol1 = mean(auto_coral_L1_num),
-        autol2 = mean(auto_coral_L2_num),
-        autol3 = mean(auto_coral_L3_num),
-        autol4 = mean(auto_coral_L4_num)
-        
+        autol1 = mean((auto_coral_L1_num*3)),
+        autol2 = mean(auto_coral_L2_num*4),
+        autol3 = mean(auto_coral_L3_num*6),
+        autol4 = mean(auto_coral_L4_num*7),
+        move_pts = mean(move*3)
       )%>%
       
-      pivot_longer(cols = c(l4, l3, l2,l1,autol1,autol2,autol3,autol4), 
+      pivot_longer(cols = c(autol1,autol2,autol3,autol4,move_pts), 
                    names_to = "level", 
-                   values_to = "coral_num")
-    auto_tele$level_score <- case_when(
-      auto_tele$level == "l1" ~ auto_tele$coral_num*2, 
-      auto_tele$level == "l2" ~ auto_tele$coral_num*3, 
-      auto_tele$level == "l3" ~ auto_tele$coral_num*4, 
-      auto_tele$level == "l4" ~ auto_tele$coral_num*5,
-      auto_tele$level == "autol1" ~ auto_tele$coral_num*3,
-      auto_tele$level == "autol2" ~ auto_tele$coral_num*4,
-      auto_tele$level == "autol3" ~ auto_tele$coral_num*6,
-      auto_tele$level == "autol4" ~ auto_tele$coral_num*7
-      
-    )
+                   values_to = "points")
     
-    ggplot(auto_tele, aes(x = factor(team), y = (level_score), fill = level)) + 
-      geom_bar(position = "stack", stat = "identity") + 
-      labs(title = "Level Summary", 
-           x = "Team", y = "Coral score", fill = "Level") +
-      scale_fill_manual(values=c("plum1","plum2","plum3","plum4","steelblue2","steelblue3","steelblue","steelblue4"))+
-      
+    
+    ggplot(auto, aes(x = factor(team), y = points, fill = level)) + 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(auto$team %in% red_alliance, "red", "blue"),
+               size = 0.5) + 
+      labs(title = "Move + Auto Coral Summary", 
+           x = "Team", y = "Coral Scored Points", fill = "Level") +
+      scale_fill_manual(values=c("#f2cbfe","plum2","plum3","plum4", "#FFD700"))+
       theme_bw() 
   }
+  
+  
+  
+  
+  
+
+  
+  
+  
+#  ALGAE NET AND PROC GRAPH
+
+  algae_bar <- function(raw, red_alliance, blue_alliance) {
+    
+    algae <- raw %>%
+      filter(team %in% c(red_alliance, blue_alliance)) %>%
+      mutate(team = factor(team, c(red_alliance, blue_alliance))) %>%
+      group_by(team) %>%
+      summarize(mathes = n(),
+                net = sum(robot_net_score, na.rm = TRUE)/n(),
+                proc = sum(proc_score, na.rm = TRUE)/n()) %>%
+      
+      pivot_longer(cols = c(net, proc), 
+                   names_to = "type", 
+                   values_to = "points")
+    
+    
+    ggplot(algae, aes(x = team, y = points, fill = type)) + 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(algae$team %in% red_alliance, "red", "blue"),
+               size = 0.8
+      ) + 
+      labs(title = "Algae Points Summary", 
+           x = "Team", y = "Algae Points", fill = "Place")+
+      
+      
+      scale_fill_manual(values=c("#008B8B","darkslategray2"))  +
+      theme_bw() 
+  }
+  
   
   #ENDGAME BAR GRAPH
   endgame_graph <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
@@ -476,7 +509,9 @@ server <- function(input, output, session) {
     end$ending <- factor(end$ending, levels = c("D", "S","P","No"))
     
     ggplot(end, aes(x = factor(team), y = total_points, fill = ending)) +
-      geom_bar(position= "stack", stat = "identity") +
+      geom_bar(position= "stack", stat = "identity", 
+               color = ifelse(end$team %in% red_alliance, "red", "blue"),
+               size = 0.8) +
       
       labs(title = "Endgame Score",
            x = "Team",
@@ -484,7 +519,8 @@ server <- function(input, output, session) {
       scale_fill_manual(
         values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
         labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage")
-      )
+      ) +
+      theme_bw() 
   }
   
 
@@ -539,17 +575,24 @@ server <- function(input, output, session) {
       boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
     })
     
-    output$alliance_coral_graph_output <- renderPlot({
-        bar_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+    
+    output$alliance_tele_coral_graph_output <- renderPlot({
+        tele_coral_alliance(raw, selected_red_teams, selected_blue_teams)
       })
     
-    output$alliance_tele_auto_graph_output <- renderPlot({
-      tele_auto_graph(raw, selected_red_teams, selected_blue_teams)
+    output$alliance_auto_coral_graph_output <- renderPlot({
+        auto_coral_alliance(raw, selected_red_teams, selected_blue_teams)
       }) 
+    
+    output$alliance_algae_bar_graph_output <- renderPlot({
+        algae_bar(raw, selected_red_teams, selected_blue_teams)
+    }) 
+    
     
     output$alliance_endgame_graph_output <- renderPlot({
       endgame_graph(raw, selected_red_teams, selected_blue_teams)
       })
+    
     
     output$alliance_table <- renderDT({
       alliance_dt_subset <- consolidated_team_data[consolidated_team_data$team %in% c(selected_red_teams, selected_blue_teams), ]
@@ -694,7 +737,8 @@ server <- function(input, output, session) {
       scale_fill_manual(
         values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
         labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage")
-      )
+      ) +
+      theme_bw() 
   }
   
   output$team_graph_output <- renderPlot({

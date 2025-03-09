@@ -115,7 +115,45 @@ ggplotly(bubble_graph(raw,red_alliance,blue_alliance))
 
 ```
 
-CORAL LEVEL SCORING
+AUTO CORAL LEVEL SCORING
+
+```{r}
+auto_coral_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+    
+    auto <- raw %>%
+      filter(team %in% c(red_alliance, blue_alliance)) %>%
+      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+      
+      group_by(team) %>%
+      summarize(
+        matches = n(),
+        
+        autol1 = mean((auto_coral_L1_num*3)),
+        autol2 = mean(auto_coral_L2_num*4),
+        autol3 = mean(auto_coral_L3_num*6),
+        autol4 = mean(auto_coral_L4_num*7),
+        move_pts = mean(move*3)
+      )%>%
+      
+      pivot_longer(cols = c(autol1,autol2,autol3,autol4,move_pts), 
+                   names_to = "level", 
+                   values_to = "points")
+  
+    
+    ggplot(auto, aes(x = factor(team), y = points, fill = level)) + 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(auto$team %in% red_alliance, "red", "blue"),
+               size = 0.5) + 
+      labs(title = "Auto Coral + Move Summary", 
+           x = "Team", y = "Coral Scored Points", fill = "Level") +
+      scale_fill_manual(values=c("#f2cbfe","plum2","plum3","plum4", "#FFD700"))+
+      theme_bw() 
+  }
+
+ggplotly(auto_coral_alliance(raw,red_alliance,blue_alliance))
+```
+
+TELE CORAL LEVEL SCORING
 
 ```{r}
 bar_graph <- function(raw,team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
@@ -147,6 +185,63 @@ bar_graph <- function(raw,team_red_alliance = c(params$red1, params$red2, params
     theme_bw()
 }
 ggplotly(bar_graph(raw,red_alliance,blue_alliance))
+```
+
+CORAL SCORED DURING AUTO AND TELEOP
+
+```{r}
+tele_auto_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) { 
+    
+    auto_tele <- raw %>%
+      filter(team %in% c(red_alliance, blue_alliance)) %>%
+      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+      
+      group_by(team) %>%
+      summarize(
+        matches = n(),
+        
+        l1 = mean(coral_L1_num*2),
+        l2 = mean(coral_L2_num*3),
+        l3 = mean(coral_L3_num*4),
+        l4 = mean(coral_L4_num*5),
+        autol1 = mean(auto_coral_L1_num*3),
+        autol2 = mean(auto_coral_L2_num*4),
+        autol3 = mean(auto_coral_L3_num*5),
+        autol4 = mean(auto_coral_L4_num*7),
+        move_pts = mean(move*3)
+
+        
+      )%>%
+      
+      pivot_longer(cols = c(l4, l3, l2,l1,
+                            autol1,autol2,autol3,autol4,
+                            move_pts), 
+                   names_to = "level", 
+                   values_to = "total")
+    
+    
+    ggplot(auto_tele, aes(x = factor(team), y = total, fill = level)) + 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(auto_tele$team %in% team_red_alliance, "red", "blue"),
+               size = 0.3
+               ) + 
+      labs(title = "Coral + Move Summary", 
+           x = "Team", y = "Coral score", fill = "Level") +
+
+      scale_fill_manual(values=c("plum1",
+                                 "plum2",
+                                 "plum3",
+                                 "plum4",
+                                "lightskyblue",
+                                "royalblue1",
+                                "royalblue3",
+                                "navy",
+                                "orange"))+
+      theme_bw() 
+  }
+ggplotly(tele_auto_graph(raw,red_alliance,blue_alliance))
+  
+
 ```
 
 ALGAE NET AND PROC GRAPH
@@ -181,69 +276,6 @@ algae_bar <- function(raw, red_alliance, blue_alliance) {
 
   }
 algae_bar(raw,red_alliance,blue_alliance)
-```
-
-CORAL SCORED DURING AUTO AND TELEOP
-
-```{r}
-tele_auto_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) { 
-    
-    auto_tele <- raw %>%
-      filter(team %in% c(red_alliance, blue_alliance)) %>%
-      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
-      
-      group_by(team) %>%
-      summarize(
-        matches = n(),
-        
-        l1 = mean(coral_L1_num),
-        l2 = mean(coral_L2_num),
-        l3 = mean(coral_L3_num),
-        l4 = mean(coral_L4_num),
-        autol1 = mean(auto_coral_L1_num),
-        autol2 = mean(auto_coral_L2_num),
-        autol3 = mean(auto_coral_L3_num),
-        autol4 = mean(auto_coral_L4_num)
-        
-      )%>%
-      
-      pivot_longer(cols = c(l4, l3, l2,l1,autol1,autol2,autol3,autol4), 
-                   names_to = "level", 
-                   values_to = "coral_num")
-    
-    auto_tele$level_score <- case_when(
-      auto_tele$level == "l1" ~ auto_tele$coral_num*2, 
-      auto_tele$level == "l2" ~ auto_tele$coral_num*3, 
-      auto_tele$level == "l3" ~ auto_tele$coral_num*4, 
-      auto_tele$level == "l4" ~ auto_tele$coral_num*5,
-      auto_tele$level == "autol1" ~ auto_tele$coral_num*3,
-      auto_tele$level == "autol2" ~ auto_tele$coral_num*4,
-      auto_tele$level == "autol3" ~ auto_tele$coral_num*6,
-      auto_tele$level == "autol4" ~ auto_tele$coral_num*7
-    )
-    
-    
-    ggplot(auto_tele, aes(x = factor(team), y = (level_score), fill = level)) + 
-      geom_bar(position = "stack", stat = "identity", 
-               color = ifelse(auto_tele$team %in% team_red_alliance, "red", "blue"),
-               size = 0.3
-               ) + 
-      labs(title = "Level Summary", 
-           x = "Team", y = "Coral score", fill = "Level") +
-
-      scale_fill_manual(values=c("plum1",
-                                 "plum2",
-                                 "plum3",
-                                 "plum4",
-                                 "steelblue2",
-                                 "steelblue3",
-                                 "steelblue",
-                                 "steelblue4"))+
-      theme_bw() 
-  }
-ggplotly(tele_auto_graph(raw,red_alliance,blue_alliance))
-  
-
 ```
 
 ENDGAME SCORING
