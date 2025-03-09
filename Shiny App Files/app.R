@@ -31,6 +31,9 @@ mldf <- raw %>%
     coral_l2_pts = coral_L2_num * 3, 
     coral_l3_pts = coral_L3_num * 4, 
     coral_l4_pts = coral_L4_num * 5, 
+    
+
+    
     endgame_pts = case_when(
       ending == "P" ~ 2, 
       ending == "S" ~ 6, 
@@ -64,6 +67,30 @@ mldf <- raw %>%
 consolidated_team_data <- mldf %>%
   group_by(team) %>%
   summarize(
+    
+    #coral cycle
+    l1_cycle = round(mean(auto_coral_L1_num + coral_L1_num), digits = 2),
+    l2_cycle = round(mean(auto_coral_L2_num + coral_L2_num), digits = 2),
+    l3_cycle = round(mean(auto_coral_L3_num + coral_L3_num), digits = 2),
+    l4_cycle = round(mean(auto_coral_L4_num + coral_L4_num), digits = 2),
+    coral_cycle = round(sum(l1_cycle+l2_cycle+l3_cycle+l4_cycle), digits = 2),
+    
+    #algae cycle
+    net_cycle = round(mean(robot_net_score), digits = 2),
+    proc_cycle = round(mean(proc_score), digits = 2),
+    alage_cycle = round((sum(net_cycle+proc_cycle)),digits = 2),
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     #total points
     total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
