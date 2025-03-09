@@ -768,10 +768,7 @@ server <- function(input, output, session) {
                    values_to = "points")
   
     ggplot(algae, aes(x = factor(team), y = points, fill = type)) + 
-      geom_bar(position = "stack", stat = "identity", 
-               color = ifelse(algae$team %in% red_alliance, "red", "blue"),
-               size = 0.8
-      ) + 
+      geom_bar(position = "stack", stat = "identity")+ 
       labs(title = "Algae Points Summary", 
            x = "Team", y = "Algae Points", fill = "Place")+
       scale_fill_manual(values=c("#008B8B","darkslategray2")) 
