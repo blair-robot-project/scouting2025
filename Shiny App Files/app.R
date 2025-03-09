@@ -179,7 +179,7 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(
                  selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Algae Bar Graph", "Endgame Bar Graph")),
                  imageOutput("team_image_output")
               ),
                mainPanel(
@@ -638,7 +638,7 @@ server <- function(input, output, session) {
     ggplot(boxplot, aes(x = total, y = as.character(team))) +    
       geom_boxplot(position = "dodge2", fill = "azure2") +
       stat_boxplot(geom = "errorbar") + 
-      stat_summary(fun = mean, geom = "point", size = 1, color = "orange") +
+      stat_summary(fun = mean, geom = "point", size = 5, color = "orange") +
       labs(title = paste("Total points scored by Team", team_num),
            x = "Points", 
            y = "Team") +
@@ -724,6 +724,31 @@ server <- function(input, output, session) {
                         ) +
       theme_bw() 
   }
+
+  #ALGAE POINTS GRAPH
+  algae_bar_single <- function(raw, team_num) {
+    
+    algae <-  raw %>%
+      filter(team == team_num) %>%
+      group_by(team, ending) %>%
+      summarize(mathes = n(),
+                net = sum(robot_net_score, na.rm = TRUE)/n(),
+                proc = sum(proc_score, na.rm = TRUE)/n()) %>%
+      
+      pivot_longer(cols = c(net, proc), 
+                   names_to = "type", 
+                   values_to = "points")
+  
+    ggplot(algae, aes(x = factor(team), y = points, fill = type)) + 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(algae$team %in% red_alliance, "red", "blue"),
+               size = 0.8
+      ) + 
+      labs(title = "Algae Points Summary", 
+           x = "Team", y = "Algae Points", fill = "Place")+
+      scale_fill_manual(values=c("#008B8B","darkslategray2")) 
+    
+  }
   
   #END GAME
   endgame_graph_single <- function(raw, team_num) {
@@ -755,12 +780,13 @@ server <- function(input, output, session) {
     selected_team <- input$team_select
     
     if (input$team_graph == "Overall Points Box Plot"){
-      
       boxplot_graph_single(raw, selected_team)
     } else if (input$team_graph == "Coral Level Bar Graph"){
       bar_graph_single(raw, selected_team)
     } else if (input$team_graph == "Auto + Tele Bar Graph"){
       tele_auto_graph_single(raw, selected_team)
+    } else if (input$team_graph == "Algae Bar Graph"){
+      algae_bar_single(raw, selected_team)
     } else if (input$team_graph == "Endgame Bar Graph"){
       endgame_graph_single(raw, selected_team)
     }
