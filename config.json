@@ -339,18 +339,8 @@
       "name": "Defense",
       "fields": [
         {
-          "title": "Defense Delay Times",
-          "description": "Time each time your robot delays another from getting a coral and for how long",
-          "type": "timer",
-          "required": false,
-          "code": "dt",
-          "formResetBehavior": "reset",
-          "outputType": "average",
-          "defaultValue": 0
-        },
-        {
-          "title": "Defendee Gave Up",
-          "description": "How many times the defended robot went to opposite coral station",
+          "title": "Reef Fouls",
+          "description": "How many times the defending robot that you are watching touched a robot in the reef zone",
           "type": "counter",
           "required": false,
           "code": "dgu",
@@ -359,18 +349,8 @@
           "step": 1
         },
         {
-          "title": "Defendee Won",
-          "description": "How many times the defended robot got a coral from the defended station",
-          "type": "counter",
-          "required": false,
-          "code": "dw",
-          "formResetBehavior": "reset",
-          "defaultValue": 0,
-          "step": 1
-        },
-        {
           "title": "Defense Rating",
-          "description": "Driver rating but for defense",
+          "description": "Driver rating but for defense, leave at zero if they didn't play defense",
           "type": "range",
           "required": false,
           "code": "dr",
@@ -397,50 +377,41 @@
           "step": 1
         },
         {
-          "title": "Died/Tipped Over",
-          "type": "boolean",
-          "required": false,
-          "code": "dto",
-          "formResetBehavior": "reset",
-          "defaultValue": false
-        },
-        {
-          "title": "Yellow/Red Card",
+          "title": "Died/Tipped Over etc.",
+          "description": "Things that made it so your robot could no longer function for the rest of the match",
           "type": "select",
           "required": true,
-          "code": "yc",
+          "code": "robot",
           "formResetBehavior": "reset",
-          "defaultValue": "No Card",
+          "defaultValue": "NA",
           "choices": {
-            "No Card": "No Card",
-            "Yellow": "Yellow Card",
-            "Red": "Red Card"
+            "NA": "None",
+            "cs": "Got a coral stuck",
+            "ba": "Beached on an algae",
+            "di": "Disabled(Orange light fully on)",
+            "de": "Dead(Orange light fully off)",
+            "t": "Tipped over"
           }
         },
         {
           "title": "General Comments",
           "type": "multi-select",
           "required": false,
-          "code": "scoringLocations",
+          "code": "gco",
           "choices": {
             "D": "Played Defense",
             "WB": "Wobbly Bot",
             "WM": "Wobbly Manip",
-            "CSR": "Coral Stuck For Rest of Match",
-            "CSS": "Coral Stuck For Some of Match",
             "PP": "Penalty Proccer",
             "W": "Whiffs",
             "BI": "Bad Intake",
-            "GI": "Good Intake",
-            "BD": "Bad Driver",
-            "GD": "Good Driver",
             "XLC": "Extra Long Climb(~15-20 secs)"
           },
           "formResetBehavior": "reset"
         },
         {
           "title": "Specific Comments",
-          "description": "Comments that are still important for us to know, please only include relevant info and not insults of their drive team or statements about owing people skittles"
+          "description": "Comments that are still important for us to know, please only include relevant info and not insults of their drive team or statements about owing people skittles",
           "type": "text",
           "required": false,
           "code": "co",
