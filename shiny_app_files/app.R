@@ -7,7 +7,7 @@ library(shinyWidgets)
 library(tidyverse)
 library(shinythemes)
 
-data_dir <- "shiny_app_files/data_files"
+data_dir <- "data files"
 data_file <- paste0(data_dir, "/match_data_glen_allen.csv")
 event_schedule_file <- paste0(data_dir, "/event_schedule_glen_allen.csv")
 teams_file <- paste0(data_dir, "/teams_glen_allen.csv")
@@ -125,67 +125,66 @@ consolidated_team_data <- mldf %>%
 ui <- fluidPage(
   navbarPage(theme = shinytheme("sandstone"),  
              "449 Scouting",
-             tabPanel("Picklisting",
-                      #sidebarLayout(
-                      #  sidebarPanel(
-                      #    selectInput("picklist_metric", "Choose Graph", choices = c("Bubble Graph", "Other Graphs")),
-                      #    actionButton("graph_btn", "Graph", class = "btn btn-primary")
-                      #  ),
-                      #  mainPanel(
-                      #    plotOutput("picklist_graph"),
-                      #    DTOutput("picklist_table")
-                      #  )
-                      #)
-                      fluidRow(
-                        column(12,
-                               plotOutput("picklist_graph"),
-                               plotOutput("long_column_output"),
-                               DTOutput("picklist_table")
-                        )
-                      )
-             ),
-             
-             tabPanel("Alliance/Match",
-                      sidebarLayout(
-                        sidebarPanel(
-                          #Selection between match number or entering 6 teams
-                          radioButtons("match_or_teams", "Select Match Number or 6 Teams", choices = c("Match Number", "Select 6 Teams")),
-                          conditionalPanel(
-                            condition = "input.match_or_teams == 'Match Number'",
-                            selectInput("match_num", "Match Number", choices = unique(match_schedule$Match))
-                          ),
-                          conditionalPanel(
-                            condition = "input.match_or_teams == 'Select 6 Teams'",
-                            pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
-                            pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
-                          ),
-                          #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
-                          actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary")
-                        ),
-                        mainPanel(
-                          plotOutput("alliance_box_plot_output"),
-                          plotOutput("alliance_coral_graph_output"),
-                          plotOutput("alliance_tele_auto_graph_output"),
-                          plotOutput("alliance_endgame_graph_output"),
-                          plotOutput("alliance_algae_graph_output"),
-                          DTOutput("alliance_table")
-                        )
-                      )
-             ),
-             
-             tabPanel("Single Team",
-                      sidebarLayout(
-                        sidebarPanel(
-                          selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                          selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
-                          imageOutput("team_image_output")
-                        ),
-                        mainPanel(
-                          plotOutput("team_graph_output"),
-                          DTOutput("team_data_row")
-                        )
-                      )
+    tabPanel("Picklisting",
+             #sidebarLayout(
+             #  sidebarPanel(
+             #    selectInput("picklist_metric", "Choose Graph", choices = c("Bubble Graph", "Other Graphs")),
+             #    actionButton("graph_btn", "Graph", class = "btn btn-primary")
+             #  ),
+             #  mainPanel(
+             #    plotOutput("picklist_graph"),
+             #    DTOutput("picklist_table")
+             #  )
+             #)
+             fluidRow(
+               column(12,
+                      plotOutput("picklist_graph"),
+                      plotOutput("long_column_output"),
+                      DTOutput("picklist_table")
+               )
              )
+    ),
+    
+    tabPanel("Alliance/Match",
+             sidebarLayout(
+               sidebarPanel(
+                 #Selection between match number or entering 6 teams
+                 radioButtons("match_or_teams", "Select Match Number or 6 Teams", choices = c("Match Number", "Select 6 Teams")),
+                 conditionalPanel(
+                   condition = "input.match_or_teams == 'Match Number'",
+                   selectInput("match_num", "Match Number", choices = unique(match_schedule$Match))
+                 ),
+                 conditionalPanel(
+                   condition = "input.match_or_teams == 'Select 6 Teams'",
+                   pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
+                   pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
+                 ),
+                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary")
+               ),
+               mainPanel(
+                 plotOutput("alliance_box_plot_output"),
+                 plotOutput("alliance_coral_graph_output"),
+                 plotOutput("alliance_tele_auto_graph_output"),
+                 plotOutput("alliance_endgame_graph_output"),
+                 DTOutput("alliance_table")
+               )
+             )
+    ),
+    
+    tabPanel("Single Team",
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("team_select", "Select Team", choices = unique(teams$team)),
+                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Coral Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 imageOutput("team_image_output")
+              ),
+               mainPanel(
+                 plotOutput("team_graph_output"),
+                 DTOutput("team_data_row")
+               )
+             )
+    )
   )
 )
 
@@ -353,7 +352,7 @@ server <- function(input, output, session) {
     boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score
     
     
-    ggplot(boxplot,aes(x = total, y = team))+    
+    ggplot(boxplot,aes(x = total, y = as.character(team)))+    
       geom_boxplot(position = "dodge2", fill = "azure2", ) +
       stat_boxplot(geom = "errorbar") + 
       stat_summary(fun = mean, geom="point", size=3, color="orange",)+
@@ -363,7 +362,7 @@ server <- function(input, output, session) {
   
   #CORAL LEVEL GRAPH ALLIANCE
   bar_graph_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
-                                 blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
+                        blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
     
     bar <- raw %>%
       filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -395,36 +394,6 @@ server <- function(input, output, session) {
     
     return(p)
   }
-  
-  
-  #ALGAE NET AND PROC GRAPH
-  
-  algae_graph <- function(raw,team_red_alliance = 
-                            c(params$red1, params$red2, params$red3),
-                          team_blue_alliance= 
-                            c(params$blue1, params$blue2, params$blue3)) {
-    
-    algae <- raw %>%
-      filter(team %in% c(red_alliance, blue_alliance)) %>%
-      mutate(team = factor(team, c(red_alliance, blue_alliance))) %>%
-      group_by(team) %>%
-      summarize(mathes = n(),
-                net = sum(robot_net_score, na.rm = TRUE)/n(),
-                proc = sum(proc_score, na.rm = TRUE)/n()) %>%
-      
-      pivot_longer(cols = c(net, proc), 
-                   names_to = "type", 
-                   values_to = "points")
-    ggplot(algae, aes(x = team, y = points, fill = type)) + 
-      geom_bar(position = "stack", stat = "identity", 
-               color = ifelse(algae$team %in% red_alliance, "red", "blue"),
-               size = 0.8
-      ) + 
-      labs(title = "Algae Points Summary", 
-           x = "Team", y = "Algae Points", fill = "Place")+
-      scale_fill_manual(values=c("#008B8B","darkslategray2")) 
-  }
-  
   
   #CORAL TELE AUTO
   tele_auto_graph <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
@@ -501,30 +470,30 @@ server <- function(input, output, session) {
       )
   }
   
-  
+
   
   #Server logic for generating alliance graph
   observeEvent(input$generate_graph, {
     #Backend team splitting based on user input
     if (input$match_or_teams == "Match Number") {
       match_num <- input$match_num
-      
+
       #Get the specific row first
       match_row <- match_schedule[match_schedule$Match == match_num, ]
-      
+
       #Extract teams as vectors
       selected_red_teams <- c(
         match_row$R1,
         match_row$R2,
         match_row$R3
       )
-      
+
       selected_blue_teams <- c(
         match_row$B1,
         match_row$B2,
         match_row$B3
       )
-      
+
       print("Selected match number:")
       print(match_num)
       print("Red teams:")
@@ -534,13 +503,13 @@ server <- function(input, output, session) {
     } else {
       selected_red_teams <- input$red_teams
       selected_blue_teams <- input$blue_teams
-      
+
       #Check for fewer than 3 teams for either alliance
       if (length(selected_red_teams) != 3 || length(selected_blue_teams) != 3) {
         showNotification("Please select exactly 3 teams for both the red and blue alliances.", type = "error")
         return()
       }
-      
+
       #Check for duplicate teams
       all_selected_teams <- c(selected_red_teams, selected_blue_teams)
       if (length(unique(all_selected_teams)) != length(all_selected_teams)) {
@@ -548,28 +517,22 @@ server <- function(input, output, session) {
         return()
       }
     }
-   
+
     output$alliance_box_plot_output <- renderPlot({
       boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
     })
     
     output$alliance_coral_graph_output <- renderPlot({
-      bar_graph_alliance(raw, selected_red_teams, selected_blue_teams)
-    })
+        bar_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+      })
     
     output$alliance_tele_auto_graph_output <- renderPlot({
       tele_auto_graph(raw, selected_red_teams, selected_blue_teams)
-    }) 
+      }) 
     
     output$alliance_endgame_graph_output <- renderPlot({
       endgame_graph(raw, selected_red_teams, selected_blue_teams)
-    })
-    
-    output$alliance_algae_graph_output <- renderPlot({
-      algae_graph(raw, selected_red_teams, selected_blue_teams)
-    })
-    
-    
+      })
     
     output$alliance_table <- renderDT({
       alliance_dt_subset <- consolidated_team_data[consolidated_team_data$team %in% c(selected_red_teams, selected_blue_teams), ]
@@ -577,10 +540,10 @@ server <- function(input, output, session) {
       datatable(alliance_dt_subset, options = list(scrollX = TRUE, dom = 't'))
     })
     
-  })
+    })
   
   
-  
+
   
   #Single Team Tab
   #GRAPH GEN LOGIC-------------------------------------------
@@ -614,7 +577,7 @@ server <- function(input, output, session) {
            x = "Points", 
            y = "Team") +
       theme_bw() 
-    #coord_fixed(ratio = 20)
+      #coord_fixed(ratio = 20)
   }
   
   #CORAL LEVEL
@@ -729,8 +692,6 @@ server <- function(input, output, session) {
       tele_auto_graph_single(raw, selected_team)
     } else if (input$team_graph == "Endgame Bar Graph"){
       endgame_graph_single(raw, selected_team)
-    } else if (input$team_graph == "Algae Graph"){
-      algae_graph_single(raw, selected_team)
     }
   })
   

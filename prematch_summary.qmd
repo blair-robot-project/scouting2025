@@ -60,7 +60,8 @@ boxplot_graph <- function(raw, team_red_alliance =
                   boxplot$total_endgame_score
   
   ggplot(boxplot, aes(x = total, y = team)) +    
-    geom_boxplot(position = "dodge2", fill = "azure2") +
+    geom_boxplot(position = "dodge2", fill = "azure2" ) +
+    
     stat_boxplot(geom = "errorbar") + 
     stat_summary(fun = "mean", geom = "point", size = 3, color = "orange") +
     labs(title = "Total points scored", x = "Points", y = "Team") +
@@ -148,10 +149,44 @@ bar_graph <- function(raw,team_red_alliance = c(params$red1, params$red2, params
 ggplotly(bar_graph(raw,red_alliance,blue_alliance))
 ```
 
+ALGAE NET AND PROC GRAPH
+
+```{r}
+algae_bar <- function(raw, red_alliance, blue_alliance) {
+  
+  algae <- raw %>%
+    filter(team %in% c(red_alliance, blue_alliance)) %>%
+    mutate(team = factor(team, c(red_alliance, blue_alliance))) %>%
+    group_by(team) %>%
+    summarize(mathes = n(),
+              net = sum(robot_net_score, na.rm = TRUE)/n(),
+              proc = sum(proc_score, na.rm = TRUE)/n()) %>%
+    
+    pivot_longer(cols = c(net, proc), 
+                 names_to = "type", 
+                 values_to = "points")
+
+  
+ ggplot(algae, aes(x = team, y = points, fill = type)) + 
+    geom_bar(position = "stack", stat = "identity", 
+             color = ifelse(algae$team %in% red_alliance, "red", "blue"),
+             size = 0.8
+             ) + 
+    labs(title = "Algae Points Summary", 
+         x = "Team", y = "Algae Points", fill = "Place")+
+
+   
+    scale_fill_manual(values=c("#008B8B","darkslategray2")) 
+   
+
+  }
+algae_bar(raw,red_alliance,blue_alliance)
+```
+
 CORAL SCORED DURING AUTO AND TELEOP
 
 ```{r}
-tele_auto_graph <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+tele_auto_graph <- function(raw, team_red_alliance = c(params$red1, params$red2, params$red3), team_blue_alliance= c(params$blue1, params$blue2, params$blue3)) { 
     
     auto_tele <- raw %>%
       filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -175,6 +210,7 @@ tele_auto_graph <- function(raw, red_alliance = c(params$red1, params$red2, para
       pivot_longer(cols = c(l4, l3, l2,l1,autol1,autol2,autol3,autol4), 
                    names_to = "level", 
                    values_to = "coral_num")
+    
     auto_tele$level_score <- case_when(
       auto_tele$level == "l1" ~ auto_tele$coral_num*2, 
       auto_tele$level == "l2" ~ auto_tele$coral_num*3, 
@@ -184,13 +220,17 @@ tele_auto_graph <- function(raw, red_alliance = c(params$red1, params$red2, para
       auto_tele$level == "autol2" ~ auto_tele$coral_num*4,
       auto_tele$level == "autol3" ~ auto_tele$coral_num*6,
       auto_tele$level == "autol4" ~ auto_tele$coral_num*7
-      
     )
     
+    
     ggplot(auto_tele, aes(x = factor(team), y = (level_score), fill = level)) + 
-      geom_bar(position = "stack", stat = "identity") + 
+      geom_bar(position = "stack", stat = "identity", 
+               color = ifelse(auto_tele$team %in% team_red_alliance, "red", "blue"),
+               size = 0.3
+               ) + 
       labs(title = "Level Summary", 
            x = "Team", y = "Coral score", fill = "Level") +
+
       scale_fill_manual(values=c("plum1",
                                  "plum2",
                                  "plum3",
@@ -199,7 +239,6 @@ tele_auto_graph <- function(raw, red_alliance = c(params$red1, params$red2, para
                                  "steelblue3",
                                  "steelblue",
                                  "steelblue4"))+
-      
       theme_bw() 
   }
 ggplotly(tele_auto_graph(raw,red_alliance,blue_alliance))
@@ -233,11 +272,13 @@ endgame_graph <- function(raw,
       values = c("blue", "red")
     ) +
     scale_fill_manual(
-      values = c("D" = "#008B8B", "S" = "#00CDCD", "P" = "darkslategray1"),
+      values = c("D" = "springgreen4", "S" = "olivedrab3", "P" = "#FFF68F"),
       breaks = c("Deep", "Shallow", "Park", "N/A")
       #theme(axis.text.x = element_text(colour = c(rep("red", 3), rep("blue", 3)))
     )+
-    guides(color = "none")
+    
+    guides(color = "none")+
+    theme_bw()
 
   #variable with alliance per team
   }
@@ -518,5 +559,24 @@ ggplot(column4, aes(x = `team`, y = level_score, fill = level)) +
   theme_bw()+
   coord_flip()
 
+
+```
+
+```{r}
+scouter_graph_output <- function(raw){
+  scout_df <- raw %>%
+    group_by(scout) %>%
+    summarise(count = n()) %>%
+    arrange(desc(count))
+  
+  scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
+  
+  ggplot(scout_df, aes(x = `scout`, y = count)) + 
+    geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
+      labs(title = "Scouter Summary", 
+           x = "Scouters", y = "Times Scouted") +
+      theme_bw()
+}
+ggplotly(scouter_graph_output(raw))
 
 ```
