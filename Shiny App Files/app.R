@@ -173,6 +173,7 @@ ui <- fluidPage(
                  plotOutput("alliance_auto_coral_graph_output"),
                  plotOutput("alliance_algae_bar_graph_output"),
                  plotOutput("alliance_endgame_graph_output"),
+                 plotOutput("alliance_all_graph_output"),
                  DTOutput("alliance_table")
                )
              )
@@ -460,7 +461,8 @@ server <- function(input, output, session) {
   
   
 #  ALGAE NET AND PROC GRAPH
-  algae_bar <- function(raw, red_alliance, blue_alliance) {
+  algae_bar <- function(raw, red_alliance = c(params$red1, params$red2, params$red3),
+                        blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
     
     algae <- raw %>%
       filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -490,7 +492,8 @@ server <- function(input, output, session) {
   
   
   #ENDGAME BAR GRAPH
-  endgame_graph <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+  endgame_graph <- function(raw, red_alliance = c(params$red1, params$red2, params$red3),
+                            blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
     
     end <- raw %>%
       filter(team %in% c(red_alliance, blue_alliance)) %>%
@@ -522,10 +525,74 @@ server <- function(input, output, session) {
   }
   
 
+  #ALL BAR GRAPH
+  long_column_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3),
+                                   blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
+    column4 <- raw %>%
+      filter(team %in% c(red_alliance, blue_alliance)) %>%
+      mutate(team = factor(team, c(red_alliance,blue_alliance) )) %>%
+      group_by(team) %>%
+      summarise(
+        match = n(),
+        auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+        auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+        auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+        auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+        move_pts = sum(move*3)/n(),
+        tele_coral_L1 = sum(coral_L1_num*2)/n(),
+        tele_coral_L2 = sum(coral_L2_num*3)/n(),
+        tele_coral_L3 = sum(coral_L3_num*4)/n(),
+        tele_coral_L4 = sum(coral_L4_num*5)/n(),
+        robot_net_score = sum(robot_net_score*4)/n(),
+        robot_proc_score = sum(proc_score*2.5)/n(),
+        
+        endgame_score = sum(ifelse(ending =="D", 12,
+                                   ifelse(ending =="S", 6,
+                                          ifelse(ending =="P", 2, 0)))
+        )/n(),
+        
+        avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
+          tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
+          robot_net_score + robot_proc_score +
+          endgame_score
+      ) %>%
+      
+      pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
+                            tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+                            robot_net_score, robot_proc_score,
+                            endgame_score), 
+                   names_to = "level", 
+                   values_to = "score")
+
+    ggplot(column4, aes(x = factor(team), y = score, fill = level)) + 
+      geom_bar(position = "stack", stat = "identity") + 
+      labs(title = "Scoring Summary", 
+           x = "Team", y = "Total Score with Coral", fill = "Level") +
+      scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
+                                   "#FFF68F","#FFC156","olivedrab3","springgreen4", 
+                                   "steelblue2","steelblue3","steelblue","steelblue4"),
+                        labels = c("auto_coral_L1" = "Auto Coral L1", 
+                                   "auto_coral_L2" = "Auto Coral L2",
+                                   "auto_coral_L3" = "Auto Coral L3", 
+                                   "auto_coral_L4" = "Auto Coral L4",
+                                   "move_pts" = "Move",
+                                   "tele_coral_L1" = "Tele Coral L1", 
+                                   "tele_coral_L2" = "Tele Coral L2", 
+                                   "tele_coral_L3" = "Tele Coral L3", 
+                                   "tele_coral_L4" = "Tele Coral L4", 
+                                   "endgame_score" = "Endgame", 
+                                   "robot_net_score" = "Net", 
+                                   "robot_proc_score" = "Processor")
+      )+
+      theme_bw()+
+      coord_flip()+
+    theme( 
+      axis.text.y = element_text(size = 15)
+    )
+  }
   
   
-  
-  
+
   output$field_image_output <- renderImage({
     img_src <- paste0("images/reefscapeField.png")  #Path to the image
     no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
@@ -623,7 +690,12 @@ server <- function(input, output, session) {
     
     output$alliance_endgame_graph_output <- renderPlot({
       endgame_graph(raw, selected_red_teams, selected_blue_teams)
-      })
+    })
+    
+    
+    output$alliance_all_graph_output <- renderPlot({
+      long_column_alliance(raw, selected_red_teams, selected_blue_teams)
+    })
     
     
     output$alliance_table <- renderDT({
@@ -800,6 +872,7 @@ server <- function(input, output, session) {
       ) +
       theme_bw() 
   }
+
   
   output$team_graph_output <- renderPlot({
     selected_team <- input$team_select
