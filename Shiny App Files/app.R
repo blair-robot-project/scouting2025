@@ -162,7 +162,10 @@ ui <- fluidPage(
                    pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
                  ),
                  #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Endgame Bar Graph")),
-                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary")
+                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
+                 imageOutput("field_image_output")
+                 
+                 
                ),
                mainPanel(
                  plotOutput("alliance_box_plot_output"),
@@ -351,8 +354,8 @@ server <- function(input, output, session) {
                                      blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
     
     boxplot <- raw %>%
-      filter(team %in% c(red_alliance, blue_alliance)) %>%
-      mutate(team = factor(team, c(red_alliance,blue_alliance) ))%>%
+      filter(team %in% c(blue_alliance,red_alliance)) %>%
+      mutate(team = factor(team, c(blue_alliance,red_alliance)))%>%
       
       mutate(total_coral_score = 
                (coral_L1_num*2) + (coral_L2_num*3) + 
@@ -456,15 +459,7 @@ server <- function(input, output, session) {
   }
   
   
-  
-  
-  
-
-  
-  
-  
 #  ALGAE NET AND PROC GRAPH
-
   algae_bar <- function(raw, red_alliance, blue_alliance) {
     
     algae <- raw %>%
@@ -527,6 +522,40 @@ server <- function(input, output, session) {
   }
   
 
+  
+  
+  
+  
+  output$field_image_output <- renderImage({
+    img_src <- paste0("images/reefscapeField.png")  #Path to the image
+    no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
+    
+    #Check if the image file exists
+    if (file.exists(img_src)) {
+      return(list(
+        src = img_src,
+        contentType = "image/png",
+        width = 380,
+        height = 750,
+        alt = paste("Field Image for Reefscape"),
+        style="display: block; margin-left: auto; margin-right: auto;"
+      ))
+    } else {
+      return(list(
+        src = no_img_available_src,
+        contentType = "image/jpg",
+        width = 350,
+        height = 350,
+        alt = paste("No Image Available"),
+        style="display: block; margin-left: auto; margin-right: auto;"
+      ))
+    }
+  }, deleteFile = FALSE)
+  
+  
+  
+  
+  
   
   #Server logic for generating alliance graph
   observeEvent(input$generate_graph, {
@@ -606,7 +635,6 @@ server <- function(input, output, session) {
     })
   
   
-
   
   #Single Team Tab
   #GRAPH GEN LOGIC-------------------------------------------
