@@ -188,7 +188,7 @@ ui <- fluidPage(
                    pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
                    pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
                  ),
-                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Endgame Bar Graph")),
+                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Level Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
                  actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
                  imageOutput("field_image_output")
                  
@@ -210,7 +210,7 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(
                  selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Algae Bar Graph", "Endgame Bar Graph")),
+                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
                  imageOutput("team_image_output")
               ),
                mainPanel(
@@ -246,8 +246,7 @@ server <- function(input, output, session) {
       summarise(
         match = n(),
         total_coral_score = sum(
-          (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + 
-            (coral_L1_num*2) + (coral_L2_num*3) + (coral_L3_num*4)+ (coral_L4_num*5)+move*3)/n(),
+          (auto_coral_L1_num*3) + (auto_coral_L2_num*4) + (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + (move*3))/n(),
         
         total_algae_score = sum(
           (robot_net_score*4) + (proc_score*2.5))/n(),
@@ -261,7 +260,7 @@ server <- function(input, output, session) {
       geom_point( color = "lightblue2")+
       geom_text( aes(label=team, vjust = 1.7 ))+
       labs(title = "Teams Performance Summary", 
-           x = "Auto + Tele Coral Points", y = "Total algae Points", fill = "Auto+End", size = "Endgame")
+           x = "Auto Coral Points", y = "Total algae Points", fill = "Auto+End", size = "Endgame")
     
   }
   
@@ -773,83 +772,78 @@ server <- function(input, output, session) {
       #coord_fixed(ratio = 20)
   }
   
-  #CORAL LEVEL
-  bar_graph_single <- function(raw, team_num) {
+  #TELE LEVEL
+  tele_graph_single <- function(raw, team_num) {
     
     bar <- raw %>%
       filter(team == team_num) %>%
       group_by(team) %>%
       summarize(
-        l1 = mean(coral_L1_num),
-        l2 = mean(coral_L2_num),
-        l3 = mean(coral_L3_num),
-        l4 = mean(coral_L4_num)
+        L1 = mean(coral_L1_num),
+        L2 = mean(coral_L2_num),
+        L3 = mean(coral_L3_num),
+        L4 = mean(coral_L4_num),
+        Net = mean(robot_net_score),
+        Proc = mean(proc_score)
       ) %>%
-      pivot_longer(cols = c(l4, l3, l2, l1), 
-                   names_to = "level", 
-                   values_to = "coral_num")
+      pivot_longer(cols = c(L4, L3, L2, L1, Net, Proc), 
+                   names_to = "type", 
+                   values_to = "points")
     
-    bar$level_score <- case_when(
-      bar$level == "l1" ~ bar$coral_num*2, 
-      bar$level == "l2" ~ bar$coral_num*3, 
-      bar$level == "l3" ~ bar$coral_num*4, 
-      bar$level == "l4" ~ bar$coral_num*5
+    bar$points_score <- case_when(
+      bar$type == "L1" ~ bar$points*2, 
+      bar$type == "L2" ~ bar$points*3, 
+      bar$type == "L3" ~ bar$points*4, 
+      bar$type == "L4" ~ bar$points*5,
+      bar$type == "Net" ~ bar$points*4,
+      bar$type == "Proc" ~ bar$points*6
     )
     
-    p <- ggplot(bar, aes(x = factor(team), y = level_score, fill = level)) + 
+    p <- ggplot(bar, aes(x = factor(team), y = points_score, fill = type)) + 
       geom_bar(position = "stack", stat = "identity", width = 0.3) + 
       labs(title = paste("Level Summary for Team", team_num), 
-           x = "Team", y = "Coral score", fill = "Level") +
-      scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy")) +
+           x = "Team", y = "Tele score", fill = "Points") +
+      scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy", "#008B8B","darkslategray2")) +
       theme_bw()
     
     return(p)
   }
   
-  #TELE AUTO CORAL
-  tele_auto_graph_single <- function(raw, team_num) {
-    
-    auto_tele <- raw %>%
+  #AUTO CORAL
+  auto_graph_single <- function(raw, team_num) {
+    #bouncer()
+    auto <- raw %>%
       filter(team == team_num) %>%
       group_by(team) %>%
       summarize(
         matches = n(),
         autoMove = mean(move),
-        l1 = mean(coral_L1_num),
-        l2 = mean(coral_L2_num),
-        l3 = mean(coral_L3_num),
-        l4 = mean(coral_L4_num),
         autol1 = mean(auto_coral_L1_num),
         autol2 = mean(auto_coral_L2_num),
         autol3 = mean(auto_coral_L3_num),
         autol4 = mean(auto_coral_L4_num)
       ) %>%
-      pivot_longer(cols = c(autoMove, l4, l3, l2, l1, autol1, autol2, autol3, autol4), 
-                   names_to = "level", 
-                   values_to = "coral_num")
+      pivot_longer(cols = c(autoMove, autol1, autol2, autol3, autol4), 
+                   names_to = "type", 
+                   values_to = "level")
     
-    auto_tele$level_score <- case_when(
-      auto_tele$level == "autoMove" ~ auto_tele$coral_num*3,
-      auto_tele$level == "l1" ~ auto_tele$coral_num*2, 
-      auto_tele$level == "l2" ~ auto_tele$coral_num*3, 
-      auto_tele$level == "l3" ~ auto_tele$coral_num*4, 
-      auto_tele$level == "l4" ~ auto_tele$coral_num*5,
-      auto_tele$level == "autol1" ~ auto_tele$coral_num*3,
-      auto_tele$level == "autol2" ~ auto_tele$coral_num*4,
-      auto_tele$level == "autol3" ~ auto_tele$coral_num*6,
-      auto_tele$level == "autol4" ~ auto_tele$coral_num*7
+    auto$level_score <- case_when(
+      auto$type == "autoMove" ~ auto$level*3,
+      auto$type == "autol1" ~ auto$level*3,
+      auto$type == "autol2" ~ auto$level*4,
+      auto$type == "autol3" ~ auto$level*6,
+      auto$type == "autol4" ~ auto$level*7
     )
     
-    ggplot(auto_tele, aes(x = factor(team), y = level_score, fill = level)) + 
+    ggplot(auto, aes(x = factor(team), y = level_score, fill = type)) + 
       geom_bar(position = "stack", stat = "identity", width = 0.3) + 
       labs(title = paste("Level Summary for Team", team_num), 
-           x = "Team", y = "Coral score", fill = "Level") +
-      scale_fill_manual(values=c("plum1","plum2","plum3","plum4", "#FFC156",
-                                 "steelblue2","steelblue3","steelblue","steelblue4"),
-                        labels=c("autoMove" = "Move", "l1" = "L1", "l2" = "L2", "l3" = "L3", "l4" = "L4", 
+           x = "Team", y = "Level score", fill = "Level") +
+      scale_fill_manual(values=c("plum1","plum2","plum3","plum4", "#FFC156"),
+                        labels=c("autoMove" = "Move",
                                  "autol1" = "Auto L1", "autol2" = "Auto L2", "autol3" = "Auto L3", "autol4" = "Auto L4")
                         ) +
-      theme_bw() 
+      theme_bw()
   }
 
   #ALGAE POINTS GRAPH
@@ -906,13 +900,13 @@ server <- function(input, output, session) {
     
     if (input$team_graph == "Overall Points Box Plot"){
       boxplot_graph_single(raw, selected_team)
-    } else if (input$team_graph == "Coral Level Bar Graph"){
-      bar_graph_single(raw, selected_team)
-    } else if (input$team_graph == "Auto + Tele Bar Graph"){
-      tele_auto_graph_single(raw, selected_team)
-    } else if (input$team_graph == "Algae Bar Graph"){
-      algae_bar_single(raw, selected_team)
-    } else if (input$team_graph == "Endgame Bar Graph"){
+    } else if (input$team_graph == "Auto Bar Graph"){
+      auto_graph_single(raw, selected_team)
+    } else if (input$team_graph == "Tele Bar Graph"){
+      tele_graph_single(raw, selected_team)
+    } #else if (input$team_graph == "Algae Bar Graph"){
+      #algae_bar_single(raw, selected_team)}
+    else if (input$team_graph == "Endgame Bar Graph"){
       endgame_graph_single(raw, selected_team)
     }
   })
