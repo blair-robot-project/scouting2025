@@ -116,9 +116,9 @@
           "formResetBehavior": "reset",
           "defaultValue": "",
           "choices": {
-            "R1": "Far",
-            "R2": "Middle",
-            "R3": "Close"
+            "F": "Far",
+            "M": "Middle",
+            "C": "Close"
           }
         },
         {
