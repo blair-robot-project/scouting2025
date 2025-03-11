@@ -381,7 +381,7 @@
           "description": "Things that made it so your robot could no longer function for the rest of the match",
           "type": "select",
           "required": true,
-          "code": "robot",
+          "code": "ded",
           "formResetBehavior": "reset",
           "defaultValue": "NA",
           "choices": {
