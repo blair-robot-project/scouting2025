@@ -35,15 +35,20 @@ coral_L1_num <- sample(0:24, size = n, replace = TRUE)
 coral_L2_num <- sample(0:12, size = n, replace = TRUE)
 coral_L3_num <- sample(0:12, size = n, replace = TRUE)
 coral_L4_num <- sample(0:12, size = n, replace = TRUE)
+coral_missed_num <- sample(0:12, size = n, replace = TRUE)
 #feex later
 
 
 climb_attempt <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))
 end_pos <- sample(c("No", "P", "S", "D"), size = n, replace = TRUE)
 climb_timing <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
+reef_foul <- sample(0:5, size = n, replace = TRUE)
+defense_ranking <- sample(c(5), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
-died_tipped <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(10, 90))
-card_color <- sample(c("Yellow", "No Card", "Red"), size = n, replace = TRUE, prob = c(10, 85, 5))
+died_tipped <- sample(c("NA", "cs", "ba", "di", "de", "t"), size = n, replace = TRUE)
+
+commentsMCQ <- sample(c("D, WB, WM, PP, W, BI, XLC", "WB, WM, PP, W, BI, XLC", "WM, PP, W, BI, XLC", "PP, W, BI, XLC", "W, BI, XLC", "BI, XLC", "XLC", "NA"), size = n, replace = TRUE, prob = c(5, 5, 5, 5, 5, 5, 5, 65))
+commentsFRQ <- sample(c("sample"), size = n, replace = TRUE, prob = 90)
 
 
 df <- data.frame(
@@ -67,12 +72,16 @@ df <- data.frame(
   coral_L2_num = coral_L2_num,
   coral_L3_num = coral_L3_num,
   coral_L4_num = coral_L4_num,
+  coral_miss = coral_missed_num,
   climb_attempt = climb_attempt,
   ending = end_pos,
   climb_time = climb_timing,
+  reef_fouls = reef_foul,
+  defense = defense_ranking,
   driver = driver_ranking,
   dead = died_tipped,
-  card = card_color
+  comments = commentsMCQ,
+  comments2 = commentsFRQ
 )
 
 write_csv(df, file = "made_up_data.csv")
