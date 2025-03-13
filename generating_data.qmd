@@ -11,15 +11,22 @@ library(tidyverse)
 ```{r}
 n <- 200
 
-scout_id <- sample(c("Gabriel", "Tinbite", "Mitchell", "Sophia", "Jack"), size = n, replace = TRUE)
+scout_id <- sample(c("Gabriel", "Tinbite", "Mitchell", "Sophia", "Jack"), 
+                   size = n, replace = TRUE)
 match_num <- rep(1:34, length.out = n, each = 6) #make not random when gabriel comes back
-robot_num <- sample(c("R1", "R2", "R3", "B1", "B2", "B3"), size = n, replace = TRUE)
+robot_num <- sample(c("R1", "R2", "R3", "B1", "B2", "B3"), 
+                    size = n, replace = TRUE)
 
 team_num <- sample(rep(449:498, times = 4))
 
-start_loc <- sample(c("Far", "Middle", "Close"), size = n, replace = TRUE)
-no_show <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(10, 90))
-move_bool <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))
+start_loc <- sample(c("Far", "Middle", "Close"), 
+                    size = n, replace = TRUE)
+no_show <- sample(c(TRUE, FALSE), 
+                  size = n, replace = TRUE, 
+                  prob = c(10, 90))
+move_bool <- sample(c(TRUE, FALSE), 
+                    size = n, replace = TRUE, 
+                    prob = c(90, 10))
 
 auto_coral_L1 <- sample(0:2, size = n, replace = TRUE)
 auto_coral_L2 <-sample(0:2, size = n, replace = TRUE)
@@ -39,53 +46,62 @@ coral_missed_num <- sample(0:12, size = n, replace = TRUE)
 #feex later
 
 
-climb_attempt <- sample(c(TRUE, FALSE), size = n, replace = TRUE, prob = c(90, 10))
-end_pos <- sample(c("No", "P", "S", "D"), size = n, replace = TRUE)
+climb_attempt <- sample(c(TRUE, FALSE), 
+                        size = n, replace = TRUE, 
+                        prob = c(90, 10))
+
+end_pos <- sample(c("No", "P", "S", "D"), 
+                  size = n, replace = TRUE)
+
 climb_timing <- sample(c(TRUE, FALSE), size = n, replace = TRUE)
 reef_foul <- sample(0:5, size = n, replace = TRUE)
 defense_ranking <- sample(c(5), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
-died_tipped <- sample(c("NA", "cs", "ba", "di", "de", "t"), size = n, replace = TRUE)
+died_tipped <- sample(c("NA", "cs", "ba", "di", "de", "t"), 
+                      size = n, replace = TRUE)
 
-commentsMCQ <- sample(c("1, 2, 3, 4, 5, 6, 0", "2, 3, 4, 5, 6, 0", "3, 4, 5, 6, 0", "4, 5, 6, 0", "5, 6, 0", "6, 0", "0"), size = n, replace = TRUE)
+commentsMCQ <- sample(c("1, 2, 3, 4, 5, 6, 0", "2, 3, 4, 5, 6, 0", 
+                        "3, 4, 5, 6, 0", "4, 5, 6, 0", "5, 6, 0", 
+                        "6, 0", "0"), 
+                      size = n, replace = TRUE)
+
 commentsFRQ <- sample(c("sample"), size = n, replace = TRUE, prob = 90)
 
 
 df <- data.frame(
-  scout = scout_id, 
-  match = match_num,
-  robot = robot_num,
-  team = team_num,
-  start = start_loc,
-  show = no_show,
-  move = move_bool,
-  auto_coral_L1_num = auto_coral_L1,
-  auto_coral_L2_num = auto_coral_L2,
-  auto_coral_L3_num = auto_coral_L3,
-  auto_coral_L4_num = auto_coral_L4,
-  robot_reef_removal = robot_reef_removed,
-  robot_algae_picked = robot_algae_intake,
-  robot_net_score = robot_net_scored,
-  robot_net_miss = robot_net_missed,
-  proc_score = proc_scored,
-  coral_L1_num = coral_L1_num,
-  coral_L2_num = coral_L2_num,
-  coral_L3_num = coral_L3_num,
-  coral_L4_num = coral_L4_num,
-  coral_miss = coral_missed_num,
-  climb_attempt = climb_attempt,
-  ending = end_pos,
-  climb_time = climb_timing,
-  reef_fouls = reef_foul,
-  defense = defense_ranking,
-  driver = driver_ranking,
-  dead = died_tipped,
-  comments = commentsMCQ,
-  comments2 = commentsFRQ
+    scout = scout_id, 
+    match = match_num,
+    robot = robot_num,
+    team = team_num,
+    start = start_loc,
+    show = no_show,
+    move = move_bool,
+    auto_coral_L1_num = auto_coral_L1,
+    auto_coral_L2_num = auto_coral_L2,
+    auto_coral_L3_num = auto_coral_L3,
+    auto_coral_L4_num = auto_coral_L4,
+    robot_reef_removal = robot_reef_removed,
+    robot_algae_picked = robot_algae_intake,
+    robot_net_score = robot_net_scored,
+    robot_net_miss = robot_net_missed,
+    proc_score = proc_scored,
+    coral_L1_num = coral_L1_num,
+    coral_L2_num = coral_L2_num,
+    coral_L3_num = coral_L3_num,
+    coral_L4_num = coral_L4_num,
+    coral_miss = coral_missed_num,
+    climb_attempt = climb_attempt,
+    ending = end_pos,
+    climb_time = climb_timing,
+    reef_fouls = reef_foul,
+    defense = defense_ranking,
+    driver = driver_ranking,
+    dead = died_tipped,
+    comments = commentsMCQ,
+    comments2 = commentsFRQ
 )
 
 write_csv(df, file = "made_up_data.csv")
-
 ```
 
 ```{r}
