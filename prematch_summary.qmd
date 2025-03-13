@@ -612,3 +612,27 @@ scouter_graph_output <- function(raw){
 ggplotly(scouter_graph_output(raw))
 
 ```
+
+```{r}
+
+team_num <- 449
+comments_df <- raw %>%
+  #filter(selected_team == team_num) %>%
+  group_by(449) %>%
+  summarise(
+    test = unlist(strsplit(comments,", "))
+  )
+    
+comments_df_counts <- comments_df %>% count(test)
+comments_df_counts <- comments_df_counts %>% arrange(desc(n))
+comments_df_counts$test <- factor(comments_df_counts$test, levels = comments_df_counts$test)
+
+
+#ggplot(column4, aes(x = `team`, y = level_score, fill = level)) + 
+ggplot(comments_df_counts, aes(x = `test`, y = n)) + 
+  geom_bar(position = "stack", stat = "identity", fill = "lightskyblue") + 
+  labs(title = "Scouter Summary", 
+       x = "Option", y = "Times Selected") +
+  coord_flip()+
+  theme_bw()
+```
