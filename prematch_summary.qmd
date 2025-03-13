@@ -642,10 +642,9 @@ ggplot(comments_df_counts, aes(x = `test`, y = n)) +
 toi = 465
 
 comments <- raw%>%
-
     group_by(team)%>%
   summarise(
-    wobbly = sum(grep("2", comments)),
+    wobbly = length(grep("2", comments)),
     wiffs = length(grep("4", comments)),
     `wobbly manip` = length(grep("1", comments)),
     `bad intake` = length(grep("5", comments)),

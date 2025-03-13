@@ -914,7 +914,7 @@ server <- function(input, output, session) {
   
   #COMMENTS TABLE
   comment_table_single <- function(raw, team_num){
-    
+    #browser()
     comments <- raw%>%
       group_by(team)%>%
       summarise(
