@@ -639,24 +639,32 @@ ggplot(comments_df_counts, aes(x = `test`, y = n)) +
 
 ```{r}
 
-toi = 449
+toi = 465
 
-comment_table<- function(raw, toi){
 comments <- raw%>%
 
     group_by(team)%>%
   summarise(
-    wobbly = length(grep("2", comments)),
+    wobbly = sum(grep("2", comments)),
     wiffs = length(grep("4", comments)),
     `wobbly manip` = length(grep("1", comments)),
     `bad intake` = length(grep("5", comments)),
     defense = length(grep("0", comments)),
-    `xtra long climb` = length(grep("6", comments)),
-    
-  )%>%
-filter(team == toi)
-
-gt(comments)
-}
+    `xtra long climb` = length(grep("6", comments))
+    )%>%
+  
+  pivot_longer(cols = c(wobbly,
+                        wiffs, 
+                        `wobbly manip`,
+                        `bad intake`,
+                        defense,
+                        `xtra long climb`), 
+               names_to = "com", 
+               values_to = "level")
+ggplot(comments, aes(x = com, y = level)) + 
+  geom_bar(position = "stack", stat = "identity", fill = "green") + 
+  labs(title = "Comments Summary", 
+       x = "Issues", y = "Frequency") +
+  theme_bw()
 
 ```

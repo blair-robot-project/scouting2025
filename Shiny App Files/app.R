@@ -913,9 +913,9 @@ server <- function(input, output, session) {
   }
   
   #COMMENTS TABLE
-  comment_table_single <- function(raw, toi){
+  comment_table_single <- function(raw, team_num){
+    
     comments <- raw%>%
-      
       group_by(team)%>%
       summarise(
         wobbly = length(grep("2", comments)),
@@ -923,13 +923,24 @@ server <- function(input, output, session) {
         `wobbly manip` = length(grep("1", comments)),
         `bad intake` = length(grep("5", comments)),
         defense = length(grep("0", comments)),
-        `xtra long climb` = length(grep("6", comments)),
-        
+        `xtra long climb` = length(grep("6", comments))
       )%>%
-      filter(team == toi)
+      
+      pivot_longer(cols = c(wobbly,
+                            wiffs, 
+                            `wobbly manip`,
+                            `bad intake`,
+                            defense,
+                            `xtra long climb`), 
+                   names_to = "com", 
+                   values_to = "level")
+    ggplot(comments, aes(x = com, y = level)) + 
+      geom_bar(position = "stack", stat = "identity", fill = "#EE3B3B") + 
+      labs(title = "Comments Summary", 
+           x = "Issues", y = "Frequency") +
+      theme_bw()
     
-    gt(comments)
-  }
+}
   
   
   team_comments <- reactive({
