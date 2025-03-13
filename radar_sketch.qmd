@@ -22,111 +22,97 @@ raw <- read_csv("made_up_data.csv")
 
 # mldf - "match level data frame"
 mldf <- raw %>%
-  mutate(
-    auto_coral_l1_pts = auto_coral_L1_num * 3, 
-    auto_coral_l2_pts = auto_coral_L2_num * 4, 
-    auto_coral_l3_pts = auto_coral_L3_num * 6, 
-    auto_coral_l4_pts = auto_coral_L4_num * 7, 
-    net_pts = robot_net_score * 4, 
-    net_missed = robot_net_miss*4,
-    processor_value = proc_score * 2.5, 
-    coral_l1_pts = coral_L1_num * 2, 
-    coral_l2_pts = coral_L2_num * 3, 
-    coral_l3_pts = coral_L3_num * 4, 
-    coral_l4_pts = coral_L4_num * 5, 
-    endgame_pts = case_when(
-      ending == "P" ~ 2, 
-      ending == "S" ~ 6, 
-      ending == "D" ~ 12, 
-      .default = 0
-      ),
-    
-    total_pts = (3 * move) + auto_coral_l1_pts + auto_coral_l2_pts + 
-      auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
-      coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts,
-    
-    #auto
-    total_auto_pts = auto_coral_l1_pts + auto_coral_l2_pts + 
-      auto_coral_l3_pts + auto_coral_l4_pts +(3 * move),
-    
-    
-    #tele
-    total_algae_pts = net_pts + processor_value,
-    
-    total_tele_coral_pts =  coral_l1_pts + coral_l2_pts + 
-      coral_l3_pts + coral_l4_pts,
-    
-  total_tele_pts =  total_tele_coral_pts +total_algae_pts,
-  
-  #algae
-  algae_net_shots = sum(net_pts + net_missed)
-  
-  
+    mutate(
+        auto_coral_l1_pts = auto_coral_L1_num * 3, 
+        auto_coral_l2_pts = auto_coral_L2_num * 4, 
+        auto_coral_l3_pts = auto_coral_L3_num * 6, 
+        auto_coral_l4_pts = auto_coral_L4_num * 7, 
+        net_pts = robot_net_score * 4, 
+        net_missed = robot_net_miss*4,
+        processor_value = proc_score * 2.5, 
+        coral_l1_pts = coral_L1_num * 2, 
+        coral_l2_pts = coral_L2_num * 3, 
+        coral_l3_pts = coral_L3_num * 4, 
+        coral_l4_pts = coral_L4_num * 5, 
+        endgame_pts = case_when(
+            ending == "P" ~ 2, 
+            ending == "S" ~ 6, 
+            ending == "D" ~ 12, 
+            .default = 0
+        ),
+        total_pts = (3 * move) + auto_coral_l1_pts + auto_coral_l2_pts + 
+            auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + 
+            coral_l2_pts + coral_l3_pts + coral_l4_pts + net_pts + 
+            processor_value + endgame_pts,
+        
+        #auto
+        total_auto_pts = auto_coral_l1_pts + auto_coral_l2_pts + 
+            auto_coral_l3_pts + auto_coral_l4_pts +(3 * move),
+        #tele
+        total_algae_pts = net_pts + processor_value,
+        total_tele_coral_pts =  coral_l1_pts + coral_l2_pts + 
+            coral_l3_pts + coral_l4_pts,
+        total_tele_pts =  total_tele_coral_pts +total_algae_pts,
+        #algae
+        algae_net_shots = sum(net_pts + net_missed)
   )
 
 # tldf - "team level data frame"
 tldf <- mldf %>%
-  group_by(team) %>%
-  summarize(
-    
-    #total points
-    total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
-    total_pts_median = round(median(total_pts, na.rm = TRUE), digits =2),
-    total_pts_sd = round(sd(total_pts, na.rm = TRUE), digits =2), 
-    total_pts_max = round(max(total_pts, na.rm = TRUE), digits =2),
-       
-    
-    #coral
-     coral_pts_mean = round(mean(coral_l1_pts + coral_l2_pts + coral_l3_pts + 
-                             coral_l4_pts, na.rm = TRUE), digits =2), 
-    
-     l1_pts_mean = round(mean(coral_l1_pts, na.rm = TRUE), digits = 2), 
-     l2_pts_mean = round(mean(coral_l2_pts, na.rm = TRUE), digits = 2), 
-     l3_pts_mean = round(mean(coral_l3_pts, na.rm = TRUE), digits = 2), 
-     l4_pts_mean = round(mean(coral_l4_pts, na.rm = TRUE), digits = 2), 
-      # % in levels
-     l1_pct_mean = round(mean(coral_l1_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-     l2_pct_mean = round(mean(coral_l2_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-     l3_pct_mean = round(mean(coral_l3_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-     l4_pct_mean = round(mean(coral_l4_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-    
-    
-    #teleop
-    tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
-    tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
-    tele_pts_sd = round(sd(total_tele_pts, na.rm = TRUE), digits = 2), 
-    tele_pts_max = round(max(total_tele_pts, na.rm = TRUE), digits = 2), 
-               
-    
-    #auto
-    auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
-    auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
-    auto_pts_sd = round(sd(total_auto_pts, na.rm = TRUE), digits = 2),
-    auto_pts_max = round(max(total_auto_pts, na.rm = TRUE),digits =2),  
-      
-    
-    #algae
-    algae_pts_mean =round(mean(net_pts + processor_value, na.rm = TRUE), digits=2),
-    algae_pts_median = round(median(net_pts + processor_value, na.rm = TRUE), digits = 2),
-    algae_pts_sd = round(sd(net_pts + processor_value, na.rm = TRUE), digits =2),
-    algae_pts_max = round(max(net_pts + processor_value, na.rm = TRUE), digits =2), 
-
-
-    
-    #endgame
-    endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
-    endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
-    endgame_pts_sd = round(sd(endgame_pts, na.rm = TRUE), digits =2),
-    endgame_pts_max = round(max(endgame_pts, na.rm = TRUE), digits =2),
-    
-    
-    # you would put many more calculations here!
-    #algae net pct
-    #algae remove data?
-    
-    algae_remove_pct = sum(c(robot_reef_removal))/n()
-    
-  )
+    group_by(team) %>%
+    summarize(
+        #total points
+        total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
+        total_pts_median = round(median(total_pts, na.rm = TRUE), digits =2),
+        total_pts_sd = round(sd(total_pts, na.rm = TRUE), digits =2), 
+        total_pts_max = round(max(total_pts, na.rm = TRUE), digits =2),
+        #coral
+        coral_pts_mean = round(
+            mean(coral_l1_pts + coral_l2_pts + coral_l3_pts + 
+                     coral_l4_pts, na.rm = TRUE), 
+            digits = 2), 
+        l1_pts_mean = round(mean(coral_l1_pts, na.rm = TRUE), digits = 2), 
+        l2_pts_mean = round(mean(coral_l2_pts, na.rm = TRUE), digits = 2), 
+        l3_pts_mean = round(mean(coral_l3_pts, na.rm = TRUE), digits = 2), 
+        l4_pts_mean = round(mean(coral_l4_pts, na.rm = TRUE), digits = 2), 
+        # % in levels
+        l1_pct_mean = round(mean(coral_l1_pts, na.rm = TRUE) / 
+                                coral_pts_mean * 100, digits = 2), 
+        l2_pct_mean = round(mean(coral_l2_pts, na.rm = TRUE) / 
+                                coral_pts_mean*100, digits = 2), 
+        l3_pct_mean = round(mean(coral_l3_pts, na.rm = TRUE) / 
+                                coral_pts_mean*100, digits = 2), 
+        l4_pct_mean = round(mean(coral_l4_pts, na.rm = TRUE) / 
+                                coral_pts_mean*100, digits = 2), 
+        #teleop
+        tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
+        tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
+        tele_pts_sd = round(sd(total_tele_pts, na.rm = TRUE), digits = 2), 
+        tele_pts_max = round(max(total_tele_pts, na.rm = TRUE), digits = 2), 
+        
+        #auto
+        auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
+        auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
+        auto_pts_sd = round(sd(total_auto_pts, na.rm = TRUE), digits = 2),
+        auto_pts_max = round(max(total_auto_pts, na.rm = TRUE),digits =2),  
+        
+        #algae
+        algae_pts_mean = round(mean(net_pts + processor_value, na.rm = TRUE), digits=2),
+        algae_pts_median = round(median(net_pts + processor_value, na.rm = TRUE), digits = 2),
+        algae_pts_sd = round(sd(net_pts + processor_value, na.rm = TRUE), digits =2),
+        algae_pts_max = round(max(net_pts + processor_value, na.rm = TRUE), digits =2), 
+        
+        #endgame
+        endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
+        endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
+        endgame_pts_sd = round(sd(endgame_pts, na.rm = TRUE), digits =2),
+        endgame_pts_max = round(max(endgame_pts, na.rm = TRUE), digits =2),
+        
+        # you would put many more calculations here!
+        #algae net pct
+        #algae remove data?
+        algae_remove_pct = sum(c(robot_reef_removal))/n()
+    )
 
 ```
 
@@ -135,25 +121,21 @@ tldf <- mldf %>%
 # devtools::install_github("ricardo-bion/ggradar")
 library(ggradar)
 
-
 radar_plot <- tldf
-   viz <- tldf %>%
+
+viz <- tldf %>%
     filter(team == 449) %>%
-    select(auto_pts_mean, endgame_pts_mean, algae_pts_mean, algae_remove_pct, coral_pts_mean)
-  
-   standardize <- function(v){
+    select(auto_pts_mean, endgame_pts_mean, algae_pts_mean, 
+           algae_remove_pct, coral_pts_mean)
+
+standardize <- function(v){
     return(v - mean(v)/ sd(v))
-  } 
- 
-     
-   viz2 <- apply(viz, 2, standardize)
-   
-   
-    plt <- ggradar(viz2)
-  
-  
-  print(plt)
+} 
 
 
+viz2 <- apply(viz, 2, standardize)
 
+plt <- ggradar(viz2)
+
+print(plt)
 ```
