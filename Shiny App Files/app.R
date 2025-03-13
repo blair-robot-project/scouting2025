@@ -914,7 +914,7 @@ server <- function(input, output, session) {
   
   #COMMENTS MCQ 
   comments_MCQ <- function(raw, team_num){
-    browser()
+    #browser()
     comments_df <- raw %>%
       filter(team == team_num) %>%
       group_by(team, comments) %>%
