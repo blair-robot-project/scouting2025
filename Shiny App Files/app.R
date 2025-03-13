@@ -200,7 +200,7 @@ ui <- fluidPage(
              sidebarLayout(
                sidebarPanel(
                  selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
+                 selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments")),
                  imageOutput("team_image_output")
               ),
                mainPanel(
@@ -883,6 +883,28 @@ server <- function(input, output, session) {
       ) +
       theme_bw() 
   }
+  
+  #COMMENTS MCQ 
+  comments_MCQ <- function(raw, team_num){
+    browser()
+    comments_df <- raw %>%
+      filter(team == team_num) %>%
+      group_by(team, comments) %>%
+      summarise(
+        options = unlist(strsplit(comments,", "))
+      )
+    
+    comments_df_counts <- comments_df %>% count(options)
+    comments_df_counts <- comments_df_counts %>% arrange(desc(n))
+    comments_df_counts$options <- factor(comments_df_counts$options, levels = comments_df_counts$options)
+    
+    ggplot(comments_df_counts, aes(x = `options`, y = n)) + 
+      geom_bar(position = "stack", stat = "identity", fill = "lightskyblue") + 
+      labs(title = "Comments Summary", 
+           x = "Option", y = "Times Selected") +
+      coord_flip()+
+      theme_bw()
+  }
 
   
   output$team_graph_output <- renderPlot({
@@ -894,10 +916,10 @@ server <- function(input, output, session) {
       auto_graph_single(raw, selected_team)
     } else if (input$team_graph == "Tele Bar Graph"){
       tele_graph_single(raw, selected_team)
-    } #else if (input$team_graph == "Algae Bar Graph"){
-      #algae_bar_single(raw, selected_team)}
-    else if (input$team_graph == "Endgame Bar Graph"){
+    } else if (input$team_graph == "Endgame Bar Graph"){
       endgame_graph_single(raw, selected_team)
+    } else if (input$team_graph == "Comments"){
+      comments_MCQ(raw, selected_team)
     }
   })
   
