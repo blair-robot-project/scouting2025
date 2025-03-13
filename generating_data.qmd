@@ -47,7 +47,7 @@ defense_ranking <- sample(c(5), size = n, replace = TRUE)
 driver_ranking <- sample(c(5), size = n, replace = TRUE)
 died_tipped <- sample(c("NA", "cs", "ba", "di", "de", "t"), size = n, replace = TRUE)
 
-commentsMCQ <- sample(c("D, WB, WM, PP, W, BI, XLC", "WB, WM, PP, W, BI, XLC", "WM, PP, W, BI, XLC", "PP, W, BI, XLC", "W, BI, XLC", "BI, XLC", "XLC", "NA"), size = n, replace = TRUE, prob = c(5, 5, 5, 5, 5, 5, 5, 65))
+commentsMCQ <- sample(sample(0:6), size = n, replace = TRUE)
 commentsFRQ <- sample(c("sample"), size = n, replace = TRUE, prob = 90)
 
 
