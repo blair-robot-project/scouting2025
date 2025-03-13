@@ -912,27 +912,25 @@ server <- function(input, output, session) {
       theme_bw() 
   }
   
-  #COMMENTS MCQ 
-  comments_MCQ <- function(raw, team_num){
-    #browser()
-    comments_df <- raw %>%
-      filter(team == team_num) %>%
-      group_by(team, comments) %>%
+  #COMMENTS TABLE
+  comment_table_single <- function(raw, toi){
+    comments <- raw%>%
+      
+      group_by(team)%>%
       summarise(
-        options = unlist(strsplit(comments,", "))
-      )
+        wobbly = length(grep("2", comments)),
+        wiffs = length(grep("4", comments)),
+        `wobbly manip` = length(grep("1", comments)),
+        `bad intake` = length(grep("5", comments)),
+        defense = length(grep("0", comments)),
+        `xtra long climb` = length(grep("6", comments)),
+        
+      )%>%
+      filter(team == toi)
     
-    comments_df_counts <- comments_df %>% count(options)
-    comments_df_counts <- comments_df_counts %>% arrange(desc(n))
-    comments_df_counts$options <- factor(comments_df_counts$options, levels = comments_df_counts$options)
-    
-    ggplot(comments_df_counts, aes(x = `options`, y = n)) + 
-      geom_bar(position = "stack", stat = "identity", fill = "lightskyblue") + 
-      labs(title = "Comments Summary", 
-           x = "Option", y = "Times Selected") +
-      coord_flip()+
-      theme_bw()
+    gt(comments)
   }
+  
   
   team_comments <- reactive({
     comments_data <- raw() %>%
@@ -971,9 +969,9 @@ server <- function(input, output, session) {
       tele_graph_single(raw, selected_team)
     } else if (input$team_graph == "Endgame Bar Graph"){
       endgame_graph_single(raw, selected_team)
-    } else if (input$team_graph == "Comments"){
-      comments_MCQ(raw, selected_team)
-    }
+    }else if (input$team_graph == "Comments"){
+      comment_table_single(raw, selected_team)
+    } 
   })
   
   output$scouter_graph_output <- renderPlot({

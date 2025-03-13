@@ -399,13 +399,13 @@
           "required": false,
           "code": "gco",
           "choices": {
-            "D": "Played Defense",
-            "WB": "Wobbly Bot",
-            "WM": "Wobbly Manip",
-            "MP": "Many Penalties",
-            "W": "Whiffs",
-            "BI": "Bad Intake",
-            "XLC": "Extra Long Climb(~15-20 secs)"
+            "0": "Played Defense",
+            "1": "Wobbly Bot",
+            "2": "Wobbly Manip",
+            "3": "Many Penalties",
+            "4": "Whiffs",
+            "5": "Bad Intake",
+            "6": "Extra Long Climb(~15-20 secs)"
           },
           "formResetBehavior": "reset"
         },
