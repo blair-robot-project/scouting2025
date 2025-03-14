@@ -74,11 +74,11 @@ boxplot_graph(raw,red_alliance,blue_alliance)
 BUBBLE GRAPH OF EVERYTHING
 
 ```{r}
-bubble_graph <- function(raw, 
-                         team_red_alliance = 
-                             c(params$red1, params$red2, params$red3), 
-                         team_blue_alliance= 
-                             c(params$blue1, params$blue2, params$blue3)) {
+# bubble_graph <- function(raw, 
+#                          team_red_alliance = 
+#                              c(params$red1, params$red2, params$red3), 
+#                          team_blue_alliance= 
+#                              c(params$blue1, params$blue2, params$blue3)) {
     bubble <- raw%>%
         group_by(team)%>%
         summarise(
@@ -91,22 +91,32 @@ bubble_graph <- function(raw,
                                         coral_L2_num*3 + 
                                         coral_L3_num*4 + 
                                         coral_L4_num*5)/n(),
-            total_algae_score = sum(robot_net_score*4 + proc_score*6)/n(),
+            
+            total_coral_cycle =sum(auto_coral_L1_num +
+                                        auto_coral_L2_num + 
+                                        auto_coral_L3_num + 
+                                        auto_coral_L4_num +
+                                        coral_L1_num +
+                                        coral_L2_num + 
+                                        coral_L3_num + 
+                                        coral_L4_num)/n(),
+            
             endgame_score = sum(ifelse(ending =="D", 12,
                                        ifelse(ending =="S", 6,  
-                                              ifelse(ending =="P", 2, 0))))/n(), 
-            avg_score = total_algae_score+total_coral_score+endgame_score)
-  
-    ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_score)) +
+                                              ifelse(ending =="P", 2, 0))))/n() 
+            
+)
+    ggplot(bubble, aes(x=total_coral_score, y=total_coral_cycle, 
+                       size = endgame_score)) +
         geom_point( color = "lightblue2")+
         geom_text( aes(label=team, vjust = 1.7 ))+
         labs(title = "Teams Performance Summary", 
              x = "Auto + Tele Coral Points", 
-             y = "Total algae Points", 
-             fill = "Auto+End", 
-             size = "Endgame")
-}
-ggplotly(bubble_graph(raw,red_alliance,blue_alliance))
+             y = "Total coral cycle", 
+             size = "Endgame")+
+        theme_bw()
+#}
+#ggplotly(bubble_graph(raw,red_alliance,blue_alliance))
 
 ```
 
@@ -229,7 +239,8 @@ tele_auto_graph <- function(raw,
     
     ggplot(auto_tele, aes(x = factor(team), y = total, fill = level)) + 
         geom_bar(position = "stack", stat = "identity", 
-                 color = ifelse(auto_tele$team %in% team_red_alliance, "red", "blue"),
+                 color = ifelse(auto_tele$team %in% team_red_alliance,
+                                "red", "blue"),
                  size = 0.3
         ) + 
         labs(title = "Coral + Move Summary", 

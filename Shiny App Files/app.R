@@ -8,10 +8,10 @@ library(tidyverse)
 library(shinythemes)
 
 data_dir <- "data files"
-data_file <- paste0(data_dir, "/Severn/pre-severn.csv")
+data_file <- paste0(data_dir, "/GlenAllen/match_data_glen_allen.csv")
 #data_file <- paste0(data_dir, "/match_data_glen_allen.csv")
-event_schedule_file <- paste0(data_dir, "/2025vagle_match_info.csv")
-teams_file <- paste0(data_dir, "/Severn/pre-severn_teams.csv")
+event_schedule_file <- paste0(data_dir, "/GlenAllen/2025vagle_match_info.csv")
+teams_file <- paste0(data_dir, "/GlenAllen/teams_glen_allen.csv")
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
@@ -248,20 +248,38 @@ server <- function(input, output, session) {
         group_by(team)%>%
         summarise(
             match = n(),
-            total_coral_score = sum((auto_coral_L1_num*3) + (auto_coral_L2_num*4) + 
-                                    (auto_coral_L3_num*6) + (auto_coral_L4_num*7) + (move*3))/n(),
+            total_coral_score = sum((auto_coral_L1_num*3) + 
+                                    (auto_coral_L2_num*4) + 
+                                    (auto_coral_L3_num*6) + 
+                                    (auto_coral_L4_num*7) + 
+                                    (coral_L1_num*2) +
+                                    (coral_L2_num*3) + 
+                                    (coral_L3_num*4) +
+                                    (coral_L4_num*5) 
+                                    )/n(),
                 
-            total_algae_score = sum((robot_net_score*4) + (proc_score*2.5))/n(),
+            total_coral_cycle =sum(auto_coral_L1_num +
+                                       auto_coral_L2_num + 
+                                       auto_coral_L3_num + 
+                                       auto_coral_L4_num +
+                                       coral_L1_num +
+                                       coral_L2_num + 
+                                       coral_L3_num + 
+                                       coral_L4_num)/n(),
+            
             endgame_score = sum(ifelse(ending =="D", 12, 
                                 ifelse(ending =="S",6,
-                                ifelse(ending =="P", 2, 0))))/n(),
-            avg_score = total_algae_score+total_coral_score+endgame_score
+                                ifelse(ending =="P", 2, 0))))/n()
+            
         )
-        ggplot(bubble, aes(x=total_coral_score, y=total_algae_score, size = endgame_score)) +
+        ggplot(bubble, aes(x=total_coral_score, y=total_coral_cycle, 
+                           size = endgame_score)) +
             geom_point( color = "lightblue2")+
             geom_text( aes(label=team, vjust = 1.7 ))+
             labs(title = "Teams Performance Summary", 
-                 x = "Auto Coral Points", y = "Total algae Points", fill = "Auto+End", size = "Endgame")
+                 x = "Auto + Tele Coral Points", y = "Auto + Tele Coral Cycles", 
+                 size = "Endgame")+
+            theme_bw()
     }
     
     long_column <- function(raw) {
