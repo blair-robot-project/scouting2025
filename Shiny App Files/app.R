@@ -220,8 +220,8 @@ ui <- fluidPage(
                         mainPanel(
                             plotOutput("team_graph_output"),
                             DTOutput("team_data_row"),
-                            h3("Comments"),
-                            DTOutput("comments_list")
+                            h3("Comments")#,
+                            #DTOutput("comments_list")
                             )
                         )
                     ),
