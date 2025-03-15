@@ -326,7 +326,6 @@ server <- function(input, output, session) {
         column4$team <- factor(column4$team, 
                                levels = unique_teams$team, 
                                ordered = TRUE)
-        
         column4$level_score <- column4$score  # Simplified since case_when wasn't changing values
         
         ggplot(column4, aes(x = team, y = level_score, fill = level)) + 

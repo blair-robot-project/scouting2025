@@ -2,7 +2,7 @@ scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_
 BH,1,R3,2106,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,7,2,TRUE,D,FALSE,0,0,3,NA,"1,4",
 EC,1,B3,404,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,TRUE,P,FALSE,0,0,4,NA,,Only algae
 CL,1,B2,10679,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,5,0,0,0,1,FALSE,No,FALSE,0,0,2,NA,1,
-GL,1,B1,7880,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,2,2,NA,,"Felt like smth went wrong, the bot felt unnaturally slow and clunky"
+GL,1,B1,7886,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,2,2,NA,,"Felt like smth went wrong, the bot felt unnaturally slow and clunky"
 Arman N,1,R1,7770,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,3,1,2,0,FALSE,P,FALSE,0,0,2,NA,BI,
 SBS,1,R2,5587,C,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,1,NA,,
 Arman N,2,R1,3714,,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,
@@ -94,7 +94,7 @@ BH,16,B3,1811,C,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,4,1,0,0,0,FALSE,No,FALSE,0,0
 SBS,16,R2,9403,C,FALSE,FALSE,0,0,0,0,TRUE,FALSE,0,0,0,1,1,1,0,0,FALSE,No,FALSE,0,0,2,NA,,
 LJ,16,B2,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,3,1,FALSE,P,FALSE,0,0,3,NA,,Long time to align
 GL,16,B1,449,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,6,6,1,2,FALSE,P,FALSE,0,0,5,NA,,449!! Absolute cinema
-AX,16,R3,10675,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,3,FALSE,No,FALSE,0,0,3,NA,,"Sat in the wrong barge, did not park in correct color"
+AX,16,R3,10679,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,3,FALSE,No,FALSE,0,0,3,NA,,"Sat in the wrong barge, did not park in correct color"
 BH,17,B3,3748,C,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,1,3,2,0,2,FALSE,P,FALSE,0,0,3,NA,,
 AW,17,R1,3793,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,0,0,0,FALSE,P,FALSE,0,0,2,NA,,
 LJ,17,B2,10449,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,1,FALSE,P,FALSE,0,0,2,NA,,"Kitbot, struggled to move around alliance partners, coral landed in robot so robot couldn41391t play for about a minute"
@@ -214,7 +214,7 @@ SBS,36,B2,339,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,2,2,0,0,FALSE,No,FALSE,0,
 BH,36,R1,10679,,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,7,0,0,0,2,FALSE,P,FALSE,0,0,2,NA,,
 AW,36,R2,4541,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,5,3,FALSE,P,FALSE,0,0,4,NA,,"Good intake, but slow elevator"
 Ashwin,36,R3,8622,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,5,2,0,0,FALSE,No,FALSE,0,0,2,NA,5,"Took a long time to attach corals, did nothing auto"
-LJ,36,B3,2537,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,2,2,FALSE,P,FALSE,0,0,3,NA,2,Every tele op shot attempted except 1 was L4
+LJ,36,B3,2537,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,2,2,FALSE,P, FALSE,0,0,3,NA,2,Every tele op shot attempted except 1 was L4
 NL,37,B1,9403,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,6,1,0,0,0,FALSE,P,FALSE,0,0,3,NA,5,
 Ashwin,37,R3,5587,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,0,0,FALSE,No,FALSE,0,0,1,NA,"1,5,4",
 AW,37,R2,10449,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,3,cs,,"Touched blue cages, briefly tried defense towards the end"
