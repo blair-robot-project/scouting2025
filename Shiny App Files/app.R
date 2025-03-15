@@ -9,9 +9,8 @@ library(shinythemes)
 
 data_dir <- "data files"
 data_file <- paste0(data_dir, "/GlenAllen/match_data_glen_allen.csv")
-#data_file <- paste0(data_dir, "/match_data_glen_allen.csv")
-event_schedule_file <- paste0(data_dir, "/GlenAllen/2025vagle_match_info.csv")
-teams_file <- paste0(data_dir, "/GlenAllen/teams_glen_allen.csv")
+event_schedule_file <- paste0(data_dir, "/Severn/match_schedule.csv")
+teams_file <- paste0(data_dir, "/Severn/teams_severn.csv")
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
@@ -339,8 +338,8 @@ server <- function(input, output, session) {
                                          "plum4",
                                          "#FFF68F",
                                          "#FFC156", 
-                                         "#008B8B",
-                                         "darkslategray2",
+                                         "olivedrab3",
+                                         "springgreen4", 
                                          "steelblue2",
                                          "steelblue3",
                                          "steelblue",
@@ -613,10 +612,8 @@ server <- function(input, output, session) {
             labs(title = "Scoring Summary", 
                  x = "Team", y = "Total Score with Coral", fill = "Level") +
             scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
-                                         "#FFF68F","#FFC156","#008B8B",
-                                         "darkslategray2", "steelblue2",
-                                         "steelblue3","steelblue",
-                                         "steelblue4"),
+                                         "#FFF68F","#FFC156","olivedrab3","springgreen4", 
+                                         "steelblue2","steelblue3","steelblue","steelblue4"),
                               labels = c("auto_coral_L1" = "Auto Coral L1", 
                                          "auto_coral_L2" = "Auto Coral L2",
                                          "auto_coral_L3" = "Auto Coral L3", 
