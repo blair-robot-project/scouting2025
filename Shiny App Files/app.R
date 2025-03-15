@@ -9,8 +9,8 @@ library(shinythemes)
 
 data_dir <- "data files"
 data_file <- paste0(data_dir, "/Severn/pre-severn.csv")
-event_schedule_file <- paste0(data_dir, "/Severn/match_schedule.csv")
-teams_file <- paste0(data_dir, "/Severn/teams_severn.csv")
+event_schedule_file <- paste0(data_dir, "/Severn/schedule.csv")
+teams_file <- paste0(data_dir, "/Severn/teams.csv")
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
