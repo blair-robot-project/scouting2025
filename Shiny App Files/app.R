@@ -8,7 +8,7 @@ library(tidyverse)
 library(shinythemes)
 
 data_dir <- "data files"
-data_file <- paste0(data_dir, "/Severn/pre-severn.csv")
+data_file <- paste0(data_dir, "/Severn/data.csv")
 event_schedule_file <- paste0(data_dir, "/Severn/schedule.csv")
 teams_file <- paste0(data_dir, "/Severn/teams.csv")
 
