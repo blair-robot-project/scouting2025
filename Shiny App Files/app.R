@@ -8,7 +8,7 @@ library(tidyverse)
 library(shinythemes)
 
 data_dir <- "data files"
-data_file <- paste0(data_dir, "/GlenAllen/match_data_glen_allen.csv")
+data_file <- paste0(data_dir, "/Severn/pre-severn.csv")
 event_schedule_file <- paste0(data_dir, "/Severn/match_schedule.csv")
 teams_file <- paste0(data_dir, "/Severn/teams_severn.csv")
 
@@ -911,6 +911,7 @@ server <- function(input, output, session) {
     comment_table_single <- function(raw, team_num){
         comments <- raw%>%
             group_by(team)%>%
+            filter(team==team_num)%>%
             summarise(
                 wobbly = length(grep("2", comments)),
                 wiffs = length(grep("4", comments)),
