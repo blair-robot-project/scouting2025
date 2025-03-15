@@ -196,7 +196,7 @@ ui <- fluidPage(
                                     ),
                                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Level Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
                                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
-                                #imageOutput("field_image_output")
+                                imageOutput("field_image_output")
                                 ),
                             mainPanel(
                                 plotOutput("alliance_box_plot_output"),
@@ -566,6 +566,33 @@ server <- function(input, output, session) {
             ) +
             theme_bw() 
     }
+    
+    output$field_image_output <- renderImage({
+        img_src <- paste0("images/reefscapeField.png")  #Path to the image
+        no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
+        
+        #Check if the image file exists
+        if (file.exists(img_src)) {
+            return(list(
+                src = img_src,
+                contentType = "image/png",
+                width = 380,
+                height = 750,
+                alt = paste("Field Image for Reefscape"),
+                style="display: block; margin-left: auto; margin-right: auto;"
+            ))
+        } else {
+            return(list(
+                src = no_img_available_src,
+                contentType = "image/jpg",
+                width = 350,
+                height = 350,
+                alt = paste("No Image Available"),
+                style="display: block; margin-left: auto; margin-right: auto;"
+            ))
+        }
+    }, deleteFile = FALSE)
+    
     
     
     #ALL BAR GRAPH
