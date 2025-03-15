@@ -221,7 +221,7 @@ ui <- fluidPage(
                             plotOutput("team_graph_output"),
                             DTOutput("team_data_row"),
                             h3("Comments"),
-                            uiOutput("comments_table")
+                            DTOutput("comments_list")
                             )
                         )
                     ),
@@ -935,29 +935,19 @@ server <- function(input, output, session) {
     
     
     team_comments <- reactive({
-        comments_data <- raw() %>%
-            filter(team == input$team) %>%
-            pull(commentsOpen)  
+        comments_data <- raw %>%
+            filter(team == input$team_select) %>%
+            select(commentOpen)  
         if (length(comments_data) > 0) {
             print(comments_data)
             return(comments_data)
         } else {
-            return("No comments available for this team.")
+            return(data.frame())
         }
     })
     
-    output$comments_list <- renderUI({
+    output$comments_list <- renderDT({
         comments <- team_comments()
-        
-        if (is.character(comments)) {
-            p(comments)
-        } else {
-            tagList(
-                lapply(comments, function(comment) {
-                    p(comment)
-                    })
-                )
-            }
         })
     
     output$team_graph_output <- renderPlot({
