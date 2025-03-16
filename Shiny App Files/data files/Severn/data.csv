@@ -275,3 +275,45 @@ JY,46,B3,4541,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,6,1,FALSE,P,FALSE,0,0
 AX,46,R3,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,8,0,0,0,0,FALSE,P,FALSE,0,0,4,NA,,"Tech issue at beginning so robot paused briefly with coral in intake, pretty fast L1 cycles"
 Arman N,46,R1,3793,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,5,0,0,0,3,FALSE,P,FALSE,0,0,2,NA,4,
 FL,46,R2,3748,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,3,3,0,0,TRUE,D,TRUE,0,0,3,NA,,Algae manip broke off of the bot
+AW,47,B2,1885,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,2,2,0,0,0,0,0,0,FALSE,No,FALSE,0,0,3,NA,2,Pretty quick at removing algae from reef
+EC,47,B1,9403,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,3,0,0,FALSE,P,FALSE,0,0,3,NA,,
+FL,47,R2,2421,F,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,1,0,1,2,FALSE,P,FALSE,0,0,3,NA,5, 
+JY,47,B3,9709,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,3,0,2,FALSE,P,FALSE,0,0,2,NA,,"browning out, suffered lots of defense"
+Arman N,47,R1,2537,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,4,2,NA,5,Not able to intake any coral and switched to defense.
+AX,47,R3,10449,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,1,2,NA,,"During auto, coral fell into robot, 10449 decided to play defense after, poor defense, 2421 malfunctioned in this match too and 2537 as well, bad defense for 2537 too"
+EC,48,B1,339,C,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,4,3,0,1,FALSE,P,FALSE,0,0,4,NA,"2,5",The issue with their manip was much more noticeable this round
+Arman N,48,R1,623,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,5,4,NA,0,
+FL,48,R2,2199,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,1,3,0,3,FALSE,P,FALSE,0,0,3,NA,, 
+AW,48,B2,1727,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,2,3,0,2,TRUE,D,FALSE,0,0,4,NA,,Kept being blocked at coral station by 623 on defense
+AX,48,R3,404,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,9,0,0,0,0,0,TRUE,D,TRUE,0,0,4,NA,6,"Really good algae intake and scoring in processor, fast algae cycles and consistent scoring, climb took 24 seconds and deep climb wasn41391t fully successfully ( touching 623)"
+JY,48,B3,7886,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,3,3,NA,0,Defense
+AW,49,B2,3793,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,1,FALSE,P,FALSE,0,0,3,NA,,Slowwwww
+SBS,49,R3,2106,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,1,1,0,1,7,0,TRUE,D,TRUE,0,0,5,NA,,449 cooked on defense
+EC,49,B1,449,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,4,0,FALSE,P,FALSE,1,4,5,NA,,"Manip stopped spinning :(  Very good defense though, yellow card"
+JY,49,B3,8622,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,4,2,0,3,FALSE,P,FALSE,0,0,4,NA,,decent cycle but need time to align
+Arman N,49,R1,10679,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,3,2,NA,0, 
+AX,49,R2,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,3,1,1,FALSE,P,FALSE,0,0,3,NA,,"Slow coral loading, slow coral positioning, missed L4 auto"
+EC,50,B1,3748,C,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,1,2,4,0,0,TRUE,D,TRUE,0,0,4,NA,,Small possibility that a coral might stick in their intake 
+RL,50,B2,4464,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,0,1,FALSE,No,FALSE,0,0,2,di,,"Oscillated between alive and more often disabled, very push-able tho"
+JY,50,B3,3714,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,4,0,0,0,1,FALSE,P,FALSE,0,0,2,ba,,"kitbot, L1, mid driving"
+CL,50,R1,10224,C,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,0,1,6,3,FALSE,No,FALSE,0,0,3,NA,"5,4",coral kept getting not completely in the manip and they had to shake to fix
+SBS,50,R2,9403,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,2,0,1,FALSE,No,FALSE,0,3,2,NA,"5,4",coral kept getting not completely in the manip and they had to shake to fix
+AX,50,R3,4541,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,0,2,1,FALSE,P,FALSE,1,2,2,cs,0,"Coral fell into robot + got stuck, played defense, removes algae, L4 coral adjustment for positioning takes long, got 1 foul"
+CL,51,R1,7770,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,2,1,FALSE,No,FALSE,0,0,2,NA,"5,4,2,1",
+EC,51,B1,888,F,FALSE,TRUE,1,0,0,1,FALSE,FALSE,0,0,0,0,1,4,5,0,FALSE,No,FALSE,0,0,4,NA,,Coral sometimes has trouble going from intake to manip
+JY,51,B3,1885,M,FALSE,TRUE,1,0,0,0,TRUE,TRUE,0,3,5,0,0,0,0,0,FALSE,No,FALSE,0,0,4,NA,,Algae bot
+SBS,51,R2,2377,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,1,3,3,0,1,FALSE,No,FALSE,0,0,4,NA,,Cycle time sped up a lot towards the end
+AX,51,R3,2537,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,3,FALSE,P,FALSE,0,0,2,NA,,"Missed L4 in auto, L4 positioning+ adjustment takes very long, inconsistent L4 scoring"
+RL,51,B2,1811,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,4,1,0,1,FALSE,P,FALSE,0,0,3,NA,,
+CL,52,R1,2421,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,5,1,FALSE,P,FALSE,0,0,3,NA,2,
+EC,52,B1,5587,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,0,de,2,Tried to play defense got a coral jammed and then died
+JY,52,B3,10679,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,7,0,0,0,1,FALSE,P,FALSE,0,0,3,NA,,"Kitbot, but decent cycles"
+SBS,52,R2,9709,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,Didn41391t move; neither dead nor disabled tho
+AX,52,R3,1111,M,FALSE,TRUE,0,0,1,0,FALSE,FALSE,0,0,0,0,0,0,6,0,FALSE,No,FALSE,0,0,3,NA,,"Consistent L4 scoring but inefficient L4 positioning/ adjustment , elevator pauses at L3 before extending to L4 and scoring "
+RL,52,B2,1727,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,0,1,8,0,1,TRUE,D,FALSE,0,0,4,NA,2,"Hesitant in outtake with manip wobble, made up with speed and relative consistency (missed one coral on way to climb)"
+FL,53,R1,404,M,FALSE,TRUE,1,0,0,0,TRUE,TRUE,0,0,5,0,0,0,0,0,TRUE,D,TRUE,0,4,4,ba,0,Solid
+CL,53,R2,9403,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,1,1,2,0,0,FALSE,P,FALSE,0,0,3,NA,,
+AX,53,R3,3748,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,0,4,6,0,0,TRUE,P,FALSE,0,0,5,NA,,"Efficient cycles, consistent L2, L3 "
+EC,53,B1,2199,M,FALSE,FALSE,0,0,0,0,TRUE,FALSE,0,0,2,0,1,1,1,1,TRUE,P,FALSE,0,0,3,NA,,Long pause at beginning
+JY,53,B3,7886,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,1,0,0,0,0,0,FALSE,No,FALSE,0,0,3,di,,"Algae, went to other side then stopped moving"
+RL,53,B2,449,C,FALSE,TRUE,0,0,3,0,TRUE,FALSE,0,0,0,0,5,6,4,0,FALSE,P,FALSE,0,0,5,NA,,"Incredibly smooth cycles, ignored defense like it was nothing, safe and calculated round"
