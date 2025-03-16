@@ -2,7 +2,7 @@ scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_
 BH,1,R3,2106,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,7,2,TRUE,D,FALSE,0,0,3,NA,"1,4",
 EC,1,B3,404,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,TRUE,P,FALSE,0,0,4,NA,,Only algae
 CL,1,B2,10679,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,5,0,0,0,1,FALSE,No,FALSE,0,0,2,NA,1,
-GL,1,B1,7886,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,2,2,NA,,"Felt like smth went wrong, the bot felt unnaturally slow and clunky"
+GL,1,B1,7880,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,2,2,NA,,"Felt like smth went wrong, the bot felt unnaturally slow and clunky"
 Arman N,1,R1,7770,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,3,1,2,0,FALSE,P,FALSE,0,0,2,NA,BI,
 SBS,1,R2,5587,C,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,1,NA,,
 Arman N,2,R1,3714,,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,
@@ -42,7 +42,7 @@ IH,7,R1,1811,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,1,4,0,0,FALSE,No,FALSE,0,0,
 AW,7,B2,5587,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,0,di,,Never moved 
 GL,7,B1,2199,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,0,TRUE,D,FALSE,0,0,3,NA,,"Mid manip, looks like potemtial for inconsistency?"
 SBS,8,R2,3748,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,1,0,2,0,1,0,TRUE,D,FALSE,0,0,2,NA,,
-SBS,8,R3,339,C,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,4,1,0,0,FALSE,P,FALSE,0,0,2,NA,2,"Long alignment time at station, occasional hitch at reef"
+LJ,8,R3,339,C,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,4,1,0,0,FALSE,P,FALSE,0,0,2,NA,2,"Long alignment time at station, occasional hitch at reef"
 EC,8,B3,3793,C,FALSE,FALSE,1,0,0,0,FALSE,FALSE,0,0,0,0,1,2,0,4,FALSE,P,FALSE,0,0,3,NA,,Elevator interferes with manip intake I think
 IH,8,R1,4541,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,1,0,5,3,FALSE,P,FALSE,0,0,4,NA,WM,Slow at aiming outake
 AW,8,B2,1885,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,2,4,4,0,0,0,0,0,FALSE,No,FALSE,0,0,3,NA,,
@@ -76,7 +76,7 @@ BH,13,B3,888,C,FALSE,FALSE,0,0,0,1,TRUE,FALSE,0,0,0,1,0,0,5,0,FALSE,P,FALSE,0,0,
 GL,13,B1,2377,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,4,1,0,0,0,FALSE,No,FALSE,0,0,3,cs,,Dislodged stuck coral
 LJ,13,B2,449,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,1,5,5,2,2,FALSE,No,FALSE,0,0,4,NA,2,"Top stage elevator broke, interrupted auto, stopped l4, wrist also seemingly broke? "
 JY,13,R3,7770,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,4,FALSE,P,FALSE,0,0,1,NA,4,
-EC,13,R1,9403,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,0,1,FALSE,P,FALSE,0,3,2,NA,,A lot of weird pausing at the middle of the field, seemingly for no reason. 
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 EC,14,R1,10449,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,2,FALSE,No,FALSE,0,0,1,NA,,Lacks understanding of how the game works
 BH,14,B3,9709,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,0,0,FALSE,No,FALSE,0,1,2,NA,0,Got coral stuck in the bot
 LJ,14,B2,3793,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,0,2,FALSE,No,FALSE,0,0,1,NA,"5,4","Seemingly L1 only, dropped many coral, lot of idle time"
@@ -94,7 +94,7 @@ BH,16,B3,1811,C,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,4,1,0,0,0,FALSE,No,FALSE,0,0
 SBS,16,R2,9403,C,FALSE,FALSE,0,0,0,0,TRUE,FALSE,0,0,0,1,1,1,0,0,FALSE,No,FALSE,0,0,2,NA,,
 LJ,16,B2,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,3,1,FALSE,P,FALSE,0,0,3,NA,,Long time to align
 GL,16,B1,449,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,6,6,1,2,FALSE,P,FALSE,0,0,5,NA,,449!! Absolute cinema
-AX,16,R3,10679,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,3,FALSE,No,FALSE,0,0,3,NA,,"Sat in the wrong barge, did not park in correct color"
+AX,16,R3,10675,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,3,FALSE,No,FALSE,0,0,3,NA,,"Sat in the wrong barge, did not park in correct color"
 BH,17,B3,3748,C,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,1,3,2,0,2,FALSE,P,FALSE,0,0,3,NA,,
 AW,17,R1,3793,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,0,0,0,FALSE,P,FALSE,0,0,2,NA,,
 LJ,17,B2,10449,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,1,FALSE,P,FALSE,0,0,2,NA,,"Kitbot, struggled to move around alliance partners, coral landed in robot so robot couldn41391t play for about a minute"
@@ -214,7 +214,7 @@ SBS,36,B2,339,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,2,2,0,0,FALSE,No,FALSE,0,
 BH,36,R1,10679,,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,7,0,0,0,2,FALSE,P,FALSE,0,0,2,NA,,
 AW,36,R2,4541,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,5,3,FALSE,P,FALSE,0,0,4,NA,,"Good intake, but slow elevator"
 Ashwin,36,R3,8622,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,5,2,0,0,FALSE,No,FALSE,0,0,2,NA,5,"Took a long time to attach corals, did nothing auto"
-LJ,36,B3,2537,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,2,2,FALSE,P, FALSE,0,0,3,NA,2,Every tele op shot attempted except 1 was L4
+LJ,36,B3,2537,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,2,2,FALSE,P,FALSE,0,0,3,NA,2,Every tele op shot attempted except 1 was L4
 NL,37,B1,9403,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,6,1,0,0,0,FALSE,P,FALSE,0,0,3,NA,5,
 Ashwin,37,R3,5587,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,0,0,FALSE,No,FALSE,0,0,1,NA,"1,5,4",
 AW,37,R2,10449,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,3,cs,,"Touched blue cages, briefly tried defense towards the end"
@@ -227,3 +227,51 @@ EC,38,B2,2421,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,1,0,2,FALSE,P,FALSE,0,0
 LJ,38,B3,404,M,FALSE,TRUE,1,0,0,0,TRUE,TRUE,0,0,10,0,0,0,0,0,FALSE,No,FALSE,0,5,4,NA,,Ground intake somewhat inconsistent if no wall
 AX,38,R2,3793,C,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,7,0,0,0,1,FALSE,No,FALSE,0,0,3,NA,5,"Loading coral inconsistent, often took multiple tries, consistent L1 scoring, no auto, did not park"
 Ashwin,38,R3,4464,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,4,0,0,0,0,FALSE,P,FALSE,0,0,1,NA,"5,4",
+AW,39,B2,623,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,FALSE,P,FALSE,0,4,3,NA,0,Was disabled for about 20 secs in the middle of the match
+EC,39,B1,4541,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,7,1,FALSE,P,FALSE,0,0,4,NA,,
+AX,39,R3,10224,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,4,1,3,0,0,0,FALSE,P,FALSE,0,0,4,NA,,"Fast and consistent algae processor cycles, sometimes struggles with coral loading but scores consistent L2"
+JY,39,B3,10679,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,8,0,0,0,1,FALSE,P,FALSE,0,0,3,NA,,kitbot
+FL,39,R1,3714,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,3,FALSE,P,FALSE,0,0,2,di,,Got algae stuck in bot
+SBS,39,R2,449,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,2,4,4,1,FALSE,P,FALSE,0,0,5,NA,,Scouting app wasn41391t loaded yet so it41391s from memory (might not be most accurate)
+FL,40,R1,10449,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,1,2,2,di,,
+AW,40,B2,888,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,7,2,FALSE,P,FALSE,0,0,4,NA,2,Wobbly bot when elevator is extended
+EC,40,B1,5587,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,3,cs,5,Struggled to intake coral and gave up
+SBS,40,R2,2106,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,1,2,4,1,3,0,TRUE,D,TRUE,0,0,5,NA,1,Dropped a coral in auto
+JY,40,B3,339,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,2,3,cs,0,stuck during auto
+AX,40,R3,1727,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,2,1,6,0,0,TRUE,No,FALSE,0,0,4,NA,,"Attempted climb and barely parked ( referee said no park );, fast cycles for L3, L2, auto tries to score L2 twice but failed "
+EC,41,B1,8622,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,6,2,0,0,FALSE,P,FALSE,0,0,4,NA,1,A bit of hesitation from driver
+AW,41,B2,1811,C,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,0,0,6,0,0,FALSE,P,FALSE,0,0,3,NA,,Slow bot and slow elevator
+JY,41,B3,9403,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,6,0,0,0,1,FALSE,P,FALSE,0,0,3,NA,,good l1 cycle
+SBS,41,R2,2537,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,1,5,FALSE,P,FALSE,0,0,2,NA,"4,1",
+AX,41,R3,7886,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,2,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,"Driver was struggling a lot, focuses on removing algae and scoring in processor, inconsistent algae intake, long cycles "
+FL,41,R1,4464,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,0,5,FALSE,P,FALSE,0,0,2,NA,"4,5",Kit bot and they still had inconsistent intake41389
+EC,42,B1,3748,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,2,4,0,1,TRUE,P,FALSE,0,0,3,NA,,Tried scoring a coral on an algae for some reason
+JY,42,B3,2377,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,4,0,1,0,2,FALSE,No,FALSE,0,0,4,cs,,"stuck coral at end, but completely possible "
+AW,42,B2,2199,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,2,0,0,0,3,2,TRUE,D,FALSE,0,0,4,NA,1,Some issues aligning when scoring L4 both in auto and teleop 
+SBS,42,R2,1885,C,FALSE,TRUE,0,0,0,0,FALSE,TRUE,2,3,0,0,0,0,0,0,FALSE,P,FALSE,0,4,5,NA,0,Popped an algae and was then forced to play defense
+FL,42,R1,7770,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,2,3,0,FALSE,P,FALSE,0,0,2,NA,1,"Relatively consistent but slow, attempted l4 during auto"
+AX,42,R3,1111,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,4,2,FALSE,P,FALSE,0,0,3,NA,,"Long cycles, coral loading takes long, L4 positioning takes long + not time efficient because robot elevator pauses briefly at L3 before extending fully to L4, missed L4 few times too"
+CL,43,R2,623,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,5,4,NA,,
+EC,43,B1,339,M,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,3,0,0,0,FALSE,P,FALSE,0,4,4,NA,5,Intake struggled in second half
+FL,43,R1,5587,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,2,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,5,Useless
+AX,43,R3,449,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,3,8,4,0,FALSE,No,FALSE,0,0,5,NA,,Struggled to score coral on L4 on the farthest side of the reef from driver 
+AW,43,B2,2106,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,7,2,TRUE,D,FALSE,0,0,4,NA,,Hindered by 623 playing defense
+JY,43,B3,9709,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,1,de,,"shaking, most likely browned out but not dead"
+AW,44,B2,3714,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,2,0,0,0,5,FALSE,P,FALSE,0,0,2,NA,5,Very slow
+JY,44,B3,10449,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,FALSE,No,FALSE,0,0,3,di,,disabled most of match
+CL,44,R2,404,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,8,0,0,0,0,0,TRUE,D,FALSE,0,0,4,NA,,
+AX,44,R3,4464,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,5,0,0,0,2,FALSE,P,FALSE,0,0,3,NA,,"Inconsistent L1 scoring, dropped algae when trying to score processor"
+EC,44,B1,10679,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,2,2,NA,,Poor defense and high amounts of hesitation 
+FL,44,R1,888,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,0,7,1,FALSE,P,FALSE,0,0,3,NA,1, 
+CL,45,R2,10224,C,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,2,2,1,1,0,1,FALSE,No,FALSE,0,0,3,NA,1,almost beached itself 4 times
+Arman N,45,R1,1727,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,1,4,3,0,3,TRUE,P,FALSE,0,0,4,NA,2, 
+EC,45,B1,1111,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,4,1,FALSE,No,FALSE,0,0,3,NA,4,Indecisive driver
+AW,45,B2,2377,F,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,1,4,0,1,FALSE,P,FALSE,0,0,3,NA,,"Good intake, slow bot"
+AX,45,R3,2199,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,0,1,0,5,1,TRUE,D,TRUE,0,0,3,NA,,"Inefficient L4 scoring, elevator goes very high, higher than necessary, good climb"
+JY,45,B3,7886,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,4,4,NA,,"something loose on bot, went to defense, good at removing algae"
+EC,46,B1,1811,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,1,4,0,0,FALSE,No,FALSE,0,0,4,NA,,Slow cycle time because robot is slow but can handle algae and coral together and very effectively
+AW,46,B2,7770,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,1,1,0,1,FALSE,No,FALSE,0,0,2,ba,1,Took a really long time to align
+JY,46,B3,4541,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,6,1,FALSE,P,FALSE,0,0,4,NA,,take a while to align when scoring l4
+AX,46,R3,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,8,0,0,0,0,FALSE,P,FALSE,0,0,4,NA,,"Tech issue at beginning so robot paused briefly with coral in intake, pretty fast L1 cycles"
+Arman N,46,R1,3793,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,5,0,0,0,3,FALSE,P,FALSE,0,0,2,NA,4,
+FL,46,R2,3748,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,3,3,0,0,TRUE,D,TRUE,0,0,3,NA,,Algae manip broke off of the bot
