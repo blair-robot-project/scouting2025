@@ -42,7 +42,7 @@ IH,7,R1,1811,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,1,4,0,0,FALSE,No,FALSE,0,0,
 AW,7,B2,5587,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,0,di,,Never moved 
 GL,7,B1,2199,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,0,TRUE,D,FALSE,0,0,3,NA,,"Mid manip, looks like potemtial for inconsistency?"
 SBS,8,R2,3748,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,1,0,2,0,1,0,TRUE,D,FALSE,0,0,2,NA,,
-LJ,8,R3,339,C,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,4,1,0,0,FALSE,P,FALSE,0,0,2,NA,2,"Long alignment time at station, occasional hitch at reef"
+SBS,8,R3,339,C,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,0,4,1,0,0,FALSE,P,FALSE,0,0,2,NA,2,"Long alignment time at station, occasional hitch at reef"
 EC,8,B3,3793,C,FALSE,FALSE,1,0,0,0,FALSE,FALSE,0,0,0,0,1,2,0,4,FALSE,P,FALSE,0,0,3,NA,,Elevator interferes with manip intake I think
 IH,8,R1,4541,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,1,0,5,3,FALSE,P,FALSE,0,0,4,NA,WM,Slow at aiming outake
 AW,8,B2,1885,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,2,4,4,0,0,0,0,0,FALSE,No,FALSE,0,0,3,NA,,
@@ -76,7 +76,7 @@ BH,13,B3,888,C,FALSE,FALSE,0,0,0,1,TRUE,FALSE,0,0,0,1,0,0,5,0,FALSE,P,FALSE,0,0,
 GL,13,B1,2377,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,4,1,0,0,0,FALSE,No,FALSE,0,0,3,cs,,Dislodged stuck coral
 LJ,13,B2,449,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,1,5,5,2,2,FALSE,No,FALSE,0,0,4,NA,2,"Top stage elevator broke, interrupted auto, stopped l4, wrist also seemingly broke? "
 JY,13,R3,7770,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,4,FALSE,P,FALSE,0,0,1,NA,4,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+EC,13,R1,9403,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,0,0,1,FALSE,P,FALSE,0,3,2,NA,,A lot of weird pausing at the middle of the field, seemingly for no reason. 
 EC,14,R1,10449,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,2,FALSE,No,FALSE,0,0,1,NA,,Lacks understanding of how the game works
 BH,14,B3,9709,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,0,0,FALSE,No,FALSE,0,1,2,NA,0,Got coral stuck in the bot
 LJ,14,B2,3793,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,0,2,FALSE,No,FALSE,0,0,1,NA,"5,4","Seemingly L1 only, dropped many coral, lot of idle time"
