@@ -1002,7 +1002,7 @@ server <- function(input, output, session) {
     
     output$team_image_output <- renderImage({
         teamnum <- input$team_select
-        img_src <- paste0("images/Severn", teamnum, ".png")  #Path to the image
+        img_src <- paste0("images/Severn/", teamnum, ".png")  #Path to the image
         no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
         
         #Check if the image file exists
