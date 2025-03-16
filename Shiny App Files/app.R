@@ -88,11 +88,19 @@ consolidated_team_data <- mldf %>%
     group_by(team) %>%
     summarize(
         #coral cycle
-        l1_cycle = round(mean(auto_coral_L1_num + coral_L1_num), digits = 2),
-        l2_cycle = round(mean(auto_coral_L2_num + coral_L2_num), digits = 2),
-        l3_cycle = round(mean(auto_coral_L3_num + coral_L3_num), digits = 2),
-        l4_cycle = round(mean(auto_coral_L4_num + coral_L4_num), digits = 2),
-        coral_cycle = round(sum(l1_cycle+l2_cycle+l3_cycle+l4_cycle), digits = 2),
+        # l1_cycle = round(mean(auto_coral_L1_num + coral_L1_num), digits = 2),
+        # l2_cycle = round(mean(auto_coral_L2_num + coral_L2_num), digits = 2),
+        # l3_cycle = round(mean(auto_coral_L3_num + coral_L3_num), digits = 2),
+        # l4_cycle = round(mean(auto_coral_L4_num + coral_L4_num), digits = 2),
+        # coral_cycle = round(sum(l1_cycle+l2_cycle+l3_cycle+l4_cycle), digits = 2),
+        
+        l1_cycle_tele = round(mean(coral_L1_num), digits = 2),
+        l2_cycle_tele = round(mean(coral_L2_num), digits = 2),
+        l3_cycle_tele = round(mean(coral_L3_num), digits = 2),
+        l4_cycle_tele = round(mean(coral_L4_num), digits = 2),
+        
+        coral_cycle_tele = round(sum(l1_cycle_tele+l2_cycle_tele+l3_cycle_tele+l4_cycle_tele), digits = 2),
+        coral_cycle_auto = round(sum(mean(auto_coral_L1_num) + mean(auto_coral_L2_num) + mean(auto_coral_L3_num) + mean(auto_coral_L4_num)), digits = 2),
 
         #algae cycle
         net_cycle = round(mean(robot_net_score), digits = 2),
@@ -220,8 +228,8 @@ ui <- fluidPage(
                         mainPanel(
                             plotOutput("team_graph_output"),
                             DTOutput("team_data_row"),
-                            h3("Comments")#,
-                            #DTOutput("comments_list")
+                            h3("Comments"),
+                            DTOutput("comments_list")
                             )
                         )
                     ),
