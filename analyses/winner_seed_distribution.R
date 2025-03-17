@@ -1,34 +1,41 @@
 library(scoutR)
 
-#' Combine Tables
-#' 
-#' Combines two tables, numerical vectors of integer counts. Assumes that 
-#' order() is a meaningful call on the names of the tables.
-#' @param tbl1 First table to be combined
-#' @param tbl2 Second table to be combined
-#' @export
 #' @TODO remember to write test cases, start building my "utils.R"
-combine_tbls <- function(tbl1, tbl2){
-    unq <- unique(c(names(tbl1), names(tbl2)))
-    # using 0 bc we will combine with addition
-    pads <- rep(0, length(unq) - length(tbl1))
-    names(pads) <- setdiff(unq, names(tbl1))
-    tbl1 <- c(tbl1, pads)
-    tbl1 <- tbl1[order(names(tbl1))]
-    # using 0 bc we will combine with addition
-    pads <- rep(0, length(unq) - length(tbl2))
-    names(pads) <- setdiff(unq, names(tbl2))
-    tbl2 <- c(tbl2, pads)
-    tbl2 <- tbl2[order(names(tbl2))]
-    return(tbl1 + tbl2)
-}
 
-winner_seeds_thru_wk <- function(yr, wk){
+winner_seed_pct_thru_wk <- function(yr, wk){
     wks <- 1:wk
     lst <- lapply(wks, week_winning_seed_table, yr)
-    return(purrr::reduce(lst, combine_tbls))
+    result <- purrr::reduce(lst, combine_tbls)
+    dummy <- rep(0, 8)
+    names(dummy) <- 1:8
+    result <- combine_tbls(dummy, result)
+    result <- round(result / sum(result), digits = 2)
+    return(result)
 }
 
-years <- c(2010:2019, 2022:2025)
+years <- c(2012:2019, 2022:2025)
+result <- lapply(years, winner_seed_pct_thru_wk, 3)
+names(result) <- years
 
-winner_seeds_thru_wk(2024, 3)
+# reconstruct years into a df (credit to ChatGPT for the do.call/rbind idea)
+df <- do.call(rbind, lapply(names(result), function(name){
+    data.frame(
+        year = name, 
+        seed = names(result[[name]]), 
+        win_pct = result[[name]]
+    )
+}))
+
+rownames(df) <- 1:nrow(df)
+
+library(ggplot2)
+
+ggplot(df, aes(x = year, y = win_pct, color = seed, group = seed)) + 
+    geom_line() + 
+    geom_point() + 
+    labs(title = "#1 Seeds are crushing in 2025",
+         subtitle = "Cumulative through week 3",
+         x = "Year", y = "Tournament Win Percentage", 
+         color = "Seed") +
+    theme_bw() + 
+    scale_y_continuous(labels = scales::percent, limits = c(0, 1))
