@@ -7,7 +7,6 @@ library(scoutR)
 #' @param tbl1 First table to be combined
 #' @param tbl2 Second table to be combined
 #' @export
-#' @importFrom purrr reduce
 #' @TODO remember to write test cases, start building my "utils.R"
 combine_tbls <- function(tbl1, tbl2){
     unq <- unique(c(names(tbl1), names(tbl2)))
