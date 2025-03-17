@@ -316,4 +316,21 @@ CL,53,R2,9403,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,1,1,2,0,0,FALSE,P,FALSE,0,0,
 AX,53,R3,3748,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,0,4,6,0,0,TRUE,P,FALSE,0,0,5,NA,,"Efficient cycles, consistent L2, L3 "
 EC,53,B1,2199,M,FALSE,FALSE,0,0,0,0,TRUE,FALSE,0,0,2,0,1,1,1,1,TRUE,P,FALSE,0,0,3,NA,,Long pause at beginning
 JY,53,B3,7886,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,1,0,0,0,0,0,FALSE,No,FALSE,0,0,3,di,,"Algae, went to other side then stopped moving"
-RL,53,B2,449,C,FALSE,TRUE,0,0,3,0,TRUE,FALSE,0,0,0,0,5,6,4,0,FALSE,P,FALSE,0,0,5,NA,,"Incredibly smooth cycles, ignored defense like it was nothing, safe and calculated round"
+RL,53,B2,449,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,0,5,6,4,0,FALSE,P,FALSE,0,0,5,NA,,"Incredibly smooth cycles, ignored defense like it was nothing, safe and calculated round"
+CL,54,R2,7770,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,4,1,FALSE,No,FALSE,0,0,3,NA,,
+Arman N,54,R1,3714,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,7,0,0,0,4,FALSE,P,FALSE,0,0,3,NA,4, 
+EC,54,B1,1885,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,FALSE,P,FALSE,0,0,1,NA,,Scored in other team41391s processor?!?
+AX,54,R3,623,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,3,3,NA,0,"This round 623 defense was not great, only slowed down cycles slightly but 2106 was still able to complete its cycles"
+BP,54,B3,2537,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,1,0,2,FALSE,P,FALSE,0,0,2,NA,4,L3 coral with algae + took forever to score
+RL,54,B2,2106,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,0,5,2,3,0,TRUE,D,FALSE,0,0,5,NA,,"Good around defense, very smooth, self sufficient but calculated and safe"
+BP,55,B3,4541,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,di,,
+RS,55,R1,2421,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,0,2,2,FALSE,P,FALSE,0,0,3,NA,,Slow elevator
+EC,55,B1,10449,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,3,0,0,0,2,FALSE,P,FALSE,0,0,2,NA,,Only l1 difficulty navigating 
+AX,55,R3,888,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,0,0,7,3,FALSE,P,FALSE,0,0,3,NA,,"Driving wasn41391t great this round, L4 missed frequently, L4 coral positioning/ adjustment took a little long "
+RL,55,B2,4464,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,4,0,0,0,6,FALSE,P,FALSE,0,0,4,NA,,"Relatively good driver but mid l1 bot, misses with imperfect intake"
+SBS,55,R2,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,1,0,0,0,FALSE,P,FALSE,0,0,1,NA,1,
+RL,56,B2,1811,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,2,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,"So many chances to do better, pretty bad decision paralysis"
+EC,56,B1,10224,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,7,1,FALSE,No,FALSE,0,0,4,NA,,Bouncy intake under certain circumstances 
+BP,56,B3,5587,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,1,0,0,0,0,0,0,FALSE,P,FALSE,0,4,4,NA,,"Guarded 2 bots at once + only let 339 score 1 coral, wasted majority of match for them."
+AX,56,R3,3793,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,2,NA,,"Defense was poor, came very late to match due to tech issues"
+SBS,56,R2,339,F,FALSE,TRUE,1,1,0,0,FALSE,FALSE,0,0,0,0,2,1,0,1,FALSE,P,FALSE,0,0,3,NA,,5587 did good defense on them
