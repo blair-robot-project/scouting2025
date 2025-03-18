@@ -1,4 +1,4 @@
-library(scoutR)
+library(scoutR) # devtools::install_github("gkrotkov/scoutR")
 
 #' @TODO remember to write test cases, start building my "utils.R"
 
@@ -28,7 +28,7 @@ df <- do.call(rbind, lapply(names(result), function(name){
 
 rownames(df) <- 1:nrow(df)
 
-library(ggplot2)
+library(ggplot2) # install.packages("ggplot2")
 
 ggplot(df, aes(x = year, y = win_pct, color = seed, group = seed)) + 
     geom_line() + 
@@ -36,6 +36,6 @@ ggplot(df, aes(x = year, y = win_pct, color = seed, group = seed)) +
     labs(title = "#1 Seeds are crushing in 2025",
          subtitle = "Cumulative through week 3",
          x = "Year", y = "Tournament Win Percentage", 
-         color = "Seed") +
+         color = "Seed", caption = "Data from frc-events via TBA") +
     theme_bw() + 
     scale_y_continuous(labels = scales::percent, limits = c(0, 1))
