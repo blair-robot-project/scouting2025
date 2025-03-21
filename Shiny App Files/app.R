@@ -207,8 +207,8 @@ ui <- fluidPage(
                                     ),
                                 conditionalPanel(
                                     condition = "input.match_or_teams == '2 Alliances'",
-                                    pickerInput("red_alliance", "Red Alliance", choices = unique(alliances$Alliances), multiple = FALSE, options = list(maxOptions = 1)),
-                                    pickerInput("blue_alliance", "Blue Alliance", choices = unique(alliances$Alliances), multiple = FALSE, options = list(maxOptions = 1))                                
+                                    pickerInput("red_alliance", "Red Alliance", choices = unique(alliances$Alliance), multiple = FALSE, options = list(maxOptions = 1)),
+                                    pickerInput("blue_alliance", "Blue Alliance", choices = unique(alliances$Alliance), multiple = FALSE, options = list(maxOptions = 1))                                
                                     ),
                                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Level Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
                                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
@@ -754,24 +754,23 @@ server <- function(input, output, session) {
             red_alliance <- input$red_alliance
             blue_alliance <- input$blue_alliance
             
-            #Get the specific rows
-            red_alliance_row <- alliances[alliances$Alliances == red_alliance,]
-            blue_alliance_row <- alliances[alliances$Alliances == blue_alliance,]
+            #Get the rows
+            red_alliance_row <- alliances[alliances$Alliance == red_alliance,]
+            blue_alliance_row <- alliances[alliances$Alliance == blue_alliance,]
             
             #Extract teams as vectors
             selected_red_teams <- c(
                 red_alliance_row$Captain,
-                red_alliance_row$First_Pick,
-                red_alliance_row$Second_Pick
+                red_alliance_row$Pick.1,
+                red_alliance_row$Pick.2
             )
             
             selected_blue_teams <- c(
                 blue_alliance_row$Captain,
-                blue_alliance_row$First_Pick,
-                blue_alliance_row$Second_Pick
+                blue_alliance_row$Pick.1,
+                blue_alliance_row$Pick.2
             )
         }
-        
         
         output$alliance_box_plot_output <- renderPlot({
             boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
