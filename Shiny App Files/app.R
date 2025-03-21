@@ -11,6 +11,8 @@ data_dir <- "data files"
 data_file <- paste0(data_dir, "/Severn/data.csv")
 event_schedule_file <- paste0(data_dir, "/Severn/schedule.csv")
 teams_file <- paste0(data_dir, "/Severn/teams.csv")
+alliances_file <- paste0(data_dir, "/Severn/alliances.csv")
+
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
@@ -41,6 +43,7 @@ raw <- read.csv(data_file)
 #                  comments = as.character(comments))
 match_schedule <- read.csv(event_schedule_file, fill = TRUE)
 teams <- read.csv(teams_file)
+alliances <- read.csv(alliances_file)
 
 mldf <- raw %>%
     mutate(
@@ -192,7 +195,7 @@ ui <- fluidPage(
                         sidebarLayout(
                             sidebarPanel(
                               #Selection between match number or entering 6 teams
-                                radioButtons("match_or_teams", "Select Match Number or 6 Teams", choices = c("Match Number", "Select 6 Teams")),
+                                radioButtons("match_or_teams", "Select One of the Following", choices = c("Match Number", "Select 6 Teams", "2 Alliances")),
                                 conditionalPanel(
                                     condition = "input.match_or_teams == 'Match Number'",
                                     selectInput("match_num", "Match Number", choices = unique(match_schedule$Match))
@@ -201,6 +204,11 @@ ui <- fluidPage(
                                     condition = "input.match_or_teams == 'Select 6 Teams'",
                                     pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
                                     pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
+                                    ),
+                                conditionalPanel(
+                                    condition = "input.match_or_teams == '2 Alliances'",
+                                    pickerInput("red_alliance", "Red Alliance", choices = unique(alliances$Alliances), multiple = FALSE, options = list(maxOptions = 1)),
+                                    pickerInput("blue_alliance", "Blue Alliance", choices = unique(alliances$Alliances), multiple = FALSE, options = list(maxOptions = 1))                                
                                     ),
                                 #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Level Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
                                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
@@ -726,7 +734,7 @@ server <- function(input, output, session) {
             print(selected_red_teams)
             print("Blue teams:")
             print(selected_blue_teams)
-        } else {
+        } else if (input$match_or_teams == "Select 6 Teams"){
             selected_red_teams <- input$red_teams
             selected_blue_teams <- input$blue_teams
             
@@ -742,7 +750,28 @@ server <- function(input, output, session) {
                 showNotification("Duplicate teams are not allowed across alliances. Please select unique teams.", type = "error")
                 return()
             }
+        } else if (input$match_or_teams == "2 Alliances"){
+            red_alliance <- input$red_alliance
+            blue_alliance <- input$blue_alliance
+            
+            #Get the specific rows
+            red_alliance_row <- alliances[alliances$Alliances == red_alliance,]
+            blue_alliance_row <- alliances[alliances$Alliances == blue_alliance,]
+            
+            #Extract teams as vectors
+            selected_red_teams <- c(
+                red_alliance_row$Captain,
+                red_alliance_row$First_Pick,
+                red_alliance_row$Second_Pick
+            )
+            
+            selected_blue_teams <- c(
+                blue_alliance_row$Captain,
+                blue_alliance_row$First_Pick,
+                blue_alliance_row$Second_Pick
+            )
         }
+        
         
         output$alliance_box_plot_output <- renderPlot({
             boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
@@ -969,6 +998,7 @@ server <- function(input, output, session) {
     
     #PAST HISTORY GRAPH
     previous <- function(raw, team_num){
+        #browser()
         past <- raw%>%
             group_by(team)%>%
             filter(team==team_num)%>%
@@ -985,10 +1015,11 @@ server <- function(input, output, session) {
                     coral_L2_num*3 +
                     coral_L3_num*4 +
                     coral_L4_num*5 +
-                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0)))
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+                driver = driver
             )
-        ggplot(past, aes(x = match, y = total_score)) + 
-            geom_line(color = blair_red)   
+        ggplot(past, aes(x = match, y = driver)) + 
+            geom_line(color = blair_red) 
     }
     team_comments <- reactive({
         comments_data <- raw %>%
