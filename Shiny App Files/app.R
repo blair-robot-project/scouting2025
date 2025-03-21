@@ -217,12 +217,12 @@ ui <- fluidPage(
                                 )
                             )
                         ),
-             
+               
                 tabPanel("Single Team",
                     sidebarLayout(
                         sidebarPanel(
                             selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments")),
+                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Past History")),
                             imageOutput("team_image_output")
                             ),
                         mainPanel(
@@ -967,13 +967,35 @@ server <- function(input, output, session) {
             theme_bw()
     }
     
-    
+    #PAST HISTORY GRAPH
+    previous <- function(raw, team_num){
+        past <- raw%>%
+            group_by(team)%>%
+            filter(team==team_num)%>%
+            summarize(
+                match = match,
+                total_score = move*3 +
+                    auto_coral_L1_num*3 +
+                    auto_coral_L2_num*4 +
+                    auto_coral_L3_num*6 +
+                    auto_coral_L4_num*7 +
+                    robot_net_score*4 +
+                    proc_score*2.5 +
+                    coral_L1_num*2 +
+                    coral_L2_num*3 +
+                    coral_L3_num*4 +
+                    coral_L4_num*5 +
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0)))
+            )
+        ggplot(past, aes(x = match, y = total_score)) + 
+            geom_line(color = blair_red)   
+    }
     team_comments <- reactive({
         comments_data <- raw %>%
             filter(team == input$team_select) %>%
             select(commentOpen)  
         if (length(comments_data) > 0) {
-            print(comments_data)
+            #print(comments_data)
             return(comments_data)
         } else {
             return(data.frame())
@@ -1002,6 +1024,9 @@ server <- function(input, output, session) {
         else if (input$team_graph == "Comments"){
             comment_table_single(raw, selected_team)
             } 
+        else if (input$team_graph == "Past History"){
+            previous(raw, selected_team)
+        } 
         })
     
     output$scouter_graph_output <- renderPlot({
