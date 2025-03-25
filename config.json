@@ -403,10 +403,11 @@
             "1": "Wobbly Bot",
             "2": "Wobbly Manip",
             "3": "Many Penalties",
-            "4": "Whiffs",
+            "4": "Broke during this match",
             "5": "Bad Intake",
-            "6": "Extra Long Climb(~15-20 secs)"
-          },
+            "6": "Extra Long Climb(~15-20 secs)",
+            "7": "Ground intook coral"
+          }
           "formResetBehavior": "reset"
         },
         {
