@@ -1026,10 +1026,12 @@ server <- function(input, output, session) {
                     coral_L3_num*4 +
                     coral_L4_num*5 +
                     ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
-                driver = driver
+                driver = driver,
+                defense = defense
             )
-        ggplot(past, aes(x = match, y = driver)) + 
-            geom_line(color = blair_red) +
+        ggplot(past, aes(match)) + 
+            geom_line(aes(y=driver), color = blair_red) +
+            geom_line(aes(y=defense), color = "blue") +
             scale_y_continuous(limits = c(1, 5)) +
             scale_x_continuous(breaks=past$match)
     }
