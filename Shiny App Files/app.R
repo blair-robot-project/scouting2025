@@ -1009,7 +1009,6 @@ server <- function(input, output, session) {
     
     #PAST HISTORY GRAPH
     previous <- function(raw, team_num){
-        #browser()
         past <- raw%>%
             group_by(team)%>%
             filter(team==team_num)%>%
@@ -1030,7 +1029,9 @@ server <- function(input, output, session) {
                 driver = driver
             )
         ggplot(past, aes(x = match, y = driver)) + 
-            geom_line(color = blair_red) 
+            geom_line(color = blair_red) +
+            scale_y_continuous(limits = c(1, 5)) +
+            scale_x_continuous(breaks=past$match)
     }
     team_comments <- reactive({
         comments_data <- raw %>%
