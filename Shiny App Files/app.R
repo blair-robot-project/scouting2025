@@ -7,6 +7,8 @@ library(shinyWidgets)
 library(tidyverse)
 library(shinythemes)
 
+blair_red <- "#a7000a"
+
 data_dir <- "data files"
 data_file <- paste0(data_dir, "/Severn/data.csv")
 event_schedule_file <- paste0(data_dir, "/Severn/schedule.csv")
