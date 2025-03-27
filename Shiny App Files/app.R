@@ -65,6 +65,15 @@ mldf <- raw %>%
             ending == "D" ~ 12, 
             .default = 0
             ),
+        
+        dead = case_when(
+            dead == "de" ~ 1,
+            dead == "ba" ~ 0,
+            dead == "di" ~ 0,
+            dead == "t" ~ 0,
+            dead == "cs" ~ 0,
+            .default = 0
+            ),
     
         total_pts = move_pts + auto_coral_l1_pts + auto_coral_l2_pts + 
                     auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
@@ -163,6 +172,7 @@ consolidated_team_data <- mldf %>%
     
         algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
         move_pct = round(sum(c(move))/n(), digits = 2),
+        dead_pct = round(sum(c(dead))/n(), digits = 2),
         driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2 ),
         defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2 )
     )
