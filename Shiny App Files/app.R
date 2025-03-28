@@ -237,7 +237,21 @@ ui <- fluidPage(
                                 )
                             )
                         ),
-               
+               tabPanel("Compare Two Teams",
+                        sidebarLayout(
+                            sidebarPanel(
+                                pickerInput("teams_selected", "Select Team", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 2)),
+                                selectInput("two_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph"))
+                            ),
+                            mainPanel(
+                                plotOutput("two_teams_graph_output"),
+                                DTOutput("team_data_row"),
+                                h3("Comments"),
+                                DTOutput("comments_list")
+                            )
+                        )
+               ),
+                
                 tabPanel("Single Team",
                     sidebarLayout(
                         sidebarPanel(
@@ -1077,6 +1091,70 @@ server <- function(input, output, session) {
         comments <- team_comments()
         })
     
+    #Two Teams Tab
+    #GRAPH GEN LOGIC-------------------------------------------
+    
+    two_teams_large_bar_graph <- function(raw, selected_teams){
+        #browser()
+        two_bar_graph <- raw %>%
+            filter(team %in% selected_teams) %>%
+                       group_by(team) %>%
+                       summarise(
+                           match = n(),
+                           auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+                           auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+                           auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+                           auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+                           move_pts = sum(move*3)/n(),
+                           tele_coral_L1 = sum(coral_L1_num*2)/n(),
+                           tele_coral_L2 = sum(coral_L2_num*3)/n(),
+                           tele_coral_L3 = sum(coral_L3_num*4)/n(),
+                           tele_coral_L4 = sum(coral_L4_num*5)/n(),
+                           robot_net_score = sum(robot_net_score*4)/n(),
+                           robot_proc_score = sum(proc_score*2.5)/n(),
+                           
+                           endgame_score = sum(ifelse(ending =="D", 12,
+                                                      ifelse(ending =="S", 6,
+                                                             ifelse(ending =="P", 2, 0)))
+                           )/n(),
+                           
+                           avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
+                               tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
+                               robot_net_score + robot_proc_score +
+                               endgame_score
+                       ) %>%
+                       
+                       pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
+                                             tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+                                             robot_net_score, robot_proc_score,
+                                             endgame_score), 
+                                    names_to = "level", 
+                                    values_to = "score")
+                   
+                   ggplot(two_bar_graph, aes(x = factor(team), y = score, fill = level)) + 
+                       geom_bar(position = "stack", stat = "identity") + 
+                       labs(title = "Scoring Summary", 
+                            x = "Team", y = "Total Score with Coral", fill = "Level") +
+                       scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
+                                                    "#FFF68F","#FFC156","olivedrab3","springgreen4", 
+                                                    "steelblue2","steelblue3","steelblue","steelblue4"),
+                                         labels = c("auto_coral_L1" = "Auto Coral L1", 
+                                                    "auto_coral_L2" = "Auto Coral L2",
+                                                    "auto_coral_L3" = "Auto Coral L3", 
+                                                    "auto_coral_L4" = "Auto Coral L4",
+                                                    "move_pts" = "Move",
+                                                    "tele_coral_L1" = "Tele Coral L1", 
+                                                    "tele_coral_L2" = "Tele Coral L2", 
+                                                    "tele_coral_L3" = "Tele Coral L3", 
+                                                    "tele_coral_L4" = "Tele Coral L4", 
+                                                    "endgame_score" = "Endgame", 
+                                                    "robot_net_score" = "Net", 
+                                                    "robot_proc_score" = "Processor")
+                       )+
+                       theme_bw()
+    }
+    
+    #SINGLE TEAM CHOICE LOGIC
     output$team_graph_output <- renderPlot({
         selected_team <- input$team_select
         
@@ -1101,7 +1179,17 @@ server <- function(input, output, session) {
         else if (input$team_graph == "Past History"){
             previous(raw, selected_team)
         } 
-        })
+    })
+    
+    
+    #TWO TEAMS CHOICE LOGIC
+    output$two_teams_graph_output <- renderPlot({
+        selected_teams <- input$teams_selected
+        
+        if (input$two_teams_graph == "Points Large Bar Graph"){
+            two_teams_large_bar_graph(raw, selected_teams)
+        } 
+    })
     
     output$scouter_graph_output <- renderPlot({
         scouter_graph_output(raw)
