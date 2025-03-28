@@ -1098,61 +1098,62 @@ server <- function(input, output, session) {
         #browser()
         two_bar_graph <- raw %>%
             filter(team %in% selected_teams) %>%
-                       group_by(team) %>%
-                       summarise(
-                           match = n(),
-                           auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
-                           auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
-                           auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
-                           auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
-                           move_pts = sum(move*3)/n(),
-                           tele_coral_L1 = sum(coral_L1_num*2)/n(),
-                           tele_coral_L2 = sum(coral_L2_num*3)/n(),
-                           tele_coral_L3 = sum(coral_L3_num*4)/n(),
-                           tele_coral_L4 = sum(coral_L4_num*5)/n(),
-                           robot_net_score = sum(robot_net_score*4)/n(),
-                           robot_proc_score = sum(proc_score*2.5)/n(),
+            group_by(team) %>%
+            summarise(
+                match = n(),
+                auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+                auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+                auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+                auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+                move_pts = sum(move*3)/n(),
+                tele_coral_L1 = sum(coral_L1_num*2)/n(),
+                tele_coral_L2 = sum(coral_L2_num*3)/n(),
+                tele_coral_L3 = sum(coral_L3_num*4)/n(),
+                tele_coral_L4 = sum(coral_L4_num*5)/n(),
+                robot_net_score = sum(robot_net_score*4)/n(),
+                robot_proc_score = sum(proc_score*2.5)/n(),
+                endgame_score = sum(ifelse(ending =="D", 12,
+                                    ifelse(ending =="S", 6,
+                                    ifelse(ending =="P", 2, 0)))
+                                    )/n(),
                            
-                           endgame_score = sum(ifelse(ending =="D", 12,
-                                                      ifelse(ending =="S", 6,
-                                                             ifelse(ending =="P", 2, 0)))
-                           )/n(),
-                           
-                           avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
-                               tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
-                               robot_net_score + robot_proc_score +
-                               endgame_score
-                       ) %>%
+                avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
+                            tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
+                            robot_net_score + robot_proc_score +
+                            endgame_score
+            ) %>%
                        
-                       pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
-                                             tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
-                                             robot_net_score, robot_proc_score,
-                                             endgame_score), 
-                                    names_to = "level", 
-                                    values_to = "score")
+            pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
+                                  tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+                                  robot_net_score, robot_proc_score,
+                                  endgame_score), 
+                        names_to = "level", 
+                        values_to = "score")
                    
-                   ggplot(two_bar_graph, aes(x = factor(team), y = score, fill = level)) + 
-                       geom_bar(position = "stack", stat = "identity") + 
-                       labs(title = "Scoring Summary", 
-                            x = "Team", y = "Total Score with Coral", fill = "Level") +
-                       scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
-                                                    "#FFF68F","#FFC156","olivedrab3","springgreen4", 
-                                                    "steelblue2","steelblue3","steelblue","steelblue4"),
-                                         labels = c("auto_coral_L1" = "Auto Coral L1", 
-                                                    "auto_coral_L2" = "Auto Coral L2",
-                                                    "auto_coral_L3" = "Auto Coral L3", 
-                                                    "auto_coral_L4" = "Auto Coral L4",
-                                                    "move_pts" = "Move",
-                                                    "tele_coral_L1" = "Tele Coral L1", 
-                                                    "tele_coral_L2" = "Tele Coral L2", 
-                                                    "tele_coral_L3" = "Tele Coral L3", 
-                                                    "tele_coral_L4" = "Tele Coral L4", 
-                                                    "endgame_score" = "Endgame", 
-                                                    "robot_net_score" = "Net", 
-                                                    "robot_proc_score" = "Processor")
-                       )+
-                       theme_bw()
+            ggplot(two_bar_graph, aes(x = factor(team), y = score, fill = level)) + 
+                geom_bar(position = "stack", stat = "identity") + 
+                labs(title = "Scoring Summary", 
+                     x = "Team", y = "Total Score with Coral", fill = "Level") +
+                     scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
+                                                  "#FFF68F","#FFC156","olivedrab3","springgreen4", 
+                                                  "steelblue2","steelblue3","steelblue","steelblue4"),
+                                       labels = c("auto_coral_L1" = "Auto Coral L1", 
+                                                  "auto_coral_L2" = "Auto Coral L2",
+                                                  "auto_coral_L3" = "Auto Coral L3", 
+                                                  "auto_coral_L4" = "Auto Coral L4",
+                                                  "move_pts" = "Move",
+                                                  "tele_coral_L1" = "Tele Coral L1", 
+                                                  "tele_coral_L2" = "Tele Coral L2", 
+                                                  "tele_coral_L3" = "Tele Coral L3", 
+                                                  "tele_coral_L4" = "Tele Coral L4", 
+                                                  "endgame_score" = "Endgame", 
+                                                  "robot_net_score" = "Net", 
+                                                  "robot_proc_score" = "Processor")
+                     )+
+                theme_bw()
     }
+    
+    
     
     #SINGLE TEAM CHOICE LOGIC
     output$team_graph_output <- renderPlot({
