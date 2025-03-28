@@ -242,7 +242,7 @@ ui <- fluidPage(
                     sidebarLayout(
                         sidebarPanel(
                             selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Past History")),
+                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Past History")),
                             imageOutput("team_image_output")
                             ),
                         mainPanel(
@@ -1007,6 +1007,33 @@ server <- function(input, output, session) {
             theme_bw()
     }
     
+    #PROBLEMS TABLE
+    problem_table_single <- function(raw, team_num){
+        problem <- raw%>%
+            group_by(team)%>%
+            filter(team==team_num)%>%
+            summarise(
+                coral_stuck = length(grep("cs", dead)),
+                algae_beach = length(grep("ba", dead)),
+                disabled = length(grep("di", dead)),
+                `dead` = length(grep("de", dead)),
+                tipped = length(grep("t", dead))
+                )%>%
+            
+            pivot_longer(cols = c(coral_stuck,
+                                  algae_beach, 
+                                  disabled,
+                                  `dead`,
+                                  tipped), 
+                         names_to = "labels", 
+                         values_to = "count")
+        ggplot(problem, aes(x = labels, y = count)) + 
+            geom_bar(position = "stack", stat = "identity", fill = "#EE3B3B") + 
+            labs(title = "Dead Summary", 
+                 x = "Issues", y = "Frequency") +
+            theme_bw()
+    }
+    
     #PAST HISTORY GRAPH
     previous <- function(raw, team_num){
         past <- raw%>%
@@ -1040,7 +1067,6 @@ server <- function(input, output, session) {
             filter(team == input$team_select) %>%
             select(commentOpen)  
         if (length(comments_data) > 0) {
-            #print(comments_data)
             return(comments_data)
         } else {
             return(data.frame())
@@ -1068,7 +1094,10 @@ server <- function(input, output, session) {
             } 
         else if (input$team_graph == "Comments"){
             comment_table_single(raw, selected_team)
-            } 
+        } 
+        else if (input$team_graph == "Problems"){
+            problem_table_single(raw, selected_team)
+        } 
         else if (input$team_graph == "Past History"){
             previous(raw, selected_team)
         } 
