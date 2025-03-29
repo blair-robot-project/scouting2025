@@ -3,6 +3,7 @@ library(shiny)
 library(DT)
 library(ggplot2)
 library(dplyr)
+library(scales)
 library(shinyWidgets)
 library(tidyverse)
 library(shinythemes)
@@ -302,9 +303,8 @@ ui <- fluidPage(
                             ),
                             mainPanel(
                                 plotOutput("two_teams_graph_output"),
-                                DTOutput("team_data_row"),
-                                h3("Comments"),
-                                DTOutput("comments_list")
+                                h3("Data Frame"),
+                                DTOutput("two_teams_data_row"),
                             )
                         )
                ),
@@ -1258,9 +1258,8 @@ server <- function(input, output, session) {
     #Two Teams Tab
     #GRAPH GEN LOGIC-------------------------------------------
     
-    #LARGE BAR GRAPH
+    #LARGE BAR GRAPH (in median)
     two_teams_large_bar_graph <- function(raw, selected_teams){
-        #browser()
         two_bar_graph <- raw %>%
             filter(team %in% selected_teams) %>%
             group_by(team) %>%
@@ -1323,6 +1322,7 @@ server <- function(input, output, session) {
         comments2 <- raw%>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
             summarise(
                 wobbly = length(grep("2", comments)),
                 wiffs = length(grep("4", comments)),
@@ -1341,18 +1341,22 @@ server <- function(input, output, session) {
                          names_to = "com", 
                          values_to = "level")
         
-        ggplot(comments2, aes(x = com, y = level)) + 
-            geom_bar(position = "stack", stat = "identity", fill = comments2$team)+
+        team_colors <- setNames(hue_pal()(length(levels(comments2$team))), levels(comments2$team))
+        
+        ggplot(comments2, aes(x = com, y = level, fill = team)) + 
+            geom_bar(position = "stack", stat = "identity")+
             labs(title = "Comments Summary", 
                  x = "Issues", y = "Frequency") +
-            theme_bw()     
+            scale_fill_manual(values = team_colors) +
+            theme_bw()
         }
     
     #PROBLEMS
     two_teams_problems <- function(raw, selected_teams){
-        problem2 <- raw%>%
+        problems2 <- raw%>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
             summarise(
                 coral_stuck = length(grep("cs", dead)),
                 algae_beach = length(grep("ba", dead)),
@@ -1368,13 +1372,22 @@ server <- function(input, output, session) {
                                   tipped), 
                          names_to = "labels", 
                          values_to = "count")
-        ggplot(problem2, aes(x = labels, y = count)) + 
-            geom_bar(position = "stack", stat = "identity", fill = problem2$team) + 
+        
+        team_colors <- setNames(hue_pal()(length(levels(problems2$team))), levels(problems2$team))
+        
+        ggplot(problems2, aes(x = labels, y = count, fill = team)) + 
+            geom_bar(position = "stack", stat = "identity") + 
             labs(title = "Dead Summary", 
                  x = "Issues", y = "Frequency") +
+            scale_fill_manual(values = team_colors) +
             theme_bw()
     }
     
+    output$two_teams_data_row <- renderDT({
+        selected_teams <- input$teams_selected
+        two_teams_data_row <- consolidated_team_data[consolidated_team_data$team %in% selected_teams, ]
+        datatable(two_teams_data_row, options = list(scrollX = TRUE, dom = 't'))
+    })
     
     #SINGLE TEAM CHOICE LOGIC
     output$team_graph_output <- renderPlot({
