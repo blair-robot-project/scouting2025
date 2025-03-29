@@ -2,7 +2,7 @@ scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_
 BH,1,R3,2106,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,7,2,TRUE,D,FALSE,0,0,3,NA,"1,4",
 EC,1,B3,404,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,TRUE,P,FALSE,0,0,4,NA,,Only algae
 CL,1,B2,10679,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,5,0,0,0,1,FALSE,No,FALSE,0,0,2,NA,1,
-GL,1,B1,7880,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,2,2,NA,,"Felt like smth went wrong, the bot felt unnaturally slow and clunky"
+GL,1,B1,7886,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,2,2,NA,,"Felt like smth went wrong, the bot felt unnaturally slow and clunky"
 Arman N,1,R1,7770,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,3,1,2,0,FALSE,P,FALSE,0,0,2,NA,BI,
 SBS,1,R2,5587,C,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,1,NA,,
 Arman N,2,R1,3714,,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,
