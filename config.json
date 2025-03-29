@@ -398,6 +398,7 @@
           "type": "multi-select",
           "required": false,
           "code": "gco",
+          "formResetBehavior": "reset",
           "choices": {
             "0": "Played Defense",
             "1": "Wobbly Bot",
@@ -407,8 +408,7 @@
             "5": "Bad Intake",
             "6": "Extra Long Climb(~15-20 secs)",
             "7": "Ground intook coral"
-          }
-          "formResetBehavior": "reset"
+          }       
         },
         {
           "title": "Specific Comments",
