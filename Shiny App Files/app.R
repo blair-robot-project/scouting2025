@@ -3,7 +3,6 @@ library(shiny)
 library(DT)
 library(ggplot2)
 library(dplyr)
-library(scales)
 library(shinyWidgets)
 library(tidyverse)
 library(shinythemes)
@@ -303,7 +302,9 @@ ui <- fluidPage(
                             ),
                             mainPanel(
                                 plotOutput("two_teams_graph_output"),
-                                DTOutput("two_teams_data_row"),
+                                DTOutput("team_data_row"),
+                                h3("Comments"),
+                                DTOutput("comments_list")
                             )
                         )
                ),
@@ -892,37 +893,25 @@ server <- function(input, output, session) {
     
     #PREVIOUS MATCH TAB
     
-    # Server logic for Previous Matches tab
-    
-    # Get list of matches that have already happened
-    # Only include match numbers that exist in the raw data
     observe({
         matches_happened <- sort(unique(mldf$match))
         updateSelectInput(session, "match_num_PREVIOUS", choices = matches_happened)
     })
     
-    # Server logic for generating previous match graphs
     observeEvent(input$match_num_PREVIOUS, {
-        # Get the selected match number
         selected_match <- input$match_num_PREVIOUS
         
-        # Filter raw data for the selected match
         match_data <- mldf %>% filter(match == selected_match)
-        
-        # Get teams from the match
         match_teams <- unique(match_data$team)
         
-        # Split teams into red and blue alliances based on match_schedule
         match_row <- match_schedule[match_schedule$Match == selected_match, ]
         
         red_teams <- c(match_row$R1, match_row$R2, match_row$R3)
         blue_teams <- c(match_row$B1, match_row$B2, match_row$B3)
         
-        # Create team match data - this will contain only data for the selected match
         team_match_data <- match_data %>%
             group_by(team) %>%
             summarize(
-                # Coral cycle calculations
                 l1_cycle_tele = coral_L1_num,
                 l2_cycle_tele = coral_L2_num,
                 l3_cycle_tele = coral_L3_num,
@@ -931,24 +920,18 @@ server <- function(input, output, session) {
                 coral_cycle_tele = sum(l1_cycle_tele, l2_cycle_tele, l3_cycle_tele, l4_cycle_tele),
                 coral_cycle_auto = sum(auto_coral_L1_num, auto_coral_L2_num, auto_coral_L3_num, auto_coral_L4_num),
                 
-                # Algae cycle
                 net_cycle = robot_net_score,
                 proc_cycle = proc_score,
                 algae = sum(net_cycle, proc_cycle),
                 
-                # Total points
                 total_pts_mean = total_pts,
                 
-                # Teleop
                 tele_pts_mean = total_tele_pts,
                 
-                # Auto
                 auto_pts_mean = total_auto_pts,
                 
-                # Endgame
                 endgame_pts_mean = endgame_pts,
                 
-                # Misc
                 algae_remove_pct = as.numeric(robot_reef_removal),
                 move_pct = as.numeric(move),
                 dead_times = paste(dead, "/", 1),
@@ -956,13 +939,9 @@ server <- function(input, output, session) {
                 driver_rating_mean = driver,
                 defense_rating_mean = defense
             )
-        
-        # Modified boxplot function for previous match data
         output$MATCH_alliance_box_plot_output <- renderPlot({
-            # Get the full dataset boxplot
             base_plot <- boxplot_graph_alliance(raw, red_teams, blue_teams)
             
-            # Add points for the specific match performance
             match_points <- match_data %>%
                 mutate(
                     total_coral_score = 
@@ -984,7 +963,6 @@ server <- function(input, output, session) {
             match_points$total <- match_points$total_algae_score + match_points$total_coral_score + 
                 match_points$total_endgame_score + match_points$total_misc_score
             
-            # Add match-specific performance dots
             base_plot + 
                 geom_point(data = match_points, 
                            aes(x = total, y = team), 
@@ -992,37 +970,31 @@ server <- function(input, output, session) {
                 labs(title = paste("Total points scored - Match", selected_match))
         })
         
-        # Tele coral graph for the specific match
         output$MATCH_alliance_tele_coral_graph_output <- renderPlot({
             tele_coral_graph <- tele_coral_alliance(match_data, red_teams, blue_teams)
             tele_coral_graph + labs(title = paste("Tele Coral Summary - Match", selected_match))
         })
         
-        # Auto coral graph for the specific match
         output$MATCH_alliance_auto_coral_graph_output <- renderPlot({
             auto_coral_graph <- auto_coral_alliance(match_data, red_teams, blue_teams)
             auto_coral_graph + labs(title = paste("Move + Auto Coral Summary - Match", selected_match))
         })
         
-        # Algae bar graph for the specific match
         output$MATCH_alliance_algae_bar_graph_output <- renderPlot({
             algae_graph <- algae_bar(match_data, red_teams, blue_teams)
             algae_graph + labs(title = paste("Algae Points Summary - Match", selected_match))
         })
         
-        # Endgame graph for the specific match
         output$MATCH_alliance_endgame_graph_output <- renderPlot({
             endgame_plot <- endgame_graph(match_data, red_teams, blue_teams)
             endgame_plot + labs(title = paste("Endgame Score - Match", selected_match))
         })
         
-        # All bar graph for the specific match
         output$MATCH_alliance_all_graph_output <- renderPlot({
             all_graph <- long_column_alliance(match_data, red_teams, blue_teams)
             all_graph + labs(title = paste("Scoring Summary - Match", selected_match))
         })
         
-        # Table for the specific match
         output$MATCH_alliance_table <- renderDT({
             datatable(team_match_data, options = list(scrollX = TRUE, dom = 't'))
         })
@@ -1286,28 +1258,29 @@ server <- function(input, output, session) {
     #Two Teams Tab
     #GRAPH GEN LOGIC-------------------------------------------
     
-    #LARGE BAR GRAPH (in median)
+    #LARGE BAR GRAPH
     two_teams_large_bar_graph <- function(raw, selected_teams){
+        #browser()
         two_bar_graph <- raw %>%
             filter(team %in% selected_teams) %>%
             group_by(team) %>%
             summarise(
                 match = n(),
-                auto_coral_L1 = median(auto_coral_L1_num*3),
-                auto_coral_L2 = median(auto_coral_L2_num*4),
-                auto_coral_L3 = median(auto_coral_L3_num*6),
-                auto_coral_L4 = median(auto_coral_L4_num*7),
-                move_pts = median(move*3),
-                tele_coral_L1 = median(coral_L1_num*2),
-                tele_coral_L2 = median(coral_L2_num*3),
-                tele_coral_L3 = median(coral_L3_num*4),
-                tele_coral_L4 = median(coral_L4_num*5),
-                robot_net_score = median(robot_net_score*4),
-                robot_proc_score = median(proc_score*2.5),
-                endgame_score = median(ifelse(ending =="D", 12,
+                auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+                auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+                auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+                auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+                move_pts = sum(move*3)/n(),
+                tele_coral_L1 = sum(coral_L1_num*2)/n(),
+                tele_coral_L2 = sum(coral_L2_num*3)/n(),
+                tele_coral_L3 = sum(coral_L3_num*4)/n(),
+                tele_coral_L4 = sum(coral_L4_num*5)/n(),
+                robot_net_score = sum(robot_net_score*4)/n(),
+                robot_proc_score = sum(proc_score*2.5)/n(),
+                endgame_score = sum(ifelse(ending =="D", 12,
                                     ifelse(ending =="S", 6,
                                     ifelse(ending =="P", 2, 0)))
-                                    ),
+                                    )/n(),
                            
                 avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
                             tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
@@ -1350,7 +1323,6 @@ server <- function(input, output, session) {
         comments2 <- raw%>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
-            mutate(team = as.factor(team))%>%
             summarise(
                 wobbly = length(grep("2", comments)),
                 wiffs = length(grep("4", comments)),
@@ -1369,22 +1341,18 @@ server <- function(input, output, session) {
                          names_to = "com", 
                          values_to = "level")
         
-        team_colors <- setNames(hue_pal()(length(levels(comments2$team))), levels(comments2$team))
-        
-        ggplot(comments2, aes(x = com, y = level, fill = team)) + 
-            geom_bar(position = "stack", stat = "identity")+
+        ggplot(comments2, aes(x = com, y = level)) + 
+            geom_bar(position = "stack", stat = "identity", fill = comments2$team)+
             labs(title = "Comments Summary", 
                  x = "Issues", y = "Frequency") +
-            scale_fill_manual(values = team_colors) +
-            theme_bw()
+            theme_bw()     
         }
     
     #PROBLEMS
     two_teams_problems <- function(raw, selected_teams){
-        problems2 <- raw%>%
+        problem2 <- raw%>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
-            mutate(team = as.factor(team))%>%
             summarise(
                 coral_stuck = length(grep("cs", dead)),
                 algae_beach = length(grep("ba", dead)),
@@ -1400,14 +1368,10 @@ server <- function(input, output, session) {
                                   tipped), 
                          names_to = "labels", 
                          values_to = "count")
-        
-        team_colors <- setNames(hue_pal()(length(levels(problems2$team))), levels(problems2$team))
-        
-        ggplot(problems2, aes(x = labels, y = count, fill = team)) + 
-            geom_bar(position = "stack", stat = "identity") + 
+        ggplot(problem2, aes(x = labels, y = count)) + 
+            geom_bar(position = "stack", stat = "identity", fill = problem2$team) + 
             labs(title = "Dead Summary", 
                  x = "Issues", y = "Frequency") +
-            scale_fill_manual(values = team_colors) +
             theme_bw()
     }
     
@@ -1522,12 +1486,6 @@ server <- function(input, output, session) {
         datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1, dom = 't'))
     })
     
-    output$two_teams_data_row <- renderDT({
-        selected_teams <- input$teams_selected
-        two_teams_data_row <- consolidated_team_data[consolidated_team_data$team %in% selected_teams, ]
-        datatable(two_teams_data_row, options = list(scrollX = TRUE, dom = 't'))
-    })
-
     #SCOUTERS
     scouter_graph_output <- function(raw){
         scout_df <- raw %>%
