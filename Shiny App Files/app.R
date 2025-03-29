@@ -1384,9 +1384,12 @@ server <- function(input, output, session) {
     }
     
     output$two_teams_data_row <- renderDT({
+        #Reasoning behind this is I found it hard to read by continuously scrolling horizantally
+        #so I made it vertical. Only problem is that team is no longer the column name...
         selected_teams <- input$teams_selected
-        two_teams_data_row <- consolidated_team_data[consolidated_team_data$team %in% selected_teams, ]
-        datatable(two_teams_data_row, options = list(scrollX = TRUE, dom = 't'))
+        filtered_data <- consolidated_team_data[consolidated_team_data$team %in% selected_teams, ]
+        flipped_data <- as.data.frame(t(filtered_data))
+        datatable(flipped_data, options = list(scrollX = TRUE, dom = 't'))
     })
     
     #SINGLE TEAM CHOICE LOGIC
