@@ -174,7 +174,13 @@ consolidated_team_data <- mldf %>%
     
         algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
         move_pct = round(sum(c(move))/n(), digits = 2),
-        dead_pct = round(sum(c(dead))/n(), digits = 2),
+        
+        # dead_count = sum(c(dead)),
+        # matches = n(),
+        dead_times = paste(sum(c(dead)),"/",n()),
+        
+#        dead_pct = round(sum(c(dead))/n(), digits = 2),
+        
         driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2 ),
         defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2 )
     )
