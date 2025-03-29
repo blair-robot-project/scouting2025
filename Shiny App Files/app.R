@@ -122,8 +122,8 @@ consolidated_team_data <- mldf %>%
         algae = round((sum(net_cycle+proc_cycle)),digits = 2),
     
         #total points
-        #total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
-        total_pts_median = round(median(total_pts, na.rm = TRUE), digits =2),
+        total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
+        #total_pts_median = round(median(total_pts, na.rm = TRUE), digits =2),
         #total_pts_sd = round(sd(total_pts, na.rm = TRUE), digits =2), 
         #total_pts_max = round(max(total_pts, na.rm = TRUE), digits =2),
     
@@ -144,14 +144,14 @@ consolidated_team_data <- mldf %>%
         # l4_pct_mean = round(mean(coral_l4_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
     
         #teleop
-        #tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
-        tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
+        tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
+        #tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
         #tele_pts_sd = round(sd(total_tele_pts, na.rm = TRUE), digits = 2), 
         #tele_pts_max = round(max(total_tele_pts, na.rm = TRUE), digits = 2), 
     
         #auto
-        #auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
-        auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
+        auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
+        #auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
         #auto_pts_sd = round(sd(total_auto_pts, na.rm = TRUE), digits = 2),
         #auto_pts_max = round(max(total_auto_pts, na.rm = TRUE),digits =2),  
         #auto_move = round(mean(move_pts, na.rm = TRUE), digits = 2),
@@ -163,8 +163,8 @@ consolidated_team_data <- mldf %>%
         #algae_pts_max = round(max(net_pts + processor_value, na.rm = TRUE), digits =2), 
         
         #endgame
-        #endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
-        endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
+        endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
+        #endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
         #endgame_pts_sd = round(sd(endgame_pts, na.rm = TRUE), digits =2),
         #endgame_pts_max = round(max(endgame_pts, na.rm = TRUE), digits =2),
         
@@ -179,17 +179,40 @@ consolidated_team_data <- mldf %>%
         # matches = n(),
         dead_times = paste(sum(c(dead)),"/",n()),
         
-#        dead_pct = round(sum(c(dead))/n(), digits = 2),
+        dead_pct = round(sum(c(dead))/n(), digits = 2),
         
         driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2 ),
         defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2 )
     )
 
+default_linear_weights <- data.frame(
+    team = 0,
+    l1_cycle_tele = 5,
+    l2_cycle_tele = 5,
+    l3_cycle_tele = 11,
+    l4_cycle_tele = 17,
+    coral_cycle_tele = 0,
+    coral_cycle_auto = 13,
+    net_cycle = 15,
+    proc_cycle = 12,
+    algae = 0,
+    total_pts_mean = 0,
+    tele_pts_mean = 13,
+    auto_pts_mean = 12,
+    endgame_pts_mean = 10,
+    algae_remove_pct = 7,
+    move_pct = 5,
+    dead_times = 0,
+    dead_pct = -15,
+    driver_rating_mean = 14,
+    defense_rating_mean = 13
+)
+
 #UI
 ui <- fluidPage(
     navbarPage(theme = shinytheme("sandstone"),  
                "449 Scouting",
-               tabPanel("Picklisting",
+               tabPanel("Event Summary",
                         #sidebarLayout(
                         #  sidebarPanel(
                         #    selectInput("picklist_metric", "Choose Graph", choices = c("Bubble Graph", "Other Graphs")),
@@ -208,6 +231,16 @@ ui <- fluidPage(
                                 )
                             )
                         ),
+               
+               tabPanel("Auto-Picklisting",
+                        fluidRow(
+                            column(12, 
+                                   actionButton("open_weights", "Adjust Weights", class = "btn btn-primary"),
+                                   downloadButton("download_picklist", "Download Picklist", class = "btn btn-success"),
+                                   DTOutput("weighted_picklist_table")
+                            )
+                        )
+               ),
              
                tabPanel("Alliance/Match",
                         sidebarLayout(
@@ -1343,5 +1376,187 @@ server <- function(input, output, session) {
             theme_bw()
         
     }
+    
+    #AUTO PICKLISTING
+    weights_data <- reactiveVal(default_linear_weights)
+    
+    normalize_column <- function(x) {
+        if (sd(x, na.rm = TRUE) == 0) {
+            return(rep(0, length(x)))
+        }
+        
+        #min-max normalization
+        normalized <- (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+        
+        normalized[is.nan(normalized)] <- 0
+        
+        return(normalized)
+    }
+    
+    calculate_team_scores <- reactive({
+        #get current weights
+        current_weights <- weights_data()
+        
+        #create a copy of data to work with
+        team_data <- consolidated_team_data
+        
+        #these cols are genkey not useful but will see
+        numeric_cols <- setdiff(names(team_data), c("team", "dead_times"))
+        
+        #create normalized version of the data
+        normalized_data <- team_data
+        
+        for (col in numeric_cols) {
+            normalized_data[[col]] <- normalize_column(team_data[[col]])
+        }
+        
+        #calc weighted scores
+        team_scores <- team_data[, "team", drop = FALSE]
+        team_scores$team_score <- 0
+        
+        for (col in numeric_cols) {
+            if (col %in% names(current_weights)) {
+                weight_val <- current_weights[[col]]
+                team_scores$team_score <- team_scores$team_score + (normalized_data[[col]] * weight_val)
+            }
+        }
+        
+        team_scores <- merge(team_scores, team_data, by = "team")
+        
+        #sort by team score in descending order
+        team_scores <- team_scores[order(-team_scores$team_score), ]
+        
+        return(team_scores)
+    })
+    
+    output$weighted_picklist_table <- renderDT({
+        team_scores <- calculate_team_scores()
+        
+        team_scores$rank <- 1:nrow(team_scores)
+        team_scores$team_score <- round(team_scores$team_score, 2)
+        
+        #reorder columns to show rank and score first
+        cols_order <- c("rank", "team", "team_score")
+        remaining_cols <- setdiff(names(team_scores), cols_order)
+        team_scores <- team_scores[, c(cols_order, remaining_cols)]
+        
+        #datatable
+        datatable(team_scores, 
+                  options = list(
+                      pageLength = 15,
+                      dom = 'ftip',
+                      scrollX = TRUE
+                  ),
+                  rownames = FALSE) %>%
+            formatStyle('team_score',
+                        background = styleColorBar(c(0, max(team_scores$team_score)), 'lightblue'),
+                        backgroundSize = '100% 90%',
+                        backgroundRepeat = 'no-repeat',
+                        backgroundPosition = 'center')
+    })
+    
+    #create weights modal UI
+    weights_modal <- function() {
+        modalDialog(
+            title = "Adjust Team Weighting Factors",
+            size = "l",
+            
+            fluidRow(
+                column(6,
+                       sliderInput("weight_l1_cycle_tele", "L1 Coral Tele", min = -20, max = 20, value = weights_data()$l1_cycle_tele, step = 1),
+                       sliderInput("weight_l2_cycle_tele", "L2 Coral Tele", min = -20, max = 20, value = weights_data()$l2_cycle_tele, step = 1),
+                       sliderInput("weight_l3_cycle_tele", "L3 Coral Tele", min = -20, max = 20, value = weights_data()$l3_cycle_tele, step = 1),
+                       sliderInput("weight_l4_cycle_tele", "L4 Coral Tele", min = -20, max = 20, value = weights_data()$l4_cycle_tele, step = 1),
+                       sliderInput("weight_coral_cycle_tele", "Total Coral Tele", min = -20, max = 20, value = weights_data()$coral_cycle_tele, step = 1),
+                       sliderInput("weight_coral_cycle_auto", "Total Coral Auto", min = -20, max = 20, value = weights_data()$coral_cycle_auto, step = 1),
+                       sliderInput("weight_net_cycle", "Net Cycle", min = -20, max = 20, value = weights_data()$net_cycle, step = 1),
+                       sliderInput("weight_proc_cycle", "Processor Cycle", min = -20, max = 20, value = weights_data()$proc_cycle, step = 1),
+                       sliderInput("weight_algae", "Total Algae", min = -20, max = 20, value = weights_data()$algae, step = 1),
+                       sliderInput("weight_total_pts_mean", "Total Points Mean", min = -20, max = 20, value = weights_data()$total_pts_mean, step = 1)
+                ),
+                column(6,
+                       sliderInput("weight_tele_pts_mean", "Teleop Points Mean", min = -20, max = 20, value = weights_data()$tele_pts_mean, step = 1),
+                       sliderInput("weight_auto_pts_mean", "Auto Points Mean", min = -20, max = 20, value = weights_data()$auto_pts_mean, step = 1),
+                       sliderInput("weight_endgame_pts_mean", "Endgame Points Mean", min = -20, max = 20, value = weights_data()$endgame_pts_mean, step = 1),
+                       sliderInput("weight_algae_remove_pct", "Algae Removal %", min = -20, max = 20, value = weights_data()$algae_remove_pct, step = 1),
+                       sliderInput("weight_move_pct", "Move %", min = -20, max = 20, value = weights_data()$move_pct, step = 1),
+                       sliderInput("weight_dead_pct", "Dead %", min = -20, max = 20, value = weights_data()$dead_pct, step = 1),
+                       sliderInput("weight_driver_rating_mean", "Driver Rating", min = -20, max = 20, value = weights_data()$driver_rating_mean, step = 1),
+                       sliderInput("weight_defense_rating_mean", "Defense Rating", min = -20, max = 20, value = weights_data()$defense_rating_mean, step = 1)
+                )
+            ),
+            
+            footer = tagList(
+                modalButton("Cancel"),
+                actionButton("reset_weights", "Reset to Default", class = "btn-warning"),
+                actionButton("apply_weights", "Apply Weights", class = "btn-primary")
+            )
+        )
+    }
+    
+    #open weights modal
+    observeEvent(input$open_weights, {
+        showModal(weights_modal())
+    })
+    
+    observeEvent(input$reset_weights, {
+        #update all slider values to default
+        updateSliderInput(session, "weight_l1_cycle_tele", value = default_linear_weights$l1_cycle_tele)
+        updateSliderInput(session, "weight_l2_cycle_tele", value = default_linear_weights$l2_cycle_tele)
+        updateSliderInput(session, "weight_l3_cycle_tele", value = default_linear_weights$l3_cycle_tele)
+        updateSliderInput(session, "weight_l4_cycle_tele", value = default_linear_weights$l4_cycle_tele)
+        updateSliderInput(session, "weight_coral_cycle_tele", value = default_linear_weights$coral_cycle_tele)
+        updateSliderInput(session, "weight_coral_cycle_auto", value = default_linear_weights$coral_cycle_auto)
+        updateSliderInput(session, "weight_net_cycle", value = default_linear_weights$net_cycle)
+        updateSliderInput(session, "weight_proc_cycle", value = default_linear_weights$proc_cycle)
+        updateSliderInput(session, "weight_algae", value = default_linear_weights$algae)
+        updateSliderInput(session, "weight_total_pts_mean", value = default_linear_weights$total_pts_mean)
+        updateSliderInput(session, "weight_tele_pts_mean", value = default_linear_weights$tele_pts_mean)
+        updateSliderInput(session, "weight_auto_pts_mean", value = default_linear_weights$auto_pts_mean)
+        updateSliderInput(session, "weight_endgame_pts_mean", value = default_linear_weights$endgame_pts_mean)
+        updateSliderInput(session, "weight_algae_remove_pct", value = default_linear_weights$algae_remove_pct)
+        updateSliderInput(session, "weight_move_pct", value = default_linear_weights$move_pct)
+        updateSliderInput(session, "weight_dead_pct", value = default_linear_weights$dead_pct)
+        updateSliderInput(session, "weight_driver_rating_mean", value = default_linear_weights$driver_rating_mean)
+        updateSliderInput(session, "weight_defense_rating_mean", value = default_linear_weights$defense_rating_mean)
+    })
+    
+    #apply updated weights
+    observeEvent(input$apply_weights, {
+        new_weights <- data.frame(
+            team = 0,
+            l1_cycle_tele = input$weight_l1_cycle_tele,
+            l2_cycle_tele = input$weight_l2_cycle_tele,
+            l3_cycle_tele = input$weight_l3_cycle_tele,
+            l4_cycle_tele = input$weight_l4_cycle_tele,
+            coral_cycle_tele = input$weight_coral_cycle_tele,
+            coral_cycle_auto = input$weight_coral_cycle_auto,
+            net_cycle = input$weight_net_cycle,
+            proc_cycle = input$weight_proc_cycle,
+            algae = input$weight_algae,
+            total_pts_mean = input$weight_total_pts_mean,
+            tele_pts_mean = input$weight_tele_pts_mean,
+            auto_pts_mean = input$weight_auto_pts_mean,
+            endgame_pts_mean = input$weight_endgame_pts_mean,
+            algae_remove_pct = input$weight_algae_remove_pct,
+            move_pct = input$weight_move_pct,
+            dead_pct = input$weight_dead_pct,
+            driver_rating_mean = input$weight_driver_rating_mean,
+            defense_rating_mean = input$weight_defense_rating_mean
+        )
+        
+        weights_data(new_weights)
+        removeModal()
+    })
+    
+    #download picklist
+    output$download_picklist <- downloadHandler(
+        filename = function() {
+            paste("team-picklist-", Sys.Date(), ".csv", sep = "")
+        },
+        content = function(file) {
+            write.csv(calculate_team_scores(), file, row.names = FALSE)
+        }
+    )
 }
 shinyApp(ui, server)
