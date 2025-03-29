@@ -285,9 +285,7 @@ ui <- fluidPage(
                             ),
                             mainPanel(
                                 plotOutput("two_teams_graph_output"),
-                                DTOutput("team_data_row"),
-                                h3("Comments"),
-                                DTOutput("comments_list")
+                                DTOutput("two_teams_data_row"),
                             )
                         )
                ),
@@ -1133,28 +1131,28 @@ server <- function(input, output, session) {
     #Two Teams Tab
     #GRAPH GEN LOGIC-------------------------------------------
     
-    #LARGE BAR GRAPH
+    #LARGE BAR GRAPH (in median)
     two_teams_large_bar_graph <- function(raw, selected_teams){
         two_bar_graph <- raw %>%
             filter(team %in% selected_teams) %>%
             group_by(team) %>%
             summarise(
                 match = n(),
-                auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
-                auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
-                auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
-                auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
-                move_pts = sum(move*3)/n(),
-                tele_coral_L1 = sum(coral_L1_num*2)/n(),
-                tele_coral_L2 = sum(coral_L2_num*3)/n(),
-                tele_coral_L3 = sum(coral_L3_num*4)/n(),
-                tele_coral_L4 = sum(coral_L4_num*5)/n(),
-                robot_net_score = sum(robot_net_score*4)/n(),
-                robot_proc_score = sum(proc_score*2.5)/n(),
-                endgame_score = sum(ifelse(ending =="D", 12,
+                auto_coral_L1 = median(auto_coral_L1_num*3),
+                auto_coral_L2 = median(auto_coral_L2_num*4),
+                auto_coral_L3 = median(auto_coral_L3_num*6),
+                auto_coral_L4 = median(auto_coral_L4_num*7),
+                move_pts = median(move*3),
+                tele_coral_L1 = median(coral_L1_num*2),
+                tele_coral_L2 = median(coral_L2_num*3),
+                tele_coral_L3 = median(coral_L3_num*4),
+                tele_coral_L4 = median(coral_L4_num*5),
+                robot_net_score = median(robot_net_score*4),
+                robot_proc_score = median(proc_score*2.5),
+                endgame_score = median(ifelse(ending =="D", 12,
                                     ifelse(ending =="S", 6,
                                     ifelse(ending =="P", 2, 0)))
-                                    )/n(),
+                                    ),
                            
                 avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
                             tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
@@ -1369,6 +1367,12 @@ server <- function(input, output, session) {
         datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1, dom = 't'))
     })
     
+    output$two_teams_data_row <- renderDT({
+        selected_teams <- input$teams_selected
+        two_teams_data_row <- consolidated_team_data[consolidated_team_data$team %in% selected_teams, ]
+        datatable(two_teams_data_row, options = list(scrollX = TRUE, dom = 't'))
+    })
+
     #SCOUTERS
     scouter_graph_output <- function(raw){
         scout_df <- raw %>%
