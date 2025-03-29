@@ -241,7 +241,7 @@ ui <- fluidPage(
                         sidebarLayout(
                             sidebarPanel(
                                 pickerInput("teams_selected", "Select Team", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 2)),
-                                selectInput("two_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph"))
+                                selectInput("two_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph", "Comments", "Dead"))
                             ),
                             mainPanel(
                                 plotOutput("two_teams_graph_output"),
@@ -844,7 +844,6 @@ server <- function(input, output, session) {
         
         boxplot <- raw %>%
             filter(team == team_num) %>%
-            
             mutate(total_coral_score = 
                        (coral_L1_num*2) + (coral_L2_num*3) + 
                        (coral_L3_num*4) + (coral_L4_num*5) + 
@@ -1094,6 +1093,7 @@ server <- function(input, output, session) {
     #Two Teams Tab
     #GRAPH GEN LOGIC-------------------------------------------
     
+    #LARGE BAR GRAPH
     two_teams_large_bar_graph <- function(raw, selected_teams){
         #browser()
         two_bar_graph <- raw %>%
@@ -1153,6 +1153,62 @@ server <- function(input, output, session) {
                 theme_bw()
     }
     
+    #COMMENTS
+    two_teams_comments <- function(raw, selected_teams){
+        comments2 <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            summarise(
+                wobbly = length(grep("2", comments)),
+                wiffs = length(grep("4", comments)),
+                `wobbly manip` = length(grep("1", comments)),
+                `bad intake` = length(grep("5", comments)),
+                defense = length(grep("0", comments)),
+                `xtra long climb` = length(grep("6", comments))
+            )%>%
+            
+            pivot_longer(cols = c(wobbly,
+                                  wiffs, 
+                                  `wobbly manip`,
+                                  `bad intake`,
+                                  defense,
+                                  `xtra long climb`), 
+                         names_to = "com", 
+                         values_to = "level")
+        
+        ggplot(comments2, aes(x = com, y = level)) + 
+            geom_bar(position = "stack", stat = "identity", fill = comments2$team)+
+            labs(title = "Comments Summary", 
+                 x = "Issues", y = "Frequency") +
+            theme_bw()     
+        }
+    
+    #PROBLEMS
+    two_teams_problems <- function(raw, selected_teams){
+        problem2 <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            summarise(
+                coral_stuck = length(grep("cs", dead)),
+                algae_beach = length(grep("ba", dead)),
+                disabled = length(grep("di", dead)),
+                `dead` = length(grep("de", dead)),
+                tipped = length(grep("t", dead))
+            )%>%
+            
+            pivot_longer(cols = c(coral_stuck,
+                                  algae_beach, 
+                                  disabled,
+                                  `dead`,
+                                  tipped), 
+                         names_to = "labels", 
+                         values_to = "count")
+        ggplot(problem2, aes(x = labels, y = count)) + 
+            geom_bar(position = "stack", stat = "identity", fill = problem2$team) + 
+            labs(title = "Dead Summary", 
+                 x = "Issues", y = "Frequency") +
+            theme_bw()
+    }
     
     
     #SINGLE TEAM CHOICE LOGIC
@@ -1190,6 +1246,12 @@ server <- function(input, output, session) {
         if (input$two_teams_graph == "Points Large Bar Graph"){
             two_teams_large_bar_graph(raw, selected_teams)
         } 
+        else if (input$two_teams_graph == "Comments"){
+            two_teams_comments(raw, selected_teams)
+        }
+        else if (input$two_teams_graph == "Dead"){
+            two_teams_problems(raw, selected_teams)
+        }
     })
     
     output$scouter_graph_output <- renderPlot({
