@@ -302,7 +302,7 @@ ui <- fluidPage(
                                 selectInput("two_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph", "Comments", "Dead", "Progress Over Time")),
                                 conditionalPanel(
                                     condition = "input.two_teams_graph == 'Progress Over Time'",
-                                    selectInput("two_teams_progress_graph", "Choose Graph", choices = c("Points"))
+                                    selectInput("two_teams_progress_graph", "Choose Graph", choices = c("Points", "Driver Ranking"))
                                 ),
                             ),
                             mainPanel(
@@ -896,7 +896,6 @@ server <- function(input, output, session) {
     })
     
     #PREVIOUS MATCH TAB
-    
     observe({
         matches_happened <- sort(unique(mldf$match))
         updateSelectInput(session, "match_num_PREVIOUS", choices = matches_happened)
@@ -1262,7 +1261,7 @@ server <- function(input, output, session) {
     #Two Teams Tab
     #GRAPH GEN LOGIC-------------------------------------------
     
-    #LARGE BAR GRAPH (in median)
+    #LARGE BAR GRAPH
     two_teams_large_bar_graph <- function(raw, selected_teams){
         two_bar_graph <- raw %>%
             filter(team %in% selected_teams) %>%
@@ -1346,7 +1345,6 @@ server <- function(input, output, session) {
                          values_to = "level")
         
         team_colors <- setNames(hue_pal()(length(levels(comments2$team))), levels(comments2$team))
-        
         ggplot(comments2, aes(x = com, y = level, fill = team)) + 
             geom_bar(position = "stack", stat = "identity")+
             labs(title = "Comments Summary", 
@@ -1378,7 +1376,6 @@ server <- function(input, output, session) {
                          values_to = "count")
         
         team_colors <- setNames(hue_pal()(length(levels(problems2$team))), levels(problems2$team))
-        
         ggplot(problems2, aes(x = labels, y = count, fill = team)) + 
             geom_bar(position = "stack", stat = "identity") + 
             labs(title = "Dead Summary", 
@@ -1404,13 +1401,35 @@ server <- function(input, output, session) {
                     ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
             )
         team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
-        ggplot(past_match_points, aes(x= match, y= total_score, color = team, group = team)) + 
+        ggplot(past_match_points, aes(x = match, y = total_score, color = team, group = team)) + 
             geom_line(size = 1) +
             geom_point(size = 2) + 
             scale_fill_manual(values = team_colors) +
             scale_y_continuous(limits = c(0, max(past_match_points$total_score, na.rm = TRUE))) +
             scale_x_continuous(breaks = unique(past_match_points$match)) +
             labs(title = "Points Over Time", x = "Match", y = "Total Score", color = "Team") +
+            theme_minimal()
+    }
+    
+    #DRIVER OVER TIME
+    two_teams_past_driver <- function(raw, selected_teams){
+        past_match_points <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
+            summarize(
+                team = team,
+                match = match,
+                driver = driver
+            )
+        team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
+        ggplot(past_match_points, aes(x = match, y = driver, color = team, group = team)) + 
+            geom_line(size = 1) +
+            geom_point(size = 2) + 
+            scale_fill_manual(values = team_colors) +
+            scale_y_continuous(limits = c(0, 5, na.rm = TRUE)) +
+            scale_x_continuous(breaks = unique(past_match_points$match)) +
+            labs(title = "Driver Ranking Over Time", x = "Match", y = "Driver Ranking", color = "Team") +
             theme_minimal()
     }
     
@@ -1469,6 +1488,9 @@ server <- function(input, output, session) {
         }
         else if (input$two_teams_progress_graph == "Points"){
             two_teams_past_points(raw, selected_teams)
+        }
+        else if (input$two_teams_progress_graph == "Driver Ranking"){
+            two_teams_past_driver(raw, selected_teams)
         }
     })
     
