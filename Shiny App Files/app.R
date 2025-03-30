@@ -299,7 +299,11 @@ ui <- fluidPage(
                         sidebarLayout(
                             sidebarPanel(
                                 pickerInput("teams_selected", "Select Team", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 2)),
-                                selectInput("two_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph", "Comments", "Dead"))
+                                selectInput("two_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph", "Comments", "Dead", "Progress Over Time")),
+                                conditionalPanel(
+                                    condition = "input.two_teams_graph == 'Progress Over Time'",
+                                    selectInput("two_teams_progress_graph", "Choose Graph", choices = c("Points"))
+                                ),
                             ),
                             mainPanel(
                                 plotOutput("two_teams_graph_output"),
@@ -1383,12 +1387,42 @@ server <- function(input, output, session) {
             theme_bw()
     }
     
+    #POINTS OVER TIME
+    two_teams_past_points <- function(raw, selected_teams){
+        past_match_points <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
+            summarize(
+                team = team,
+                match = match,
+                total_score = 
+                    move*3 +
+                    auto_coral_L1_num*3 + auto_coral_L2_num*4 + auto_coral_L3_num*6 + auto_coral_L4_num*7 +
+                    robot_net_score*4 + proc_score*2.5 +
+                    coral_L1_num*2 + coral_L2_num*3 + coral_L3_num*4 + coral_L4_num*5 +
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+            )
+        team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
+        ggplot(past_match_points, aes(x= match, y= total_score, color = team, group = team)) + 
+            geom_line(size = 1) +
+            geom_point(size = 2) + 
+            scale_fill_manual(values = team_colors) +
+            scale_y_continuous(limits = c(0, max(past_match_points$total_score, na.rm = TRUE))) +
+            scale_x_continuous(breaks = unique(past_match_points$match)) +
+            labs(title = "Points Over Time", x = "Match", y = "Total Score", color = "Team") +
+            theme_minimal()
+    }
+    
+    
     output$two_teams_data_row <- renderDT({
         #Reasoning behind this is I found it hard to read by continuously scrolling horizantally
         #so I made it vertical. Only problem is that team is no longer the column name...
         selected_teams <- input$teams_selected
-        filtered_data <- consolidated_team_data[consolidated_team_data$team %in% selected_teams, ]
+        filtered_data <- consolidated_team_data[consolidated_team_data$team %in% selected_teams,]
+        filtered_data <- filtered_data[, !names(filtered_data) %in% "team"]
         flipped_data <- as.data.frame(t(filtered_data))
+        colnames(flipped_data) <- selected_teams
         datatable(flipped_data, options = list(scrollX = TRUE, dom = 't'))
     })
     
@@ -1432,6 +1466,9 @@ server <- function(input, output, session) {
         }
         else if (input$two_teams_graph == "Dead"){
             two_teams_problems(raw, selected_teams)
+        }
+        else if (input$two_teams_progress_graph == "Points"){
+            two_teams_past_points(raw, selected_teams)
         }
     })
     
