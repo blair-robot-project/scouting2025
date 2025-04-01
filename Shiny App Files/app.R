@@ -821,6 +821,86 @@ server <- function(input, output, session) {
             print(selected_red_teams)
             print("Blue teams:")
             print(selected_blue_teams)
+            
+            matches_happened <- sort(unique(mldf$match))
+            
+            if (match_num %in% matches_happened) {
+                output$alliance_box_plot_output <- renderPlot({
+                    match_data <- mldf %>% filter(match == match_num)
+                    
+                    match_teams <- unique(match_data$team)
+                    
+                    match_row <- match_schedule[match_schedule$Match == match_num, ]
+                    
+                    red_teams <- c(match_row$R1, match_row$R2, match_row$R3)
+                    blue_teams <- c(match_row$B1, match_row$B2, match_row$B3)
+                    
+                    team_match_data <- match_data %>%
+                        group_by(team) %>%
+                        summarize(
+                            l1_cycle_tele = coral_L1_num,
+                            l2_cycle_tele = coral_L2_num,
+                            l3_cycle_tele = coral_L3_num,
+                            l4_cycle_tele = coral_L4_num,
+                            
+                            coral_cycle_tele = sum(l1_cycle_tele, l2_cycle_tele, l3_cycle_tele, l4_cycle_tele),
+                            coral_cycle_auto = sum(auto_coral_L1_num, auto_coral_L2_num, auto_coral_L3_num, auto_coral_L4_num),
+                            
+                            net_cycle = robot_net_score,
+                            proc_cycle = proc_score,
+                            algae = sum(net_cycle, proc_cycle),
+                            
+                            total_pts_mean = total_pts,
+                            
+                            tele_pts_mean = total_tele_pts,
+                            
+                            auto_pts_mean = total_auto_pts,
+                            
+                            endgame_pts_mean = endgame_pts,
+                            
+                            algae_remove_pct = as.numeric(robot_reef_removal),
+                            move_pct = as.numeric(move),
+                            dead_times = paste(dead, "/", 1),
+                            dead_pct = as.numeric(dead),
+                            driver_rating_mean = driver,
+                            defense_rating_mean = defense
+                        )
+                    
+                    match_points <- match_data %>%
+                        mutate(
+                            total_coral_score =
+                                (coral_L1_num*2) + (coral_L2_num*3) +
+                                (coral_L3_num*4) + (coral_L4_num*5) +
+                                (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+
+                                (auto_coral_L3_num*5)+ (auto_coral_L4_num*7),
+                            
+                            total_algae_score =
+                                (robot_net_score*4) + (proc_score*2.5),
+                            
+                            total_endgame_score =
+                                ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+                            
+                            total_misc_score =
+                                (move * 3)
+                        )
+                    
+                    match_points$total <- match_points$total_algae_score + match_points$total_coral_score +
+                        match_points$total_endgame_score + match_points$total_misc_score
+                    
+                    
+                    base_plot <- boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+                    
+                    base_plot +
+                        geom_point(data = match_points,
+                                   aes(x = total, y = factor(team, levels = c(selected_red_teams, selected_blue_teams))),
+                                   color = "red", size = 4)
+                })
+            } else {
+                output$alliance_box_plot_output <- renderPlot({
+                    boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+                })
+            }
+            
         } else if (input$match_or_teams == "Select 6 Teams"){
             selected_red_teams <- input$red_teams
             selected_blue_teams <- input$blue_teams
@@ -857,11 +937,11 @@ server <- function(input, output, session) {
                 blue_alliance_row$Pick.1,
                 blue_alliance_row$Pick.2
             )
+            
+            output$alliance_box_plot_output <- renderPlot({
+                boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+            })
         }
-        
-        output$alliance_box_plot_output <- renderPlot({
-            boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
-        })
         
         
         output$alliance_tele_coral_graph_output <- renderPlot({
@@ -947,30 +1027,33 @@ server <- function(input, output, session) {
             
             match_points <- match_data %>%
                 mutate(
-                    total_coral_score = 
-                        (coral_L1_num*2) + (coral_L2_num*3) + 
-                        (coral_L3_num*4) + (coral_L4_num*5) + 
-                        (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
+                    total_coral_score =
+                        (coral_L1_num*2) + (coral_L2_num*3) +
+                        (coral_L3_num*4) + (coral_L4_num*5) +
+                        (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+
                         (auto_coral_L3_num*5)+ (auto_coral_L4_num*7),
-                    
-                    total_algae_score = 
+
+                    total_algae_score =
                         (robot_net_score*4) + (proc_score*2.5),
-                    
-                    total_endgame_score = 
+
+                    total_endgame_score =
                         ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
-                    
-                    total_misc_score = 
+
+                    total_misc_score =
                         (move * 3)
                 )
-            
-            match_points$total <- match_points$total_algae_score + match_points$total_coral_score + 
+
+            match_points$total <- match_points$total_algae_score + match_points$total_coral_score +
                 match_points$total_endgame_score + match_points$total_misc_score
-            
-            base_plot + 
-                geom_point(data = match_points, 
-                           aes(x = total, y = team), 
+
+            base_plot +
+                geom_point(data = match_points,
+                           aes(x = total, y = factor(team, levels = c(red_teams, blue_teams))),
                            color = "red", size = 4) +
                 labs(title = paste("Total points scored - Match", selected_match))
+            
+            #print(match_points$total)
+            #base_plot
         })
         
         output$MATCH_alliance_tele_coral_graph_output <- renderPlot({
