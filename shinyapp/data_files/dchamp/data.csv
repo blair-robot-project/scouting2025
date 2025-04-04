@@ -1,2 +1,145 @@
 scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_coral_L3_num,auto_coral_L4_num,robot_reef_removal,robot_algae_picked,robot_net_score,robot_net_miss,proc_score,coral_L1_num,coral_L2_num,coral_L3_num,coral_L4_num,tele_missed,climb_attempt,ending,climb_time,fouls,defense,driver,dead,comments,commentOpen
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+MF,1,B3,540,F,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,5,4,4,1,FALSE,No,FALSE,0,0,5,NA,,Human player struggled to output coral at the end
+RX,1,R2,2534,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,0,4,2,FALSE,P,FALSE,0,0,3,NA,,Paused for 10 secs near end of match
+BH,1,B1,686,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,3,0,4,0,2,FALSE,No,FALSE,0,0,3,NA,2,They missed every l4 attempt 
+Ashwin,1,R3,2534,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,0,4,2,TRUE,P,FALSE,0,0,3,NA,,"Missed an L4 coral in teleop, intake was a bit slow low but steady and consistent"
+GEH,1,B2,116,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,8,1,0,1,0,4,0,4,FALSE,P,FALSE,0,0,4,NA,,Had a rough start but picked up the pace and was able to score multiple L3 and remove algae from the reef.
+CVC,1,R1,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,4,FALSE,No,FALSE,0,0,2,NA,5,"They struggled with their wheels towards the end half of the match, and really struggled the start of teleop to align for coral intake"
+BH,2,B1,122,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,2,TRUE,P,FALSE,0,0,3,NA,,All L1 is a result of missed l4
+RX,2,R2,1895,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,4,3,1,FALSE,P,FALSE,0,0,4,NA,1,"Fast Early Reef Algae Removal, Difficult L4 score but good L3, somewhat lengthy loading time"
+CVC,2,R1,4821,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,6,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,,"Didn41391t focus on other parts really only did algae intake for net human shots, succeeded the majority only missed two algae into processor"
+Ashwin,2,R3,9072,F,FALSE,TRUE,0,0,0,1,TRUE,TRUE,2,0,0,0,0,0,5,1,TRUE,P,FALSE,0,0,4,NA,7,"Almost all corals scored were intook from ground. Driver or robot seemed to lose control in last 30 seconds, crashing into reef repeatedly "
+ TC,2,R1,2199,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,1,0,0,0,1,4,0,TRUE,P,FALSE,0,0,2,NA,,They were good at removing coral but not as consistent with scoring it in the processor.
+GEH,2,B2,10224,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,2,2,0,0,1,TRUE,P,FALSE,0,0,3,NA,,One note for me - they scored on the opposite side of the reef but I couldn41391t see whether it was L1 or L2.
+RX,3,R2,4541,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,2,0,2,2,FALSE,P,FALSE,0,0,3,cs,,"Fast Loading, Coral got stuck near end of match"
+BH,3,B1,2106,C,FALSE,FALSE,0,0,0,3,TRUE,FALSE,2,0,0,1,0,3,4,1,TRUE,D,FALSE,0,0,4,NA,,
+CVC,3,R1,888,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,1,4,3,3,FALSE,No,FALSE,0,0,3,NA,,"Overall alright, missed a couple coral placements and dropped one on their way pretty swift, also removed two algaes from reef"
+GEH,3,B2,2890,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,1,0,1,FALSE,P,FALSE,0,0,2,NA,,"Moved very slow, only managed to score one coral in the entire game. Was able to remove some algae but struggled picking it up to score."
+ TC,3,R1,6802,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,4,TRUE,S,FALSE,0,0,2,NA,,Mised a lot and slow cycle speed and aiming for coral.
+Ashwin,3,R3,4638,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,1,3,0,TRUE,P,FALSE,0,0,2,NA,1,"Robot elevator raised so high that robot almost tipped over, took 15+ seconds to score each coral. Driver had difficulty being precise in intake, but robot design compensated"
+GEH,4,B2,3793,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,2,6,0,0,0,FALSE,P,FALSE,0,0,4,NA,,"Focused on putting coral on L2, which worked out well for them. "
+BH,4,B1,614,F,FALSE,FALSE,0,1,0,0,FALSE,TRUE,0,0,2,1,0,4,0,0,FALSE,P,FALSE,0,0,3,NA,,Ground intake coral but can only put it in L1
+RX,4,R2,8726,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,0,0,2,0,1,TRUE,D,FALSE,0,0,3,ba,,
+ MF,4,B3,5804,C,FALSE,TRUE,0,0,0,3,TRUE,TRUE,1,0,0,0,0,0,8,0,TRUE,D,TRUE,0,0,4,ba,,"The third autonomous was scored just as autonomous ended, it tipped back and forth without falling once"
+CVC,4,R1,2363,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,2,1,0,2,4,0,TRUE,No,FALSE,0,0,3,NA,,"Attempted climb and almost lifted, failed to intake some corals from human station but overall did alright, was good and swift with giving algae to processor"
+Ashwin,4,R3,1418,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,2,0,2,0,2,TRUE,P,TRUE,0,0,2,NA,2,Tried scoring two L441391s but both missed and both landed in L1 instead. 
+GEH,5,B2,1885,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,1,0,8,0,0,0,0,0,FALSE,No,FALSE,0,0,5,NA,,Really good at removing all algae from the reef and then scoring it all in the processor.
+CVC,5,R1,1727,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,5,0,5,0,2,TRUE,D,FALSE,0,0,4,NA,,
+RX,5,R2,401,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,0,0,1,2,2,1,1,TRUE,D,FALSE,0,0,5,NA,,"Had a little trouble scoring L1, around 10-15 second climb & fast cycles, can score algae nicely"
+BH,5,B1,977,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,2,5,0,TRUE,No,FALSE,0,0,3,NA,,Slammed into while trying to climb which affect their climbing ability. Also they moved but didn41391t catch how many coral they got 
+MF,5,B3,539,F,FALSE,TRUE,2,0,0,0,FALSE,FALSE,0,0,0,4,5,0,0,0,FALSE,No,FALSE,0,0,3,NA,,There is a chance that 1-2 were missed
+Ashwin,5,R3,836,F,FALSE,TRUE,1,0,0,0,TRUE,TRUE,1,0,0,3,2,0,2,1,TRUE,D,FALSE,0,0,3,NA,"1,7","Attempted to grab 3 algae total, got hold of but dropped 2. Ground Intook pretty much all coral it attempted"
+JA,6,R2,4505,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,2,2,5,FALSE,No,FALSE,0,0,3,NA,,Missed a lot of coral 
+TC,6,R1,1086,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,5,6,FALSE,P,FALSE,2,0,3,NA,,
+BH,6,B1,422,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,2,1,0,0,3,1,0,0,TRUE,D,FALSE,0,3,3,ba,,They got beached and get helped off not once but twice 
+GEH,6,B2,5338,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,1,0,3,2,4,0,3,FALSE,No,FALSE,0,0,5,NA,1,"Their momentum came close to tipping them many times. Other than that, had fast cycle times and was good."
+CVC,6,R1,611,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,7,0,0,2,0,FALSE,No,FALSE,0,0,3,NA,,"Wasn41391t too successful at scoring high, had a bit of trouble in taking coral, mainly scored L1"
+Ashwin,6,R3,5115,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,2,0,1,FALSE,P,TRUE,0,0,2,NA,"6,5",Almost tipped by defense from 422. Dropped most of the coral before in range to score
+BH,7,B1,6326,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,2,2,NA,,
+TC,7,R1,1731,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,1,7,0,TRUE,D,FALSE,0,0,4,NA,,
+JA,7,R2,6863,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,2,3,0,1,FALSE,P,FALSE,0,0,3,NA,,
+GEH,7,B2,1908,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,2,0,1,1,1,TRUE,D,TRUE,0,0,3,NA,6,Cycling time was slow and robot spent a lot of time positioning to score coral.
+CVC,7,R1,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,4,0,0,FALSE,P,FALSE,0,0,3,NA,,"Did pretty basic, good placement of coral though, didn41391t miss any placement"
+Ashwin,7,R3,8230,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,TRUE,0,5,4,NA,0,Only played defense. Caused opposing team to miss around 66% of coral intakes
+TC,8,R1,6213,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,1,de,,
+GEH,8,B2,3748,M,FALSE,TRUE,0,0,0,0,FALSE,TRUE,0,0,1,0,1,6,0,0,TRUE,P,FALSE,0,0,5,NA,,Pushed teammate out of starting line during auto. Very consistent with L3.
+JA,8,R2,3136,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,4,4,1,TRUE,P,TRUE,0,0,4,NA,,
+BH,8,B1,346,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,2,NA,,Wobbly bot 
+CVC,8,R1,620,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,1,0,4,1,0,2,4,FALSE,No,FALSE,0,0,3,NA,,"Driver kept misaligning, causing their missing shots, when they seemingly failed to do the higher levels they started to score in L1"
+Ashwin,8,R3,1629,M,FALSE,TRUE,0,0,0,1,TRUE,TRUE,1,0,2,0,3,2,2,1,TRUE,P,FALSE,0,0,4,NA,,Scored both processor shots during auto. Very well-rounded (smooth driving and quick with intake and scoring)
+JA,9,R2,3559,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,3,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,5,Has some anti tip
+MF,9,B2,8592,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,2,2,2,1,1,1,2,TRUE,D,FALSE,0,0,2,ba,,Swinging deep climb
+CVC,9,R1,3373,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,5,1,TRUE,D,FALSE,0,0,3,NA,1,"A Little Slow in speed, had trouble scoring sometimes, seems to be slower at lower reef levels"
+Ashwin,9,R3,2186,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,1,TRUE,P,TRUE,0,0,3,NA,"1,5",
+AX,9,B1,449,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,5,4,3,9,TRUE,P,TRUE,0,0,4,NA,,"Missed L4 coral in auto, struggled with ground intake during last 15 seconds and wasn41391t able to score anymore coral"
+TC,9,R1,339,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,2,3,NA,,
+JA,10,R2,9072,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,0,0,0,1,1,5,0,TRUE,P,FALSE,0,0,5,NA,,The goats
+BH,10,B1,1111,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,0,de,,:(
+GL,10,B2,6802,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,2,1,FALSE,P,FALSE,0,0,2,cs,2,"Overall kinda slow, post coral stuck didn41391t try defense (but it was late so41389 eh?). Failed scoring several times."
+Ashwin,10,R3,686,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,0,0,0,2,3,0,0,TRUE,P,TRUE,0,0,3,NA,1,Wobbled almost 4 times by crashing into other bots and crashing into reef
+CVC,10,R1,614,M,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,6,1,0,0,3,FALSE,No,FALSE,0,0,3,NA,,"Two coral Intakes, one ground intake for L1 & another for loading and higher levels, doesn41391t seem to be able to do L4 & missed a lot of shots L2-L3"
+TC,10,R1,1895,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,5,4,0,TRUE,D,FALSE,0,0,3,NA,,Froze during auto. Slow outtake one time.
+JJ,11,R2,4541,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,2,0,FALSE,No,FALSE,0,0,3,di,,Looks like they lost control of the drive before they disabled. Broke during the match 
+BH,11,B1,8726,C,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,0,0,6,0,1,FALSE,P,FALSE,0,0,3,NA,,
+MF,11,R1,539,C,FALSE,TRUE,3,0,0,0,TRUE,FALSE,0,0,0,1,1,2,0,0,FALSE,No,FALSE,0,0,3,NA,,I41391m not sure about one of my L1s because it was blocked from my view since it was behind the reef. Very slow robot.
+Ashwin,11,R3,5804,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,2,0,0,2,4,2,TRUE,P,FALSE,0,0,3,NA,,
+GL,11,B2,8590,F,FALSE,TRUE,0,1,0,0,FALSE,FALSE,0,0,0,1,0,0,0,0,FALSE,No,FALSE,0,4,3,NA,"1,0","Crazy wobbly, but aggressive defense caused a lot of delays for opponents. Didn41391t zone one station, instead chased and tried to interfere with all bots."
+TC,11,R1,1885,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,10,0,0,0,0,0,FALSE,No,FALSE,0,0,4,NA,,
+BH,12,B1,2890,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,0,FALSE,No,FALSE,0,0,3,NA,,
+JJ,12,R2,5115,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,2,0,2,FALSE,P,FALSE,0,0,3,NA,2,Their coral can get knocked out when hit hard enough.
+MF,12,R1,2106,F,FALSE,FALSE,0,0,0,3,TRUE,FALSE,1,1,0,2,0,2,3,1,TRUE,D,FALSE,0,0,5,NA,,"Was defended against by a blue robot most of the match. One of their L1s may have been a miss, but I believe it was a score. Hard to tell because it was behind reef."
+TC,12,R1,122,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,6,1,TRUE,D,FALSE,0,0,3,NA,,Missed auto coral. Bad intake.
+GL,12,B2,977,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,4,4,cs,0,"Switched defense from marking everyone to just 2106, I think a smart choice. Really effective man marking at the coral station."
+Ashwin,12,R3,1418,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,TRUE,D,TRUE,0,3,3,NA,0,"Mainly played defense. Didn’t really prevent opponents from feed intake coral, but slowed them down somewhat "
+BH,13,B1,6326,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,
+JJ,13,R2,5338,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,0,3,0,4,0,FALSE,No,FALSE,0,0,3,NA,,Looks like an algae got knocked out on contact?
+GEH,13,R1,6326,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,Removed a few pieces of algae but didn41391t score anything. 
+MF,13,R1,3793,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,3,5,0,0,0,FALSE,No,FALSE,0,0,4,NA,,A little slow in speed
+Ashwin,13,R3,401,C,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,5,3,3,TRUE,D,FALSE,0,0,4,NA,,Very consistent and fast at intaking coral from feed and scored quickly
+GL,13,B2,2534,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,4,0,4,1,FALSE,No,FALSE,0,0,3,NA,5,"Passive intake, has to waste time shaking it into manip. Also got in partners’ way a few times."
+BH,14,B1,8622,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,4,0,0,FALSE,No,FALSE,0,0,3,NA,,Slow ahh elevator 
+Ashwin,14,R3,10224,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,1,4,0,TRUE,D,FALSE,0,0,3,NA,,Messing up feed intakes near end but overall solid intakes
+RX,14,R1,8230,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,0,1,FALSE,No,FALSE,1,4,4,NA,0,Somewhat aggressive defense
+GEH,14,R1,8622,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,4,0,0,FALSE,No,FALSE,0,0,3,NA,,"Slow cycling times, remained stationary during the last 20 seconds of the match and didn41391t move into the barge "
+JJ,14,R2,3748,C,FALSE,TRUE,0,2,0,0,TRUE,TRUE,0,0,2,0,0,1,0,0,TRUE,D,TRUE,0,0,2,cs,,"Beached for a large portion of the match, station intake being small means vulnerable to defense"
+GL,14,B2,346,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,1,0,0,0,0,0,1,FALSE,P,FALSE,0,3,2,cs,0,"Caused a coral descore, defense was lackluster since they didn41391t play for long, but slowed down opponent a little."
+RX,15,R1,1731,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,0,0,0,0,2,5,2,TRUE,P,FALSE,0,0,4,NA,,Fast Cycling
+JJ,15,R2,339,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,2,0,NA,"0,2",Tried to station defend 449 with ground intake. Doesn41391t matter because 449 is still garbage
+TC,15,B1,540,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,1,1,FALSE,No,FALSE,0,4,3,NA,,Coral got stuck in intake and forced them to do defense.
+Ashwin,15,R3,888,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,1,0,3,2,1,FALSE,No,FALSE,0,0,4,NA,,
+GL,15,B2,2363,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,2,0,2,0,1,3,0,TRUE,P,FALSE,0,0,3,NA,,Had some trouble near the coral station after failed drops
+GEH,15,R1,449,C,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,1,2,3,3,0,FALSE,No,FALSE,0,0,4,NA,,The cycle times could be improved if we got coral directly from the station. 
+JJ,16,R2,4505,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,5,2,1,FALSE,P,FALSE,0,0,2,NA,"2,1",Missed auto l4
+GL,16,B2,611,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,2,1,3,0,FALSE,No,FALSE,0,0,3,NA,,Got defended for a good bit.
+RX,16,R1,620,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,1,0,0,1,0,5,1,FALSE,P,FALSE,0,0,4,NA,,Missed two L4 shots in auto
+TC,16,B1,3138,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,1,0,2,2,FALSE,P,FALSE,0,0,3,NA,1,Slow cycle and outake
+GEH,16,R1,3373,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,1,0,1,2,TRUE,P,FALSE,0,0,2,NA,,"Very slow cycle times, missed about half the coral they tried to place"
+Ashwin,16,R3,836,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,0,0,1,0,0,0,2,TRUE,D,FALSE,0,4,3,NA,1,Wobbled at least once every 10 seconds (i.e. extremely wobbly)
+GEH,17,R1,6213,,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,
+JJ,17,R2,4821,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,TRUE,D,FALSE,0,0,3,NA,,"Removed algae in auto, scored two in opponent pros, drivetrain a little slow"
+RX,17,R1,1727,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,3,1,6,0,1,FALSE,No,TRUE,0,0,3,NA,,Intake is inconsistent when loading
+GL,17,B2,1629,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,1,0,0,0,2,7,0,FALSE,P,FALSE,0,0,4,NA,,"Had to solo, fast cycling. Had a coral stuck for a little bit but got free."
+Ashwin,17,R3,8592,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,0,0,4,3,3,2,2,FALSE,P,FALSE,0,0,3,NA,,Missed some L4 but in a way such that most of them land in L1
+BH,17,B1,1086,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,de,,
+JJ,18,R2,2199,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,5,0,FALSE,No,FALSE,0,0,2,de,4,"Got hard defended by 2186, narrow intake couldn41391t cope."
+BH,18,B1,116,C,FALSE,TRUE,1,0,0,0,TRUE,TRUE,5,0,2,0,0,0,0,0,TRUE,D,FALSE,0,0,4,NA,,Auto algae in net!!!
+TC,18,R1,3359,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,3,2,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,2,And outake for algae
+GL,18,B2,422,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,5,6,9,1,TRUE,D,FALSE,0,0,5,NA,,"Never felt rushed, even with a last second climb."
+GEH,18,R1,2186,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,4,4,NA,0,Did a good job of making one of the coral stations useable and pushing other robots away from it. 
+Ashwin,18,R3,1908,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,1,TRUE,D,TRUE,0,0,3,NA,5,Dropped many coral on intakes
+TC,19,R1,8590,C,FALSE,TRUE,0,0,0,0,,FALSE,0,0,0,1,6,6,0,2,FALSE,No,FALSE,0,0,4,NA,,
+JJ,19,R2,1418,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,1,1,4,TRUE,D,FALSE,0,0,1,NA,5,"HP missed coral in auto, managed to descore an l3 on their own reef, hp kinda sucks"
+GL,19,B2,4541,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,2,4,2,1,FALSE,No,FALSE,0,0,3,NA,,"Didn41391t try for parking, but probably could have. Otherwise pretty average and focused on ranking points over high score."
+GEH,19,R1,9072,F,FALSE,TRUE,0,0,0,2,TRUE,TRUE,3,0,0,4,0,1,1,3,FALSE,P,FALSE,0,0,4,NA,,"Very fast, but tends to miss coral because they rush it"
+Ashwin,19,R3,614,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,2,2,2,0,0,FALSE,P,FALSE,0,0,3,NA,,"Took over 5 seconds to score each coral, almost got beached once"
+BH,19,B1,401,F,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,4,5,2,1,0,TRUE,P,FALSE,0,0,4,NA,,
+BH,20,B1,5338,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,0,12,1,FALSE,P,FALSE,0,0,4,NA,,
+JJ,20,R2,4638,F,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,0,6,1,FALSE,No,FALSE,0,0,2,NA,,Has a very specific configuration where the coral gets stuck in the funnel
+GEH,20,R1,539,F,FALSE,FALSE,1,0,0,0,TRUE,TRUE,0,0,2,2,0,4,0,1,FALSE,P,FALSE,0,0,5,NA,,"Very good overall, decent at processing algae and scoring coral on the reef. "
+TC,20,R1,686,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,2,3,0,TRUE,D,FALSE,0,0,3,ba,,Missed starting pos.
+GL,20,B2,5115,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,1,0,0,TRUE,D,TRUE,1,4,3,NA,,"Helped cause a beach, even though it was temporary. Slowed a lot of potential cycles with the beach and coral station zone defense, but man marking was average or slightly below average."
+Ashwin,20,R3,10224,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,0,0,3,0,0,TRUE,D,TRUE,0,0,2,NA,,Disabled for first half of match
+BH,21,B1,2363,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,2,0,1,2,3,0,TRUE,D,FALSE,0,0,3,NA,,
+JJ,21,R2,1885,C,FALSE,FALSE,0,0,0,0,TRUE,TRUE,0,0,10,0,0,0,0,0,FALSE,No,FALSE,0,0,3,NA,,"Tried to remove 4 during auto, removed 3. When removing algae, it can get stuck on top"
+GEH,21,R1,1111,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,1,1,3,3,0,FALSE,No,FALSE,0,0,5,NA,,"Very good at coral, likely could have scored more except another team kept pinning them in defense."
+GL,21,B2,1731,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,3,2,4,2,TRUE,D,FALSE,0,0,4,NA,1,"Crazy auto. Cycles were not as smooth as some other teams, but was still quick."
+Ashwin,21,R3,2890,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,2,2,FALSE,No,FALSE,0,0,2,NA,5,Bad at intaking coral from feed and dropped 2 corals before in range to score
+TC,21,R1,346,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,1,1,FALSE,No,FALSE,0,4,3,cs,2,Stopped 20secs before ending. Played defense after stuck coral.
+GEH,22,R1,1895,M,FALSE,FALSE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,3,4,1,FALSE,P,FALSE,0,0,5,NA,,Good at getting that algae up in the high levels
+BH,22,B1,3136,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,FALSE,0,0,3,NA,,Hard blocked by defender 
+MF,22,B2,8230,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,1,0,1,0,2,TRUE,D,FALSE,0,5,4,NA,,"Incredible defense, defended against two bots at once. "
+TC,22,R1,339,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,1,2,FALSE,P,FALSE,0,0,3,NA,,Froze two times and including a delayed start. They tried to defend one bot with their teamate(double team) instead of focusing on scoring.
+JJ,22,R2,977,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,1,1,TRUE,No,FALSE,1,4,3,cs,"0,6",Missed auto
+Ashwin,22,R3,5804,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,7,1,TRUE,P,FALSE,0,0,3,NA,,"Beached for 1 second but escaped, defended against heavily"
+JJ,23,R2,836,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,3,0,3,4,3,0,TRUE,D,TRUE,0,0,4,NA,7,"Collision in auto, scored one in opponent pros "
+MF,23,B2,888,F,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,0,0,2,FALSE,P,FALSE,0,4,3,NA,,
+GEH,23,R1,2534,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,5,2,1,3,FALSE,P,FALSE,0,0,4,NA,,Started off slow but managed to pick up the pace and score a decent amount of coral. The robot did struggle with positioning which caused 3 coral misses. 
+TC,23,R1,112,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,3,2,TRUE,D,FALSE,0,0,3,NA,2,Dropped 3 coral before getting to reef. Bad defense maneuvering.
+BH,23,B1,1629,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,1,0,1,4,0,0,2,1,FALSE,No,FALSE,0,0,3,NA,, L1 is a result of missed L4 and L3 attempts 
+Ashwin,23,R3,1086,F,FALSE,TRUE,1,0,0,1,TRUE,FALSE,0,1,0,0,0,1,2,2,FALSE,No,FALSE,0,0,4,di,,Disabled for the last 40 seconds of the match
+BH,24,B1,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,1,0,2,FALSE,P,FALSE,0,0,3,NA,,
+MF,24,B2,611,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,1,8,1,FALSE,No,FALSE,0,0,4,NA,,Barely reached L4.
+CVC,24,R2,6863,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,4,0,2,FALSE,P,FALSE,0,0,3,NA,,"Started off pretty good, struggled at aligning themselves for coral station intake towards end half."
+TC,24,R1,116,F,FALSE,TRUE,0,0,0,0,TRUE,TRUE,8,1,0,0,0,0,0,0,TRUE,D,FALSE,0,0,4,NA,,Very good algae scoring.
+GEH,24,R1,8726,C,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,0,0,3,0,0,FALSE,P,FALSE,0,0,3,NA,,Started off very strong but just stopped scoring after 30 seconds into teleop. Sat around doing nothing and then parked in the barge to end. 
+Ashwin,24,R3,8592,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,1,5,3,3,2,TRUE,D,FALSE,0,0,5,NA,,"No movements were wasted. They scored each time they intook from the feed, and they got all their intakes on the first tries. "
