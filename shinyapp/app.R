@@ -11,10 +11,10 @@ library(shinythemes)
 blair_red <- "#a7000a"
 
 data_dir <- "data_files"
-data_file <- paste0(data_dir, "/mdsev/data.csv")
-event_schedule_file <- paste0(data_dir, "/mdsev/schedule.csv")
-teams_file <- paste0(data_dir, "/mdsev/teams.csv")
-alliances_file <- paste0(data_dir, "/mdsev/alliances.csv")
+data_file <- paste0(data_dir, "/dchamp/data.csv")
+event_schedule_file <- paste0(data_dir, "/dchamp/schedule.csv")
+teams_file <- paste0(data_dir, "/dchamp/teams.csv")
+alliances_file <- paste0(data_dir, "/dchamp/alliances.csv")
 
 
 #Load team data and event schedule
