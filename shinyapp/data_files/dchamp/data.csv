@@ -143,3 +143,27 @@ CVC,24,R2,6863,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,4,0,2,FALSE,P,FALSE,0,
 TC,24,R1,116,F,FALSE,TRUE,0,0,0,0,TRUE,TRUE,8,1,0,0,0,0,0,0,TRUE,D,FALSE,0,0,4,NA,,Very good algae scoring.
 GEH,24,R1,8726,C,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,0,0,3,0,0,FALSE,P,FALSE,0,0,3,NA,,Started off very strong but just stopped scoring after 30 seconds into teleop. Sat around doing nothing and then parked in the barge to end. 
 Ashwin,24,R3,8592,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,1,5,3,3,2,TRUE,D,FALSE,0,0,5,NA,,"No movements were wasted. They scored each time they intook from the feed, and they got all their intakes on the first tries. "
+JJ,25,R2,2186,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,2,2,de,0,rip
+RX,25,B2,3793,F,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,1,1,6,3,0,0,FALSE,No,FALSE,0,3,0,NA,,"Removed one algae in auto, a little slow, tried to park"
+GEH,25,R1,422,C,FALSE,FALSE,0,0,0,3,TRUE,FALSE,4,0,0,2,2,3,1,0,TRUE,D,FALSE,0,0,5,NA,,"Amazing performance with cycling around 3 seconds each. Speedy and unstoppable. Only minor hiccup was when a piece of coral got stuck in the robot, but it didn41391t affect performance."
+TC,25,R1,3748,C,FALSE,TRUE,0,2,0,0,TRUE,FALSE,0,0,0,0,0,8,0,1,TRUE,D,FALSE,0,0,4,NA,,Claw mechanism for algae removal. ~3sec cycle.
+BH,25,B1,4821,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,4,0,0,0,0,0,TRUE,P,FALSE,0,0,3,NA,,Major foul:1 They could not climb in time 
+Ashwin,25,R3,620,F,FALSE,TRUE,1,0,0,1,TRUE,FALSE,0,0,0,1,2,1,10,2,TRUE,P,FALSE,0,0,5,NA,,"Almost no movements of robot were wasted, almost all trips to intake scored. They never failed any intakes. Removed 2 algae from reef. "
+RX,26,B2,3373,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,3,0,TRUE,D,FALSE,0,2,0,NA,5,"Switched to defense midway, inconsistent loading"
+JJ,26,R2,6326,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,4,4,NA,0,
+GEH,26,R1,1727,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,0,3,6,0,2,TRUE,D,FALSE,0,0,5,NA,,"Good cycling, would have done even better if there wasn41391t a defender"
+Ashwin,26,R3,3359,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,3,0,2,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,2,Only attempted algae
+BH,26,B1,1908,C,FALSE,TRUE,0,0,0,0,FALSE,TRUE,0,0,1,0,0,0,4,1,TRUE,D,FALSE,0,0,3,NA,,
+TC,26,R1,2106,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,0,3,6,2,1,FALSE,No,FALSE,0,0,4,t,,Very fast and efficient cycle. The teammates tipped over the bot when it was beached. Bot was strong against defense.
+JJ,27,R2,449,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,5,4,3,1,TRUE,P,FALSE,0,0,4,NA,"1,7,5",It41391s so joever
+GEH,27,R1,4505,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,4,1,FALSE,P,FALSE,0,0,4,NA,,Good at L4 but very slow cycle times. 
+RX,27,B2,6273,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,2,ba,0,"Didn41391t really move in match, ended up beached and also didn41391t block the coral station when stationary"
+GL,27,B1,540,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,1,6,2,FALSE,P,FALSE,0,0,3,NA,1,"Driver feels greedy, basically denying their ally a line in order to score themselves. They also are super wobbly with elevator fully extended and almost fell over."
+TC,27,R1,6802,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,3,1,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,Very slow cycle freezing multiple times. Driver was bad at algae intake.
+Ashwin,27,R3,2199,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,1,0,1,1,1,5,0,FALSE,P,FALSE,0,0,4,NA,,"Solid maneuvering, focused L4"
+JJ,28,R2,1418,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,4,Elevator broke in an extended state 
+GEH,28,R1,686,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,2,0,4,5,1,0,TRUE,P,FALSE,0,0,5,NA,,"Very fast cycle times, great performance "
+GL,28,B1,3136,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,1,2,1,7,1,TRUE,D,FALSE,0,0,4,NA,,"Smooth cycles, might have climbed a bit early but still good"
+RX,28,B2,346,C,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,FALSE,No,FALSE,0,3,4,cs,0,"Didn41391t move for first 10 seconds into teleop, later got coral stuck and camped opposing coral station"
+TC,28,R1,2890,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,2,NA,"0,5",Very bad robot it did not score anything because its algae intake did not work. Very slow and bad played defense at the last 30 secs.
+Ashwin,28,R3,9072,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,0,2,8,0,TRUE,P,FALSE,0,0,4,NA,7,"Almost only ground intook, very fast scoring mechanism, drove smoothly without any crashes. In auto, scored L4 on the reef area closest to the drive team"
