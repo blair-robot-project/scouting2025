@@ -10,11 +10,11 @@ library(shinythemes)
 
 blair_red <- "#a7000a"
 
-data_dir <- "data files"
-data_file <- paste0(data_dir, "/Severn/data.csv")
-event_schedule_file <- paste0(data_dir, "/Severn/schedule.csv")
-teams_file <- paste0(data_dir, "/Severn/teams.csv")
-alliances_file <- paste0(data_dir, "/Severn/alliances.csv")
+data_dir <- "data_files"
+data_file <- paste0(data_dir, "/mdsev/data.csv")
+event_schedule_file <- paste0(data_dir, "/mdsev/schedule.csv")
+teams_file <- paste0(data_dir, "/mdsev/teams.csv")
+alliances_file <- paste0(data_dir, "/mdsev/alliances.csv")
 
 
 #Load team data and event schedule
@@ -317,7 +317,7 @@ ui <- fluidPage(
                     sidebarLayout(
                         sidebarPanel(
                             selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Past History")),
+                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Match History", "Driver Rating History")),
                             imageOutput("team_image_output")
                             ),
                         mainPanel(
@@ -1517,6 +1517,82 @@ server <- function(input, output, session) {
     }
     
     
+    #NEED TO CONTINUE DEBUGGING
+    # single_team_match_history_bar_graph <- function(raw, selected_team){
+    #     team_data <- raw %>%
+    #         filter(team == selected_team) %>%
+    #         mutate(
+    #             auto_coral_L1 = auto_coral_L1_num * 3,
+    #             auto_coral_L2 = auto_coral_L2_num * 4,
+    #             auto_coral_L3 = auto_coral_L3_num * 6,
+    #             auto_coral_L4 = auto_coral_L4_num * 7,
+    #             move_pts = move * 3,
+    #             tele_coral_L1 = coral_L1_num * 2,
+    #             tele_coral_L2 = coral_L2_num * 3,
+    #             tele_coral_L3 = coral_L3_num * 4,
+    #             tele_coral_L4 = coral_L4_num * 5,
+    #             robot_net_score = robot_net_score * 4,
+    #             robot_proc_score = proc_score * 2.5,
+    #             endgame_score = ifelse(ending == "D", 12,
+    #                                    ifelse(ending == "S", 6,
+    #                                           ifelse(ending == "P", 2, 0)))
+    #         ) %>%
+    #         # Use match number for each bar
+    #         mutate(match_num = factor(match_num)) %>%
+    #         # Keep match_num and all the score columns
+    #         select(match_num, auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
+    #                tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+    #                robot_net_score, robot_proc_score, endgame_score) %>%
+    #         # Reshape data for ggplot
+    #         pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
+    #                               tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+    #                               robot_net_score, robot_proc_score, endgame_score), 
+    #                      names_to = "level", 
+    #                      values_to = "score")
+    #     
+    #     color_values <- list(
+    #         "auto_coral_L1" = "plum1",
+    #         "auto_coral_L2" = "plum2",
+    #         "auto_coral_L3" = "plum3", 
+    #         "auto_coral_L4" = "plum4",
+    #         "move_pts" = "#FFF68F",
+    #         "tele_coral_L1" = "#FFC156", 
+    #         "tele_coral_L2" = "olivedrab3", 
+    #         "tele_coral_L3" = "springgreen4", 
+    #         "tele_coral_L4" = "steelblue2", 
+    #         "robot_net_score" = "steelblue3", 
+    #         "robot_proc_score" = "steelblue", 
+    #         "endgame_score" = "steelblue4"
+    #     )
+    #     
+    #     label_values <- list(
+    #         "auto_coral_L1" = "Auto Coral L1", 
+    #         "auto_coral_L2" = "Auto Coral L2",
+    #         "auto_coral_L3" = "Auto Coral L3", 
+    #         "auto_coral_L4" = "Auto Coral L4",
+    #         "move_pts" = "Move",
+    #         "tele_coral_L1" = "Tele Coral L1", 
+    #         "tele_coral_L2" = "Tele Coral L2", 
+    #         "tele_coral_L3" = "Tele Coral L3", 
+    #         "tele_coral_L4" = "Tele Coral L4", 
+    #         "endgame_score" = "Endgame", 
+    #         "robot_net_score" = "Net", 
+    #         "robot_proc_score" = "Processor"
+    #     )
+    #     
+    #     ggplot(team_data, aes(x = match_num, y = score, fill = level)) + 
+    #         geom_bar(position = "stack", stat = "identity") + 
+    #         labs(title = paste("Match History for Team", selected_team), 
+    #              x = "Match Number", y = "Score Breakdown", fill = "Scoring Element") +
+    #         scale_fill_manual(values = unlist(color_values),
+    #                           labels = unlist(label_values)) +
+    #         theme_bw() +
+    #         theme(
+    #             axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    #             plot.title = element_text(size = 14, face = "bold")
+    #         )
+    # }
+    
     output$two_teams_data_row <- renderDT({
         #Reasoning behind this is I found it hard to read by continuously scrolling horizantally
         #so I made it vertical. Only problem is that team is no longer the column name...
@@ -1550,7 +1626,10 @@ server <- function(input, output, session) {
         else if (input$team_graph == "Problems"){
             problem_table_single(raw, selected_team)
         } 
-        else if (input$team_graph == "Past History"){
+        else if (input$team_graph == "Match History"){
+            single_team_match_history_bar_graph(raw, selected_team)
+        }
+        else if (input$team_graph == "Driver Rating History"){
             previous(raw, selected_team)
         } 
     })
