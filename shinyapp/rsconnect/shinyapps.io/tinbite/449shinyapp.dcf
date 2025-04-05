@@ -1,0 +1,12 @@
+name: 449shinyapp
+title: 449shinyapp
+username: tinbite
+account: tinbite
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14438242
+bundleId: 10061267
+url: https://tinbite.shinyapps.io/449shinyapp/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
