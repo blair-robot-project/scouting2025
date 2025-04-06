@@ -3,7 +3,7 @@ GK,1,B2,686,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,3,3,3,2,TRUE,P,TRUE,0,0,4,NA
 TA,1,B1,686,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,3,3,2,2,TRUE,No,TRUE,0,0,4,NA,,Can remove algae with coral in hold
 TA,1,B3,540,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,3,5,2,FALSE,P,FALSE,0,0,3,NA,,
 GK,1,R1,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,2,3,NA,0,Active but scattershot defense
-TA,1,R2,2534,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,6,FALSE,P,FALSE,0,0,3,cs,5,Intake issues
+TA,2,R2,2534,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,6,FALSE,P,FALSE,0,0,3,cs,5,Intake issues
 GK,1,R3,8590,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,3,4,8,0,3,FALSE,No,FALSE,0,0,4,NA,,
 BH,2,B1,122,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,2,TRUE,P,FALSE,0,0,3,NA,,All L1 is a result of missed l4
 RX,2,R2,1895,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,4,3,1,FALSE,P,FALSE,0,0,4,NA,1,"Fast Early Reef Algae Removal, Difficult L4 score but good L3, somewhat lengthy loading time"
@@ -134,7 +134,7 @@ Ashwin,22,R3,5804,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,7,1,TRUE,P,FALSE,
 JJ,23,R2,836,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,3,0,3,4,3,0,TRUE,D,TRUE,0,0,4,NA,7,"Collision in auto, scored one in opponent pros "
 MF,23,B2,888,F,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,0,0,2,FALSE,P,FALSE,0,4,3,NA,,
 GEH,23,R1,2534,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,5,2,1,3,FALSE,P,FALSE,0,0,4,NA,,Started off slow but managed to pick up the pace and score a decent amount of coral. The robot did struggle with positioning which caused 3 coral misses.
-TC,23,R1,122,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,3,2,TRUE,D,FALSE,0,0,3,NA,2,Dropped 3 coral before getting to reef. Bad defense maneuvering.
+TC,23,R1,112,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,3,2,TRUE,D,FALSE,0,0,3,NA,2,Dropped 3 coral before getting to reef. Bad defense maneuvering.
 BH,23,B1,1629,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,1,0,1,4,0,0,2,1,FALSE,No,FALSE,0,0,3,NA,,L1 is a result of missed L4 and L3 attempts
 Ashwin,23,R3,1086,F,FALSE,TRUE,1,0,0,1,TRUE,FALSE,0,1,0,0,0,1,2,2,FALSE,No,FALSE,0,0,4,di,,Disabled for the last 40 seconds of the match
 BH,24,B1,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,1,0,2,FALSE,P,FALSE,0,0,3,NA,,
@@ -284,7 +284,7 @@ GL,47,R1,4638,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,0,FALSE,P,FALSE,0,0
 GL,48,R1,4821,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,TRUE,D,FALSE,0,0,3,NA,,
 JJ,48,B3,4505,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,1,di,,"Collided in auto, then dc'd"
 TC,48,R3,8230,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,FALSE,0,3,2,NA,"0,1",Bot froze at start.
-AA,48,B2,2363,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,3,4,0,TRUE,D,FALSE,0,0,3,NA,,
+AA,48,B2,2563,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,3,4,0,TRUE,D,FALSE,0,0,3,NA,,
 KO,48,R2,686,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,7,3,FALSE,No,FALSE,0,0,4,NA,,"Missed L4 auto, dropped coral into L1 during teleop"
 BH,48,B1,1885,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,1,2,5,0,0,0,0,0,FALSE,P,FALSE,0,0,4,NA,,Algae bot 
 BH,49,B1,2534,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,0,4,3,FALSE,P,FALSE,0,0,3,NA,,
@@ -480,7 +480,7 @@ JJ,84,R2,422,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,4,5,5,6,0,TRUE,D,FALSE,0,0,5,
 BH,84,B1,346,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,0,1,FALSE,No,FALSE,0,3,3,ba,,
 AA,84,B2,6863,M,FALSE,TRUE,0,0,0,0,FALSE,TRUE,0,0,6,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,,Couldn't intake coral 
 GL,84,B3,8590,F,FALSE,TRUE,0,0,2,0,TRUE,FALSE,0,0,0,0,5,10,0,0,FALSE,No,FALSE,0,0,4,NA,,
-LJ,84,R3,1885,C,FALSE,FALSE,0,0,0,0,TRUE,TRUE,0,0,8,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,,"Descored 2 algae on their side of reef, would descore 3 if successful, goes to other side to steal algae, ground intake algae most consistent against wall, had to chase down algae a few times"
+LJ,84,R3,1885,C,FALSE,FALSE,0,0,0,0,TRUE,TRUE,0,0,8,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,,"Descored 2 algae on their side of reef, would descore 3 if successful, goes to other side to steal algae, ground intake algae most consistent against wall, had to chase down algae a few times "
 Ashwin,84,R1,1895,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,3,3,1,1,FALSE,P,FALSE,0,0,3,NA,1,One of the wobbliest bots of them all. Scoring coral on reef took a long time due to the wobbling
 JJ,85,R2,449,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,2,0,TRUE,No,FALSE,0,3,3,NA,0,dropped coral project
 TC,85,B2,2890,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,1,1,0,2,FALSE,P,FALSE,0,0,2,NA,2,Slow cycle.
@@ -511,7 +511,7 @@ BH,89,B1,836,F,FALSE,TRUE,0,0,0,1,TRUE,TRUE,0,0,1,0,5,0,7,1,FALSE,P,FALSE,0,0,4,
 GL,89,B3,5115,M,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,0,0,6,0,1,FALSE,No,FALSE,0,0,3,NA,,
 IH,89,R2,6213,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,1,2,NA,0,"Stood still most of the time, cant tell if it was dead, defense did nothing"
 LJ,89,R3,4541,C,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,3,4,5,0,FALSE,P,FALSE,0,0,4,NA,,"Had time for 2.5 L4 auto, stopped after scoring second L4, focused only on cycling spots closest to station"
-Ashwin,89,R1,614,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,2,1,3,1,0,1,FALSE,P,FALSE,0,0,3,NA,,Removed 3 algae from reef.
+Ashwin,89,R1,614,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,2,1,3,1,0,1,FALSE,P,FALSE,0,0,3,NA,,Removed 3 algae from reef. 
 LJ,90,R3,4638,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,1,0,FALSE,No,FALSE,0,0,3,NA,,"Dropped L4, Intook coral, drove to reef, stopped was auto routines, many many pauses on movement, elevator could not retract so driver did not move much, so stopped moving about 30 seconds into teleop before wobbling over to park with about 40 seconds left"
 AA,90,B2,116,C,FALSE,TRUE,1,0,0,0,TRUE,TRUE,8,0,0,0,1,0,0,0,TRUE,D,TRUE,0,0,4,NA,6,
 GL,90,B3,1418,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,3,6,2,TRUE,D,TRUE,0,0,3,NA,,
@@ -523,7 +523,6 @@ GL,91,B3,977,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,1,5,0,TRUE,P,FALSE,0,0,3,
 AY,91,B2,449,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,1,5,8,5,1,TRUE,P,FALSE,0,0,5,NA,,
 Ashwin,91,R1,6802,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,3,1,2,TRUE,D,FALSE,0,0,3,NA,,Got beached for 3 seconds
 LJ,91,R3,346,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,2,1,1,FALSE,No,FALSE,0,5,2,NA,,"Elevator did not retract during auto, had reef alignment issues, coral dropped on robot and seemed to break, afterwards did not score but parked. Algae ground intake did not work"
-MH,91,R2,422,F,FALSE,TRUE,0,0,0,4,TRUE,FALSE,2,2,0,0,2,4,3,1,TRUE,P,FALSE,0,0,3,NA,,Got cooked by 6326 defenses also weird spins
 BH,92,B1,1895,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,1,2,2,4,0,TRUE,S,FALSE,0,0,3,NA,,
 AY,92,B2,1908,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,4,4,0,TRUE,P,TRUE,0,0,0,NA,,Went to climb at 20 sec
 LJ,92,R3,122,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,5,1,0,1,4,TRUE,D,FALSE,0,0,3,NA,,"Attempted only L1 until last 30 seconds of match, auto scored preloaded, did not intake from station, drove to reef, then intook from station and drove wrong direction"
@@ -560,3 +559,87 @@ JoJo,78,B3,6863,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,5,0,0,FALSE,No,FALSE,0
 JD,78,R2,449,F,FALSE,FALSE,0,0,0,2,TRUE,FALSE,0,0,0,1,5,4,5,1,TRUE,D,FALSE,0,0,4,NA,7,
 AX,78,R3,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,1,0,3,1,FALSE,No,FALSE,0,0,2,NA,,
 TA,78,R1,2186,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,4,0,NA,,
+AW,95,B1,4541,C,FALSE,FALSE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,4,4,cs,,
+MF,95,R1,6213,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,3,NA,,"Their intake(?) was hanging off the robot and dragging on the ground, hindering their bot"
+SZ,95,R3,5338,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,1,0,4,7,0,1,FALSE,P,FALSE,0,0,4,NA,,
+Frank,95,R2,9072,F,FALSE,FALSE,0,0,0,1,TRUE,FALSE,0,1,0,3,0,0,7,0,FALSE,P,FALSE,0,0,4,NA,,No defense and kinda bad accuracy with stuff
+IH,95,B3,540,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,7,7,1,FALSE,No,FALSE,0,0,4,NA,,"Got defended a little by 6213, somewhat effective"
+NY,95,B2,8230,M,FALSE,FALSE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,0,3,NA,6,
+AW,96,B1,1731,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,1,1,0,0,0,0,7,1,TRUE,D,FALSE,0,0,4,NA,,
+NY,96,B2,2186,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,TRUE,2,2,3,NA,6,
+IH,96,B3,1418,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,di,,Connection issue? Stopped after beginning of driver controlled
+SZ,96,R3,1629,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,0,0,0,1,2,3,0,FALSE,P,FALSE,0,0,4,ba,,Got a lot of defense from blue
+MF,96,R1,4505,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,2,3,NA,,Helped teammate get unbeached from algae.
+Frank,96,R2,10224,M,FALSE,FALSE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,4,4,0,TRUE,D,TRUE,0,0,5,NA,,Good bot but slow. That41391s all :Pv(ivi)v
+IH,97,B3,1086,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,1,3,3,FALSE,P,FALSE,0,0,2,NA,2,
+NY,97,B2,116,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,6,1,3,0,0,0,0,0,TRUE,D,TRUE,0,0,4,NA,,
+AW,97,B1,539,F,FALSE,TRUE,0,0,1,0,FALSE,FALSE,0,0,0,1,1,6,0,0,FALSE,P,FALSE,0,0,4,NA,,Missed the one that got put in l1
+MF,97,R1,614,M,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,2,5,1,1,0,2,FALSE,P,FALSE,0,0,4,NA,,
+Frank,97,R2,3373,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,3,3,TRUE,D,TRUE,0,0,2,NA,6,Indecisive
+SZ,97,R3,3748,C,FALSE,TRUE,0,2,0,0,TRUE,FALSE,0,0,0,0,3,5,0,0,TRUE,D,FALSE,0,0,3,NA,,
+NY,98,B2,3359,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,2,1,2,0,0,0,0,0,FALSE,P,FALSE,0,0,4,NA,,
+AW,98,B1,401,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,2,4,1,2,0,TRUE,D,FALSE,0,0,3,NA,,
+MF,98,R1,5115,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,3,0,3,0,2,TRUE,D,FALSE,0,0,3,NA,,Missed like 2/3 of the algae that the human player dropped.
+SZ,98,R3,2363,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,0,1,1,1,2,4,1,TRUE,D,FALSE,0,0,4,NA,,
+Frank,98,R2,2199,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,0,0,1,0,0,6,1,TRUE,D,TRUE,0,0,3,NA,,Got a coral stuck in demselves lmao
+IH,98,B3,3136,F,FALSE,TRUE,1,0,0,1,TRUE,FALSE,0,0,0,0,1,3,2,3,TRUE,P,TRUE,0,0,2,NA,"6,2","Human player was throwing, funnel missing coral"
+AW,99,B1,836,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,0,10,0,FALSE,No,FALSE,0,4,4,NA,"1,0,7",
+NY,99,B2,4821,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,4,0,0,0,0,0,TRUE,P,FALSE,0,0,2,NA,6,
+Frank,99,R2,3793,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,2,3,2,0,0,FALSE,P,FALSE,0,0,3,NA,,Maybe robot broken cuz they had something hanging
+IH,99,B3,8590,F,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,3,0,4,0,3,FALSE,No,FALSE,0,0,3,NA,2,
+MF,99,R1,8592,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,1,2,1,0,2,7,0,TRUE,D,FALSE,0,0,5,NA,,
+SZ,99,R3,4638,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,2,3,0,FALSE,No,FALSE,0,0,3,cs,,Yellow card - MH
+AW,100,B1,422,F,FALSE,TRUE,0,0,0,4,TRUE,FALSE,3,0,0,0,6,7,2,0,FALSE,D,TRUE,0,0,5,NA,,
+IH,100,B3,888,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,1,3,4,4,3,FALSE,P,FALSE,0,0,3,NA,2,Drivers + hp cant aim
+NY,100,B2,2890,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,1,0,0,0,0,0,0,FALSE,No,FALSE,1,2,3,NA,,
+MF,100,R1,1895,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,4,0,3,TRUE,D,FALSE,0,0,4,NA,,Very tipsy + they were blocked from coral + they ran out of coral on the near side
+Frank,100,R2,8622,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,4,4,0,0,0,FALSE,No,FALSE,0,0,3,NA,,Only l1 and l2
+SZ,100,R3,686,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,1,3,2,3,1,TRUE,D,TRUE,0,0,5,NA,1,
+AW,101,B1,6213,F,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,
+SZ,101,R3,6326,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,4,4,NA,,e chain broke
+MF,101,R1,122,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,1,0,1,3,3,TRUE,D,FALSE,0,0,3,NA,,
+Frank,101,R2,5804,M,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,0,4,5,1,TRUE,P,FALSE,0,0,4,NA,,Slow
+NY,101,B2,1111,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,1,4,2,FALSE,No,FALSE,0,0,3,NA,,
+IH,101,B3,620,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,3,2,0,0,0,1,5,0,FALSE,P,FALSE,0,0,3,NA,,
+Frank,102,R2,2534,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,2,0,0,2,5,0,FALSE,No,FALSE,0,0,3,NA,,
+AW,102,B1,8230,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,5,0,0,0,2,TRUE,D,FALSE,0,0,3,NA,7,
+NY,102,B2,9072,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,1,2,0,0,0,6,1,FALSE,No,FALSE,0,0,4,NA,,
+MF,102,R1,1418,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,FALSE,0,4,4,NA,,"They were spinning a lot and rolled over an algae, smooshing it. (They popped the algae)"
+SZ,102,R3,611,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,2,0,4,0,FALSE,No,FALSE,0,0,3,NA,,"Descored a coral l4, also very janky movement"
+IH,102,B3,1727,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,4,5,0,0,TRUE,P,TRUE,0,0,4,NA,,"Beached for a bit bc of defense, tried and failed to climb"
+AX,103,B1,1086,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,3,0,0,0,0,0,0,TRUE,D,FALSE,0,0,2,NA,,Frequently dropped algae
+Frank,103,R2,539,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,3,1,3,0,1,FALSE,P,FALSE,0,0,3,NA,,Maybe nice when having many l4 cycles but slow outtake
+MF,103,R1,8726,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,1,2,4,0,1,TRUE,D,TRUE,0,0,3,NA,,"Their coral intake is like angled to the side, so their general intake accuracy is good."
+SZ,103,R3,540,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,5,0,9,0,FALSE,No,FALSE,0,0,5,NA,,
+NY,103,B2,346,F,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,1,0,FALSE,No,FALSE,0,0,2,di,4,RSL was flashing but wasn41391t moving
+IH,103,B3,2186,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,P,FALSE,0,3,3,NA,6,"1 pin foul, started lining up to climb with 35 secs left"
+SZ,104,R3,449,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,2,7,5,3,0,TRUE,P,FALSE,0,0,5,NA,,
+Frank,104,R2,2106,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,3,0,3,4,0,1,TRUE,D,TRUE,0,0,4,NA,,
+MF,104,R1,1629,M,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,2,2,4,4,0,FALSE,No,FALSE,0,0,4,NA,,I might41391ve missed one or two coral on L1/L2 because it was blocked by the reef.
+NY,104,B2,2199,M,FALSE,TRUE,0,0,0,1,TRUE,TRUE,0,0,4,0,0,1,3,0,TRUE,D,TRUE,0,0,4,NA,,
+IH,104,B3,5338,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,5,8,1,FALSE,P,FALSE,0,0,4,NA,,
+AW,104,B1,1885,F,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,4,0,0,0,0,0,FALSE,No,FALSE,1,2,4,NA,,
+AW,105,B1,4638,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,1,0,3,1,FALSE,No,FALSE,0,0,3,NA,,
+IH,105,B3,401,F,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,4,4,0,FALSE,No,FALSE,0,0,0,ba,,Beached themselves twice
+NY,105,B2,4821,M,FALSE,TRUE,1,0,0,0,TRUE,TRUE,0,0,4,0,0,0,0,0,TRUE,D,TRUE,0,0,3,NA,6,
+Frank,105,R2,339,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,FALSE,P,FALSE,0,3,4,NA,0,Um definitely not enough defense practice but it41391s oke 
+MF,105,R1,3136,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,0,0,2,0,TRUE,D,TRUE,0,0,3,ba,,They stopped randomly in the middle (they spent most of their time removing algae)
+SZ,105,R3,1908,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,3,6,0,TRUE,D,FALSE,0,0,4,NA,,Climbed with 22 seconds to go
+MF,106,R1,6863,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,1,0,4,0,0,FALSE,P,FALSE,0,0,2,NA,,"Incredibly slow to place corals, unbeached teammate very quickly."
+SZ,106,R3,977,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,2,7,0,TRUE,P,TRUE,0,0,4,NA,,
+Frank,106,R2,614,F,FALSE,TRUE,1,0,0,0,FALSE,TRUE,0,0,2,0,4,0,0,2,FALSE,No,FALSE,0,0,3,NA,,Not good l3 kinda silly
+IH,106,B3,4505,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,7,3,FALSE,P,FALSE,0,0,3,NA,2,Slow alignment to reef
+NY,106,B2,8590,F,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,0,5,9,0,3,TRUE,P,FALSE,0,0,4,NA,,
+AW,106,B1,3359,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,2,2,2,0,0,0,0,0,TRUE,D,TRUE,0,0,4,NA,,
+SZ,107,R3,6802,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,1,2,0,TRUE,D,FALSE,0,0,4,NA,"2,1",
+Frank,107,R2,1731,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,0,0,7,4,0,TRUE,D,TRUE,0,0,5,NA,,
+NY,107,B2,836,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,0,0,11,1,TRUE,P,FALSE,0,0,5,NA,7,
+AW,107,B1,3748,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,5,6,0,1,TRUE,D,TRUE,0,0,4,NA,6,Started climb earlier than they needed to
+MF,107,R1,5115,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,4,0,3,FALSE,P,FALSE,3,2,4,ba,,"During the auto, I initially thought the far bot was 5115 and did not catch their coral auto."
+IH,107,B3,116,M,FALSE,TRUE,1,0,0,0,TRUE,TRUE,9,0,0,0,0,0,0,0,TRUE,P,TRUE,0,0,4,NA,,
+AW,108,B1,3373,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,2,0,0,2,TRUE,D,FALSE,0,0,3,NA,"1,2",
+MF,108,R1,3793,F,FALSE,TRUE,1,0,0,0,FALSE,TRUE,0,0,0,3,3,1,0,0,FALSE,P,FALSE,0,0,3,NA,5,I couldn41391t see a lot of their coral placement.
+SZ,108,R3,2363,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,2,3,2,0,TRUE,D,FALSE,0,0,3,NA,,
+IH,108,B3,4541,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,3,3,4,0,FALSE,No,FALSE,0,0,3,NA,,
+LJ,108,B2,8592,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,3,1,0,0,1,5,3,0,TRUE,D,FALSE,0,0,4,NA,,
+Frank,108,R2,10224,M,FALSE,TRUE,0,0,0,1,TRUE,TRUE,0,0,2,0,1,5,2,1,TRUE,D,TRUE,0,0,4,NA,,"Slow, consistent deep, can algae well"
