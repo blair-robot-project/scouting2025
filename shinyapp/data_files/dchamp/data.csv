@@ -1,10 +1,10 @@
 scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_coral_L3_num,auto_coral_L4_num,robot_reef_removal,robot_algae_picked,robot_net_score,robot_net_miss,proc_score,coral_L1_num,coral_L2_num,coral_L3_num,coral_L4_num,tele_missed,climb_attempt,ending,climb_time,fouls,defense,driver,dead,comments,commentOpen
-MF,1,B3,540,F,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,5,4,4,1,FALSE,No,FALSE,0,0,5,NA,,Human player struggled to output coral at the end
-RX,1,R2,2534,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,0,4,2,FALSE,P,FALSE,0,0,3,NA,,Paused for 10 secs near end of match
-BH,1,B1,686,F,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,3,0,4,0,2,FALSE,No,FALSE,0,0,3,NA,2,They missed every l4 attempt
-Ashwin,1,R3,2534,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,0,4,2,TRUE,P,FALSE,0,0,3,NA,,"Missed an L4 coral in teleop, intake was a bit slow low but steady and consistent"
-GEH,1,B2,116,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,8,1,0,1,0,4,0,4,FALSE,P,FALSE,0,0,4,NA,,Had a rough start but picked up the pace and was able to score multiple L3 and remove algae from the reef.
-CVC,1,R1,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,4,FALSE,No,FALSE,0,0,2,NA,5,"They struggled with their wheels towards the end half of the match, and really struggled the start of teleop to align for coral intake"
+GK,1,B2,686,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,3,3,3,2,TRUE,P,TRUE,0,0,4,NA,,
+TA,1,B1,686,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,3,3,2,2,TRUE,No,TRUE,0,0,4,NA,,Can remove algae with coral in hold
+TA,1,B3,540,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,3,5,2,FALSE,P,FALSE,0,0,3,NA,,
+GK,1,R1,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,2,3,NA,0,Active but scattershot defense
+TA,2,R2,2534,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,6,FALSE,P,FALSE,0,0,3,cs,5,Intake issues
+GK,1,R3,8590,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,3,4,8,0,3,FALSE,No,FALSE,0,0,4,NA,,
 BH,2,B1,122,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,2,TRUE,P,FALSE,0,0,3,NA,,All L1 is a result of missed l4
 RX,2,R2,1895,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,4,3,1,FALSE,P,FALSE,0,0,4,NA,1,"Fast Early Reef Algae Removal, Difficult L4 score but good L3, somewhat lengthy loading time"
 CVC,2,R1,4821,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,6,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,,"Didn't focus on other parts really only did algae intake for net human shots, succeeded the majority only missed two algae into processor"
