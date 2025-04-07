@@ -47,7 +47,7 @@ JA,8,R2,3136,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,4,4,1,TRUE,P,TRUE,0,0,4,N
 BH,8,B1,346,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,2,NA,,Wobbly bot 
 CVC,8,R1,620,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,1,0,4,1,0,2,4,FALSE,No,FALSE,0,0,3,NA,,"Driver kept misaligning, causing their missing shots, when they seemingly failed to do the higher levels they started to score in L1"
 Ashwin,8,R3,1629,M,FALSE,TRUE,0,0,0,1,TRUE,TRUE,1,0,2,0,3,2,2,1,TRUE,P,FALSE,0,0,4,NA,,Scored both processor shots during auto. Very well-rounded (smooth driving and quick with intake and scoring)
-JA,9,R2,3559,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,3,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,5,Has some anti tip
+JA,9,R2,3359,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,3,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,5,Has some anti tip
 MF,9,B2,8592,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,2,2,2,1,1,1,2,TRUE,D,FALSE,0,0,2,ba,,Swinging deep climb
 CVC,9,R1,3373,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,5,1,TRUE,D,FALSE,0,0,3,NA,1,"A Little Slow in speed, had trouble scoring sometimes, seems to be slower at lower reef levels"
 Ashwin,9,R3,2186,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,1,TRUE,P,TRUE,0,0,3,NA,"1,5",
@@ -92,7 +92,7 @@ GEH,15,R1,449,C,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,1,2,3,3,0,FALSE,No,FALSE,0
 JJ,16,R2,4505,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,5,2,1,FALSE,P,FALSE,0,0,2,NA,"2,1",Missed auto l4
 GL,16,B2,611,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,2,1,3,0,FALSE,No,FALSE,0,0,3,NA,,Got defended for a good bit.
 RX,16,R1,620,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,1,0,0,1,0,5,1,FALSE,P,FALSE,0,0,4,NA,,Missed two L4 shots in auto
-TC,16,B1,3138,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,1,0,2,2,FALSE,P,FALSE,0,0,3,NA,1,Slow cycle and outake
+TC,16,B1,3136,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,1,0,2,2,FALSE,P,FALSE,0,0,3,NA,1,Slow cycle and outake
 GEH,16,R1,3373,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,1,0,1,2,TRUE,P,FALSE,0,0,2,NA,,"Very slow cycle times, missed about half the coral they tried to place"
 Ashwin,16,R3,836,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,1,0,0,1,0,0,0,2,TRUE,D,FALSE,0,4,3,NA,1,Wobbled at least once every 10 seconds (i.e. extremely wobbly)
 GEH,17,R1,6213,,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,
@@ -134,7 +134,7 @@ Ashwin,22,R3,5804,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,7,1,TRUE,P,FALSE,
 JJ,23,R2,836,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,3,0,3,4,3,0,TRUE,D,TRUE,0,0,4,NA,7,"Collision in auto, scored one in opponent pros "
 MF,23,B2,888,F,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,0,0,2,FALSE,P,FALSE,0,4,3,NA,,
 GEH,23,R1,2534,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,5,2,1,3,FALSE,P,FALSE,0,0,4,NA,,Started off slow but managed to pick up the pace and score a decent amount of coral. The robot did struggle with positioning which caused 3 coral misses.
-TC,23,R1,112,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,3,2,TRUE,D,FALSE,0,0,3,NA,2,Dropped 3 coral before getting to reef. Bad defense maneuvering.
+TC,23,R1,122,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,3,2,TRUE,D,FALSE,0,0,3,NA,2,Dropped 3 coral before getting to reef. Bad defense maneuvering.
 BH,23,B1,1629,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,1,0,1,4,0,0,2,1,FALSE,No,FALSE,0,0,3,NA,,L1 is a result of missed L4 and L3 attempts
 Ashwin,23,R3,1086,F,FALSE,TRUE,1,0,0,1,TRUE,FALSE,0,1,0,0,0,1,2,2,FALSE,No,FALSE,0,0,4,di,,Disabled for the last 40 seconds of the match
 BH,24,B1,8622,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,1,0,2,FALSE,P,FALSE,0,0,3,NA,,
@@ -209,7 +209,7 @@ JJ,35,B3,3373,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,2,4,1,TRUE,No,TRUE,0,0,
 BP,35,B2,6863,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,1,4,0,1,FALSE,No,FALSE,0,0,3,NA,,
 GL,35,R1,4638,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,1,0,4,1,FALSE,P,FALSE,0,0,3,cs,,"Potential for 3 pc auto, and can remove algae, but it took a long time and was ultimately unsuccessful. Overall cycles were quick though."
 TC,35,R3,6802,C,FALSE,TRUE,0,0,0,1,TRUE,TRUE,4,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,3,NA,,Slow positioning for intake.
-BP,36,B2,5116,M,FALSE,FALSE,0,0,1,0,TRUE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,3,3,NA,"5,0",
+BP,36,B2,5115,M,FALSE,FALSE,0,0,1,0,TRUE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,3,3,NA,"5,0",
 JJ,36,B3,888,F,FALSE,FALSE,0,0,0,1,TRUE,FALSE,0,0,2,0,0,0,8,1,FALSE,No,FALSE,0,0,4,NA,,Innacurate autos
 KO,36,R2,1908,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,1,7,0,TRUE,D,FALSE,0,0,3,NA,,"I might have missed 1-2 teleop corals, they missed 1 auto L4"
 AA,36,B1,449,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,7,9,0,0,TRUE,D,FALSE,0,0,4,NA,,
@@ -284,7 +284,7 @@ GL,47,R1,4638,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,5,0,FALSE,P,FALSE,0,0
 GL,48,R1,4821,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,6,0,0,0,0,0,TRUE,D,FALSE,0,0,3,NA,,
 JJ,48,B3,4505,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,1,di,,"Collided in auto, then dc'd"
 TC,48,R3,8230,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,FALSE,0,3,2,NA,"0,1",Bot froze at start.
-AA,48,B2,2563,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,3,4,0,TRUE,D,FALSE,0,0,3,NA,,
+AA,48,B2,2363,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,3,4,0,TRUE,D,FALSE,0,0,3,NA,,
 KO,48,R2,686,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,7,3,FALSE,No,FALSE,0,0,4,NA,,"Missed L4 auto, dropped coral into L1 during teleop"
 BH,48,B1,1885,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,1,2,5,0,0,0,0,0,FALSE,P,FALSE,0,0,4,NA,,Algae bot 
 BH,49,B1,2534,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,0,0,4,3,FALSE,P,FALSE,0,0,3,NA,,
@@ -473,7 +473,7 @@ Ashwin,82,R1,8592,M,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,1,0,2,3,4,2,TRUE,P,FALSE,0
 BH,83,B1,611,C,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,3,4,2,FALSE,No,FALSE,0,0,3,NA,,
 JJ,83,R2,3136,C,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,4,0,1,0,1,TRUE,D,TRUE,0,0,2,NA,6,can't play against defense
 GL,83,B3,3793,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,4,3,NA,,Starts defense at 1:30 on the clock. Great zoning and doesn't leave its post
-AA,83,B2,3739,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,3,3,NA,,Had issues so it played defense
+AA,83,B2,3793,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,3,3,NA,,Had issues so it played defense
 Ashwin,83,R1,1086,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,2,3,2,3,3,FALSE,P,FALSE,0,0,3,NA,,"Intake was solid considering being defended, but scoring coral was slow, especially for L3 and L4"
 LJ,83,R3,977,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,3,2,1,1,FALSE,P,FALSE,0,0,3,NA,5,Intake was not awful but often bounced coral around with a few coral landing badly and being flung out. Auto had a ridiculously fast l4 with preloaded but delayed before moving and stopped after
 JJ,84,R2,422,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,0,0,0,4,5,5,6,0,TRUE,D,FALSE,0,0,5,NA,,matty 422 best driver
@@ -546,7 +546,7 @@ AX,76,R2,1885,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,11,0,0,0,0,0,FALSE,No,FALSE,0,
 JoJo,76,B3,9072,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,4,5,4,0,TRUE,P,FALSE,0,0,4,NA,"7,1","Slightly wobbly, L1 actual L1"
 DK,76,R1,4505,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,0,0,2,1,4,FALSE,P,FALSE,0,0,3,NA,,
 AX,76,R2,1086,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,0,0,0,1,1,2,2,6,FALSE,No,FALSE,0,0,3,NA,,
-JoJo,76,R3,3739,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,2,6,2,0,0,FALSE,No,FALSE,0,0,3,NA,1,"Slightly wobbly, low 3"
+JoJo,76,R3,3793,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,2,6,2,0,0,FALSE,No,FALSE,0,0,3,NA,1,"Slightly wobbly, low 3"
 JoJo,77,B1,1731,M,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,0,0,0,0,10,4,1,TRUE,D,FALSE,0,0,4,NA,,"High 4, some alignment issues, SLAM DUNK"
 AX,77,B2,122,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,1,3,4,0,TRUE,D,FALSE,0,0,3,NA,,
 DK,77,B3,6213,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,3,3,NA,,"About as good as drivetrain bot can do, but not effective as actual defense."
