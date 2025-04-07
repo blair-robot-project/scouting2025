@@ -339,7 +339,8 @@ ui <- fluidPage(
                         plotOutput("scouter_graph_output")
                         )
                     )
-               )
+               ),
+    actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning")
     )
 
 #Server
@@ -490,6 +491,22 @@ server <- function(input, output, session) {
     #  })
     #})
     #
+    
+    #CHECKING DATA LOGIC
+    observeEvent(input$check, {
+        # display a modal dialog with a header, textinput and action buttons
+        showModal(modalDialog(
+            h4(
+                renderText("Problematic data will be shown below.")
+            ),
+            DTOutput("checked_data")
+        ))
+    })
+    
+    output$checked_data <- renderDT({
+        #temp until we actually implement the code to check
+        datatable(raw, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 1000000000, pageLength = nrow(row)))
+    })
     
     
     #Alliance/Match Tab
