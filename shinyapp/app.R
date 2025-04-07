@@ -494,7 +494,6 @@ server <- function(input, output, session) {
     
     #CHECKING DATA LOGIC
     observeEvent(input$check, {
-        # display a modal dialog with a header, textinput and action buttons
         showModal(modalDialog(
             h4(
                 renderText("Problematic data will be shown below.")
@@ -505,7 +504,7 @@ server <- function(input, output, session) {
     
     output$checked_data <- renderDT({
         #temp until we actually implement the code to check
-        datatable(raw, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 1000000000, pageLength = nrow(row)))
+        datatable(raw, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(raw)))
     })
     
     
@@ -588,7 +587,7 @@ server <- function(input, output, session) {
         return(p)
     }
     
-    #CORAL  AUTO  
+    #CORAL AUTO  
     auto_coral_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
                                     blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
         
