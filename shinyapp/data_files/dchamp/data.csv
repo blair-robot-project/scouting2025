@@ -1,5 +1,4 @@
 scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_coral_L3_num,auto_coral_L4_num,robot_reef_removal,robot_algae_picked,robot_net_score,robot_net_miss,proc_score,coral_L1_num,coral_L2_num,coral_L3_num,coral_L4_num,tele_missed,climb_attempt,ending,climb_time,fouls,defense,driver,dead,comments,commentOpen
-GK,1,B2,686,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,3,3,3,2,TRUE,P,TRUE,0,0,4,NA,,
 TA,1,B1,686,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,0,3,3,2,2,TRUE,No,TRUE,0,0,4,NA,,Can remove algae with coral in hold
 TA,1,B3,540,F,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,3,3,5,2,FALSE,P,FALSE,0,0,3,NA,,
 GK,1,R1,1111,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,2,3,NA,0,Active but scattershot defense
@@ -72,8 +71,7 @@ TC,12,R1,122,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,6,1,TRUE,D,FALSE,0,0,3
 GL,12,B2,977,C,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,4,4,cs,0,"Switched defense from marking everyone to just 2106, I think a smart choice. Really effective man marking at the coral station."
 Ashwin,12,R3,1418,C,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,TRUE,D,TRUE,0,3,3,NA,0,"Mainly played defense. Didn’t really prevent opponents from feed intake coral, but slowed them down somewhat "
 BH,13,B1,6326,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,
-JJ,13,R2,5338,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,0,3,0,4,0,FALSE,No,FALSE,0,0,3,NA,,Looks like an algae got knocked out on contact?
-GEH,13,R1,6326,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,0,2,NA,,Removed a few pieces of algae but didn't score anything.
+JJ,13,R2,5338,F,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,1,0,3,0,4,0,FALSE,No,FALSE,0,0,3,NA,,Looks like an algae got knocked out on contact
 MF,13,R1,3793,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,3,5,0,0,0,FALSE,No,FALSE,0,0,4,NA,,A little slow in speed
 Ashwin,13,R3,401,C,FALSE,TRUE,0,0,0,3,FALSE,FALSE,0,0,0,0,0,5,3,3,TRUE,D,FALSE,0,0,4,NA,,Very consistent and fast at intaking coral from feed and scored quickly
 GL,13,B2,2534,F,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,4,0,4,1,FALSE,No,FALSE,0,0,3,NA,5,"Passive intake, has to waste time shaking it into manip. Also got in partners’ way a few times."
@@ -373,7 +371,6 @@ GL,62,B3,6863,M,FALSE,TRUE,1,0,0,0,FALSE,FALSE,0,0,0,0,0,3,0,3,FALSE,No,FALSE,0,
 IH,62,R3,2106,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,3,0,0,0,0,0,7,1,FALSE,P,FALSE,0,0,5,NA,,Died for ~15 secs toward end of match (orange light still flashing)
 AY,63,B2,6802,C,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,0,1,3,2,FALSE,P,FALSE,0,0,3,NA,,
 BH,63,B1,1418,F,FALSE,TRUE,0,0,0,2,FALSE,FALSE,0,0,0,0,0,0,7,1,TRUE,D,TRUE,0,0,4,NA,,
-TC,63,R1,8590,C,FALSE,TRUE,0,0,1,0,TRUE,FALSE,0,0,0,0,4,8,0,0,FALSE,No,FALSE,0,0,3,NA,1,
 GL,63,B3,8622,M,FALSE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,3,0,1,0,1,FALSE,No,FALSE,0,0,3,di,,Pre disabled performance was fine.
 IH,63,R3,8590,C,FALSE,FALSE,0,0,1,0,TRUE,FALSE,0,0,0,0,4,9,0,2,FALSE,No,FALSE,0,0,4,NA,,Slow-ish algae removal
 "RN, JA",63,R2,1086,F,FALSE,TRUE,1,0,0,1,FALSE,FALSE,0,0,0,0,0,0,1,0,FALSE,No,FALSE,0,0,2,di,,died 
@@ -402,11 +399,9 @@ TC,67,R1,346,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,2
 IH,67,R3,836,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,1,0,0,0,2,8,0,FALSE,P,FALSE,0,0,4,NA,7,
 AY,68,B2,8592,F,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,0,0,0,3,3,5,1,TRUE,D,FALSE,0,0,5,NA,,auto stopped abruptly 
 TC,68,R1,9072,F,FALSE,TRUE,0,1,0,2,TRUE,FALSE,3,0,0,0,1,6,5,0,FALSE,P,FALSE,0,0,4,NA,7,Very fast bot.
-AA,68,R2,2199,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,0,2,0,2,2,3,0,TRUE,D,FALSE,0,0,2,NA,,
 BH,68,B1,539,M,FALSE,TRUE,0,0,0,0,TRUE,TRUE,0,0,2,2,0,0,0,1,FALSE,P,FALSE,1,3,4,NA,,
 GL,68,B3,1731,C,FALSE,TRUE,0,0,0,1,TRUE,FALSE,0,0,0,0,3,3,2,1,TRUE,P,FALSE,0,0,4,NA,,"Got defended by 6326, but shook them off well. Seemed to have some station trouble."
 IH,68,R3,2199,M,FALSE,TRUE,0,0,0,1,TRUE,TRUE,1,1,2,0,2,2,4,0,FALSE,P,FALSE,0,0,3,NA,,
-AA,69,R2,6802,M,FALSE,TRUE,0,0,0,1,TRUE,FALSE,1,0,0,0,0,0,6,0,TRUE,P,FALSE,0,0,3,NA,,Climb obstructed by an algae
 TC,69,R1,8590,F,FALSE,TRUE,0,0,2,1,TRUE,FALSE,0,0,0,0,1,5,0,1,FALSE,P,FALSE,0,0,3,ba,,Got off algae later.
 AY,69,B3,2106,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,0,0,2,0,2,6,1,TRUE,P,FALSE,0,0,4,NA,,
 GL,69,B2,8726,C,FALSE,TRUE,0,2,0,0,TRUE,FALSE,0,0,0,0,0,4,0,2,TRUE,P,FALSE,0,0,3,NA,,
@@ -415,8 +410,6 @@ NY,69,R3,6802,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,1,0,0,0,0,0,5,1,TRUE,P,FALSE,0,0,
 JJ,70,R1,8230,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,1,1,2,0,1,TRUE,D,TRUE,0,0,3,NA,7,fish
 AY,70,B2,620,C,FALSE,TRUE,0,0,0,2,TRUE,FALSE,1,1,0,0,4,5,7,0,FALSE,No,FALSE,0,0,5,NA,,if didn't miss could do 4 L4 auto
 GL,70,B3,1086,F,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,0,0,0,0,FALSE,No,FALSE,1,3,3,NA,"0,5","Defended for 30-40 seconds, had intake problems"
-AA,70,R2,8230,M,FALSE,TRUE,1,0,0,0,TRUE,FALSE,0,0,0,1,1,3,0,1,TRUE,D,TRUE,0,0,2,NA,,
-Tc,70,R3,8230,M,FALSE,TRUE,0,0,0,0,TRUE,FALSE,0,0,0,0,1,2,1,1,TRUE,D,FALSE,0,0,2,NA,7,Not very fast cycle.
 BH,70,B1,2890,M,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,1,FALSE,No,FALSE,0,3,0,NA,0,
 JJ,71,R1,6213,,TRUE,FALSE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,No,FALSE,0,0,0,NA,,I am the very model of a modern major general I have information vegetable animal and mineral I know the kings of England and can quote the fights historical from marathon to Waterloo in order categorical
 BH,71,B1,686,M,FALSE,FALSE,0,0,0,1,FALSE,FALSE,0,0,0,6,2,2,0,1,TRUE,D,FALSE,0,0,4,NA,,
@@ -437,7 +430,6 @@ IH,73,B1,5338,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,4,3,8,2,FALSE,No,FALSE,0,
 AY,73,B2,611,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,1,2,1,4,1,FALSE,No,FALSE,0,0,3,NA,,
 AY,74,B3,1727,F,FALSE,TRUE,0,1,0,0,TRUE,FALSE,0,0,0,5,1,8,0,0,TRUE,D,FALSE,0,0,4,NA,,
 IH,74,B1,4638,C,FALSE,TRUE,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,0,0,FALSE,P,FALSE,0,1,2,NA,0,"Auto disabled after move, defense didn't slow down anyone"
-Tc,74,R3,8592,F,FALSE,TRUE,0,0,0,3,TRUE,FALSE,1,0,0,4,4,2,1,1,TRUE,D,FALSE,0,0,4,NA,,Missed algae intake.
 JJ,74,R1,8592,F,FALSE,TRUE,0,0,0,4,TRUE,FALSE,1,0,0,5,4,2,0,0,TRUE,D,TRUE,0,0,5,NA,,Looks like they tried to pick up algae for net and it fell out
 AA,74,R2,540,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,0,5,4,4,1,FALSE,P,FALSE,0,0,4,NA,,
 GL,74,B2,1895,M,FALSE,TRUE,0,0,0,1,FALSE,FALSE,0,0,0,1,1,0,4,2,TRUE,S,FALSE,0,0,3,NA,5,"manip drops L4 parallel, and intake can take time"
