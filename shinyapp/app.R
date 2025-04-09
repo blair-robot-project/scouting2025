@@ -336,7 +336,8 @@ ui <- fluidPage(
                     #imageOutput("team_image_output")
                     #   ),
                     fluidRow(
-                        plotOutput("scouter_graph_output")
+                        plotOutput("scouter_graph_output"),
+                        plotOutput("yapp_graph_output")
                         )
                     )
                ),
@@ -1676,6 +1677,10 @@ server <- function(input, output, session) {
         scouter_graph_output(raw)
         })
     
+    output$yapp_graph_output <- renderPlot({
+        yapp_graph_output(raw)
+    })
+    
     output$team_image_output <- renderImage({
         teamnum <- input$team_select
         img_src <- paste0("images/dchamp_img/", teamnum, ".png")  #Path to the image
@@ -1752,6 +1757,23 @@ server <- function(input, output, session) {
             geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
             labs(title = "Scouter Summary", 
                  x = "Scouters", y = "Times Scouted") +
+            theme_bw()
+        
+    }
+    
+    yapp_graph_output <- function(raw){
+        yapp_df <- raw %>%
+            group_by(scout) %>%
+            summarize(yapp = nchar(commentOpen)) %>%
+            summarize(yapp = mean(yapp)) %>%
+            arrange(desc(yapp))
+        
+        yapp_df$scout <- factor(yapp_df$scout, levels = yapp_df$scout)
+        
+        ggplot(yapp_df, aes(x = `scout`, yapp)) + 
+            geom_bar(position = "stack", stat = "identity", fill = "steelblue") + 
+            labs(title = "Yapp Summary", 
+                 x = "Scouters", y = "Length of Comments") +
             theme_bw()
         
     }
