@@ -145,6 +145,16 @@
           "defaultValue": false
         },
         {
+          "title": "Auto Coral Missed",
+          "type": "counter",
+          "required": false,
+          "code": "am",
+          "formResetBehavior": "reset",
+          "defaultValue": 0,
+          "min": 0,
+          "step": 1
+        },
+        {
           "title": "Auto Coral Scored L1",
           "type": "counter",
           "required": false,
