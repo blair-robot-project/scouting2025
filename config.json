@@ -339,7 +339,7 @@
       "name": "Defense",
       "fields": [
         {
-          "title": "Reef Fouls",
+          "title": "Defensive Fouls",
           "description": "How many times the defending robot that you are watching touched a robot in the reef zone",
           "type": "counter",
           "required": false,
