@@ -504,9 +504,26 @@ server <- function(input, output, session) {
     })
     
     output$checked_data <- renderDT({
-        #temp until we actually implement the code to check
-        datatable(raw, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(raw)))
+        errors <- check(raw)
+        datatable(errors, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(errors)))
     })
+    
+    check <- function(raw){
+        double_check <- raw[FALSE,]
+        for (i in 1:(nrow(raw)-1)){
+            if(!(is.na(raw[i, 4])) & length(grep(raw[i, 4], teams))==0){
+                double_check <- rbind(double_check, raw[i,])
+            }
+            for (j in (i+1):nrow(raw)){
+                if (!is.na(raw[i, 2]) & !is.na(raw[j, 2]) & raw[i,2] == raw[j,2] & 
+                    !is.na(raw[i, 4]) & !is.na(raw[j, 4]) & raw[i,4] == raw[j,4]){
+                    double_check <- rbind(double_check, raw[i,])
+                    double_check <- rbind(double_check, raw[j,])
+                }
+            }
+        }
+        return(double_check)
+    }
     
     
     #Alliance/Match Tab
