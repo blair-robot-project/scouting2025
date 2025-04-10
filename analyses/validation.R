@@ -13,17 +13,26 @@ tba <- event_matches(event_code, match_type = "qual")
 #########################
 
 # Do we have data for each team, in each match they were scheduled for?
-schedule <- qual_schedule(event_code)
-schedule <- schedule |>
+schedule <- qual_schedule(event_code) |>
     tidyr::pivot_longer(red1:blue3) |>
     dplyr::mutate(
-        alliance = substr(name, 1, nchar(name) - 1), 
-        team = value
+        robot = case_when(
+            name == "red1" ~ "R1",
+            name == "red2" ~ "R2",
+            name == "red3" ~ "R3",
+            name == "blue1" ~ "B1",
+            name == "blue2" ~ "B2",
+            name == "blue3" ~ "B3"
+        ),
+        team = substr(value, 4, nchar(value)),
+        match = match_number
     ) |>
     dplyr::select(
-        match_number, alliance, team
+        match, robot, team
     )
 
 ############################
 #### Correctness Checks ####
-############################
+############################    
+
+
