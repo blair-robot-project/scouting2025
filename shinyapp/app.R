@@ -213,7 +213,7 @@ ui <- fluidPage(
                         fluidRow(
                             column(12,
                                 plotOutput("picklist_graph"),
-                                plotOutput("long_column_output"),
+                                plotOutput("long_column_output", height = "750px"),
                                 DTOutput("picklist_table")
                                 )
                             )
