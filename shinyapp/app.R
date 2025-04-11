@@ -99,16 +99,39 @@ mldf <- raw %>%
         algae_net_shots = sum(net_pts + net_missed)
     )
 
+
+
+past_raw_team_data <- mldf%>% 
+    group_by(team) %>%
+    summarize(
+        "M#" = match,
+        
+        l1 = coral_L1_num,
+        l2 = coral_L2_num,
+        l3 = coral_L3_num,
+        l4 = coral_L4_num,
+
+
+        net = robot_net_score,
+        proc = proc_score,
+        auto_pts = total_auto_pts,
+        tele_pts = total_tele_pts,
+        total_pts = total_pts,
+        
+        endgame = ending,
+        de_reef = as.character(robot_reef_removal),
+        move_pct = as.character(move),
+        
+        dead = paste(dead, "/", 1),
+        driver_rate = driver,
+        defense_rate = defense)
+
+
+
 consolidated_team_data <- mldf %>%
     group_by(team) %>%
     summarize(
-        #coral cycle
-        # l1_cycle = round(mean(auto_coral_L1_num + coral_L1_num), digits = 2),
-        # l2_cycle = round(mean(auto_coral_L2_num + coral_L2_num), digits = 2),
-        # l3_cycle = round(mean(auto_coral_L3_num + coral_L3_num), digits = 2),
-        # l4_cycle = round(mean(auto_coral_L4_num + coral_L4_num), digits = 2),
-        # coral_cycle = round(sum(l1_cycle+l2_cycle+l3_cycle+l4_cycle), digits = 2),
-        
+       
         l1_cycle_tele = round(mean(coral_L1_num), digits = 2),
         l2_cycle_tele = round(mean(coral_L2_num), digits = 2),
         l3_cycle_tele = round(mean(coral_L3_num), digits = 2),
@@ -124,26 +147,7 @@ consolidated_team_data <- mldf %>%
     
         #total points
         total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
-        #total_pts_median = round(median(total_pts, na.rm = TRUE), digits =2),
-        #total_pts_sd = round(sd(total_pts, na.rm = TRUE), digits =2), 
-        #total_pts_max = round(max(total_pts, na.rm = TRUE), digits =2),
-    
-    
-        #------------don't think these are necessary for the table bc they are in graphs -shriyan
-        #coral
-        #coral_pts_mean = round(mean(coral_l1_pts + coral_l2_pts + coral_l3_pts + coral_l4_pts, na.rm = TRUE), digits =2), 
-    
-        #------------don't think these are necessary for the table bc they are in graphs -shriyan
-        # l1_pts_mean = round(mean(coral_l1_pts, na.rm = TRUE), digits = 2), 
-        # l2_pts_mean = round(mean(coral_l2_pts, na.rm = TRUE), digits = 2), 
-        # l3_pts_mean = round(mean(coral_l3_pts, na.rm = TRUE), digits = 2), 
-        # l4_pts_mean = round(mean(coral_l4_pts, na.rm = TRUE), digits = 2), 
-        # #% in levels
-        # l1_pct_mean = round(mean(coral_l1_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-        # l2_pct_mean = round(mean(coral_l2_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-        # l3_pct_mean = round(mean(coral_l3_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-        # l4_pct_mean = round(mean(coral_l4_pts, na.rm = TRUE)/coral_pts_mean*100, digits = 2), 
-    
+       
         #teleop
         tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
         #tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
@@ -152,32 +156,14 @@ consolidated_team_data <- mldf %>%
     
         #auto
         auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
-        #auto_pts_median = round(median(total_auto_pts, na.rm = TRUE), digits = 2), 
-        #auto_pts_sd = round(sd(total_auto_pts, na.rm = TRUE), digits = 2),
-        #auto_pts_max = round(max(total_auto_pts, na.rm = TRUE),digits =2),  
-        #auto_move = round(mean(move_pts, na.rm = TRUE), digits = 2),
-    
-        #algae
-        #algae_pts_mean =round(mean(net_pts + processor_value, na.rm = TRUE), digits=2),
-        #algae_pts_median = round(median(net_pts + processor_value, na.rm = TRUE), digits = 2),
-        #algae_pts_sd = round(sd(net_pts + processor_value, na.rm = TRUE), digits =2),
-        #algae_pts_max = round(max(net_pts + processor_value, na.rm = TRUE), digits =2), 
-        
+         
         #endgame
         endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
-        #endgame_pts_median = round(median(endgame_pts, na.rm = TRUE), digits =2), 
-        #endgame_pts_sd = round(sd(endgame_pts, na.rm = TRUE), digits =2),
-        #endgame_pts_max = round(max(endgame_pts, na.rm = TRUE), digits =2),
-        
-        #you would put many more calculations here!
-        #algae net pct
-        #algae remove data?
-    
+       
+        #algae remove data
         algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
         move_pct = round(sum(c(move))/n(), digits = 2),
-        
-        # dead_count = sum(c(dead)),
-        # matches = n(),
+       
         dead_times = paste(sum(c(dead)),"/",n()),
         
         dead_pct = round(sum(c(dead))/n(), digits = 2),
@@ -324,7 +310,9 @@ ui <- fluidPage(
                             plotOutput("team_graph_output"),
                             DTOutput("team_data_row"),
                             h3("Comments"),
-                            DTOutput("comments_list")
+                            DTOutput("comments_list"),
+                            h3("Past raw data"),
+                            DTOutput("past_team_table")
                             )
                         )
                     ),
@@ -1406,7 +1394,38 @@ server <- function(input, output, session) {
                 axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
                 plot.title = element_text(size = 14, face = "bold")
             )
+           # geom_text(aes(label = score), size = 3, hjust = 0.2, vjust = 2, position = "stack")
+        
     }
+    
+    
+    
+    
+    
+
+    
+    
+    #PAST MATCH RAW TEAM DATA
+
+    output$past_team_table <- renderDT({
+        #selected_team <- input$select_team
+        team_past_data <- as.data.frame(past_raw_team_data)
+        
+        datatable(team_past_data, options = list(fixedRow() ,scrollX = FALSE)) 
+    })
+        
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     #PAST DRIVER GRAPH
     previous <- function(raw, team_num){
@@ -1436,6 +1455,7 @@ server <- function(input, output, session) {
             scale_y_continuous(limits = c(1, 5)) +
             scale_x_continuous(breaks=past$match)
     }
+    
     team_comments <- reactive({
         comments_data <- raw %>%
             filter(team == input$team_select) %>%
@@ -1636,6 +1656,7 @@ server <- function(input, output, session) {
         colnames(flipped_data) <- selected_teams
         datatable(flipped_data, options = list(scrollX = TRUE, dom = 't'))
     })
+    
     
     #SINGLE TEAM CHOICE LOGIC
     output$team_graph_output <- renderPlot({
