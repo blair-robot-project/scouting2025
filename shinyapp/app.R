@@ -951,13 +951,15 @@ server <- function(input, output, session) {
             selected_red_teams <- c(
                 red_alliance_row$Captain,
                 red_alliance_row$Pick.1,
-                red_alliance_row$Pick.2
+                red_alliance_row$Pick.2,
+                red_alliance_row$Pick.3
             )
             
             selected_blue_teams <- c(
                 blue_alliance_row$Captain,
                 blue_alliance_row$Pick.1,
-                blue_alliance_row$Pick.2
+                blue_alliance_row$Pick.2,
+                blue_alliance_row$Pick.3
             )
             
             output$alliance_box_plot_output <- renderPlot({
