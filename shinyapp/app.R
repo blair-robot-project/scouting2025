@@ -325,7 +325,8 @@ ui <- fluidPage(
                     #   ),
                     fluidRow(
                         plotOutput("scouter_graph_output"),
-                        plotOutput("yapp_graph_output")
+                        plotOutput("yapp_graph_output"),
+                        plotOutput("high_streak_output")
                         )
                     )
                ),
@@ -1720,6 +1721,10 @@ server <- function(input, output, session) {
         yapp_graph_output(raw)
     })
     
+    output$high_streak_output <- renderPlot({
+        high_streak_output(raw)
+    })
+    
     output$team_image_output <- renderImage({
         teamnum <- input$team_select
         img_src <- paste0("images/dchamp_img/", teamnum, ".png")  #Path to the image
@@ -1814,7 +1819,29 @@ server <- function(input, output, session) {
             labs(title = "Yapp Summary", 
                  x = "Scouters", y = "Length of Comments") +
             theme_bw()
-        
+    }
+    
+    high_streak_output <- function(raw){
+        current_match = max(raw$match)
+        all_matches <- 1:current_match
+        streak_df <- raw %>%
+            group_by(scout) %>%
+            summarise(
+                scouted_matches = list(unique(match))
+            ) %>%
+            rowwise()%>% #Holy sheet rowwise my GOAT
+            mutate(
+                missed_matches = list(setdiff(all_matches, scouted_matches)),
+                streak = current_match - max(missed_matches)
+            ) %>%
+            arrange(desc(streak))%>% #help why not work
+            filter(streak>0)
+
+        ggplot(streak_df, aes(x = `scout`, streak)) + 
+            geom_bar(position = "stack", stat = "identity", fill = "chartreuse2") + 
+            labs(title = "Current Streak", 
+                 x = "Scouters", y = "Matches") +
+            theme_bw()
     }
     
     #AUTO PICKLISTING
