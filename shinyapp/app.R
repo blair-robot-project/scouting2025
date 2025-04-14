@@ -15,6 +15,7 @@ data_file <- paste0(data_dir, "/dchamp/data.csv")
 event_schedule_file <- paste0(data_dir, "/dchamp/schedule.csv")
 teams_file <- paste0(data_dir, "/dchamp/teams.csv")
 alliances_file <- paste0(data_dir, "/dchamp/alliances.csv")
+approved_scouts <- paste0(data_dir, "/newton/approved_scouters.csv")
 
 
 #Load team data and event schedule
@@ -47,6 +48,7 @@ raw <- read.csv(data_file)
 match_schedule <- read.csv(event_schedule_file, fill = TRUE)
 teams <- read.csv(teams_file)
 alliances <- read.csv(alliances_file)
+scouts <- read.csv(approved_scouts)
 
 mldf <- raw %>%
     mutate(
@@ -499,13 +501,17 @@ server <- function(input, output, session) {
     
     check <- function(raw){
         double_check <- raw[FALSE,]
-        for (i in 1:(nrow(raw)-1)){
+        for (i in 1:(nrow(raw))){
             if(!(is.na(raw[i, 4])) & length(grep(raw[i, 4], teams))==0){
                 double_check <- rbind(double_check, raw[i,])
             }
-            for (j in (i+1):nrow(raw)){
+            if (!(trimws(raw[i, 1]) %in% scouts$Name)){
+                double_check <- rbind(double_check, raw[i,])
+            }
+            for (j in (i):nrow(raw)){
                 if (!is.na(raw[i, 2]) & !is.na(raw[j, 2]) & raw[i,2] == raw[j,2] & 
-                    !is.na(raw[i, 4]) & !is.na(raw[j, 4]) & raw[i,4] == raw[j,4]){
+                    !is.na(raw[i, 4]) & !is.na(raw[j, 4]) & raw[i,4] == raw[j,4] &
+                    i!=j){
                     double_check <- rbind(double_check, raw[i,])
                     double_check <- rbind(double_check, raw[j,])
                 }
