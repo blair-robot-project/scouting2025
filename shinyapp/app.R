@@ -1417,20 +1417,12 @@ server <- function(input, output, session) {
         
     }
     
-    
-    
-    
-    
-
-
-
     #PAST MATCH RAW TEAM DATA
 
     output$past_team_table <- renderDT({
         #selected_team <- input$select_team
         team_past_data <- as.data.frame(past_raw_team_data)
-
-        datatable(team_past_data, options = list(fixedRow() ,scrollX = FALSE))
+        datatable(team_past_data, options = list(pageLength = 15 ,scrollX = FALSE))
     })
 
 
