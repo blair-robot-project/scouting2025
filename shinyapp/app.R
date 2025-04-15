@@ -107,26 +107,36 @@ past_raw_team_data <- mldf%>%
     group_by(team) %>%
     summarize(
         "M#" = match,
+        "Move %" = as.character(move),
+        "Auto coral cycle" = auto_coral_L1_num + auto_coral_L2_num  + auto_coral_L3_num + auto_coral_L4_num,
+        "Auto pts+3" = total_auto_pts,
         
-        l1 = coral_L1_num,
-        l2 = coral_L2_num,
-        l3 = coral_L3_num,
-        l4 = coral_L4_num,
+        "Tele coral cycle" = coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num,
+        "Tele coral miss" = tele_missed,
+        
+        L1 = coral_L1_num,
+        L2 = coral_L2_num,
+        L3 = coral_L3_num,
+        L4 = coral_L4_num,
+        
+        Net = robot_net_score,
+        "Net miss" = robot_net_miss, 
+        
+        Proc = proc_score,
+        Endgame = ending,
+        De_reef = as.character(robot_reef_removal),
+        
+        "Tele pts" = total_tele_pts,
+        "Total pts" = total_pts,
+        
+     
+        Dead = paste(dead, "/", 1),
+        Fouls = fouls,
+        "Driver Rate" = driver,
+        "Defense Rate" = defense
+        )
 
 
-        net = robot_net_score,
-        proc = proc_score,
-        auto_pts = total_auto_pts,
-        tele_pts = total_tele_pts,
-        total_pts = total_pts,
-        
-        endgame = ending,
-        de_reef = as.character(robot_reef_removal),
-        move_pct = as.character(move),
-        
-        dead = paste(dead, "/", 1),
-        driver_rate = driver,
-        defense_rate = defense)
 
 
 
@@ -199,7 +209,7 @@ default_linear_weights <- data.frame(
 
 #UI
 ui <- fluidPage(
-    navbarPage(theme = shinytheme("sandstone"),  
+    navbarPage(theme = shinytheme("cerulean"),  
                "449 Scouting",
                tabPanel("Event Summary",
                         #sidebarLayout(
@@ -1412,22 +1422,18 @@ server <- function(input, output, session) {
     
     
 
-    
-    
+
+
     #PAST MATCH RAW TEAM DATA
 
     output$past_team_table <- renderDT({
         #selected_team <- input$select_team
         team_past_data <- as.data.frame(past_raw_team_data)
-        
-        datatable(team_past_data, options = list(fixedRow() ,scrollX = FALSE)) 
-    })
-        
-    
-    
 
-    
-    
+        datatable(team_past_data, options = list(fixedRow() ,scrollX = FALSE))
+    })
+
+
     
     
     
