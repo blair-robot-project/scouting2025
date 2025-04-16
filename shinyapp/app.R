@@ -209,7 +209,7 @@ default_linear_weights <- data.frame(
 
 #UI
 ui <- fluidPage(
-    navbarPage(theme = shinytheme("cerulean"),  
+    navbarPage(theme = shinytheme("yeti"),  
                "449 Scouting",
                tabPanel("Event Summary",
                         #sidebarLayout(
@@ -1127,6 +1127,192 @@ server <- function(input, output, session) {
         })
     })
     
+    #Compare Teams Tab
+    #GRAPH GEN LOGIC-------------------------------------------
+    
+    #LARGE BAR GRAPH
+    compare_teams_large_bar_graph <- function(raw, selected_teams){
+        compare_bar_graph <- raw %>%
+            filter(team %in% selected_teams) %>%
+            group_by(team) %>%
+            summarise(
+                match = n(),
+                auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
+                auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
+                auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
+                auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
+                move_pts = sum(move*3)/n(),
+                tele_coral_L1 = sum(coral_L1_num*2)/n(),
+                tele_coral_L2 = sum(coral_L2_num*3)/n(),
+                tele_coral_L3 = sum(coral_L3_num*4)/n(),
+                tele_coral_L4 = sum(coral_L4_num*5)/n(),
+                robot_net_score = sum(robot_net_score*4)/n(),
+                robot_proc_score = sum(proc_score*2.5)/n(),
+                endgame_score = sum(ifelse(ending =="D", 12,
+                                           ifelse(ending =="S", 6,
+                                                  ifelse(ending =="P", 2, 0)))
+                )/n(),
+                
+                avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
+                    tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
+                    robot_net_score + robot_proc_score +
+                    endgame_score
+            ) %>%
+            
+            pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
+                                  tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
+                                  robot_net_score, robot_proc_score,
+                                  endgame_score), 
+                         names_to = "level", 
+                         values_to = "score")
+        
+        ggplot(compare_bar_graph, aes(x = factor(team), y = score, fill = level)) + 
+            geom_bar(position = "stack", stat = "identity") + 
+            labs(title = "Scoring Summary", 
+                 x = "Team", y = "Total Score with Coral", fill = "Level") +
+            scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
+                                         "#FFF68F","#FFC156","olivedrab3","springgreen4", 
+                                         "steelblue2","steelblue3","steelblue","steelblue4"),
+                              labels = c("auto_coral_L1" = "Auto Coral L1", 
+                                         "auto_coral_L2" = "Auto Coral L2",
+                                         "auto_coral_L3" = "Auto Coral L3", 
+                                         "auto_coral_L4" = "Auto Coral L4",
+                                         "move_pts" = "Move",
+                                         "tele_coral_L1" = "Tele Coral L1", 
+                                         "tele_coral_L2" = "Tele Coral L2", 
+                                         "tele_coral_L3" = "Tele Coral L3", 
+                                         "tele_coral_L4" = "Tele Coral L4", 
+                                         "endgame_score" = "Endgame", 
+                                         "robot_net_score" = "Net", 
+                                         "robot_proc_score" = "Processor")
+            )+
+            theme_bw()
+    }
+    
+    #COMMENTS
+    compare_teams_comments <- function(raw, selected_teams){
+        comments2 <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
+            summarise(
+                wobbly = length(grep("2", comments)),
+                wiffs = length(grep("4", comments)),
+                `wobbly manip` = length(grep("1", comments)),
+                `bad intake` = length(grep("5", comments)),
+                defense = length(grep("0", comments)),
+                `xtra long climb` = length(grep("6", comments))
+            )%>%
+            
+            pivot_longer(cols = c(wobbly,
+                                  wiffs, 
+                                  `wobbly manip`,
+                                  `bad intake`,
+                                  defense,
+                                  `xtra long climb`), 
+                         names_to = "com", 
+                         values_to = "level")
+        
+        team_colors <- setNames(hue_pal()(length(levels(comments2$team))), levels(comments2$team))
+        ggplot(comments2, aes(x = com, y = level, fill = team)) + 
+            geom_bar(position = "stack", stat = "identity")+
+            labs(title = "Comments Summary", 
+                 x = "Issues", y = "Frequency") +
+            scale_fill_manual(values = team_colors) +
+            theme_bw()
+    }
+    
+    #PROBLEMS
+    compare_teams_problems <- function(raw, selected_teams){
+        problems2 <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
+            summarise(
+                coral_stuck = length(grep("cs", dead)),
+                algae_beach = length(grep("ba", dead)),
+                disabled = length(grep("di", dead)),
+                `dead` = length(grep("de", dead)),
+                tipped = length(grep("t", dead))
+            )%>%
+            
+            pivot_longer(cols = c(coral_stuck,
+                                  algae_beach, 
+                                  disabled,
+                                  `dead`,
+                                  tipped), 
+                         names_to = "labels", 
+                         values_to = "count")
+        
+        team_colors <- setNames(hue_pal()(length(levels(problems2$team))), levels(problems2$team))
+        ggplot(problems2, aes(x = labels, y = count, fill = team)) + 
+            geom_bar(position = "stack", stat = "identity") + 
+            labs(title = "Dead Summary", 
+                 x = "Issues", y = "Frequency") +
+            scale_fill_manual(values = team_colors) +
+            theme_bw()
+    }
+    
+    #POINTS OVER TIME
+    compare_teams_past_points <- function(raw, selected_teams){
+        past_match_points <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
+            summarize(
+                team = team,
+                match = match,
+                total_score = 
+                    move*3 +
+                    auto_coral_L1_num*3 + auto_coral_L2_num*4 + auto_coral_L3_num*6 + auto_coral_L4_num*7 +
+                    robot_net_score*4 + proc_score*2.5 +
+                    coral_L1_num*2 + coral_L2_num*3 + coral_L3_num*4 + coral_L4_num*5 +
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+            )
+        team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
+        ggplot(past_match_points, aes(x = match, y = total_score, color = team, group = team)) + 
+            geom_line(size = 1) +
+            geom_point(size = 2) + 
+            scale_fill_manual(values = team_colors) +
+            scale_y_continuous(limits = c(0, max(past_match_points$total_score, na.rm = TRUE))) +
+            scale_x_continuous(breaks = unique(past_match_points$match)) +
+            labs(title = "Points Over Time", x = "Match", y = "Total Score", color = "Team") +
+            theme_minimal()
+    }
+    
+    #DRIVER OVER TIME
+    compare_teams_past_driver <- function(raw, selected_teams){
+        past_match_points <- raw%>%
+            group_by(team)%>%
+            filter(team %in% selected_teams)%>%
+            mutate(team = as.factor(team))%>%
+            summarize(
+                team = team,
+                match = match,
+                driver = driver
+            )
+        team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
+        ggplot(past_match_points, aes(x = match, y = driver, color = team, group = team)) + 
+            geom_line(size = 1) +
+            geom_point(size = 2) + 
+            scale_fill_manual(values = team_colors) +
+            scale_y_continuous(limits = c(0, 5, na.rm = TRUE)) +
+            scale_x_continuous(breaks = unique(past_match_points$match)) +
+            labs(title = "Driver Ranking Over Time", x = "Match", y = "Driver Ranking", color = "Team") +
+            theme_minimal()
+    }
+    
+    output$compare_teams_data_row <- renderDT({
+        #Reasoning behind this is I found it hard to read by continuously scrolling horizantally
+        #so I made it vertical. Only problem is that team is no longer the column name...
+        selected_teams <- input$teams_selected
+        filtered_data <- consolidated_team_data[consolidated_team_data$team %in% selected_teams,]
+        filtered_data <- filtered_data[, !names(filtered_data) %in% "team"]
+        flipped_data <- as.data.frame(t(filtered_data))
+        colnames(flipped_data) <- selected_teams
+        datatable(flipped_data, options = list(scrollX = TRUE, dom = 't'))
+    })
+    
     
     #Single Team Tab
     #GRAPH GEN LOGIC-------------------------------------------
@@ -1418,21 +1604,11 @@ server <- function(input, output, session) {
     }
     
     #PAST MATCH RAW TEAM DATA
-
     output$past_team_table <- renderDT({
-        #selected_team <- input$select_team
-        team_past_data <- as.data.frame(past_raw_team_data)
-        datatable(team_past_data, options = list(pageLength = 15 ,scrollX = FALSE))
+        selected_team <- input$team_select
+        team_past_data <- past_raw_team_data[past_raw_team_data$team == selected_team, ]
+        datatable(team_past_data, options = list(pageLength = nrow(team_past_data) ,scrollX = FALSE))
     })
-
-
-    
-    
-    
-    
-    
-    
-    
     
     #PAST DRIVER GRAPH
     previous <- function(raw, team_num){
@@ -1478,193 +1654,6 @@ server <- function(input, output, session) {
         comments <- team_comments()
         })
     
-    #Compare Teams Tab
-    #GRAPH GEN LOGIC-------------------------------------------
-    
-    #LARGE BAR GRAPH
-    compare_teams_large_bar_graph <- function(raw, selected_teams){
-        compare_bar_graph <- raw %>%
-            filter(team %in% selected_teams) %>%
-            group_by(team) %>%
-            summarise(
-                match = n(),
-                auto_coral_L1 = sum(auto_coral_L1_num*3)/n(),
-                auto_coral_L2 = sum(auto_coral_L2_num*4)/n(),
-                auto_coral_L3 = sum(auto_coral_L3_num*6)/n(),
-                auto_coral_L4 = sum(auto_coral_L4_num*7)/n(),
-                move_pts = sum(move*3)/n(),
-                tele_coral_L1 = sum(coral_L1_num*2)/n(),
-                tele_coral_L2 = sum(coral_L2_num*3)/n(),
-                tele_coral_L3 = sum(coral_L3_num*4)/n(),
-                tele_coral_L4 = sum(coral_L4_num*5)/n(),
-                robot_net_score = sum(robot_net_score*4)/n(),
-                robot_proc_score = sum(proc_score*2.5)/n(),
-                endgame_score = sum(ifelse(ending =="D", 12,
-                                    ifelse(ending =="S", 6,
-                                    ifelse(ending =="P", 2, 0)))
-                                    )/n(),
-                           
-                avg_score = auto_coral_L1 + auto_coral_L2 + auto_coral_L3 + auto_coral_L4 + move_pts +
-                            tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
-                            robot_net_score + robot_proc_score +
-                            endgame_score
-            ) %>%
-                       
-            pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
-                                  tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
-                                  robot_net_score, robot_proc_score,
-                                  endgame_score), 
-                        names_to = "level", 
-                        values_to = "score")
-                   
-            ggplot(compare_bar_graph, aes(x = factor(team), y = score, fill = level)) + 
-                geom_bar(position = "stack", stat = "identity") + 
-                labs(title = "Scoring Summary", 
-                     x = "Team", y = "Total Score with Coral", fill = "Level") +
-                     scale_fill_manual(values = c("plum1","plum2","plum3","plum4",
-                                                  "#FFF68F","#FFC156","olivedrab3","springgreen4", 
-                                                  "steelblue2","steelblue3","steelblue","steelblue4"),
-                                       labels = c("auto_coral_L1" = "Auto Coral L1", 
-                                                  "auto_coral_L2" = "Auto Coral L2",
-                                                  "auto_coral_L3" = "Auto Coral L3", 
-                                                  "auto_coral_L4" = "Auto Coral L4",
-                                                  "move_pts" = "Move",
-                                                  "tele_coral_L1" = "Tele Coral L1", 
-                                                  "tele_coral_L2" = "Tele Coral L2", 
-                                                  "tele_coral_L3" = "Tele Coral L3", 
-                                                  "tele_coral_L4" = "Tele Coral L4", 
-                                                  "endgame_score" = "Endgame", 
-                                                  "robot_net_score" = "Net", 
-                                                  "robot_proc_score" = "Processor")
-                     )+
-                theme_bw()
-    }
-    
-    #COMMENTS
-    compare_teams_comments <- function(raw, selected_teams){
-        comments2 <- raw%>%
-            group_by(team)%>%
-            filter(team %in% selected_teams)%>%
-            mutate(team = as.factor(team))%>%
-            summarise(
-                wobbly = length(grep("2", comments)),
-                wiffs = length(grep("4", comments)),
-                `wobbly manip` = length(grep("1", comments)),
-                `bad intake` = length(grep("5", comments)),
-                defense = length(grep("0", comments)),
-                `xtra long climb` = length(grep("6", comments))
-            )%>%
-            
-            pivot_longer(cols = c(wobbly,
-                                  wiffs, 
-                                  `wobbly manip`,
-                                  `bad intake`,
-                                  defense,
-                                  `xtra long climb`), 
-                         names_to = "com", 
-                         values_to = "level")
-        
-        team_colors <- setNames(hue_pal()(length(levels(comments2$team))), levels(comments2$team))
-        ggplot(comments2, aes(x = com, y = level, fill = team)) + 
-            geom_bar(position = "stack", stat = "identity")+
-            labs(title = "Comments Summary", 
-                 x = "Issues", y = "Frequency") +
-            scale_fill_manual(values = team_colors) +
-            theme_bw()
-        }
-    
-    #PROBLEMS
-    compare_teams_problems <- function(raw, selected_teams){
-        problems2 <- raw%>%
-            group_by(team)%>%
-            filter(team %in% selected_teams)%>%
-            mutate(team = as.factor(team))%>%
-            summarise(
-                coral_stuck = length(grep("cs", dead)),
-                algae_beach = length(grep("ba", dead)),
-                disabled = length(grep("di", dead)),
-                `dead` = length(grep("de", dead)),
-                tipped = length(grep("t", dead))
-            )%>%
-            
-            pivot_longer(cols = c(coral_stuck,
-                                  algae_beach, 
-                                  disabled,
-                                  `dead`,
-                                  tipped), 
-                         names_to = "labels", 
-                         values_to = "count")
-        
-        team_colors <- setNames(hue_pal()(length(levels(problems2$team))), levels(problems2$team))
-        ggplot(problems2, aes(x = labels, y = count, fill = team)) + 
-            geom_bar(position = "stack", stat = "identity") + 
-            labs(title = "Dead Summary", 
-                 x = "Issues", y = "Frequency") +
-            scale_fill_manual(values = team_colors) +
-            theme_bw()
-    }
-    
-    #POINTS OVER TIME
-    compare_teams_past_points <- function(raw, selected_teams){
-        past_match_points <- raw%>%
-            group_by(team)%>%
-            filter(team %in% selected_teams)%>%
-            mutate(team = as.factor(team))%>%
-            summarize(
-                team = team,
-                match = match,
-                total_score = 
-                    move*3 +
-                    auto_coral_L1_num*3 + auto_coral_L2_num*4 + auto_coral_L3_num*6 + auto_coral_L4_num*7 +
-                    robot_net_score*4 + proc_score*2.5 +
-                    coral_L1_num*2 + coral_L2_num*3 + coral_L3_num*4 + coral_L4_num*5 +
-                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
-            )
-        team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
-        ggplot(past_match_points, aes(x = match, y = total_score, color = team, group = team)) + 
-            geom_line(size = 1) +
-            geom_point(size = 2) + 
-            scale_fill_manual(values = team_colors) +
-            scale_y_continuous(limits = c(0, max(past_match_points$total_score, na.rm = TRUE))) +
-            scale_x_continuous(breaks = unique(past_match_points$match)) +
-            labs(title = "Points Over Time", x = "Match", y = "Total Score", color = "Team") +
-            theme_minimal()
-    }
-    
-    #DRIVER OVER TIME
-    compare_teams_past_driver <- function(raw, selected_teams){
-        past_match_points <- raw%>%
-            group_by(team)%>%
-            filter(team %in% selected_teams)%>%
-            mutate(team = as.factor(team))%>%
-            summarize(
-                team = team,
-                match = match,
-                driver = driver
-            )
-        team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
-        ggplot(past_match_points, aes(x = match, y = driver, color = team, group = team)) + 
-            geom_line(size = 1) +
-            geom_point(size = 2) + 
-            scale_fill_manual(values = team_colors) +
-            scale_y_continuous(limits = c(0, 5, na.rm = TRUE)) +
-            scale_x_continuous(breaks = unique(past_match_points$match)) +
-            labs(title = "Driver Ranking Over Time", x = "Match", y = "Driver Ranking", color = "Team") +
-            theme_minimal()
-    }
-    
-    output$compare_teams_data_row <- renderDT({
-        #Reasoning behind this is I found it hard to read by continuously scrolling horizantally
-        #so I made it vertical. Only problem is that team is no longer the column name...
-        selected_teams <- input$teams_selected
-        filtered_data <- consolidated_team_data[consolidated_team_data$team %in% selected_teams,]
-        filtered_data <- filtered_data[, !names(filtered_data) %in% "team"]
-        flipped_data <- as.data.frame(t(filtered_data))
-        colnames(flipped_data) <- selected_teams
-        datatable(flipped_data, options = list(scrollX = TRUE, dom = 't'))
-    })
-    
-    
     #SINGLE TEAM CHOICE LOGIC
     output$team_graph_output <- renderPlot({
         selected_team <- input$team_select
@@ -1696,7 +1685,7 @@ server <- function(input, output, session) {
     })
     
     
-    #compare TEAMS CHOICE LOGIC
+    #COMPARE TEAMS CHOICE LOGIC
     output$compare_teams_graph_output <- renderPlot({
         selected_teams <- input$teams_selected
         
