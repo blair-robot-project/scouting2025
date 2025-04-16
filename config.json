@@ -425,7 +425,7 @@
       "fields": [
         {
           "title": "Defensive Fouls",
-          "description": "How many times the defending robot that you are watching touched a robot in the reef zone",
+          "description": "Number of fouls comitted by the defense robot (tipping, reef-touching, or pinning)",
           "type": "counter",
           "required": false,
           "code": "dgu",
