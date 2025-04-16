@@ -411,7 +411,8 @@
           }
         },
         {
-          "title": "Climb over 5 Seconds",
+          "title": "Entered Barge <5 secs left",
+          "description": "If the robot entered the barge with less than 5 seconds left on the timer.",
           "type": "boolean",
           "required": false,
           "code": "climb",
