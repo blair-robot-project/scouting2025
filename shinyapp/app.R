@@ -11,10 +11,10 @@ library(shinythemes)
 blair_red <- "#a7000a"
 
 data_dir <- "data_files"
-data_file <- paste0(data_dir, "/dchamp/data.csv")
-event_schedule_file <- paste0(data_dir, "/dchamp/schedule.csv")
-teams_file <- paste0(data_dir, "/dchamp/teams.csv")
-alliances_file <- paste0(data_dir, "/dchamp/alliances.csv")
+data_file <- paste0(data_dir, "/newton/data.csv")
+event_schedule_file <- paste0(data_dir, "/newton/schedule.csv")
+teams_file <- paste0(data_dir, "/newton/teams.csv")
+alliances_file <- paste0(data_dir, "/newton/alliances.csv")
 approved_scouts <- paste0(data_dir, "/newton/approved_scouters.csv")
 
 
