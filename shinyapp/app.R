@@ -1827,7 +1827,7 @@ server <- function(input, output, session) {
                 missed_matches = list(setdiff(all_matches, scouted_matches)),
                 streak = current_match - max(missed_matches)
             ) %>%
-            arrange(desc(streak))%>% #help why not work
+            #arrange(desc(streak))%>% #help why not work
             filter(streak>0)
 
         ggplot(streak_df, aes(x = `scout`, streak)) + 
