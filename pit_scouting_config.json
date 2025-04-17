@@ -205,7 +205,7 @@
           "title": "Algae Pickup Locations",
           "description": "Where the robot is able to get algae from(leave blank if they cannot pick up algae)",
           "type": "multi-select",
-          "required": true,
+          "required": false,
           "code": "algPickup",
           "formResetBehavior": "reset",
           "choices": {
