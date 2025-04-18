@@ -151,11 +151,14 @@ consolidated_team_data <- mldf %>%
         
         coral_cycle_tele = round(sum(l1_cycle_tele+l2_cycle_tele+l3_cycle_tele+l4_cycle_tele), digits = 2),
         coral_cycle_auto = round(sum(mean(auto_coral_L1_num) + mean(auto_coral_L2_num) + mean(auto_coral_L3_num) + mean(auto_coral_L4_num)), digits = 2),
+        n_corals = round(coral_cycle_tele + coral_cycle_auto, digits = 2),
 
         #algae cycle
         net_cycle = round(mean(robot_net_score), digits = 2),
         proc_cycle = round(mean(proc_score), digits = 2),
         algae = round((sum(net_cycle+proc_cycle)),digits = 2),
+        cycles = round(n_corals + algae, digits = 2),
+        algae_ground_pct = round(sum(robot_algae_picked, na.rm = TRUE) / n(), digits = 2),
     
         #total points
         total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
@@ -182,6 +185,7 @@ consolidated_team_data <- mldf %>%
         
         driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2 ),
         defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2 )
+        
     )
 
 default_linear_weights <- data.frame(
