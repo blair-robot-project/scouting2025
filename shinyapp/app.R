@@ -358,36 +358,29 @@ server <- function(input, output, session) {
         group_by(team)%>%
         summarise(
             match = n(),
-            total_coral_score = sum((auto_coral_L1_num*3) + 
-                                    (auto_coral_L2_num*4) + 
-                                    (auto_coral_L3_num*6) + 
-                                    (auto_coral_L4_num*7) + 
-                                    (coral_L1_num*2) +
-                                    (coral_L2_num*3) + 
-                                    (coral_L3_num*4) +
-                                    (coral_L4_num*5) 
-                                    )/n(),
-                
-            total_coral_cycle =sum(auto_coral_L1_num +
-                                       auto_coral_L2_num + 
-                                       auto_coral_L3_num + 
-                                       auto_coral_L4_num +
-                                       coral_L1_num +
-                                       coral_L2_num + 
-                                       coral_L3_num + 
-                                       coral_L4_num)/n(),
+
+            total_coral_cycles = sum(
+                auto_coral_L1_num + auto_coral_L2_num + auto_coral_L3_num + 
+                    auto_coral_L4_num + coral_L1_num + coral_L2_num + 
+                    coral_L3_num + coral_L4_num
+                ) / n(),
+            
+            total_algae_cycles = sum(
+                robot_net_score + proc_score
+            ) / n(),
             
             endgame_score = sum(ifelse(ending =="D", 12, 
                                 ifelse(ending =="S",6,
                                 ifelse(ending =="P", 2, 0))))/n()
             
         )
-        ggplot(bubble, aes(x=total_coral_score, y=total_coral_cycle, 
+        ggplot(bubble, aes(x = total_coral_cycles, y = total_algae_cycles, 
                            size = endgame_score)) +
             geom_point( color = "lightblue2")+
             geom_text( aes(label=team, vjust = 1.7 ))+
             labs(title = "Teams Performance Summary", 
-                 x = "Auto + Tele Coral Points", y = "Auto + Tele Coral Cycles", 
+                 x = "Coral Cycles (auto + teleop)", 
+                 y = "Algae Cycles", 
                  size = "Endgame")+
             theme_bw()
     }
