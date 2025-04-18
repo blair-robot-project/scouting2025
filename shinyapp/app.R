@@ -63,7 +63,16 @@ mldf <- raw %>%
         coral_l1_pts = coral_L1_num * 2, 
         coral_l2_pts = coral_L2_num * 3, 
         coral_l3_pts = coral_L3_num * 4, 
-        coral_l4_pts = coral_L4_num * 5, 
+        coral_l4_pts = coral_L4_num * 5,
+        
+        tele_coral_total = (coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num),
+        auto_coral_total = (auto_coral_L1_num + auto_coral_L2_num + auto_coral_L3_num + auto_coral_L4_num),
+        
+        coral_tele_success_rate_raw = tele_coral_total / (tele_coral_total + tele_missed),
+        coral_auto_success_rate_raw = auto_coral_total / (auto_coral_total + auto_coral_missed),
+        
+        net_success_rate_raw = robot_net_score / (robot_net_score + robot_net_miss),
+        
         endgame_pts = case_when(
             ending == "P" ~ 2, 
             ending == "S" ~ 6, 
@@ -98,7 +107,7 @@ mldf <- raw %>%
         total_tele_pts =  total_tele_coral_pts +total_algae_pts,
     
         #algae
-        algae_net_shots = sum(net_pts + net_missed)
+        #algae_net_shots = sum(net_pts + net_missed)
     )
 
 
@@ -136,10 +145,6 @@ past_raw_team_data <- mldf%>%
         "Defense Rate" = defense
         )
 
-
-
-
-
 consolidated_team_data <- mldf %>%
     group_by(team) %>%
     summarize(
@@ -149,13 +154,23 @@ consolidated_team_data <- mldf %>%
         l3_cycle_tele = round(mean(coral_L3_num), digits = 2),
         l4_cycle_tele = round(mean(coral_L4_num), digits = 2),
         
+        
         coral_cycle_tele = round(sum(l1_cycle_tele+l2_cycle_tele+l3_cycle_tele+l4_cycle_tele), digits = 2),
+        
+        coral_tele_success_rate = round(mean(coral_tele_success_rate_raw), digits = 2),
+        
         coral_cycle_auto = round(sum(mean(auto_coral_L1_num) + mean(auto_coral_L2_num) + mean(auto_coral_L3_num) + mean(auto_coral_L4_num)), digits = 2),
+        
+        coral_auto_success_rate = round(mean(coral_auto_success_rate_raw), digits = 2),
+        
         n_corals = round(coral_cycle_tele + coral_cycle_auto, digits = 2),
 
         #algae cycle
         net_cycle = round(mean(robot_net_score), digits = 2),
         proc_cycle = round(mean(proc_score), digits = 2),
+        
+        net_accuracy = round(mean(net_success_rate_raw), digits = 2),
+        
         algae = round((sum(net_cycle+proc_cycle)),digits = 2),
         cycles = round(n_corals + algae, digits = 2),
         algae_ground_pct = round(sum(robot_algae_picked, na.rm = TRUE) / n(), digits = 2),
@@ -174,7 +189,9 @@ consolidated_team_data <- mldf %>%
          
         #endgame
         endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
-       
+        
+        #put in climb success rate
+        
         #algae remove data
         algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
         move_pct = round(sum(c(move))/n(), digits = 2),
@@ -319,7 +336,7 @@ ui <- fluidPage(
                     sidebarLayout(
                         sidebarPanel(
                             selectInput("team_select", "Select Team", choices = unique(teams$team)),
-                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Match History", "Driver Rating History")),
+                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Match History", "Driver Rating History", "Cycle History")),
                             imageOutput("team_image_output")
                             ),
                         mainPanel(
@@ -1008,7 +1025,7 @@ server <- function(input, output, session) {
         output$alliance_table <- renderDT({
             alliance_dt_subset <- consolidated_team_data[consolidated_team_data$team %in% c(selected_red_teams, selected_blue_teams), ]
             #team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team]
-            datatable(alliance_dt_subset, options = list(scrollX = TRUE, dom = 't'))
+            datatable(alliance_dt_subset, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(alliance_dt_subset)))
         })
         
     })
@@ -1120,7 +1137,7 @@ server <- function(input, output, session) {
         })
         
         output$MATCH_alliance_table <- renderDT({
-            datatable(team_match_data, options = list(scrollX = TRUE, dom = 't'))
+            datatable(team_match_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(team_match_data)))
         })
     })
     
@@ -1307,7 +1324,7 @@ server <- function(input, output, session) {
         filtered_data <- filtered_data[, !names(filtered_data) %in% "team"]
         flipped_data <- as.data.frame(t(filtered_data))
         colnames(flipped_data) <- selected_teams
-        datatable(flipped_data, options = list(scrollX = TRUE, dom = 't'))
+        datatable(flipped_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(flipped_data)))
     })
     
     
@@ -1604,7 +1621,7 @@ server <- function(input, output, session) {
     output$past_team_table <- renderDT({
         selected_team <- input$team_select
         team_past_data <- past_raw_team_data[past_raw_team_data$team == selected_team, ]
-        datatable(team_past_data, options = list(pageLength = nrow(team_past_data) ,scrollX = FALSE))
+        datatable(team_past_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(team_past_data)))
     })
     
     #PAST DRIVER GRAPH
@@ -1634,6 +1651,36 @@ server <- function(input, output, session) {
             geom_line(aes(y=defense), color = "blue") +
             scale_y_continuous(limits = c(1, 5)) +
             scale_x_continuous(breaks=past$match)
+    }
+    
+    cycle_history <- function(raw, team_num){
+        past <- raw%>%
+            group_by(team)%>%
+            filter(team==team_num)%>%
+            summarize(
+                match = match,
+                total_score = move*3 +
+                    auto_coral_L1_num*3 +
+                    auto_coral_L2_num*4 +
+                    auto_coral_L3_num*6 +
+                    auto_coral_L4_num*7 +
+                    robot_net_score*4 +
+                    proc_score*2.5 +
+                    coral_L1_num*2 +
+                    coral_L2_num*3 +
+                    coral_L3_num*4 +
+                    coral_L4_num*5 +
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+                driver = driver,
+                defense = defense,
+                coral_tele_cycles = coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num,
+                algae_tele_cycles = robot_net_score + proc_score
+            )
+        ggplot(past, aes(match)) + 
+            geom_line(aes(y=coral_tele_cycles), color = blair_red) +
+            geom_line(aes(y=algae_tele_cycles), color = "blue") +
+            scale_y_continuous() +
+            scale_x_continuous(breaks=past$match) + ylab("Coral (red) and Algae (blue) Cycles")
     }
     
     team_comments <- reactive({
@@ -1678,6 +1725,9 @@ server <- function(input, output, session) {
         }
         else if (input$team_graph == "Driver Rating History"){
             previous(raw, selected_team)
+        } 
+        else if (input$team_graph == "Cycle History"){
+            cycle_history(raw, selected_team)
         } 
     })
     
