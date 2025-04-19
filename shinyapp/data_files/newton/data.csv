@@ -752,3 +752,4 @@ FL,125,R2,422,C,FALSE,TRUE,0,0,0,0,4,TRUE,FALSE,2,0,1,2,2,3,3,0,TRUE,D,TRUE,0,0,
 SY,125,B3,1730,F,FALSE,FALSE,0,0,0,0,0,TRUE,FALSE,1,0,2,0,0,0,0,0,TRUE,D,FALSE,0,2,2,NA,4,"Hit some algae, algae started to not work so switched to defence"
 Ashwin,125,B1,4909,M,FALSE,TRUE,0,0,0,0,2,TRUE,FALSE,0,0,0,0,6,6,0,2,TRUE,D,FALSE,0,0,3,NA,,
 JY,125,B2,6940,F,FALSE,TRUE,0,0,0,0,3,TRUE,FALSE,0,0,0,0,4,4,4,2,TRUE,D,FALSE,0,0,5,NA,,"fast cycles, relatively fast intake. Went to climb at 20 but only took 5. Really fast auto."
+GGK,88,R2,1388,F,FALSE,TRUE,0,0,0,0,3,FALSE,FALSE,0,0,0,0,4,6,2,5,TRUE,D,FALSE,0,0,4,NA,,
