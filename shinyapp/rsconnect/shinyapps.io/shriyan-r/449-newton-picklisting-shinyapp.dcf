@@ -5,7 +5,7 @@ account: shriyan-r
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14559478
-bundleId: 10141540
+bundleId: 10141660
 url: https://shriyan-r.shinyapps.io/449-newton-picklisting-shinyapp/
 version: 1
 asMultiple: FALSE
