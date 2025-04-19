@@ -194,6 +194,8 @@ consolidated_team_data <- mldf %>%
         
         #algae remove data
         algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
+        algae_ground_intake_pct = round(sum(c(robot_algae_picked))/n(), digits = 2),
+
         move_pct = round(sum(c(move))/n(), digits = 2),
        
         dead_times = paste(sum(c(dead)),"/",n()),
@@ -221,6 +223,7 @@ default_linear_weights <- data.frame(
     auto_pts_mean = 12,
     endgame_pts_mean = 10,
     algae_remove_pct = 7,
+    intaked_algae_from_ground_pct = 10,
     move_pct = 5,
     dead_times = 0,
     dead_pct = -15,
@@ -1986,6 +1989,7 @@ server <- function(input, output, session) {
                        sliderInput("weight_auto_pts_mean", "Auto Points Mean", min = -20, max = 20, value = weights_data()$auto_pts_mean, step = 1),
                        sliderInput("weight_endgame_pts_mean", "Endgame Points Mean", min = -20, max = 20, value = weights_data()$endgame_pts_mean, step = 1),
                        sliderInput("weight_algae_remove_pct", "Algae Removal %", min = -20, max = 20, value = weights_data()$algae_remove_pct, step = 1),
+                       sliderInput("weight_intaked_algae_from_ground_pct", "Algae Ground Intake %", min = -20, max = 20, value = weights_data()$algae_remove_pct, step = 1),
                        sliderInput("weight_move_pct", "Move %", min = -20, max = 20, value = weights_data()$move_pct, step = 1),
                        sliderInput("weight_dead_pct", "Dead %", min = -20, max = 20, value = weights_data()$dead_pct, step = 1),
                        sliderInput("weight_driver_rating_mean", "Driver Rating", min = -20, max = 20, value = weights_data()$driver_rating_mean, step = 1),
@@ -2046,6 +2050,7 @@ server <- function(input, output, session) {
             auto_pts_mean = input$weight_auto_pts_mean,
             endgame_pts_mean = input$weight_endgame_pts_mean,
             algae_remove_pct = input$weight_algae_remove_pct,
+            intaked_algae_from_ground_pct = input$weight_intaked_algae_from_ground_pct,
             move_pct = input$weight_move_pct,
             dead_pct = input$weight_dead_pct,
             driver_rating_mean = input$weight_driver_rating_mean,
@@ -2055,6 +2060,7 @@ server <- function(input, output, session) {
         weights_data(new_weights)
         removeModal()
     })
+    
     
     #download picklist
     output$download_picklist <- downloadHandler(
