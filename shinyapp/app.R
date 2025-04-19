@@ -71,7 +71,7 @@ mldf <- raw %>%
         coral_tele_success_rate_raw = tele_coral_total / (tele_coral_total + tele_missed),
         coral_auto_success_rate_raw = auto_coral_total / (auto_coral_total + auto_coral_missed),
         
-        net_success_rate_raw = robot_net_score / (robot_net_score + robot_net_miss),
+        net_success_rate_raw = ifelse((robot_net_score + robot_net_miss)==0, 0, robot_net_score / (robot_net_score + robot_net_miss)),
         
         endgame_pts = case_when(
             ending == "P" ~ 2, 
