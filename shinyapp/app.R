@@ -11,45 +11,21 @@ library(shinythemes)
 blair_red <- "#a7000a"
 
 data_dir <- "data_files"
-data_file <- paste0(data_dir, "/newton/data.csv")
+data_file <- paste0(data_dir, "/all_data/data.csv")
 event_schedule_file <- paste0(data_dir, "/newton/schedule.csv")
-teams_file <- paste0(data_dir, "/newton/teams.csv")
+teams_file <- paste0(data_dir, "/all_data/teams.csv")
 alliances_file <- paste0(data_dir, "/newton/alliances.csv")
 approved_scouts <- paste0(data_dir, "/newton/approved_scouters.csv")
 
 
 #Load team data and event schedule
 raw <- read.csv(data_file)
-# raw <- transform(raw_raw,
-#                  match = as.numeric(match),
-#                  team = as.numeric(team),
-#                  show = as.logical(show),
-#                  move = as.logical(move),
-#                  auto_coral_L1_num = as.numeric(auto_coral_L1_num),
-#                  auto_coral_L2_num = as.numeric(auto_coral_L2_num),
-#                  auto_coral_L3_num = as.numeric(auto_coral_L3_num),
-#                  auto_coral_L4_num = as.numeric(auto_coral_L4_num),
-#                  robot_reef_removal = as.logical(robot_reef_removal),
-#                  robot_algae_picked = as.logical(robot_algae_picked),
-#                  robot_net_score = as.numeric(robot_net_score), 
-#                  robot_net_miss	= as.numeric(robot_net_miss),
-#                  proc_score = as.numeric(proc_score),
-#                  coral_L1_num = as.numeric(coral_L1_num),
-#                  coral_L2_num = as.numeric(coral_L2_num),
-#                  coral_L3_num = as.numeric(coral_L3_num),
-#                  coral_L4_num = as.numeric(coral_L4_num),
-#                  tele_missed = as.numeric(tele_missed),
-#                  climb_attempt = as.logical(climb_attempt),
-#                  climb_time = as.logical(climb_time),
-#                  fouls = as.numeric(fouls),
-#                  defense = as.numeric(driver),
-#                  driver = as.numeric(driver),
-#                  comments = as.character(comments))
 match_schedule <- read.csv(event_schedule_file, fill = TRUE)
 teams <- read.csv(teams_file)
 alliances <- read.csv(alliances_file)
 scouts <- read.csv(approved_scouts)
 
+#Dataframe Calculations
 mldf <- raw %>%
     mutate(
         auto_coral_l1_pts = auto_coral_L1_num * 3,
@@ -109,8 +85,6 @@ mldf <- raw %>%
         #algae
         #algae_net_shots = sum(net_pts + net_missed)
     )
-
-
 
 past_raw_team_data <- mldf%>% 
     group_by(team) %>%
@@ -179,10 +153,7 @@ consolidated_team_data <- mldf %>%
         total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
        
         #teleop
-        tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2), 
-        #tele_pts_median = round(median(total_tele_pts, na.rm = TRUE), digits =2), 
-        #tele_pts_sd = round(sd(total_tele_pts, na.rm = TRUE), digits = 2), 
-        #tele_pts_max = round(max(total_tele_pts, na.rm = TRUE), digits = 2), 
+        tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2),
     
         #auto
         auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
@@ -204,7 +175,6 @@ consolidated_team_data <- mldf %>%
         
         driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2 ),
         defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2 )
-        
     )
 
 default_linear_weights <- data.frame(
@@ -236,16 +206,6 @@ ui <- fluidPage(
     navbarPage(theme = shinytheme("yeti"),  
                "449 Scouting",
                tabPanel("Event Summary",
-                        #sidebarLayout(
-                        #  sidebarPanel(
-                        #    selectInput("picklist_metric", "Choose Graph", choices = c("Bubble Graph", "Other Graphs")),
-                        #    actionButton("graph_btn", "Graph", class = "btn btn-primary")
-                        #  ),
-                        #  mainPanel(
-                        #    plotOutput("picklist_graph"),
-                        #    DTOutput("picklist_table")
-                        #  )
-                        #)
                         fluidRow(
                             column(12,
                                 plotOutput("picklist_graph"),
@@ -284,7 +244,6 @@ ui <- fluidPage(
                                     pickerInput("red_alliance", "Red Alliance", choices = unique(alliances$Alliance), multiple = FALSE, options = list(maxOptions = 1)),
                                     pickerInput("blue_alliance", "Blue Alliance", choices = unique(alliances$Alliance), multiple = FALSE, options = list(maxOptions = 1))                                
                                     ),
-                                #selectInput("alliance_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Level Bar Graph", "Tele Bar Graph", "Endgame Bar Graph")),
                                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
                                 #imageOutput("field_image_output")
                                 ),
@@ -353,12 +312,6 @@ ui <- fluidPage(
                         )
                     ),
                 tabPanel("Scouters",
-                    #sidebarLayout(
-                    #   sidebarPanel(
-                    #     selectInput("Scouter_Select", "Select Scouter", choices = unique(raw$scout)),
-                    #selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Coral Level Bar Graph", "Auto + Tele Bar Graph", "Endgame Bar Graph")),
-                    #imageOutput("team_image_output")
-                    #   ),
                     fluidRow(
                         plotOutput("scouter_graph_output"),
                         plotOutput("yapp_graph_output"),
@@ -371,7 +324,9 @@ ui <- fluidPage(
 
 #Server
 server <- function(input, output, session) {
-    #Picklisting Tab Graph and Table
+    
+    
+    #Event Summary Tab
     #BUBBLE LOGIC
     bubble_graph <- function(raw) {
         bubble <- raw%>%
@@ -405,6 +360,7 @@ server <- function(input, output, session) {
             theme_bw()
     }
     
+    #LARGE SCORING SUMMARY
     long_column <- function(raw) {
         column4 <- raw %>%
             group_by(team) %>%
@@ -484,34 +440,44 @@ server <- function(input, output, session) {
             coord_flip()
     }
     
+    check <- function(raw){
+        double_check <- raw[FALSE,]
+        for (i in 1:(nrow(raw))){
+            if(!(is.na(raw[i, 4])) & length(grep(raw[i, 4], teams))==0){
+                double_check <- rbind(double_check, raw[i,])
+            }
+            #if (!(trimws(raw[i, 1]) %in% scouts$Name)){ #This used to be used to check if the scout was trained...
+            #    double_check <- rbind(double_check, raw[i,])
+            #}
+            for (j in (i):nrow(raw)){
+                if (!is.na(raw[i, 2]) & !is.na(raw[j, 2]) & raw[i,2] == raw[j,2] & 
+                    !is.na(raw[i, 4]) & !is.na(raw[j, 4]) & raw[i,4] == raw[j,4] &
+                    i!=j){
+                    double_check <- rbind(double_check, raw[i,])
+                    double_check <- rbind(double_check, raw[j,])
+                }
+            }
+        }
+        return(double_check)
+    }
+    
+    #UI Event Summary Rendering Plots
     output$long_column_output <- renderPlot({
         #Bubble graph logic
         long_column(raw)
     })
     
     output$picklist_graph <- renderPlot({
-        #Bubble graph logic
+        #Picklisting graph logic
         bubble_graph(raw)
     })
     
     output$picklist_table <- renderDT({
+        #Picklisting table logic
         datatable(consolidated_team_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(consolidated_team_data)))
     })
-    
-    #observeEvent(input$graph_btn, {
-    #  if (input$picklist_metric == "Bubble Graph") {
-    #    output$picklist_graph <- renderPlot({
-    #      #Bubble graph logic
-    #      bubble_graph(raw)
-    #    })
-    #  }
-    #  output$picklist_table <- renderDT({
-    #    datatable(consolidated_team_data)
-    #  })
-    #})
-    #
-    
-    #CHECKING DATA LOGIC
+
+    #UI Checking Data
     observeEvent(input$check, {
         showModal(modalDialog(
             h4(
@@ -525,28 +491,6 @@ server <- function(input, output, session) {
         errors <- check(raw)
         datatable(errors, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(errors)))
     })
-    
-    check <- function(raw){
-        double_check <- raw[FALSE,]
-        for (i in 1:(nrow(raw))){
-            if(!(is.na(raw[i, 4])) & length(grep(raw[i, 4], teams))==0){
-                double_check <- rbind(double_check, raw[i,])
-            }
-            if (!(trimws(raw[i, 1]) %in% scouts$Name)){
-                double_check <- rbind(double_check, raw[i,])
-            }
-            for (j in (i):nrow(raw)){
-                if (!is.na(raw[i, 2]) & !is.na(raw[j, 2]) & raw[i,2] == raw[j,2] & 
-                    !is.na(raw[i, 4]) & !is.na(raw[j, 4]) & raw[i,4] == raw[j,4] &
-                    i!=j){
-                    double_check <- rbind(double_check, raw[i,])
-                    double_check <- rbind(double_check, raw[j,])
-                }
-            }
-        }
-        return(double_check)
-    }
-    
     
     #Alliance/Match Tab
     #ALL GRAPH GENERATING FUNCTIONS------------------------------------------------------------------
