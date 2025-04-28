@@ -2,6 +2,7 @@
 library(shiny)
 library(DT)
 library(ggplot2)
+library(plotly)
 library(dplyr)
 library(scales)
 library(shinyWidgets)
@@ -13,7 +14,7 @@ blair_red <- "#a7000a"
 data_dir <- "data_files"
 data_file <- paste0(data_dir, "/all_data/data.csv")
 event_schedule_file <- paste0(data_dir, "/newton/schedule.csv")
-teams_file <- paste0(data_dir, "/all_data/teams.csv")
+teams_file <- paste0(data_dir, "/newton/teams.csv")
 alliances_file <- paste0(data_dir, "/newton/alliances.csv")
 approved_scouts <- paste0(data_dir, "/newton/approved_scouters.csv")
 
@@ -209,7 +210,7 @@ ui <- fluidPage(
                         fluidRow(
                             column(12,
                                 plotOutput("picklist_graph"),
-                                plotOutput("long_column_output", height = "750px"),
+                                plotlyOutput("long_column_output", height = "750px"),
                                 DTOutput("picklist_table")
                                 )
                             )
@@ -313,8 +314,8 @@ ui <- fluidPage(
                     ),
                 tabPanel("Scouters",
                     fluidRow(
-                        plotOutput("scouter_graph_output"),
-                        plotOutput("yapp_graph_output"),
+                        plotlyOutput("scouter_graph_output", width = "100%", height = "500px"),
+                        plotlyOutput("yapp_graph_output"),
                         plotOutput("high_streak_output")
                         )
                     )
@@ -407,7 +408,7 @@ server <- function(input, output, session) {
                                ordered = TRUE)
         column4$level_score <- column4$score  # Simplified since case_when wasn't changing values
         
-        ggplot(column4, aes(x = team, y = level_score, fill = level)) + 
+        temp <- ggplot(column4, aes(x = team, y = level_score, fill = level, text = paste("Average Score: ", avg_score))) + 
             geom_bar(position = "stack", stat = "identity") + 
             labs(title = "Scoring Summary", 
                  x = "Team", y = "Total Score with Coral", fill = "Level") +
@@ -438,6 +439,8 @@ server <- function(input, output, session) {
             )+
             theme_bw()+
             coord_flip()
+        
+        ggplotly(temp, tooltip = "text")
     }
     
     check <- function(raw){
@@ -462,7 +465,7 @@ server <- function(input, output, session) {
     }
     
     #UI Event Summary Rendering Plots
-    output$long_column_output <- renderPlot({
+    output$long_column_output <- renderPlotly({
         #Bubble graph logic
         long_column(raw)
     })
@@ -1700,11 +1703,11 @@ server <- function(input, output, session) {
         }
     })
     
-    output$scouter_graph_output <- renderPlot({
+    output$scouter_graph_output <- renderPlotly({
         scouter_graph_output(raw)
         })
     
-    output$yapp_graph_output <- renderPlot({
+    output$yapp_graph_output <- renderPlotly({
         yapp_graph_output(raw)
     })
     
@@ -1784,12 +1787,13 @@ server <- function(input, output, session) {
         
         scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
         
-        ggplot(scout_df, aes(x = `scout`, count)) + 
+        temp <- ggplot(scout_df, aes(x = `scout`, y = count, text = paste("Matches Scouted:", count))) + 
             geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
             labs(title = "Scouter Summary", 
                  x = "Scouters", y = "Times Scouted") +
             theme_bw()
         
+        ggplotly(temp, tooltip = "text")
     }
     
     yapp_graph_output <- function(raw){
@@ -1801,11 +1805,13 @@ server <- function(input, output, session) {
         
         yapp_df$scout <- factor(yapp_df$scout, levels = yapp_df$scout)
         
-        ggplot(yapp_df, aes(x = `scout`, yapp)) + 
+        temp <- ggplot(yapp_df, aes(x = `scout`, y = yapp, text = paste("Words Yapped:", yapp))) + 
             geom_bar(position = "stack", stat = "identity", fill = "steelblue") + 
             labs(title = "Yapp Summary", 
                  x = "Scouters", y = "Length of Comments") +
             theme_bw()
+        
+        ggplotly(temp, tooltip = "text")
     }
     
     high_streak_output <- function(raw){
