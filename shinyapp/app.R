@@ -210,7 +210,7 @@ ui <- fluidPage(
                         fluidRow(
                             column(12,
                                 plotOutput("picklist_graph"),
-                                plotlyOutput("long_column_output", height = "750px"),
+                                plotOutput("long_column_output", height = "750px"),
                                 DTOutput("picklist_table")
                                 )
                             )
@@ -325,8 +325,7 @@ ui <- fluidPage(
 
 #Server
 server <- function(input, output, session) {
-    
-    
+
     #Event Summary Tab
     #BUBBLE LOGIC
     bubble_graph <- function(raw) {
@@ -408,7 +407,7 @@ server <- function(input, output, session) {
                                ordered = TRUE)
         column4$level_score <- column4$score  # Simplified since case_when wasn't changing values
         
-        temp <- ggplot(column4, aes(x = team, y = level_score, fill = level, text = paste("Average Score: ", avg_score))) + 
+        ggplot(column4, aes(x = team, y = level_score, fill = level, text = paste("Average Score: ", avg_score))) + 
             geom_bar(position = "stack", stat = "identity") + 
             labs(title = "Scoring Summary", 
                  x = "Team", y = "Total Score with Coral", fill = "Level") +
@@ -439,8 +438,6 @@ server <- function(input, output, session) {
             )+
             theme_bw()+
             coord_flip()
-        
-        ggplotly(temp, tooltip = "text")
     }
     
     check <- function(raw){
@@ -465,7 +462,7 @@ server <- function(input, output, session) {
     }
     
     #UI Event Summary Rendering Plots
-    output$long_column_output <- renderPlotly({
+    output$long_column_output <- renderPlot({
         #Bubble graph logic
         long_column(raw)
     })
@@ -1787,7 +1784,7 @@ server <- function(input, output, session) {
         
         scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
         
-        temp <- ggplot(scout_df, aes(x = `scout`, y = count, text = paste("Matches Scouted:", count))) + 
+        temp <- ggplot(scout_df, aes(x = `scout`, y = count, text = paste("Scout: ", scout, "|| Matches Scouted:", count))) + 
             geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
             labs(title = "Scouter Summary", 
                  x = "Scouters", y = "Times Scouted") +
@@ -1805,7 +1802,7 @@ server <- function(input, output, session) {
         
         yapp_df$scout <- factor(yapp_df$scout, levels = yapp_df$scout)
         
-        temp <- ggplot(yapp_df, aes(x = `scout`, y = yapp, text = paste("Words Yapped:", yapp))) + 
+        temp <- ggplot(yapp_df, aes(x = `scout`, y = yapp, text = paste("Scout: ", scout, "|| Words Yapped:", yapp))) + 
             geom_bar(position = "stack", stat = "identity", fill = "steelblue") + 
             labs(title = "Yapp Summary", 
                  x = "Scouters", y = "Length of Comments") +
