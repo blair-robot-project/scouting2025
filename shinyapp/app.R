@@ -12,7 +12,7 @@ library(shinythemes)
 blair_red <- "#a7000a"
 
 data_dir <- "data_files"
-data_file <- paste0(data_dir, "/all_data/data.csv")
+data_file <- paste0(data_dir, "/newton/data.csv")
 event_schedule_file <- paste0(data_dir, "/newton/schedule.csv")
 teams_file <- paste0(data_dir, "/newton/teams.csv")
 alliances_file <- paste0(data_dir, "/newton/alliances.csv")
@@ -320,7 +320,8 @@ ui <- fluidPage(
                         )
                     )
                ),
-    actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning")
+    actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
+    actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning")
     )
 
 #Server
@@ -446,9 +447,6 @@ server <- function(input, output, session) {
             if(!(is.na(raw[i, 4])) & length(grep(raw[i, 4], teams))==0){
                 double_check <- rbind(double_check, raw[i,])
             }
-            #if (!(trimws(raw[i, 1]) %in% scouts$Name)){ #This used to be used to check if the scout was trained...
-            #    double_check <- rbind(double_check, raw[i,])
-            #}
             for (j in (i):nrow(raw)){
                 if (!is.na(raw[i, 2]) & !is.na(raw[j, 2]) & raw[i,2] == raw[j,2] & 
                     !is.na(raw[i, 4]) & !is.na(raw[j, 4]) & raw[i,4] == raw[j,4] &
@@ -461,6 +459,44 @@ server <- function(input, output, session) {
         return(double_check)
     }
     
+    schedule <- function(raw, match_schedule){
+        #find our next match
+        #find our next next match
+        #want all teams from next next match (to scout)
+        #want friend teams from next next match (to organize)
+        
+        #browser()
+        priority_matches <- data.frame(matrix(ncol = 3, nrow = 0))
+        colnames(priority_matches) = c("match", "team", "role")
+
+        current_match = max(raw[,2])
+        next_match = which(match_schedule == 449, arr.ind = TRUE)[,1]
+        next_match = sort(next_match)
+        temp_1 = next_match[next_match>current_match][1]
+        temp_2 = next_match[next_match>current_match][2]
+        if(is.na(temp_1) | is.na(temp_2)){ return(priority_matches)}
+        teams_next_next_match = match_schedule[temp_2,]
+        for (team in teams_next_next_match){
+            #browser()
+            if (team != 449 & team!=temp_2){
+                team_next_next_match = which(match_schedule == team, arr.ind = TRUE)[,1]
+                team_next_next_match = sort(team_next_next_match)
+                team_temp_1 = team_next_next_match[team_next_next_match>current_match][1]
+                team_temp_2 = team_next_next_match[team_next_next_match>current_match][2]
+                #figuring out which matches needed to scout
+                if (team_temp_1 > current_match & team_temp_1 < temp_1){
+                    priority_matches[nrow(priority_matches)+1,] = c(team_temp_1, team, "to scout")
+                }
+                
+                #figuring out which match can talk
+                if (team_temp_1 > temp_1 & team_temp_1 < temp_2){
+                    priority_matches[nrow(priority_matches)+1,] = c(team_temp_1, team, "can talk after")
+                }
+            }
+        }
+        return(priority_matches)
+    }
+
     #UI Event Summary Rendering Plots
     output$long_column_output <- renderPlot({
         #Bubble graph logic
@@ -492,13 +528,27 @@ server <- function(input, output, session) {
         datatable(errors, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(errors)))
     })
     
+    #UI Showing Priority Schedule
+    observeEvent(input$schedule, {
+        showModal(modalDialog(
+            h4(
+                renderText("Priority Matches/Teams to Scout Below")
+            ),
+            DTOutput("priority_schedule")
+        ))
+    })
+    
+    output$priority_schedule <- renderDT({
+        temp <- schedule(raw, match_schedule)
+        datatable(temp, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(temp)))
+    })
+    
     #Alliance/Match Tab
     #ALL GRAPH GENERATING FUNCTIONS------------------------------------------------------------------
     #BOXPLOT GRAPH
     
     boxplot_graph_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
                                        blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
-        
         boxplot <- raw %>%
             filter(team %in% c(blue_alliance,red_alliance)) %>%
             mutate(team = factor(team, c(blue_alliance,red_alliance)))%>%
@@ -559,7 +609,7 @@ server <- function(input, output, session) {
             bar$level == "l4" ~ bar$coral_num*5
         )
         
-        p <- ggplot(bar, aes(x = factor(team), y = level_score, fill = level)) + 
+        ggplot(bar, aes(x = factor(team), y = level_score, fill = level)) + 
             geom_bar(position = "stack", stat = "identity", 
                      color = ifelse(bar$team %in% red_alliance, "red", "blue"),
                      size = 0.5) + 
@@ -567,9 +617,7 @@ server <- function(input, output, session) {
                  x = "Team", y = "Coral score", fill = "Level") +
             scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy")) +
             theme_bw()
-        
-        return(p)
-    }
+        }
     
     #CORAL AUTO  
     auto_coral_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
@@ -888,12 +936,12 @@ server <- function(input, output, session) {
                         match_points$total_endgame_score + match_points$total_misc_score
                     
                     
-                    base_plot <- boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+                    boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
                     
-                    base_plot +
-                        geom_point(data = match_points,
-                                   aes(x = total, y = factor(team, levels = c(selected_red_teams, selected_blue_teams))),
-                                   color = "red", size = 4)
+                    #base_plot +
+                    #   geom_point(data = match_points,
+                    #               aes(x = total, y = factor(team, levels = c(selected_red_teams, selected_blue_teams))),
+                    #               color = "red", size = 4)
                 })
             } else {
                 output$alliance_box_plot_output <- renderPlot({
@@ -1048,14 +1096,14 @@ server <- function(input, output, session) {
             match_points$total <- match_points$total_algae_score + match_points$total_coral_score +
                 match_points$total_endgame_score + match_points$total_misc_score
 
-            base_plot +
-                geom_point(data = match_points,
-                           aes(x = total, y = factor(team, levels = c(red_teams, blue_teams))),
-                           color = "red", size = 4) +
-                labs(title = paste("Total points scored - Match", selected_match))
+            #base_plot +
+                #geom_point(data = match_points,
+                #           aes(x = total, y = factor(team, levels = c(red_teams, blue_teams))),
+                #           color = "red", size = 4) +
+                #labs(title = paste("Total points scored - Match", selected_match))
             
             #print(match_points$total)
-            #base_plot
+            base_plot
         })
         
         output$MATCH_alliance_tele_coral_graph_output <- renderPlot({
@@ -1068,7 +1116,7 @@ server <- function(input, output, session) {
             auto_coral_graph + labs(title = paste("Move + Auto Coral Summary - Match", selected_match))
         })
         
-        output$MATCH_alliance_algae_bar_graph_output <- renderPlot({
+        output$MATCH_alliance_algae_bar_graph_output <- renderPlotly({
             algae_graph <- algae_bar(match_data, red_teams, blue_teams)
             algae_graph + labs(title = paste("Algae Points Summary - Match", selected_match))
         })
