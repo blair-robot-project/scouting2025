@@ -312,7 +312,7 @@ ui <- fluidPage(
                             )
                         )
                     ),
-                tabPanel("Scouters",
+                tabPanel("Scouts",
                     fluidRow(
                         plotlyOutput("scouter_graph_output", width = "100%", height = "500px"),
                         plotlyOutput("yapp_graph_output"),
