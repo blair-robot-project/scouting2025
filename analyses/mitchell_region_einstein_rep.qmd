@@ -1,0 +1,47 @@
+---
+title: "mitchell_region_einstein_rep"
+format: html
+---
+
+```{r}
+blair_red <- "#a7000a"
+library(tidyverse)
+raw <- read_csv("einstein_representation.csv")
+
+data <- raw %>%
+    filter(
+        size > 25,
+        ratio01 != 0
+    ) %>%
+    arrange(desc(ratio01))
+
+
+ggplot(data, aes(x = reorder(region, ratio01), y = ratio01))+
+        geom_bar(position = "stack", stat = "identity", fill = "coral", color = "black") + 
+            labs(title = "Captain and First Pick", 
+                 x = "Region", y = "Ratio for Captain and First Pick Einsteins", fill = "Level") +coord_flip() + theme_bw()
+
+data2 <- raw %>%
+    filter(
+        size > 25,
+        ratio23 != 0
+    ) %>%
+    arrange(desc(ratio23))
+
+ggplot(data2, aes(x = reorder(region, ratio23), y = ratio23))+
+        geom_bar(position = "stack", stat = "identity", fill = "steelblue", color = "black") + 
+            labs(title = "Second and Third Pick", 
+                 x = "Region", y = "Ratio for Second and Third Pick Einsteins", fill = "Level") +coord_flip() + theme_bw()
+
+data3 <- raw %>%
+    filter(
+        size > 25,
+        ratio != 0
+    ) %>%
+    arrange(desc(ratio))
+
+ggplot(data3, aes(x = reorder(region, ratio), y = ratio))+
+        geom_bar(position = "stack", stat = "identity", fill = blair_red, color = "black") + 
+            labs(title = "Einsteins", x = "Region", y = "Ratio for Einsteins", fill = "Level") +coord_flip() + theme_bw()
+
+```
