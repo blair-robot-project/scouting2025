@@ -249,6 +249,7 @@ ui <- fluidPage(
                                 #imageOutput("field_image_output")
                                 ),
                             mainPanel(
+                                uiOutput("score_prediction"),
                                 plotOutput("alliance_box_plot_output"),
                                 plotOutput("alliance_tele_coral_graph_output"),
                                 plotOutput("alliance_auto_coral_graph_output"),
@@ -546,6 +547,33 @@ server <- function(input, output, session) {
     #Alliance/Match Tab
     #ALL GRAPH GENERATING FUNCTIONS------------------------------------------------------------------
     #BOXPLOT GRAPH
+    
+    predict_scores <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
+                               blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
+        scores <- raw %>%
+            filter(team %in% c(red_alliance, blue_alliance)) %>%
+            mutate(team = factor(team, c(red_alliance, blue_alliance))) %>%
+            mutate(total_score = 
+                    (coral_L1_num*2) + (coral_L2_num*3) + 
+                    (coral_L3_num*4) + (coral_L4_num*5) + 
+                    (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
+                    (auto_coral_L3_num*5)+ (auto_coral_L4_num*7) +
+                    (robot_net_score*4) + (proc_score*2.5) + 
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))) + 
+                    (move*3)
+                ) %>%
+            group_by(team) %>%
+            summarise(mean_score = mean(total_score))
+        red_alliance_score = sum(ifelse(scores$team %in% red_alliance, scores$mean_score, 0))
+        blue_alliance_score = sum(ifelse(scores$team %in% blue_alliance, scores$mean_score, 0))
+        
+
+        
+        paste0("Predicted Scores: ", 
+               "<span style='color:red;'>", round(red_alliance_score, digits = 0), 
+               "<span style='color:black;'>", " - ", 
+               "<span style='color:blue;'>", round(blue_alliance_score, digits = 0))
+    }
     
     boxplot_graph_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
                                        blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
@@ -943,12 +971,7 @@ server <- function(input, output, session) {
                     #               aes(x = total, y = factor(team, levels = c(selected_red_teams, selected_blue_teams))),
                     #               color = "red", size = 4)
                 })
-            } else {
-                output$alliance_box_plot_output <- renderPlot({
-                    boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
-                })
-            }
-            
+            } 
         } else if (input$match_or_teams == "Select 6 Teams"){
             selected_red_teams <- input$red_teams
             selected_blue_teams <- input$blue_teams
@@ -987,12 +1010,15 @@ server <- function(input, output, session) {
                 blue_alliance_row$Pick.2,
                 blue_alliance_row$Pick.3
             )
-            
-            output$alliance_box_plot_output <- renderPlot({
-                boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
-            })
         }
         
+        output$score_prediction <- renderText({
+            predict_scores(raw, selected_red_teams, selected_blue_teams)
+        })
+        
+        output$alliance_box_plot_output <- renderPlot({
+            boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+        })
         
         output$alliance_tele_coral_graph_output <- renderPlot({
             tele_coral_alliance(raw, selected_red_teams, selected_blue_teams)
