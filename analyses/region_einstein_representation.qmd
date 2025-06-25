@@ -1,0 +1,137 @@
+---
+title: "Einstein Representation by Region"
+author: "449 Data Science"
+format: 
+    html:
+        toc: true
+        code-fold: true
+---
+
+```{r, warning = FALSE}
+rm(list = ls())
+blair_red <- "#a7000a"
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(plotly))
+raw <- read_csv("einstein_representation.csv", 
+                show_col_types = FALSE)
+
+data <- raw |>
+    filter(actual > 0)
+```
+
+Which regions are most successful at making it on to Einstein? And which ones do so as the 1st round pick or captain? To answer this, we computed the expected Einstein appearances per region on a yearly basis, assuming equal skill distribution throughout FRC, and compared it to the actual number of Einstein appearances per region by taking a ratio.
+
+# Notes
+
+1. We chose $(\frac{actual}{expected})$ rather than $actual - expected$ as a proxy for region skill at making the Einstein tournament. We’re more interested in the rate at which teams advance to Einstein rather than the sheer volume, and the ratio directly estimates that.
+
+2. These graphs exclude regions with no Einstein appearances in the time range to make the plots more readable.
+
+3. We selected the time range 2014-2025 to match the 4-team alliance era at the championship. This also made data collection easier and more replicable with the TBA “alliances” endpoint.
+
+4. Data collection code is available at: https://github.com/GKrotkov/showcase/blob/main/region_einstein_representation.R
+
+# Graphs
+
+## Overall
+
+```{r, fig.height = 6}
+viz <- data |>
+    filter(ratio != 0) |>
+    arrange(desc(ratio))
+
+ggplot(viz, aes(x = reorder(region, ratio), y = ratio)) +
+    geom_bar(position = "stack", stat = "identity", 
+             fill = blair_red, color = "black") + 
+    geom_text(aes(label = ratio, y = pmax(1, ratio)), hjust = -0.1) +
+    geom_hline(aes(yintercept = 1), color = "black", lwd = 0.5, lty = 2) +
+    labs(title = "Overall Einstein Representation, 2014-2025", 
+         x = "Region", y = "(Actual / Expected) Einstein Appearances", 
+         caption = "Data from frc-events API via TBA") +
+    coord_flip() + 
+    scale_y_continuous(breaks = 0:ceiling(max(viz$ratio)), 
+                       limits = c(0, ceiling(max(viz$ratio)))) + 
+    theme_bw()
+```
+
+## Captain/1st Round Pick
+
+```{r, fig.height = 6}
+viz <- data |>
+    filter(ratio01 != 0) |>
+    arrange(desc(ratio01))
+
+ggplot(viz, aes(x = reorder(region, ratio01), y = ratio01)) +
+    geom_bar(position = "stack", stat = "identity", 
+             fill = "coral", color = "black") + 
+    geom_text(aes(label = ratio01, y = pmax(1, ratio01)), hjust = -0.1) +
+    geom_hline(aes(yintercept = 1), color = "black", lwd = 0.5, lty = 2) +
+    labs(title = "Captain/1st Pick Einstein Representation, 2014-2025", 
+         x = "Region", y = "(Actual / Expected) Einstein Appearances", 
+         caption = "Data from frc-events API via TBA") +
+    coord_flip() + 
+    scale_y_continuous(breaks = 0:ceiling(max(viz$ratio01)), 
+                       limits = c(0, ceiling(max(viz$ratio01)))) + 
+    theme_bw()
+```
+
+## 2nd/3rd Round Pick
+
+```{r, fig.height = 6}
+viz <- data |>
+    filter(ratio23 != 0) |>
+    arrange(desc(ratio23))
+
+ggplot(viz, aes(x = reorder(region, ratio23), y = ratio23)) +
+    geom_bar(position = "stack", stat = "identity", 
+             fill = "steelblue", color = "black") + 
+    geom_text(aes(label = ratio23, y = pmax(1, ratio23)), hjust = -0.1) +
+    geom_hline(aes(yintercept = 1), color = "black", lwd = 0.5, lty = 2) +
+    labs(title = "2nd/3rd Pick Einstein Representation, 2014-2025", 
+         x = "Region", y = "(Actual / Expected) Einstein Appearances", 
+         caption = "Data from frc-events API via TBA") +
+    coord_flip() + 
+    scale_y_continuous(breaks = 0:ceiling(max(viz$ratio23)), 
+                       limits = c(0, ceiling(max(viz$ratio23)) + 0.5)) + 
+    theme_bw()
+```
+
+## Overdue Regions
+
+```{r, fig.height = 6}
+viz <- raw |>
+    # ("NH" represents off-season demo)
+    filter(actual == 0, region != "NH", size >= 5) |> 
+    arrange(desc(expected))
+
+ggplot(viz, aes(x = reorder(region, expected), y = expected)) + 
+    geom_bar(stat = "identity", position = "stack", 
+             fill = blair_red, color = "black") + 
+    geom_text(aes(label = expected), hjust = -0.1) +
+    labs(title = "Overdue Regions", 
+         subtitle = "Min. 5 teams",
+         x = "Region", y = "Expected Appearances", 
+         caption = "Data from frc-events API via TBA") +
+    coord_flip() +
+    scale_y_continuous(breaks = 0:ceiling(max(viz$expected)), 
+                       limits = c(0, ceiling(max(viz$expected)))) + 
+    theme_bw()
+```
+
+# Raw Data
+
+```{r, warning = FALSE}
+library(gt)
+raw |>
+    gt() |>
+    opt_interactive(
+        use_search = TRUE,
+        use_filters = TRUE,
+        use_resizers = TRUE,
+        use_highlight = TRUE,
+        use_compact_mode = TRUE,
+        use_text_wrapping = FALSE,
+        use_page_size_select = TRUE
+    )
+```
+
