@@ -45,8 +45,8 @@ mldf <- raw %>%
         tele_coral_total = (coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num),
         auto_coral_total = (auto_coral_L1_num + auto_coral_L2_num + auto_coral_L3_num + auto_coral_L4_num),
         
-        coral_tele_success_rate_raw = tele_coral_total / (tele_coral_total + tele_missed),
-        coral_auto_success_rate_raw = auto_coral_total / (auto_coral_total + auto_coral_missed),
+        coral_tele_success_rate_raw = ifelse((tele_coral_total + tele_missed) == 0, tele_coral_total / (tele_coral_total + tele_missed), 0),
+        coral_auto_success_rate_raw = ifelse((auto_coral_total + auto_coral_missed) == 0, auto_coral_total / (auto_coral_total + auto_coral_missed), 0),
         
         net_success_rate_raw = ifelse((robot_net_score + robot_net_miss)==0, 0, robot_net_score / (robot_net_score + robot_net_miss)),
         
@@ -133,7 +133,7 @@ consolidated_team_data <- mldf %>%
         coral_cycle_tele = round(sum(l1_cycle_tele+l2_cycle_tele+l3_cycle_tele+l4_cycle_tele), digits = 2),
         
         coral_tele_success_rate = round(mean(coral_tele_success_rate_raw), digits = 2),
-        
+
         coral_cycle_auto = round(sum(mean(auto_coral_L1_num) + mean(auto_coral_L2_num) + mean(auto_coral_L3_num) + mean(auto_coral_L4_num)), digits = 2),
         
         coral_auto_success_rate = round(mean(coral_auto_success_rate_raw), digits = 2),
@@ -566,8 +566,6 @@ server <- function(input, output, session) {
             summarise(mean_score = mean(total_score))
         red_alliance_score = sum(ifelse(scores$team %in% red_alliance, scores$mean_score, 0))
         blue_alliance_score = sum(ifelse(scores$team %in% blue_alliance, scores$mean_score, 0))
-        
-
         
         paste0("Predicted Scores: ", 
                "<span style='color:red;'>", round(red_alliance_score, digits = 0), 
