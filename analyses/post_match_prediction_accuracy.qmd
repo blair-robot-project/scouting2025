@@ -6,9 +6,14 @@ format: html
 ```{r}
 library(tidyverse)
 
-raw <- read.csv("../shinyapp/data_files/newton/data.csv")
-schedule <- read.csv("../shinyapp/data_files/newton/schedule.csv")
-statbotics <- read.csv("statbotics_data.csv")
+raw <- read.csv("../shinyapp/data_files/dchamp/data.csv")
+schedule_newton <- read.csv("../shinyapp/data_files/newton/schedule.csv")
+schedule_dchamp <- read.csv("../shinyapp/data_files/dchamp/schedule.csv")
+statbotics_newton <- read.csv("data/statbotics_newton_data.csv")
+statbotics_dchamp <- read.csv("data/statbotics_dchamp_data.csv")
+
+chosen_statbotics <- statbotics_dchamp
+chosen_schedule <- schedule_dchamp
 
 predict_scores <- function(raw, red_alliance, blue_alliance) {
         scores <- raw %>%
@@ -34,7 +39,7 @@ predict_scores <- function(raw, red_alliance, blue_alliance) {
        return(c(red = red_alliance_score, blue = blue_alliance_score))
 }
 
-match_by_match_prediction <- function(match_num){
+match_by_match_prediction <- function(match_num, chosen_statbotics, schedule){
     predictions <- schedule %>% 
         rowwise() %>%
         mutate(
@@ -45,7 +50,7 @@ match_by_match_prediction <- function(match_num){
         ) %>%
         ungroup()
     
-    predictions <- cbind(predictions, statbotics) %>%
+    predictions <- cbind(predictions, chosen_statbotics) %>%
         select(Match, self_red_score, self_blue_score, red_score, blue_score, red_predict_score, blue_predict_score, self_predict_win) %>%
         mutate(
             self_statbotics_prediction_red_diff = self_red_score - red_predict_score,
@@ -65,14 +70,15 @@ match_by_match_prediction <- function(match_num){
 
 new_df <- data.frame(match = numeric(0), acc_rate = numeric(0))
 
-for (i in 1:125){
+for (i in 1:max(chosen_statbotics$match)){
     new_df[i,1] = i
-    new_df[i,2] = match_by_match_prediction(i)
+    new_df[i,2] = match_by_match_prediction(i, chosen_statbotics, chosen_schedule)
 }
-#this takes forever by the way so have fun waiting for like 3 minutes
+#this takes forever by the way so have fun waiting for 80 seconds
 ```
 
 ```{r}
+#NEWTON STATBOTICS GRAPH
 blair_red <- "#a7000a"
 
 ggplot(new_df, aes(x = match)) +    
@@ -84,5 +90,19 @@ ggplot(new_df, aes(x = match)) +
             theme_bw()
 
 #note we become "better" than statbotics at match 14
+```
 
+```{r}
+#DCHAMP STATBOTICS GRAPH
+blair_red <- "#a7000a"
+
+ggplot(new_df, aes(x = match)) +    
+            geom_line(aes(y=acc_rate), color = blair_red) +
+            geom_line(aes(y=74.1), color = "black") +
+            labs(title = paste("Our Prediction Accuracy (us red, statbotics black)"),
+                 x = "Match", 
+                 y = "Accuracy Rate") +
+            theme_bw()
+
+#note we become "better" than statbotics at match 18
 ```
