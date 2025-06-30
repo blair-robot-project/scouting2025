@@ -6,10 +6,8 @@ format: html
 ```{r}
 library(tidyverse)
 
-raw <- read.csv("/Users/mitchellhung/scouting2025/shinyapp/data_files/newton/data.csv")
-schedule <- read.csv("/Users/mitchellhung/scouting2025/shinyapp/data_files/newton/schedule.csv")
-#sorry about the bad csv practices... :)
-
+raw <- read.csv("../shinyapp/data_files/newton/data.csv")
+schedule <- read.csv("../shinyapp/data_files/newton/schedule.csv")
 statbotics <- read.csv("statbotics_data.csv")
 
 predict_scores <- function(raw, red_alliance, blue_alliance) {
