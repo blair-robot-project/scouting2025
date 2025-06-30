@@ -1,0 +1,90 @@
+---
+title: "post_match_prediction_accuracy"
+format: html
+---
+
+```{r}
+library(tidyverse)
+
+raw <- read.csv("/Users/mitchellhung/scouting2025/shinyapp/data_files/newton/data.csv")
+schedule <- read.csv("/Users/mitchellhung/scouting2025/shinyapp/data_files/newton/schedule.csv")
+#sorry about the bad csv practices... :)
+
+statbotics <- read.csv("statbotics_data.csv")
+
+predict_scores <- function(raw, red_alliance, blue_alliance) {
+        scores <- raw %>%
+            filter(team %in% c(red_alliance, blue_alliance)) %>%
+            mutate(s = factor(team, c(red_alliance, blue_alliance))) %>%
+            mutate(total_score = 
+                    (coral_L1_num*2) + (coral_L2_num*3) + 
+                    (coral_L3_num*4) + (coral_L4_num*5) + 
+                    (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
+                    (auto_coral_L3_num*5)+ (auto_coral_L4_num*7) +
+                    (robot_net_score*4) + (proc_score*6) + 
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))) + 
+                    (move*3)
+                ) %>%
+            group_by(team) %>%
+            summarise(mean_score = mean(total_score),
+                      mean_proc = mean(proc_score))
+        
+        red_alliance_score = sum(ifelse(scores$team %in% red_alliance, scores$mean_score, 0)) +
+                             sum(ifelse(scores$team %in% blue_alliance, scores$mean_proc*4, 0))
+        blue_alliance_score = sum(ifelse(scores$team %in% blue_alliance, scores$mean_score, 0))+sum(ifelse(scores$team %in% red_alliance, scores$mean_proc*4, 0))
+        
+       return(c(red = red_alliance_score, blue = blue_alliance_score))
+}
+
+match_by_match_prediction <- function(match_num){
+    predictions <- schedule %>% 
+        rowwise() %>%
+        mutate(
+            scores = list(predict_scores(raw[raw['match']<match_num,], c(R1, R2, R3), c(B1, B2, B3))),
+            self_red_score = round(scores["red"], 0),
+            self_blue_score = round(scores["blue"], 0),
+            self_predict_win = ifelse(self_red_score>self_blue_score, "red", "blue")
+        ) %>%
+        ungroup()
+    
+    predictions <- cbind(predictions, statbotics) %>%
+        select(Match, self_red_score, self_blue_score, red_score, blue_score, red_predict_score, blue_predict_score, self_predict_win) %>%
+        mutate(
+            self_statbotics_prediction_red_diff = self_red_score - red_predict_score,
+            self_statbotics_prediction_blue_diff = self_blue_score - blue_predict_score,
+            self_actual_red_diff = self_red_score - red_score,
+            self_actual_blue_diff = self_blue_score-blue_score,
+            actual_win = ifelse(red_score>blue_score, "red", "blue")
+        )
+        
+    predictions <- predictions %>%
+        mutate(
+           correct = ifelse(self_predict_win == actual_win, 1, 0)
+       )
+    
+    sum(predictions$correct)/max(predictions$Match)*100
+}
+
+new_df <- data.frame(match = numeric(0), acc_rate = numeric(0))
+
+for (i in 1:125){
+    new_df[i,1] = i
+    new_df[i,2] = match_by_match_prediction(i)
+}
+#this takes forever by the way so have fun waiting for like 3 minutes
+```
+
+```{r}
+blair_red <- "#a7000a"
+
+ggplot(new_df, aes(x = match)) +    
+            geom_line(aes(y=acc_rate), color = blair_red) +
+            geom_line(aes(y=80.8), color = "black") +
+            labs(title = paste("Our Prediction Accuracy (us red, statbotics black)"),
+                 x = "Match", 
+                 y = "Accuracy Rate") +
+            theme_bw()
+
+#note we become "better" than statbotics at match 14
+
+```
