@@ -12,7 +12,7 @@ library(shinythemes)
 blair_red <- "#a7000a"
 
 data_dir <- "data_files"
-data_file <- paste0(data_dir, "/newton/data.csv")
+data_file <- paste0(data_dir, "/iniri/data.csv")
 event_schedule_file <- paste0(data_dir, "/newton/schedule.csv")
 teams_file <- paste0(data_dir, "/newton/teams.csv")
 alliances_file <- paste0(data_dir, "/newton/alliances.csv")
@@ -558,14 +558,19 @@ server <- function(input, output, session) {
                     (coral_L3_num*4) + (coral_L4_num*5) + 
                     (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
                     (auto_coral_L3_num*5)+ (auto_coral_L4_num*7) +
-                    (robot_net_score*4) + (proc_score*2.5) + 
+                    (robot_net_score*4) + (proc_score*6) + 
                     ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))) + 
                     (move*3)
                 ) %>%
             group_by(team) %>%
-            summarise(mean_score = mean(total_score))
-        red_alliance_score = sum(ifelse(scores$team %in% red_alliance, scores$mean_score, 0))
-        blue_alliance_score = sum(ifelse(scores$team %in% blue_alliance, scores$mean_score, 0))
+            summarise(mean_score = mean(total_score),
+                      mean_proc = mean(proc_score))
+        
+        red_alliance_score = sum(ifelse(scores$team %in% red_alliance, scores$mean_score, 0)) + 
+                             sum(ifelse(scores$team %in% blue_alliance, scores$mean_proc*4, 0))
+        blue_alliance_score = sum(ifelse(scores$team %in% blue_alliance, scores$mean_score, 0)) +
+                             sum(ifelse(scores$team %in% red_alliance, scores$mean_proc*4, 0))
+        
         
         paste0("Predicted Scores: ", 
                "<span style='color:red;'>", round(red_alliance_score, digits = 0), 
@@ -1698,8 +1703,9 @@ server <- function(input, output, session) {
         ggplot(past, aes(match)) + 
             geom_line(aes(y=coral_tele_cycles), color = blair_red) +
             geom_line(aes(y=algae_tele_cycles), color = "blue") +
+            geom_line(aes(y=coral_tele_cycles+algae_tele_cycles), color = "black") +
             scale_y_continuous() +
-            scale_x_continuous(breaks=past$match) + ylab("Coral (red) and Algae (blue) Cycles")
+            scale_x_continuous(breaks=past$match) + ylab("Coral (red) || Algae (blue) || Total (black) Cycles")
     }
     
     team_comments <- reactive({
