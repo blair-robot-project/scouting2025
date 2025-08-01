@@ -10,173 +10,7 @@ library(tidyverse)
 library(shinythemes)
 
 blair_red <- "#a7000a"
-
-data_dir <- "data_files"
-data_file <- paste0(data_dir, "/iniri/data.csv")
-event_schedule_file <- paste0(data_dir, "/newton/schedule.csv")
-teams_file <- paste0(data_dir, "/newton/teams.csv")
-alliances_file <- paste0(data_dir, "/newton/alliances.csv")
-approved_scouts <- paste0(data_dir, "/newton/approved_scouters.csv")
-
-
-#Load team data and event schedule
-raw <- read.csv(data_file)
-match_schedule <- read.csv(event_schedule_file, fill = TRUE)
-teams <- read.csv(teams_file)
-alliances <- read.csv(alliances_file)
-scouts <- read.csv(approved_scouts)
-
-#Dataframe Calculations
-mldf <- raw %>%
-    mutate(
-        auto_coral_l1_pts = auto_coral_L1_num * 3,
-        auto_coral_l2_pts = auto_coral_L2_num * 4, 
-        auto_coral_l3_pts = auto_coral_L3_num * 6, 
-        auto_coral_l4_pts = auto_coral_L4_num * 7, 
-        move_pts = move * 3,
-        net_pts = robot_net_score * 4, 
-        net_missed = robot_net_miss * 4,
-        processor_value = proc_score * 2.5, 
-        coral_l1_pts = coral_L1_num * 2,
-        coral_l2_pts = coral_L2_num * 3,
-        coral_l3_pts = coral_L3_num * 4,
-        coral_l4_pts = coral_L4_num * 5,
-        
-        tele_coral_total = (coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num),
-        auto_coral_total = (auto_coral_L1_num + auto_coral_L2_num + auto_coral_L3_num + auto_coral_L4_num),
-        
-        coral_tele_success_rate_raw = ifelse((tele_coral_total + tele_missed) == 0, tele_coral_total / (tele_coral_total + tele_missed), 0),
-        coral_auto_success_rate_raw = ifelse((auto_coral_total + auto_coral_missed) == 0, auto_coral_total / (auto_coral_total + auto_coral_missed), 0),
-        
-        net_success_rate_raw = ifelse((robot_net_score + robot_net_miss)==0, 0, robot_net_score / (robot_net_score + robot_net_miss)),
-        
-        endgame_pts = case_when(
-            ending == "P" ~ 2, 
-            ending == "S" ~ 6, 
-            ending == "D" ~ 12, 
-            .default = 0
-            ),
-        
-        dead = case_when(
-            dead == "de" ~ 1,
-            dead == "ba" ~ 0,
-            dead == "di" ~ 0,
-            dead == "t" ~ 0,
-            dead == "cs" ~ 0,
-            .default = 0
-            ),
-    
-        total_pts = move_pts + auto_coral_l1_pts + auto_coral_l2_pts + 
-                    auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
-                    coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts,
-    
-        #auto
-        total_auto_pts = auto_coral_l1_pts + auto_coral_l2_pts + 
-                         auto_coral_l3_pts + auto_coral_l4_pts + move_pts,
-        #something
-    
-        #tele
-        total_algae_pts = net_pts + processor_value,
-    
-        total_tele_coral_pts =  coral_l1_pts + coral_l2_pts + 
-                                coral_l3_pts + coral_l4_pts,
-    
-        total_tele_pts =  total_tele_coral_pts +total_algae_pts,
-    
-        #algae
-        #algae_net_shots = sum(net_pts + net_missed)
-    )
-
-past_raw_team_data <- mldf%>% 
-    group_by(team) %>%
-    summarize(
-        "M#" = match,
-        "Move %" = as.character(move),
-        "Auto coral cycle" = auto_coral_L1_num + auto_coral_L2_num  + auto_coral_L3_num + auto_coral_L4_num,
-        "Auto pts+3" = total_auto_pts,
-        
-        "Tele coral cycle" = coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num,
-        "Tele coral miss" = tele_missed,
-        
-        L1 = coral_L1_num,
-        L2 = coral_L2_num,
-        L3 = coral_L3_num,
-        L4 = coral_L4_num,
-        
-        Net = robot_net_score,
-        "Net miss" = robot_net_miss, 
-        
-        Proc = proc_score,
-        Endgame = ending,
-        De_reef = as.character(robot_reef_removal),
-        
-        "Tele pts" = total_tele_pts,
-        "Total pts" = total_pts,
-        
-     
-        Dead = paste(dead, "/", 1),
-        Fouls = fouls,
-        "Driver Rate" = driver,
-        "Defense Rate" = defense
-        )
-
-consolidated_team_data <- mldf %>%
-    group_by(team) %>%
-    summarize(
-       
-        l1_cycle_tele = round(mean(coral_L1_num), digits = 2),
-        l2_cycle_tele = round(mean(coral_L2_num), digits = 2),
-        l3_cycle_tele = round(mean(coral_L3_num), digits = 2),
-        l4_cycle_tele = round(mean(coral_L4_num), digits = 2),
-        
-        
-        coral_cycle_tele = round(sum(l1_cycle_tele+l2_cycle_tele+l3_cycle_tele+l4_cycle_tele), digits = 2),
-        
-        coral_tele_success_rate = round(mean(coral_tele_success_rate_raw), digits = 2),
-
-        coral_cycle_auto = round(sum(mean(auto_coral_L1_num) + mean(auto_coral_L2_num) + mean(auto_coral_L3_num) + mean(auto_coral_L4_num)), digits = 2),
-        
-        coral_auto_success_rate = round(mean(coral_auto_success_rate_raw), digits = 2),
-        
-        n_corals = round(coral_cycle_tele + coral_cycle_auto, digits = 2),
-
-        #algae cycle
-        net_cycle = round(mean(robot_net_score), digits = 2),
-        proc_cycle = round(mean(proc_score), digits = 2),
-        
-        net_accuracy = round(mean(net_success_rate_raw), digits = 2),
-        
-        algae = round((sum(net_cycle+proc_cycle)),digits = 2),
-        cycles = round(n_corals + algae, digits = 2),
-        algae_ground_pct = round(sum(robot_algae_picked, na.rm = TRUE) / n(), digits = 2),
-    
-        #total points
-        total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
-       
-        #teleop
-        tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2),
-    
-        #auto
-        auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2 ), 
-         
-        #endgame
-        endgame_pts_mean =round( mean(endgame_pts, na.rm = TRUE), digits =2),
-        
-        #put in climb success rate
-        
-        #algae remove data
-        algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
-        algae_ground_intake_pct = round(sum(c(robot_algae_picked))/n(), digits = 2),
-
-        move_pct = round(sum(c(move))/n(), digits = 2),
-       
-        dead_times = paste(sum(c(dead)),"/",n()),
-        
-        dead_pct = round(sum(c(dead))/n(), digits = 2),
-        
-        driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2 ),
-        defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2 )
-    )
+in_rstudio <- requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()
 
 default_linear_weights <- data.frame(
     team = 0,
@@ -233,17 +67,17 @@ ui <- fluidPage(
                                 radioButtons("match_or_teams", "Select One of the Following", choices = c("Match Number", "Select 6 Teams", "2 Alliances")),
                                 conditionalPanel(
                                     condition = "input.match_or_teams == 'Match Number'",
-                                    selectInput("match_num", "Match Number", choices = unique(match_schedule$Match))
-                                    ),
+                                    selectInput("match_num", "Match Number", choices = NULL)
+                                ),
                                 conditionalPanel(
                                     condition = "input.match_or_teams == 'Select 6 Teams'",
-                                    pickerInput("red_teams", "Red Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3)),
-                                    pickerInput("blue_teams", "Blue Alliance Teams", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 3))
+                                    pickerInput("red_teams", "Red Alliance Teams", choices = NULL, multiple = TRUE, options = list(maxOptions = 3)),
+                                    pickerInput("blue_teams", "Blue Alliance Teams", choices = NULL, multiple = TRUE, options = list(maxOptions = 3))
                                     ),
                                 conditionalPanel(
                                     condition = "input.match_or_teams == '2 Alliances'",
-                                    pickerInput("red_alliance", "Red Alliance", choices = unique(alliances$Alliance), multiple = FALSE, options = list(maxOptions = 1)),
-                                    pickerInput("blue_alliance", "Blue Alliance", choices = unique(alliances$Alliance), multiple = FALSE, options = list(maxOptions = 1))                                
+                                    pickerInput("red_alliance", "Red Alliance", choices = NULL, multiple = FALSE, options = list(maxOptions = 1)),
+                                    pickerInput("blue_alliance", "Blue Alliance", choices = NULL, multiple = FALSE, options = list(maxOptions = 1))                                
                                     ),
                                 actionButton("generate_graph", "Generate Graphs", class = "btn btn-primary"),
                                 #imageOutput("field_image_output")
@@ -264,7 +98,7 @@ ui <- fluidPage(
                tabPanel("Previous Matches",
                         sidebarLayout(
                             sidebarPanel(
-                                selectInput("match_num_PREVIOUS", "Match Number", choices = unique(match_schedule$Match)),
+                                selectInput("match_num_PREVIOUS", "Match Number", choices = NULL),
                             ),
                             mainPanel(
                                 plotOutput("MATCH_alliance_box_plot_output"),
@@ -281,7 +115,7 @@ ui <- fluidPage(
                tabPanel("Compare Teams",
                         sidebarLayout(
                             sidebarPanel(
-                                pickerInput("teams_selected", "Select Team", choices = unique(teams$team), multiple = TRUE, options = list(maxOptions = 2)),
+                                pickerInput("teams_selected", "Select Team", choices = NULL, multiple = TRUE, options = list(maxOptions = 2)),
                                 selectInput("compare_teams_graph", "Choose Graph", choices = c("Points Large Bar Graph", "Comments", "Dead", "Progress Over Time")),
                                 conditionalPanel(
                                     condition = "input.compare_teams_graph == 'Progress Over Time'",
@@ -299,15 +133,24 @@ ui <- fluidPage(
                 tabPanel("Single Team",
                     sidebarLayout(
                         sidebarPanel(
-                            selectInput("team_select", "Select Team", choices = unique(teams$team)),
+                            selectInput("team_select", "Select Team", choices = NULL),
                             selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Match History", "Driver Rating History", "Cycle History")),
-                            imageOutput("team_image_output")
+                            uiOutput("team_image_output")
                             ),
                         mainPanel(
                             plotOutput("team_graph_output"),
                             DTOutput("team_data_row"),
-                            h3("Comments"),
-                            DTOutput("comments_list"),
+                            if (in_rstudio){
+                                h3("Comments")
+                                DTOutput("comments_list")
+                            },
+                            if (!in_rstudio) {
+                                tagList(
+                                    uiOutput("login_ui"),
+                                    uiOutput("login_status"),
+                                    uiOutput("comments_ui")
+                                )
+                            },
                             h3("Past raw data"),
                             DTOutput("past_team_table")
                             )
@@ -321,17 +164,262 @@ ui <- fluidPage(
                         )
                     )
                ),
-    actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
-    actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning")
+    #actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
+    #actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning"),
+    actionButton("vagle", "VAGLE DATA", style="simple", size="sm", color = "warning"),
+    actionButton("mdsev", "MDSEV DATA", style="simple", size="sm", color = "warning"),
+    actionButton("dchamp", "DCHAMP DATA", style="simple", size="sm", color = "warning"),
+    actionButton("newton", "NEWTON DATA", style="simple", size="sm", color = "warning"),
+    actionButton("all_data", "ALL DATA", style="simple", size="sm", color = "warning"),
+    actionButton("vacri", "CRI DATA", style="simple", size="sm", color = "warning")
     )
 
 #Server
 server <- function(input, output, session) {
-
+    data_dir <- "data_files"
+    
+    #Need to set data to Reactive Values to be able to change them later
+    raw <- reactiveVal()
+    match_schedule <- reactiveVal()
+    teams <- reactiveVal()
+    alliances <- reactiveVal()
+    #scouts <- reactiveVal()
+    
+    #Helper Function
+    load_event_data <- function(event) {
+        raw(read.csv(file.path(data_dir, event, "data.csv")))
+        match_schedule(read.csv(file.path(data_dir, event, "schedule.csv")))
+        teams(read.csv(file.path(data_dir, event, "teams.csv")))
+        alliances(read.csv(file.path(data_dir, event, "alliances.csv")))
+        #scouts(read.csv(file.path(data_dir, event, "approved_scouters.csv")))
+    }
+    
+    load_event_data("all_data")
+    addResourcePath("images", "images") #needed to have images show up (don't delete)
+    
+    observe({
+        req(match_schedule())
+        updateSelectInput(session, "match_num", choices = unique(match_schedule()$Match))
+        updateSelectInput(session, "match_num_PREVIOUS", choices = unique(match_schedule()$Match))
+    })
+    
+    observe({
+        req(teams())
+        updatePickerInput(session, "red_teams", choices = unique(teams()$team))
+        updatePickerInput(session, "blue_teams", choices = unique(teams()$team))
+        updatePickerInput(session, "teams_selected", choices = unique(teams()$team))
+        updateSelectInput(session, "team_select", choices = unique(teams()$team))
+    })
+    
+    observe({
+        req(alliances())
+        updatePickerInput(session, "red_alliance", choices = unique(alliances()$Alliance))
+        updatePickerInput(session, "blue_alliance", choices = unique(alliances()$Alliance))
+    })
+    
+    #Password logic
+    correct_password <- "0223"
+    user_logged_in <- reactiveVal(in_rstudio)
+    
+    output$login_ui <- renderUI({
+        if (!user_logged_in()) {
+            tagList(
+                passwordInput("password", "Enter password to access comments: "),
+                actionButton("login", "Login")
+            )
+        }
+    })
+    
+    observeEvent(input$login, {
+        if (input$password == correct_password) {
+            user_logged_in(TRUE)
+        } else {
+            user_logged_in(FALSE)
+        }
+    })
+    
+    output$login_status <- renderUI({
+        req(input$login)
+        if (user_logged_in()) {
+            tags$p(style = "color: green;", "Access granted.")
+        } else {
+            tags$p(style = "color: red;", "Incorrect password.")
+        }
+    })
+    
+    output$comments_ui <- renderUI({
+        req(user_logged_in())
+        DTOutput("comments_list")
+    })
+    
+    #Dataframe Calculations
+    mldf <- reactive({
+        req(raw())
+        
+        raw() %>% 
+            mutate(
+            auto_coral_l1_pts = auto_coral_L1_num * 3,
+            auto_coral_l2_pts = auto_coral_L2_num * 4, 
+            auto_coral_l3_pts = auto_coral_L3_num * 6, 
+            auto_coral_l4_pts = auto_coral_L4_num * 7, 
+            move_pts = move * 3,
+            net_pts = robot_net_score * 4, 
+            net_missed = robot_net_miss * 4,
+            processor_value = proc_score * 2.5, 
+            coral_l1_pts = coral_L1_num * 2,
+            coral_l2_pts = coral_L2_num * 3,
+            coral_l3_pts = coral_L3_num * 4,
+            coral_l4_pts = coral_L4_num * 5,
+            
+            tele_coral_total = (coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num),
+            auto_coral_total = (auto_coral_L1_num + auto_coral_L2_num + auto_coral_L3_num + auto_coral_L4_num),
+            
+            coral_tele_success_rate_raw = ifelse((tele_coral_total + tele_missed) == 0, tele_coral_total / (tele_coral_total + tele_missed), 0),
+            coral_auto_success_rate_raw = ifelse((auto_coral_total + auto_coral_missed) == 0, auto_coral_total / (auto_coral_total + auto_coral_missed), 0),
+            
+            net_success_rate_raw = ifelse((robot_net_score + robot_net_miss)==0, 0, robot_net_score / (robot_net_score + robot_net_miss)),
+            
+            endgame_pts = case_when(
+                ending == "P" ~ 2, 
+                ending == "S" ~ 6, 
+                ending == "D" ~ 12, 
+                .default = 0
+            ),
+            
+            dead = case_when(
+                dead == "de" ~ 1,
+                dead == "ba" ~ 0,
+                dead == "di" ~ 0,
+                dead == "t" ~ 0,
+                dead == "cs" ~ 0,
+                .default = 0
+            ),
+            
+            total_pts = move_pts + auto_coral_l1_pts + auto_coral_l2_pts + 
+                auto_coral_l3_pts + auto_coral_l4_pts + coral_l1_pts + coral_l2_pts + 
+                coral_l3_pts + coral_l4_pts + net_pts + processor_value + endgame_pts,
+            
+            #auto
+            total_auto_pts = auto_coral_l1_pts + auto_coral_l2_pts + 
+                auto_coral_l3_pts + auto_coral_l4_pts + move_pts,
+            #something
+            
+            #tele
+            total_algae_pts = net_pts + processor_value,
+            
+            total_tele_coral_pts =  coral_l1_pts + coral_l2_pts + 
+                coral_l3_pts + coral_l4_pts,
+            
+            total_tele_pts =  total_tele_coral_pts +total_algae_pts,
+            
+            #algae
+            #algae_net_shots = sum(net_pts + net_missed)
+        )
+    })
+    
+    past_raw_team_data <- reactive({
+        req(mldf())
+        
+        mldf() %>% 
+            group_by(team) %>%
+        summarize(
+            "M#" = match,
+            "Move %" = as.character(move),
+            "Auto coral cycle" = auto_coral_L1_num + auto_coral_L2_num  + auto_coral_L3_num + auto_coral_L4_num,
+            "Auto pts+3" = total_auto_pts,
+            
+            "Tele coral cycle" = coral_L1_num + coral_L2_num + coral_L3_num + coral_L4_num,
+            "Tele coral miss" = tele_missed,
+            
+            L1 = coral_L1_num,
+            L2 = coral_L2_num,
+            L3 = coral_L3_num,
+            L4 = coral_L4_num,
+            
+            Net = robot_net_score,
+            "Net miss" = robot_net_miss, 
+            
+            Proc = proc_score,
+            Endgame = ending,
+            De_reef = as.character(robot_reef_removal),
+            
+            "Tele pts" = total_tele_pts,
+            "Total pts" = total_pts,
+            
+            
+            Dead = paste(dead, "/", 1),
+            Fouls = fouls,
+            "Driver Rate" = driver,
+            "Defense Rate" = defense
+        )
+    })
+    
+    consolidated_team_data <- reactive({
+        req(mldf())
+        
+        mldf() %>%
+        group_by(team) %>%
+        summarize(
+            
+            l1_cycle_tele = round(mean(coral_L1_num), digits = 2),
+            l2_cycle_tele = round(mean(coral_L2_num), digits = 2),
+            l3_cycle_tele = round(mean(coral_L3_num), digits = 2),
+            l4_cycle_tele = round(mean(coral_L4_num), digits = 2),
+            
+            
+            coral_cycle_tele = round(sum(l1_cycle_tele+l2_cycle_tele+l3_cycle_tele+l4_cycle_tele), digits = 2),
+            
+            coral_tele_success_rate = round(mean(coral_tele_success_rate_raw, digits = 2)),
+            
+            coral_cycle_auto = round(sum(mean(auto_coral_L1_num) + mean(auto_coral_L2_num) + mean(auto_coral_L3_num) + mean(auto_coral_L4_num)), digits = 2),
+            
+            coral_auto_success_rate = round(mean(coral_auto_success_rate_raw, digits = 2)),
+            
+            n_corals = round(coral_cycle_tele + coral_cycle_auto, digits = 2),
+            
+            #algae cycle
+            net_cycle = round(mean(robot_net_score), digits = 2),
+            proc_cycle = round(mean(proc_score), digits = 2),
+            
+            net_accuracy = round(mean(net_success_rate_raw, digits = 2)),
+            
+            algae = round((sum(net_cycle+proc_cycle)),digits = 2),
+            cycles = round(n_corals + algae, digits = 2),
+            algae_ground_pct = round(sum(robot_algae_picked, na.rm = TRUE) / n(), digits = 2),
+            
+            #total points
+            total_pts_mean = round(mean(total_pts, na.rm = TRUE), digits =2), 
+            
+            #teleop
+            tele_pts_mean = round(mean(total_tele_pts, na.rm = TRUE), digits =2),
+            
+            #auto
+            auto_pts_mean = round(mean(total_auto_pts, na.rm = TRUE), digits =2), 
+            
+            #endgame
+            endgame_pts_mean =round(mean(endgame_pts, na.rm = TRUE), digits =2),
+                
+            #put in climb success rate
+            
+            #algae remove data
+            algae_remove_pct = round(sum(c(robot_reef_removal))/n(), digits = 2),
+            algae_ground_intake_pct = round(sum(c(robot_algae_picked))/n(), digits = 2),
+            
+            move_pct = round(sum(c(move))/n(), digits = 2),
+            
+            dead_times = paste(sum(c(dead)),"/",n()),
+            
+            dead_pct = round(sum(c(dead))/n(), digits = 2),
+            
+            driver_rating_mean = round(mean(driver[driver != 0], na.rm = TRUE), digits =2),
+            defense_rating_mean = round(mean(defense[defense != 0], na.rm = TRUE), digits =2)
+        )
+    })
+    
     #Event Summary Tab
     #BUBBLE LOGIC
     bubble_graph <- function(raw) {
-        bubble <- raw%>%
+        bubble <- raw %>%
         group_by(team)%>%
         summarise(
             match = n(),
@@ -465,8 +553,6 @@ server <- function(input, output, session) {
         #find our next next match
         #want all teams from next next match (to scout)
         #want friend teams from next next match (to organize)
-        
-        #browser()
         priority_matches <- data.frame(matrix(ncol = 3, nrow = 0))
         colnames(priority_matches) = c("match", "team", "role")
 
@@ -497,21 +583,23 @@ server <- function(input, output, session) {
         }
         return(priority_matches)
     }
+    
+    
 
     #UI Event Summary Rendering Plots
     output$long_column_output <- renderPlot({
         #Bubble graph logic
-        long_column(raw)
+        long_column(raw())
     })
     
     output$picklist_graph <- renderPlot({
         #Picklisting graph logic
-        bubble_graph(raw)
+        bubble_graph(raw())
     })
     
     output$picklist_table <- renderDT({
         #Picklisting table logic
-        datatable(consolidated_team_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(consolidated_team_data)))
+        datatable(consolidated_team_data(), options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(consolidated_team_data())))
     })
 
     #UI Checking Data
@@ -540,8 +628,28 @@ server <- function(input, output, session) {
     })
     
     output$priority_schedule <- renderDT({
-        temp <- schedule(raw, match_schedule)
+        temp <- schedule(raw(), match_schedule())
         datatable(temp, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(temp)))
+    })
+    
+    
+    observeEvent(input$vagle, {
+        load_event_data("vagle")
+    })
+    observeEvent(input$mdsev, {
+        load_event_data("mdsev")
+    })
+    observeEvent(input$dchamp, {
+        load_event_data("dchamp")
+    })
+    observeEvent(input$newton, {
+        load_event_data("newton")
+    })
+    observeEvent(input$all_data, {
+        load_event_data("all_data")
+    })
+    observeEvent(input$vacri, {
+        load_event_data("vacri")
     })
     
     #Alliance/Match Tab
@@ -879,7 +987,7 @@ server <- function(input, output, session) {
             match_num <- input$match_num
             
             #Get the specific row first
-            match_row <- match_schedule[match_schedule$Match == match_num, ]
+            match_row <- match_schedule()[match_schedule()$Match == match_num, ]
             
             #Extract teams as vectors
             selected_red_teams <- c(
@@ -901,15 +1009,15 @@ server <- function(input, output, session) {
             print("Blue teams:")
             print(selected_blue_teams)
             
-            matches_happened <- sort(unique(mldf$match))
+            matches_happened <- sort(unique(mldf()$match))
             
             if (match_num %in% matches_happened) {
                 output$alliance_box_plot_output <- renderPlot({
-                    match_data <- mldf %>% filter(match == match_num)
+                    match_data <- mldf() %>% filter(match == match_num)
                     
                     match_teams <- unique(match_data$team)
                     
-                    match_row <- match_schedule[match_schedule$Match == match_num, ]
+                    match_row <- match_schedule()[match_schedule()$Match == match_num, ]
                     
                     red_teams <- c(match_row$R1, match_row$R2, match_row$R3)
                     blue_teams <- c(match_row$B1, match_row$B2, match_row$B3)
@@ -967,7 +1075,7 @@ server <- function(input, output, session) {
                         match_points$total_endgame_score + match_points$total_misc_score
                     
                     
-                    boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+                    boxplot_graph_alliance(raw(), selected_red_teams, selected_blue_teams)
                     
                     #base_plot +
                     #   geom_point(data = match_points,
@@ -996,8 +1104,8 @@ server <- function(input, output, session) {
             blue_alliance <- input$blue_alliance
             
             #Get the rows
-            red_alliance_row <- alliances[alliances$Alliance == red_alliance,]
-            blue_alliance_row <- alliances[alliances$Alliance == blue_alliance,]
+            red_alliance_row <- alliances()[alliances()$Alliance == red_alliance,]
+            blue_alliance_row <- alliances()[alliances()$Alliance == blue_alliance,]
             
             #Extract teams as vectors
             selected_red_teams <- c(
@@ -1016,39 +1124,39 @@ server <- function(input, output, session) {
         }
         
         output$score_prediction <- renderText({
-            predict_scores(raw, selected_red_teams, selected_blue_teams)
+            predict_scores(raw(), selected_red_teams, selected_blue_teams)
         })
         
         output$alliance_box_plot_output <- renderPlot({
-            boxplot_graph_alliance(raw, selected_red_teams, selected_blue_teams)
+            boxplot_graph_alliance(raw(), selected_red_teams, selected_blue_teams)
         })
         
         output$alliance_tele_coral_graph_output <- renderPlot({
-            tele_coral_alliance(raw, selected_red_teams, selected_blue_teams)
+            tele_coral_alliance(raw(), selected_red_teams, selected_blue_teams)
         })
         
         output$alliance_auto_coral_graph_output <- renderPlot({
-            auto_coral_alliance(raw, selected_red_teams, selected_blue_teams)
+            auto_coral_alliance(raw(), selected_red_teams, selected_blue_teams)
         }) 
         
         output$alliance_algae_bar_graph_output <- renderPlot({
-            algae_bar(raw, selected_red_teams, selected_blue_teams)
+            algae_bar(raw(), selected_red_teams, selected_blue_teams)
         }) 
         
         
         output$alliance_endgame_graph_output <- renderPlot({
-            endgame_graph(raw, selected_red_teams, selected_blue_teams)
+            endgame_graph(raw(), selected_red_teams, selected_blue_teams)
         })
         
         
         output$alliance_all_graph_output <- renderPlot({
-            long_column_alliance(raw, selected_red_teams, selected_blue_teams)
+            long_column_alliance(raw(), selected_red_teams, selected_blue_teams)
         })
         
         
         output$alliance_table <- renderDT({
-            alliance_dt_subset <- consolidated_team_data[consolidated_team_data$team %in% c(selected_red_teams, selected_blue_teams), ]
-            #team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team]
+            alliance_dt_subset <- consolidated_team_data()[consolidated_team_data()$team %in% c(selected_red_teams, selected_blue_teams), ]
+            #team_data_row <- consolidated_team_data()[consolidated_team_data()$team == selected_team]
             datatable(alliance_dt_subset, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(alliance_dt_subset)))
         })
         
@@ -1056,17 +1164,17 @@ server <- function(input, output, session) {
     
     #PREVIOUS MATCH TAB
     observe({
-        matches_happened <- sort(unique(mldf$match))
+        matches_happened <- sort(unique(mldf()$match))
         updateSelectInput(session, "match_num_PREVIOUS", choices = matches_happened)
     })
     
     observeEvent(input$match_num_PREVIOUS, {
         selected_match <- input$match_num_PREVIOUS
         
-        match_data <- mldf %>% filter(match == selected_match)
+        match_data <- mldf() %>% filter(match == selected_match)
         match_teams <- unique(match_data$team)
         
-        match_row <- match_schedule[match_schedule$Match == selected_match, ]
+        match_row <- match_schedule()[match_schedule()$Match == selected_match, ]
         
         red_teams <- c(match_row$R1, match_row$R2, match_row$R3)
         blue_teams <- c(match_row$B1, match_row$B2, match_row$B3)
@@ -1102,7 +1210,7 @@ server <- function(input, output, session) {
                 defense_rating_mean = defense
             )
         output$MATCH_alliance_box_plot_output <- renderPlot({
-            base_plot <- boxplot_graph_alliance(raw, red_teams, blue_teams)
+            base_plot <- boxplot_graph_alliance(raw(), red_teams, blue_teams)
             
             match_points <- match_data %>%
                 mutate(
@@ -1229,7 +1337,7 @@ server <- function(input, output, session) {
     
     #COMMENTS
     compare_teams_comments <- function(raw, selected_teams){
-        comments2 <- raw%>%
+        comments2 <- raw %>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
             mutate(team = as.factor(team))%>%
@@ -1262,7 +1370,7 @@ server <- function(input, output, session) {
     
     #PROBLEMS
     compare_teams_problems <- function(raw, selected_teams){
-        problems2 <- raw%>%
+        problems2 <- raw %>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
             mutate(team = as.factor(team))%>%
@@ -1293,7 +1401,7 @@ server <- function(input, output, session) {
     
     #POINTS OVER TIME
     compare_teams_past_points <- function(raw, selected_teams){
-        past_match_points <- raw%>%
+        past_match_points <- raw %>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
             mutate(team = as.factor(team))%>%
@@ -1320,7 +1428,7 @@ server <- function(input, output, session) {
     
     #DRIVER OVER TIME
     compare_teams_past_driver <- function(raw, selected_teams){
-        past_match_points <- raw%>%
+        past_match_points <- raw %>%
             group_by(team)%>%
             filter(team %in% selected_teams)%>%
             mutate(team = as.factor(team))%>%
@@ -1344,7 +1452,7 @@ server <- function(input, output, session) {
         #Reasoning behind this is I found it hard to read by continuously scrolling horizantally
         #so I made it vertical. Only problem is that team is no longer the column name...
         selected_teams <- input$teams_selected
-        filtered_data <- consolidated_team_data[consolidated_team_data$team %in% selected_teams,]
+        filtered_data <- consolidated_team_data()[consolidated_team_data()$team %in% selected_teams,]
         filtered_data <- filtered_data[, !names(filtered_data) %in% "team"]
         flipped_data <- as.data.frame(t(filtered_data))
         colnames(flipped_data) <- selected_teams
@@ -1509,7 +1617,7 @@ server <- function(input, output, session) {
     
     #COMMENTS TABLE
     comment_table_single <- function(raw, team_num){
-        comments <- raw%>%
+        comments <- raw %>%
             group_by(team)%>%
             filter(team==team_num)%>%
             summarise(
@@ -1538,7 +1646,7 @@ server <- function(input, output, session) {
     
     #PROBLEMS TABLE
     problem_table_single <- function(raw, team_num){
-        problem <- raw%>%
+        problem <- raw %>%
             group_by(team)%>%
             filter(team==team_num)%>%
             summarise(
@@ -1644,13 +1752,13 @@ server <- function(input, output, session) {
     #PAST MATCH RAW TEAM DATA
     output$past_team_table <- renderDT({
         selected_team <- input$team_select
-        team_past_data <- past_raw_team_data[past_raw_team_data$team == selected_team, ]
+        team_past_data <- past_raw_team_data()[past_raw_team_data()$team == selected_team, ]
         datatable(team_past_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(team_past_data)))
     })
     
     #PAST DRIVER GRAPH
     previous <- function(raw, team_num){
-        past <- raw%>%
+        past <- raw %>%
             group_by(team)%>%
             filter(team==team_num)%>%
             summarize(
@@ -1678,7 +1786,7 @@ server <- function(input, output, session) {
     }
     
     cycle_history <- function(raw, team_num){
-        past <- raw%>%
+        past <- raw %>%
             group_by(team)%>%
             filter(team==team_num)%>%
             summarize(
@@ -1709,9 +1817,10 @@ server <- function(input, output, session) {
     }
     
     team_comments <- reactive({
-        comments_data <- raw %>%
+        comments_data <- raw() %>%
             filter(team == input$team_select) %>%
-            select(commentOpen)  
+            select(commentOpen) 
+        
         if (length(comments_data) > 0) {
             return(comments_data)
         } else {
@@ -1728,31 +1837,31 @@ server <- function(input, output, session) {
         selected_team <- input$team_select
         
         if (input$team_graph == "Overall Points Box Plot"){
-            boxplot_graph_single(raw, selected_team)
+            boxplot_graph_single(raw(), selected_team)
             } 
         else if (input$team_graph == "Auto Bar Graph"){
-            auto_graph_single(raw, selected_team)
+            auto_graph_single(raw(), selected_team)
             } 
         else if (input$team_graph == "Tele Bar Graph"){
-            tele_graph_single(raw, selected_team)
+            tele_graph_single(raw(), selected_team)
             } 
         else if (input$team_graph == "Endgame Bar Graph"){
-            endgame_graph_single(raw, selected_team)
+            endgame_graph_single(raw(), selected_team)
             } 
         else if (input$team_graph == "Comments"){
-            comment_table_single(raw, selected_team)
+            comment_table_single(raw(), selected_team)
         } 
         else if (input$team_graph == "Problems"){
-            problem_table_single(raw, selected_team)
+            problem_table_single(raw(), selected_team)
         } 
         else if (input$team_graph == "Match History"){
-            single_team_match_history_bar_graph(raw, selected_team)
+            single_team_match_history_bar_graph(raw(), selected_team)
         }
         else if (input$team_graph == "Driver Rating History"){
-            previous(raw, selected_team)
+            previous(raw(), selected_team)
         } 
         else if (input$team_graph == "Cycle History"){
-            cycle_history(raw, selected_team)
+            cycle_history(raw(), selected_team)
         } 
     })
     
@@ -1762,61 +1871,60 @@ server <- function(input, output, session) {
         selected_teams <- input$teams_selected
         
         if (input$compare_teams_graph == "Points Large Bar Graph"){
-            compare_teams_large_bar_graph(raw, selected_teams)
+            compare_teams_large_bar_graph(raw(), selected_teams)
         } 
         else if (input$compare_teams_graph == "Comments"){
-            compare_teams_comments(raw, selected_teams)
+            compare_teams_comments(raw(), selected_teams)
         }
         else if (input$compare_teams_graph == "Dead"){
-            compare_teams_problems(raw, selected_teams)
+            compare_teams_problems(raw(), selected_teams)
         }
         else if (input$compare_teams_progress_graph == "Points"){
-            compare_teams_past_points(raw, selected_teams)
+            compare_teams_past_points(raw(), selected_teams)
         }
         else if (input$compare_teams_progress_graph == "Driver Ranking"){
-            compare_teams_past_driver(raw, selected_teams)
+            compare_teams_past_driver(raw(), selected_teams)
         }
     })
     
     output$scouter_graph_output <- renderPlotly({
-        scouter_graph_output(raw)
+        scouter_graph_output(raw())
         })
     
     output$yapp_graph_output <- renderPlotly({
-        yapp_graph_output(raw)
+        yapp_graph_output(raw())
     })
     
     output$high_streak_output <- renderPlot({
-        high_streak_output(raw)
+        high_streak_output(raw())
     })
     
-    output$team_image_output <- renderImage({
+    output$team_image_output <- renderUI({
         teamnum <- input$team_select
         img_src <- paste0("images/newton_img/", teamnum, ".png")  #Path to the image
         no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
         
         #Check if the image file exists
         if (file.exists(img_src)) {
-            return(list(
-                src = img_src,
-                contentType = "image/png",
-                width = 350,
-                height = 350,
-                alt = paste("Robot Image for Team", teamnum),
-                style="display: block; margin-left: auto; margin-right: auto;"
-            ))
-            #tags$img(src = img_src, alt = paste("Robot Image for Team", teamnum), height = "300px")
+            tags$img(src = img_src, alt = paste("Robot Image for Team", teamnum), style = "width: 100%; height: auto; display: block; margin: 0 auto;")
+            #return(list(
+            #    src = img_src,
+            #    contentType = "image/png",
+            #    width = 350,
+            #    height = 350,
+            #    alt = paste("Robot Image for Team", teamnum),
+            #    style="display: block; margin-left: auto; margin-right: auto;"))
         } else {
-            return(list(
-                src = no_img_available_src,
-                contentType = "image/jpg",
-                width = 350,
-                height = 350,
-                alt = paste("No Image Available"),
-                style="display: block; margin-left: auto; margin-right: auto;"
-            ))
+            tags$img(src = no_img_available_src, alt = paste("No Image Available"), style = "width: 100%; height: auto; display: block: margin: 0 auto;")
+            #return(list(
+            #    src = no_img_available_src,
+            #    contentType = "image/jpg",
+            #    width = 350,
+            #    height = 350,
+            #    alt = paste("No Image Available"),
+            #    style="display: block; margin-left: auto; margin-right: auto;"))
         }
-    }, deleteFile = FALSE)
+    })
     
     output$team_field_output <- renderImage({
         teamnum <- input$team_select
@@ -1849,7 +1957,7 @@ server <- function(input, output, session) {
     
     output$team_data_row <- renderDT({
         selected_team <- input$team_select
-        team_data_row <- consolidated_team_data[consolidated_team_data$team == selected_team, ]
+        team_data_row <- consolidated_team_data()[consolidated_team_data()$team == selected_team, ]
         datatable(team_data_row, options = list(scrollX = TRUE, pageLength = 1, dom = 't'))
     })
     
@@ -1864,8 +1972,8 @@ server <- function(input, output, session) {
         
         temp <- ggplot(scout_df, aes(x = `scout`, y = count, text = paste("Scout: ", scout, "|| Matches Scouted:", count))) + 
             geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
-            labs(title = "Scouter Summary", 
-                 x = "Scouters", y = "Times Scouted") +
+            labs(title = "Scout Summary", 
+                 x = "Scouts", y = "Times Scouted") +
             theme_bw()
         
         ggplotly(temp, tooltip = "text")
@@ -1883,7 +1991,7 @@ server <- function(input, output, session) {
         temp <- ggplot(yapp_df, aes(x = `scout`, y = yapp, text = paste("Scout: ", scout, "|| Words Yapped:", yapp))) + 
             geom_bar(position = "stack", stat = "identity", fill = "steelblue") + 
             labs(title = "Yapp Summary", 
-                 x = "Scouters", y = "Length of Comments") +
+                 x = "Scouts", y = "Length of Comments") +
             theme_bw()
         
         ggplotly(temp, tooltip = "text")
@@ -1908,7 +2016,7 @@ server <- function(input, output, session) {
         ggplot(streak_df, aes(x = `scout`, streak)) + 
             geom_bar(position = "stack", stat = "identity", fill = "chartreuse2") + 
             labs(title = "Current Streak", 
-                 x = "Scouters", y = "Matches") +
+                 x = "Scouts", y = "Matches") +
             theme_bw()
     }
     
@@ -1933,7 +2041,7 @@ server <- function(input, output, session) {
         current_weights <- weights_data()
         
         #create a copy of data to work with
-        team_data <- consolidated_team_data
+        team_data <- consolidated_team_data()
         
         #these cols are genkey not useful but will see
         numeric_cols <- setdiff(names(team_data), c("team", "dead_times"))
