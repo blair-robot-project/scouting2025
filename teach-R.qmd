@@ -1,0 +1,70 @@
+---
+title: "teach-R"
+format: html
+editor: visual
+---
+
+## Planning for teaching R
+
+Write basic histogram
+
+```{r}
+#make sure to install these packages first 
+library(dslabs)
+library(ggplot2)
+library(tidyverse)
+
+raw <- murders
+
+hist(raw$total)
+```
+
+Write graph of murder_rate vs state
+
+```{r}
+raw <- murders |>
+    mutate(
+        murder_rate = total/population * 10^6
+    )
+
+ggplot(raw, aes(x = total, y = murder_rate)) + 
+    geom_point()
+```
+
+Connect with the scouting2025 repo through "New Project", link GitHub, gain access to the shinyapp/data_files/newton/data.csv.
+
+Write this in a new file (in the scouting2025)
+
+```{r}
+raw <- read.csv("shinyapp/data_files/newton/data.csv")
+#choices: 422, 449, 1323, 2910
+selected_teams <- c(422, 449, 1323, 2910)
+
+past_match_points <- raw |>
+    group_by(team) |>
+    mutate(team = as.factor(team)) |>
+    filter(team %in% selected_teams) |>
+    summarize(
+        team = team,
+        match = match,
+        total_score = 
+            move*3 +
+            auto_coral_L1_num*3 + auto_coral_L2_num*4 + auto_coral_L3_num*6 + auto_coral_L4_num*7 +
+            robot_net_score*4 + proc_score*2.5 +
+            coral_L1_num*2 + coral_L2_num*3 + coral_L3_num*4 + coral_L4_num*5 +
+            ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
+    )
+
+team_colors <- setNames(hue_pal()(length(levels(past_match_points$team))), levels(past_match_points$team))
+
+ggplot(past_match_points, aes(x = match, y = total_score, color = team, group = team)) + 
+    geom_line(size = 1) +
+    geom_point(size = 2) + 
+    scale_fill_manual(values = team_colors) +
+    #scale_y_continuous(limits = c(0, max(past_match_points$total_score, na.rm = TRUE))) +
+    #scale_x_continuous(breaks = unique(past_match_points$match)) +
+    #labs(title = "Points Over Time", x = "Match", y = "Total Score", color = "Team") +
+    theme_minimal()
+```
+
+After this, I guess take the rookie through the ShinyApp and see if there's anything in particular they would like to code.
