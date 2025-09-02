@@ -441,6 +441,9 @@ server <- function(input, output, session) {
             
         )
         ggplot(bubble, aes(x = total_coral_cycles, y = total_algae_cycles, 
+                           size = endgame_score)) +
+            geom_point(color = "lightblue2") +
+            geom_text(aes(label = team, vjust=1.7)) + 
             labs(title = "Teams Performance Summary", 
                  x = "Coral Cycles (auto + teleop)", 
                  y = "Algae Cycles", 
