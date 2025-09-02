@@ -184,6 +184,7 @@ server <- function(input, output, session) {
     teams <- reactiveVal()
     alliances <- reactiveVal()
     #scouts <- reactiveVal()
+    event_code <- "all_data"
     
     #Helper Function
     load_event_data <- function(event) {
@@ -191,6 +192,7 @@ server <- function(input, output, session) {
         match_schedule(read.csv(file.path(data_dir, event, "schedule.csv")))
         teams(read.csv(file.path(data_dir, event, "teams.csv")))
         alliances(read.csv(file.path(data_dir, event, "alliances.csv")))
+        event_code <- event
         #scouts(read.csv(file.path(data_dir, event, "approved_scouters.csv")))
     }
     
@@ -218,7 +220,7 @@ server <- function(input, output, session) {
     })
     
     #Password logic
-    correct_password <- "0223"
+    correct_password <- "0322"
     user_logged_in <- reactiveVal(in_rstudio)
     
     output$login_ui <- renderUI({
@@ -423,7 +425,6 @@ server <- function(input, output, session) {
         group_by(team)%>%
         summarise(
             match = n(),
-
             total_coral_cycles = sum(
                 auto_coral_L1_num + auto_coral_L2_num + auto_coral_L3_num + 
                     auto_coral_L4_num + coral_L1_num + coral_L2_num + 
@@ -440,9 +441,6 @@ server <- function(input, output, session) {
             
         )
         ggplot(bubble, aes(x = total_coral_cycles, y = total_algae_cycles, 
-                           size = endgame_score)) +
-            geom_point( color = "lightblue2")+
-            geom_text( aes(label=team, vjust = 1.7 ))+
             labs(title = "Teams Performance Summary", 
                  x = "Coral Cycles (auto + teleop)", 
                  y = "Algae Cycles", 
@@ -1900,8 +1898,24 @@ server <- function(input, output, session) {
     })
     
     output$team_image_output <- renderUI({
+        #browser()
         teamnum <- input$team_select
-        img_src <- paste0("images/newton_img/", teamnum, ".png")  #Path to the image
+        if (event_code == "all_data") {
+            #browser()
+            img_src <- paste0("images/vacri_img/", teamnum, ".png")
+            img_vagle <- paste0("images/vagle_img/", teamnum, ".png")
+            img_mdsev <- paste0("images/mdsev_img/", teamnum, ".png")
+            img_dchamp <- paste0("images/dchamp_img/", teamnum, ".png")
+            img_newton <- paste0("images/newton_img/", teamnum, ".png")
+            img_vacri <- paste0("images/vacri_img/", teamnum, ".png")
+            
+            if (file.exists(img_vagle)) img_src <- img_vagle
+            if (file.exists(img_mdsev)) img_src <- img_mdsev
+            if (file.exists(img_dchamp)) img_src <- img_dchamp
+            if (file.exists(img_newton)) img_src <- img_newton
+            if (file.exists(img_vacri)) img_src <- img_vacri
+        }
+        else {img_src <- paste0("images/", event_code, "_img", "/", teamnum, ".png")}
         no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
         
         #Check if the image file exists
@@ -1964,6 +1978,11 @@ server <- function(input, output, session) {
     #SCOUTERS
     scouter_graph_output <- function(raw){
         scout_df <- raw %>%
+            mutate(
+                scout = toupper(scout),
+                scout = trimws(scout),
+                scout = gsub("[^[:alnum:]]", "", scout)
+            ) %>%
             group_by(scout) %>%
             summarise(count = n()) %>%
             arrange(desc(count))
@@ -1981,6 +2000,11 @@ server <- function(input, output, session) {
     
     yapp_graph_output <- function(raw){
         yapp_df <- raw %>%
+            mutate(
+                scout = toupper(scout),
+                scout = trimws(scout),
+                scout = gsub("[^[:alnum:]]", "", scout)
+            ) %>%
             group_by(scout) %>%
             summarize(yapp = nchar(commentOpen)) %>%
             summarize(yapp = mean(yapp)) %>%
@@ -2001,6 +2025,11 @@ server <- function(input, output, session) {
         current_match = max(raw$match)
         all_matches <- 1:current_match
         streak_df <- raw %>%
+            mutate(
+                scout = toupper(scout),
+                scout = trimws(scout),
+                scout = gsub("[^[:alpha:]]", "", scout)
+            ) %>%
             group_by(scout) %>%
             summarise(
                 scouted_matches = list(unique(match))
