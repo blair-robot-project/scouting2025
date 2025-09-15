@@ -162,8 +162,16 @@ ui <- fluidPage(
                         plotlyOutput("yapp_graph_output"),
                         plotOutput("high_streak_output")
                         )
-                    )
+                    ),
+               tabPanel(
+                   "Settings",
+                   # Add settings controls here
+                   h4("Settings Panel"),
+                   sliderInput("match_reset", "Match Number to display data up to: ",
+                               min = 0, max = 200, value = 200),
+                   actionButton("save_settings", "Save Settings")
                ),
+        ),
     #actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
     #actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning"),
     actionButton("vagle", "VAGLE DATA", style="simple", size="sm", color = "warning"),
@@ -254,6 +262,19 @@ server <- function(input, output, session) {
         DTOutput("comments_list")
     })
     
+    observeEvent(input$save_settings, {
+        data <- read.csv(file.path(data_dir, event_code, "data.csv"))
+        if (input$match_reset > nrow(data)){
+            data <- data
+        }
+        else {
+            index <- (data$match <= input$match_reset)
+            data <- data[index, ]
+        }
+        
+        raw(data)
+    })
+        
     #Dataframe Calculations
     mldf <- reactive({
         req(raw())
@@ -1901,10 +1922,8 @@ server <- function(input, output, session) {
     })
     
     output$team_image_output <- renderUI({
-        #browser()
         teamnum <- input$team_select
         if (event_code == "all_data") {
-            #browser()
             img_src <- paste0("images/vacri_img/", teamnum, ".png")
             img_vagle <- paste0("images/vagle_img/", teamnum, ".png")
             img_mdsev <- paste0("images/mdsev_img/", teamnum, ".png")
