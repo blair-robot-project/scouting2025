@@ -192,7 +192,7 @@ server <- function(input, output, session) {
     teams <- reactiveVal()
     alliances <- reactiveVal()
     #scouts <- reactiveVal()
-    event_code <- "all_data"
+    event_code <- reactiveVal()
     
     #Helper Function
     load_event_data <- function(event) {
@@ -200,7 +200,7 @@ server <- function(input, output, session) {
         match_schedule(read.csv(file.path(data_dir, event, "schedule.csv")))
         teams(read.csv(file.path(data_dir, event, "teams.csv")))
         alliances(read.csv(file.path(data_dir, event, "alliances.csv")))
-        event_code <- event
+        event_code(event)
         #scouts(read.csv(file.path(data_dir, event, "approved_scouters.csv")))
     }
     
@@ -263,7 +263,7 @@ server <- function(input, output, session) {
     })
     
     observeEvent(input$save_settings, {
-        data <- read.csv(file.path(data_dir, event_code, "data.csv"))
+        data <- read.csv(file.path(data_dir, event_code(), "data.csv"))
         if (input$match_reset > nrow(data)){
             data <- data
         }
@@ -271,7 +271,6 @@ server <- function(input, output, session) {
             index <- (data$match <= input$match_reset)
             data <- data[index, ]
         }
-        
         raw(data)
     })
         
@@ -1923,7 +1922,7 @@ server <- function(input, output, session) {
     
     output$team_image_output <- renderUI({
         teamnum <- input$team_select
-        if (event_code == "all_data") {
+        if (event_code() == "all_data") {
             img_src <- paste0("images/vacri_img/", teamnum, ".png")
             img_vagle <- paste0("images/vagle_img/", teamnum, ".png")
             img_mdsev <- paste0("images/mdsev_img/", teamnum, ".png")
@@ -1937,7 +1936,7 @@ server <- function(input, output, session) {
             if (file.exists(img_newton)) img_src <- img_newton
             if (file.exists(img_vacri)) img_src <- img_vacri
         }
-        else {img_src <- paste0("images/", event_code, "_img", "/", teamnum, ".png")}
+        else {img_src <- paste0("images/", event_code(), "_img", "/", teamnum, ".png")}
         no_img_available_src <- paste0("images/", "no_image_available", ".jpg")
         
         #Check if the image file exists
