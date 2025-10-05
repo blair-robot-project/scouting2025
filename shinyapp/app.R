@@ -169,11 +169,12 @@ ui <- fluidPage(
                    h4("Settings Panel"),
                    sliderInput("match_reset", "Match Number to display data up to: ",
                                min = 0, max = 200, value = 200),
-                   actionButton("save_settings", "Save Settings")
+                   actionButton("save_settings", "Save Settings"),
+                   actionButton("generate_teams_csv", "Generate Teams List")
                ),
         ),
-    #actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
-    #actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning"),
+    actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
+    actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning"),
     actionButton("vagle", "VAGLE DATA", style="simple", size="sm", color = "warning"),
     actionButton("mdsev", "MDSEV DATA", style="simple", size="sm", color = "warning"),
     actionButton("dchamp", "DCHAMP DATA", style="simple", size="sm", color = "warning"),
@@ -198,8 +199,8 @@ server <- function(input, output, session) {
     load_event_data <- function(event) {
         raw(read.csv(file.path(data_dir, event, "data.csv")))
         match_schedule(read.csv(file.path(data_dir, event, "schedule.csv")))
-        teams(read.csv(file.path(data_dir, event, "teams.csv")))
         alliances(read.csv(file.path(data_dir, event, "alliances.csv")))
+        teams(read.csv(file.path(data_dir, event, "teams.csv")))
         event_code(event)
         #scouts(read.csv(file.path(data_dir, event, "approved_scouters.csv")))
     }
@@ -272,6 +273,14 @@ server <- function(input, output, session) {
             data <- data[index, ]
         }
         raw(data)
+    })
+    
+    observeEvent(input$generate_teams_csv, {
+        data <- read.csv(file.path(data_dir, event_code(), "data.csv"))
+        team <- unique(data$team)
+        team <- sort(team)
+        team <- data.frame(team)
+        write.csv(team, file.path(data_dir, event_code(), "teams.csv"), row.names = FALSE, quote = FALSE)
     })
         
     #Dataframe Calculations
@@ -1810,7 +1819,7 @@ server <- function(input, output, session) {
         past <- raw %>%
             group_by(team)%>%
             filter(team==team_num)%>%
-            summarize(
+            mutate(
                 match = match,
                 total_score = move*3 +
                     auto_coral_L1_num*3 +
@@ -1820,7 +1829,7 @@ server <- function(input, output, session) {
                     robot_net_score*4 +
                     proc_score*2.5 +
                     coral_L1_num*2 +
-                    coral_L2_num*3 +
+                    coral_L2_num*3+
                     coral_L3_num*4 +
                     coral_L4_num*5 +
                     ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
