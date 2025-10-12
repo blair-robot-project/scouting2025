@@ -20,6 +20,24 @@ raw = murders #use equal sign if no programming experience beforehand, use <- if
 hist(raw$total) #have time figure this out with ?hist or help(hist), then reading the documentation
 ```
 
+```{r}
+#Dataframes...
+#What are they?
+
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+y <- 1:10
+# does x = y?
+
+z <- data.frame(x, y)
+#how would I access the x data? y data?
+#how would I access a specific datapoint? z$x[4]
+
+#what is tidy data?
+#go to the slideshow https://docs.google.com/presentation/d/1EegeSUDCqnyg5rroPHMdVEJu8JtvQhFOtKkQcoXN7e8/edit?usp=sharing
+
+
+```
+
 Write graph of murder_rate vs state
 
 ```{r}
@@ -31,7 +49,8 @@ raw <- murders |> #Explain the pipe operator
 #raw$murder_rate <- raw$total / raw$population * 10^6   #alternative method, but gets annoying after more than one change
 
 ggplot(raw, aes(x = total, y = murder_rate)) +  #explain the ggplot library/function, explain the aesthetics
-    geom_point() 
+    geom_point() + 
+    geom_text(aes(label = abb), nudge_y = 20)
 ```
 
 Connect with the scouting2025 repo through "New Project", link GitHub, gain access to the shinyapp/data_files/newton/data.csv.
@@ -75,3 +94,15 @@ After this, I guess take the rookie through the ShinyApp and see if there's anyt
 Extra Thoughts: Go through the shinyapp - Look at the Newton data. Then, selected Alliance 4 and Alliance 8 to analyze. Give context: If we don't win this match, we're out of the season. Give statbotics statistics: 72% chance we lose. They predicted the score of 228 - 254 (R - B).
 
 Game Strategy Process: Identify who we think is going to play in the match. Take those robots, then plug it into the 'Select 6 Teams' feature for easier visualization. Generate our graphs. Let our rookies make some predictions: What will each robot do? Allow them to explore the Compare Teams tab or Single Team tab to look for comments. Try to get the rookies to predict what happens, give each rookie a strategy board and challenge them to come up with their own strategy for our robots. Then, watch the actual match.
+
+```{r}
+#let's start doing bunnybots stuff! we should probably run through an exercise involving them generating fake data! reference the generating_data.qmd
+
+#sample(x, size, replace = ?, )
+#df <- data.frames?
+#write_csv(df, file = "made_up_data.csv")
+
+#This should take ~15-30 minutes top
+
+
+```
