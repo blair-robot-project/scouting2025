@@ -8,7 +8,9 @@ library(scales)
 library(shinyWidgets)
 library(tidyverse)
 library(shinythemes)
-
+library(patchwork)
+library(ggbeeswarm) # to make jitter plots  
+library(RColorBrewer) # for the colors 
 #test 123
 
 blair_red <- "#a7000a"
@@ -62,7 +64,7 @@ ui <- fluidPage(
                         )
                ),
              
-               tabPanel("Alliance/Match",
+               tabPanel("Match",
                         sidebarLayout(
                             sidebarPanel(
                               #Selection between match number or entering 6 teams
@@ -174,6 +176,16 @@ ui <- fluidPage(
                    actionButton("save_settings", "Save Settings"),
                    actionButton("generate_teams_csv", "Generate Teams List")
                ),
+               tabPanel(
+                   "Strategy Board",
+                   sidebarLayout(
+                       sidebarPanel(
+                           selectInput("strategy_match_select", "Override Match", choices = NULL),
+                       ),
+                       mainPanel(
+                       )
+                   )
+               ),
         ),
     actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
     actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning"),
@@ -207,7 +219,7 @@ server <- function(input, output, session) {
         #scouts(read.csv(file.path(data_dir, event, "approved_scouters.csv")))
     }
     
-    load_event_data("all_data")
+    load_event_data("newton")
     addResourcePath("images", "images") #needed to have images show up (don't delete)
     
     observe({
@@ -737,22 +749,33 @@ server <- function(input, output, session) {
                        ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))),
                    
                    total_misc_score = 
-                       (move * 3)
+                       (move * 3),
+                   
+                   alliance_color = factor(
+                       ifelse(team %in% blue_alliance, "blue", "red"), 
+                       levels = c("red", "blue")) 
             )
         
         boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score+boxplot$total_endgame_score+boxplot$total_misc_score
         
-        ggplot(boxplot,aes(x = total, y = team))+    
-            geom_boxplot(position = "dodge2", fill = "azure2") +
-            stat_boxplot(geom = "errorbar") + 
-            stat_summary(fun = mean, geom="point", size=3, color="orange")+
-            labs(title = "Total points scored",x = "Points", y = "Team")+
+        ggplot(boxplot, aes(x = total, y = team)) +  
+            geom_boxplot(position = "dodge2", alpha = 0, whisker.linewidth = 0) + 
+            #transparent inside, no whiskers 
+            ggbeeswarm::geom_quasirandom(#created dots representing every match score
+                shape = 21, color = "white", 
+                alpha = 0.8, size = 3,
+                aes(fill = alliance_color)
+            ) +
             theme_bw()+
             theme(
-                axis.text.y = element_text(color = ifelse(levels(boxplot$team) %in% 
-                                                              red_alliance, "red", "blue"),
-                                           size = 15)
-            )
+                axis.text.y = element_text(
+                    color = ifelse(
+                        levels(boxplot$team) %in% red_alliance, 
+                        "red", 
+                        "blue"),
+                    size = 15)
+            ) +
+            labs(title = "Total points scored",x = "Points", y = "Team", fill = "Alliance Color")
     }
     
     #CORAL LEVEL GRAPH ALLIANCE
@@ -1519,14 +1542,17 @@ server <- function(input, output, session) {
         boxplot$total = boxplot$total_algae_score + boxplot$total_coral_score + boxplot$total_endgame_score + boxplot$total_misc_score
         
         ggplot(boxplot, aes(x = total, y = as.character(team))) +    
-            geom_boxplot(position = "dodge2", fill = "azure2") +
-            stat_boxplot(geom = "errorbar") + 
-            stat_summary(fun = mean, geom = "point", size = 5, color = "orange") +
+            geom_boxplot(position = "dodge2", alpha = 0, whisker.linewidth = 0) +
+            ggbeeswarm::geom_quasirandom(
+                shape = 21, color = "black", 
+                alpha = 0.8, size = 3,
+                aes(fill = "")
+            ) +
             labs(title = paste("Total points scored by Team", team_num),
                  x = "Points", 
-                 y = "Team") +
+                 y = "Team",
+                 fill = "Match") +
             theme_bw() 
-        #coord_fixed(ratio = 20)
     }
     
     #TELE LEVEL
