@@ -105,7 +105,7 @@ TC,18,R1,3359,C,FALSE,TRUE,0,0,0,0,0,TRUE,FALSE,0,3,2,0,0,0,0,0,FALSE,P,FALSE,0,
 GL,18,B2,422,F,FALSE,TRUE,0,0,0,2,0,FALSE,FALSE,0,0,0,0,5,6,9,1,TRUE,D,FALSE,0,0,5,NA,,"Never felt rushed, even with a last second climb."
 GEH,18,R1,2186,M,FALSE,FALSE,0,0,0,1,0,FALSE,FALSE,0,0,0,0,0,0,0,0,TRUE,D,TRUE,0,4,4,NA,0,Did a good job of making one of the coral stations useable and pushing other robots away from it. 
 Ashwin,18,R3,1908,F,FALSE,TRUE,0,0,0,0,0,FALSE,FALSE,0,0,0,0,0,0,3,1,TRUE,D,TRUE,0,0,3,NA,5,Dropped many coral on intakes
-TC,19,R1,8590,C,FALSE,TRUE,0,0,0,0,0,,FALSE,0,0,0,1,6,6,0,2,FALSE,No,FALSE,0,0,4,NA,,
+TC,19,R1,8590,C,FALSE,TRUE,0,0,0,0,0,TRUE,FALSE,0,0,0,1,6,6,0,2,FALSE,No,FALSE,0,0,4,NA,,
 JJ,19,R2,1418,C,FALSE,TRUE,0,0,0,1,0,FALSE,FALSE,0,0,0,1,0,1,1,4,TRUE,D,FALSE,0,0,1,NA,5,"HP missed coral in auto, managed to descore an l3 on their own reef, hp kinda sucks"
 GL,19,B2,4541,M,FALSE,TRUE,0,0,0,1,0,FALSE,FALSE,0,0,0,1,2,4,2,1,FALSE,No,FALSE,0,0,3,NA,,"Didn't try for parking, but probably could have. Otherwise pretty average and focused on ranking points over high score."
 GEH,19,R1,9072,F,FALSE,TRUE,0,0,0,2,0,TRUE,TRUE,3,0,0,4,0,1,1,3,FALSE,P,FALSE,0,0,4,NA,,"Very fast, but tends to miss coral because they rush it"
