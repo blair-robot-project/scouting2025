@@ -14,6 +14,7 @@ library(RColorBrewer) # for the colors
 #test 123
 
 blair_red <- "#a7000a"
+funny_mode <- FALSE
 in_rstudio <- requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()
 
 default_linear_weights <- data.frame(
@@ -491,7 +492,8 @@ server <- function(input, output, session) {
                  x = "Coral Cycles (auto + teleop)", 
                  y = "Algae Cycles", 
                  size = "Endgame")+
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #LARGE SCORING SUMMARY
@@ -571,7 +573,8 @@ server <- function(input, output, session) {
                                          "robot_proc_score" = "Processor")
             )+
             theme_bw()+
-            coord_flip()
+            coord_flip()+
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     check <- function(raw){
@@ -775,7 +778,8 @@ server <- function(input, output, session) {
                         "blue"),
                     size = 15)
             ) +
-            labs(title = "Total points scored",x = "Points", y = "Team", fill = "Alliance Color")
+            labs(title = "Total points scored",x = "Points", y = "Team", fill = "Alliance Color") + 
+            { if (funny_mode) coord_polar("y") else NULL}
     }
     
     #CORAL LEVEL GRAPH ALLIANCE
@@ -810,7 +814,8 @@ server <- function(input, output, session) {
             labs(title = "Tele Coral Summary", 
                  x = "Team", y = "Coral score", fill = "Level") +
             scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy")) +
-            theme_bw()
+            theme_bw() + 
+            { if (funny_mode) coord_polar("y") else NULL}
         }
     
     #CORAL AUTO  
@@ -843,19 +848,19 @@ server <- function(input, output, session) {
             labs(title = "Move + Auto Coral Summary", 
                  x = "Team", y = "Coral Scored Points", fill = "Level") +
             scale_fill_manual(values=c("#f2cbfe","plum2","plum3","plum4", "#FFD700"))+
-            theme_bw() 
+            theme_bw() +
+            { if (funny_mode) coord_polar("y") else NULL}
     }
     
     
     #  ALGAE NET AND PROC GRAPH
     algae_bar <- function(raw, red_alliance = c(params$red1, params$red2, params$red3),
                           blue_alliance= c(params$blue1, params$blue2, params$blue3)) {
-        
         algae <- raw %>%
             filter(team %in% c(red_alliance, blue_alliance)) %>%
             mutate(team = factor(team, c(red_alliance, blue_alliance))) %>%
             group_by(team) %>%
-            summarize(mathes = n(),
+            summarize(matches = n(),
                       net = sum(robot_net_score, na.rm = TRUE)/n(),
                       proc = sum(proc_score, na.rm = TRUE)/n()) %>%
             
@@ -867,14 +872,14 @@ server <- function(input, output, session) {
         ggplot(algae, aes(x = team, y = points, fill = type)) + 
             geom_bar(position = "stack", stat = "identity", 
                      color = ifelse(algae$team %in% red_alliance, "red", "blue"),
-                     size = 0.8
-            ) + 
+                     size = 0.8) + 
             labs(title = "Algae Points Summary", 
                  x = "Team", y = "Algae Points", fill = "Place")+
             
             
             scale_fill_manual(values=c("#008B8B","darkslategray2"))  +
-            theme_bw() 
+            theme_bw() +
+            { if (funny_mode) coord_polar("y") else NULL}
     }
     
     
@@ -908,7 +913,8 @@ server <- function(input, output, session) {
                 values = c("D" = "#BF9B2E", "S" = "#FBC901", "P" = "#FFF68F"),
                 labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage")
             ) +
-            theme_bw() 
+            theme_bw() +
+            { if (funny_mode) coord_polar("y") else NULL}
     }
     
     output$field_image_output <- renderImage({
@@ -970,7 +976,7 @@ server <- function(input, output, session) {
                     tele_coral_L1 + tele_coral_L2 + tele_coral_L3 + tele_coral_L4 +
                     robot_net_score + robot_proc_score +
                     endgame_score
-            ) %>%
+            ) |>
             
             pivot_longer(cols = c(auto_coral_L1, auto_coral_L2, auto_coral_L3, auto_coral_L4, move_pts,
                                   tele_coral_L1, tele_coral_L2, tele_coral_L3, tele_coral_L4,
@@ -978,7 +984,7 @@ server <- function(input, output, session) {
                                   endgame_score), 
                          names_to = "level", 
                          values_to = "score")
-        
+
         ggplot(column4, aes(x = factor(team), y = score, fill = level)) + 
             geom_bar(position = "stack", stat = "identity") + 
             labs(title = "Scoring Summary", 
@@ -1003,7 +1009,8 @@ server <- function(input, output, session) {
             coord_flip()+
             theme( 
                 axis.text.y = element_text(size = 15)
-            )
+            ) + 
+            { if (funny_mode) coord_polar("y") else NULL}
     }
     
     
@@ -1387,7 +1394,8 @@ server <- function(input, output, session) {
                                          "robot_net_score" = "Net", 
                                          "robot_proc_score" = "Processor")
             )+
-            theme_bw()
+            theme_bw()+
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #COMMENTS
@@ -1420,7 +1428,8 @@ server <- function(input, output, session) {
             labs(title = "Comments Summary", 
                  x = "Issues", y = "Frequency") +
             scale_fill_manual(values = team_colors) +
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #PROBLEMS
@@ -1451,7 +1460,8 @@ server <- function(input, output, session) {
             labs(title = "Dead Summary", 
                  x = "Issues", y = "Frequency") +
             scale_fill_manual(values = team_colors) +
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #POINTS OVER TIME
@@ -1478,7 +1488,8 @@ server <- function(input, output, session) {
             scale_y_continuous(limits = c(0, max(past_match_points$total_score, na.rm = TRUE))) +
             scale_x_continuous(breaks = unique(past_match_points$match)) +
             labs(title = "Points Over Time", x = "Match", y = "Total Score", color = "Team") +
-            theme_minimal()
+            theme_minimal() + 
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #DRIVER OVER TIME
@@ -1500,7 +1511,8 @@ server <- function(input, output, session) {
             scale_y_continuous(limits = c(0, 5, na.rm = TRUE)) +
             scale_x_continuous(breaks = unique(past_match_points$match)) +
             labs(title = "Driver Ranking Over Time", x = "Match", y = "Driver Ranking", color = "Team") +
-            theme_minimal()
+            theme_minimal() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     output$compare_teams_data_row <- renderDT({
@@ -1552,12 +1564,12 @@ server <- function(input, output, session) {
                  x = "Points", 
                  y = "Team",
                  fill = "Match") +
-            theme_bw() 
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #TELE LEVEL
     tele_graph_single <- function(raw, team_num) {
-        
         bar <- raw %>%
             filter(team == team_num) %>%
             group_by(team) %>%
@@ -1587,7 +1599,8 @@ server <- function(input, output, session) {
             labs(title = paste("Level Summary for Team", team_num), 
                  x = "Team", y = "Tele score", fill = "Points") +
             scale_fill_manual(values=c("lightskyblue","royalblue1","royalblue3","navy", "#008B8B","darkslategray2")) +
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
         
         return(p)
     }
@@ -1625,17 +1638,20 @@ server <- function(input, output, session) {
                               labels=c("autoMove" = "Move",
                                        "autol1" = "Auto L1", "autol2" = "Auto L2", "autol3" = "Auto L3", "autol4" = "Auto L4")
             ) +
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #ALGAE POINTS GRAPH
     algae_bar_single <- function(raw, team_num) {
+        browser()
         algae <-  raw %>%
             filter(team == team_num) %>%
             group_by(team, ending) %>%
-            summarize(mathes = n(),
-                      net = sum(robot_net_score, na.rm = TRUE)/n(),
-                      proc = sum(proc_score, na.rm = TRUE)/n()) %>%
+            summarize(
+                matches = n(),
+                net = sum(robot_net_score, na.rm = TRUE)/n(),
+                proc = sum(proc_score, na.rm = TRUE)/n()) %>%
             
             pivot_longer(cols = c(net, proc), 
                          names_to = "type", 
@@ -1670,7 +1686,8 @@ server <- function(input, output, session) {
                 values = c("D" = "#BF9B2E", "S" = "#FBC901", "P" = "#FFF68F"),
                 labels = c("D" = "Deep", "S" = "Shallow", "P" = "Park", "ending" = "Cage")
             ) +
-            theme_bw() 
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #COMMENTS TABLE
@@ -1699,7 +1716,8 @@ server <- function(input, output, session) {
             geom_bar(position = "stack", stat = "identity", fill = "#EE3B3B") + 
             labs(title = "Comments Summary", 
                  x = "Issues", y = "Frequency") +
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #PROBLEMS TABLE
@@ -1726,7 +1744,8 @@ server <- function(input, output, session) {
             geom_bar(position = "stack", stat = "identity", fill = "#EE3B3B") + 
             labs(title = "Dead Summary", 
                  x = "Issues", y = "Frequency") +
-            theme_bw()
+            theme_bw() +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     #PAST MATCH HISTORY (fixed)
@@ -1802,7 +1821,8 @@ server <- function(input, output, session) {
             theme(
                 axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
                 plot.title = element_text(size = 14, face = "bold")
-            )
+            ) +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
            # geom_text(aes(label = score), size = 3, hjust = 0.2, vjust = 2, position = "stack")
         
     }
@@ -1840,7 +1860,8 @@ server <- function(input, output, session) {
             geom_line(aes(y=driver), color = blair_red) +
             geom_line(aes(y=defense), color = "blue") +
             scale_y_continuous(limits = c(1, 5)) +
-            scale_x_continuous(breaks=past$match)
+            scale_x_continuous(breaks=past$match) +
+            {if (funny_mode) coord_polar("y") else NULL}
     }
     
     cycle_history <- function(raw, team_num){
@@ -1871,7 +1892,8 @@ server <- function(input, output, session) {
             geom_line(aes(y=algae_tele_cycles), color = "blue") +
             geom_line(aes(y=coral_tele_cycles+algae_tele_cycles), color = "black") +
             scale_y_continuous() +
-            scale_x_continuous(breaks=past$match) + ylab("Coral (red) || Algae (blue) || Total (black) Cycles")
+            scale_x_continuous(breaks=past$match) + ylab("Coral (red) || Algae (blue) || Total (black) Cycles") +
+            {if (funny_mode) coord_polar(theta = "y") else NULL}
     }
     
     team_comments <- reactive({
