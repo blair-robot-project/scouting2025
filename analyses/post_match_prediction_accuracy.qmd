@@ -1,4 +1,5 @@
 ---
+name---
 title: "post_match_prediction_accuracy"
 format: html
 ---
@@ -106,3 +107,239 @@ ggplot(new_df, aes(x = match)) +
 
 #note we become "better" than statbotics at match 18
 ```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+priored_newton <- read.csv("../comparison_newton.csv")
+priored_dchamp <- read.csv("../comparison_dchamp.csv")
+schedule_newton <- read.csv("../shinyapp/data_files/newton/schedule.csv")
+schedule_dchamp <- read.csv("../shinyapp/data_files/dchamp/schedule.csv")
+statbotics_newton <- read.csv("data/statbotics_newton_data.csv")
+statbotics_dchamp <- read.csv("data/statbotics_dchamp_data.csv")
+
+match_prediction <- function(statbotics_data, schedule, data) {
+    predictions <- schedule |>
+        rowwise() |>
+        mutate(
+            red_score = 
+                data[data$team == R1,]$priored +
+                data[data$team == R2,]$priored +
+                data[data$team == R3,]$priored,
+            blue_score = 
+                data[data$team == B1,]$priored +
+                data[data$team == B2,]$priored +
+                data[data$team == B3,]$priored,
+            win = 
+                ifelse(
+                    red_score == blue_score, 
+                    "tie", 
+                     ifelse(
+                         red_score > blue_score,
+                         "red",
+                         "blue"
+                         )
+                    ),
+        )
+    statbotics_data <- statbotics_data |>
+        mutate(
+            win = ifelse(
+                    red_score == blue_score, 
+                    "tie", 
+                     ifelse(
+                         red_score > blue_score,
+                         "red",
+                         "blue"
+                    )
+            ),
+        )
+    probability = sum(predictions$win == statbotics_data$win)/length(predictions$win)
+    probability
+}
+
+match_prediction(statbotics_newton, schedule_newton, priored_newton)
+match_prediction(statbotics_dchamp, schedule_dchamp, priored_dchamp)
+```
+
+```{r}
+library(glmnet)
+library(tidyverse)
+library(dplyr)
+library(scoutR)
+
+prior_ridge <- function(X, y, lambda, beta_0) {
+    p <- ncol(X)
+    lambda <- diag(lambda, p)
+    solve(crossprod(X) + lambda, crossprod(X, y) + lambda %*% beta_0)
+}
+
+calculate_priors <- function(data, match, event_code, opr, te){
+    design <- as.matrix(lineup_design_matrix(data))
+    design <- design[-match, ]
+    response <- c(data$red_score, data$blue_score)[-match]
+    start_epas <- sapply(te, function(te){te$epa$stats$start})
+    names(start_epas) <- sapply(te, function(te){te$team})
+    preelim_epas <- sapply(te, function(te){te$epa$stats$pre_elim})
+    names(preelim_epas) <- names(start_epas)
+    
+    lambdas <- 10^seq(3, -2, by = -.1)
+    cv_fit <- cv.glmnet(as.matrix(design), response, alpha = 0, nlambda = 1000)
+    lambda <- cv_fit$lambda.min
+    
+    priored <- prior_ridge(as.matrix(design), response, lambda, start_epas)[, 1]
+    comparison <- cbind(start_epas, preelim_epas, opr, priored)
+}
+
+calculate_total_err <- function(raw, match_num, event_code, opr, te) {
+    data <- raw[1:match_num, ]
+    exclusion <- 1:(match_num*2)
+    probabilities <- data.frame(
+        r1 = c(data$red1, data$blue1),
+        r2 = c(data$red2, data$blue2),
+        r3 = c(data$red3, data$blue3),
+        score = c(data$red_score, data$blue_score),
+        exclude = exclusion
+    ) 
+    
+    teams <- unique(c(
+        as.integer(gsub("frc", "", raw$red1)), 
+        as.integer(gsub("frc", "", raw$red2)), 
+        as.integer(gsub("frc", "", raw$red3)), 
+        as.integer(gsub("frc", "", raw$blue1)), 
+        as.integer(gsub("frc", "", raw$blue2)), 
+        as.integer(gsub("frc", "", raw$blue3)))
+        )
+    teams <- teams[order(teams)]
+    browser() 
+    probabilities <- probabilities |>
+        rowwise() |> 
+        mutate(
+            priors = list(calculate_priors(data, exclude, event_code, opr, te)),
+            predict_score =
+                priors[[which.max(teams == as.integer(gsub("frc", "", r1)))]] +
+                priors[[which.max(teams == as.integer(gsub("frc", "", r2)))]] +
+                priors[[which.max(teams == as.integer(gsub("frc", "", r3)))]]
+        )
+    probabilities2 <- probabilities
+    probabilities2$priors <- as.character(probabilities2$priors) 
+    write.table(probabilities2, file = "data/priors.csv")
+    mean((probabilities$score - probabilities$predict_score)^2)
+    }
+
+event_code <- "2025chcmp"
+raw <- event_matches(event_code, match_type = "qual") |>
+    select(red1, red2, red3, blue1, blue2, blue3, red_score, blue_score)
+
+up_to_match <- 20:length(raw$red1)
+opr <- coefficients(fit_event_lr(event_code))
+te <- team_events_sb(event = event_code)
+probability_list <- data.frame(event_code, up_to_match) |>
+    rowwise() |>
+    mutate(
+        #probability = calculate_total_err(raw, up_to_match, event_code, opr, te)
+    )
+
+probability = calculate_total_err(raw, 108, event_code, opr, te)
+#7:45 Newton
+#6:30 CHCMP
+
+getwd()
+write.csv(select(probability_list, event_code, up_to_match, probability), file = "data/probability_LOOCV.csv")
+
+```
+
+```{r}
+library(plotly)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+
+p <- ggplot(read.csv("data/probability_dchamp.csv"), aes(x = up_to_match, y = probability, label = probability)) + 
+    geom_point() + 
+    geom_vline(xintercept = 54) + 
+    geom_vline(xintercept = 95) + 
+    geom_line(y = 74.1, color = "#a7000a") +
+    annotate("text", x = 35, y = 75, label = "Final Statbotics Accuracy", color = "#a7000a") +
+    annotate("text", x = 35, y = 72, label = "Day 2 Pre-Lunch") +
+    annotate("text", x = 74.5, y = 65, label = "Day 2 After-Lunch") +
+    annotate("text", x = 104, y = 65, label = "Day 3 Start") + 
+    labs(
+        x = "Match",
+        y = "Prediction Accuracy %",
+        title = "DChamp TBA Data up to Match X vs. GK Prediction Accuracy %"
+    )
+
+q <- ggplot(read.csv("data/probability_newton.csv"), aes(x = up_to_match, y = probability, label = probability)) +
+    geom_point() + 
+    geom_line(y = 80.8, color = "#a7000a") +
+    labs(
+        x = "Match",
+        y = "Prediction Accuracy %",
+        title = "Newton TBA Data up to Match X vs. GK Prediction Accuracy %"
+    )
+
+r <- ggplot(read.csv("data/probability_mdsev.csv"), aes(x = up_to_match, y = probability, label = probability)) +
+    geom_point() + 
+    geom_line(y = 83.9, color = "#a7000a") +
+    labs(
+        x = "Match",
+        y = "Prediction Accuracy %",
+        title = "Newton TBA Data up to Match X vs. GK Prediction Accuracy %"
+    )
+
+s <- ggplot(read.csv("data/probability_vagle.csv"), aes(x = up_to_match, y = probability, label = probability)) +
+    geom_point() + 
+    geom_line(y = 69.1, color = "#a7000a") +
+    labs(
+        x = "Match",
+        y = "Prediction Accuracy %",
+        title = "Newton TBA Data up to Match X vs. GK Prediction Accuracy %"
+    )
+
+a <- function(data) {
+    default <- ggplot(data, aes(x = up_to_match, y = probability, label = probability)) +
+        geom_point() + 
+        geom_line(
+            y = case_when(
+                data$event_code == "2025vagle" ~ 69.1,
+                data$event_code == "2025mdsev" ~ 83.9,
+                data$event_code == "2025chcmp" ~ 74.1,
+                data$event_code == "2025new" ~ 80.8,
+            ), 
+            color = "#a7000a") +
+        labs(
+            x = "Match",
+            y = "Prediction Accuracy %",
+            title = paste(data$event_code[1], "TBA Data up to Match X vs. GK Prediction Accuracy %")
+        ) + 
+        annotate(
+            "text", 
+            x = 35, 
+            y = case_when(
+                data$event_code == "2025vagle" ~ 69-0.5,
+                data$event_code == "2025mdsev" ~ 84-0.5,
+                data$event_code == "2025chcmp" ~ 74-0.5,
+                data$event_code == "2025new" ~ 81-0.5,
+                ),  
+            label = "Final Statbotics Accuracy", color = "#a7000a"
+            )
+    default
+}
+vagle2025 <- read.csv("data/probability_vagle.csv")
+mdsev2025 <- read.csv("data/probability_mdsev.csv")
+dchamp2025 <- read.csv("data/probability_dchamp.csv")
+newton2025 <- read.csv("data/probability_newton.csv")
+dchamp2024 <- read.csv("data/probability_2024chcmp.csv")
+#a(newton2025)
+
+p <- read.csv("data/probability_LOOCV.csv")
+ggplot(p, aes(x = up_to_match, y = `avg_LSE`)) + 
+    geom_point() + 
+    labs(
+        x = "Data Given up to Match", 
+        y = "Average Least Squared Error"
+    ) + 
+    theme_bw()
+```
+
+\
