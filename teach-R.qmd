@@ -106,3 +106,21 @@ Game Strategy Process: Identify who we think is going to play in the match. Take
 
 
 ```
+
+# Style Guide
+
+-   snake_case variable names
+
+-   80 characters in a line
+
+-   Indentation
+
+    -   We indent using tabs (a tab is 4 spaces, this requires a change from default RStudio)
+
+-   one space (not two!) between fxn arguments ("add(a, b)"), parameter assignments ("na.rm = TRUE"), and operators ("a + b", "a == b")
+
+-   Piping
+
+    -   Use \|\> operator
+
+    -   Pipes (either with "+" or "\|\>") require a new line
