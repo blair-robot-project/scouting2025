@@ -11,6 +11,7 @@ library(shinythemes)
 library(patchwork)
 library(ggbeeswarm) # to make jitter plots  
 library(RColorBrewer) # for the colors 
+
 #test 123
 
 blair_red <- "#a7000a"
@@ -138,11 +139,22 @@ ui <- fluidPage(
                     sidebarLayout(
                         sidebarPanel(
                             selectInput("team_select", "Select Team", choices = NULL),
-                            selectInput("team_graph", "Choose Graph", choices = c("Overall Points Box Plot", "Auto Bar Graph", "Tele Bar Graph", "Endgame Bar Graph", "Comments", "Problems", "Match History", "Driver Rating History", "Cycle History")),
-                            uiOutput("team_image_output")
+                            selectInput("team_graph", "Choose Graph", choices = c("Point Plots", "Comments", "Problems", "Match History", "Driver Rating History", "Cycle History")),
+                            uiOutput("team_zimage_output")
                             ),
                         mainPanel(
-                            plotOutput("team_graph_output"),
+                            conditionalPanel(
+                                condition = "input.team_graph == 'Point Plots'",
+                                plotOutput("boxplot_graph_single"),
+                                plotOutput("auto_graph_single"),
+                                plotOutput("tele_graph_single"),
+                                plotOutput("endgame_graph_single")
+                            ),
+                            conditionalPanel(
+                                condition = "input.team_graph != 'Point Plots'",
+                                plotOutput("team_graph_output")
+                            ),
+                            
                             DTOutput("team_data_row"),
                             if (in_rstudio){
                                 h3("Comments")
@@ -178,15 +190,9 @@ ui <- fluidPage(
                    actionButton("generate_teams_csv", "Generate Teams List")
                ),
                tabPanel(
-                   "Strategy Board",
-                   sidebarLayout(
-                       sidebarPanel(
-                           selectInput("strategy_match_select", "Override Match", choices = NULL),
-                       ),
-                       mainPanel(
-                       )
-                   )
-               ),
+                   "Data Val.", 
+                   DTOutput("raw_editable")
+               )
         ),
     actionButton("check", "CHECK DATA", style="simple", size="sm", color = "warning"),
     actionButton("schedule", "CHECK SCHEDULE", style="simple", size="sm", color = "warning"),
@@ -407,7 +413,6 @@ server <- function(input, output, session) {
     
     consolidated_team_data <- reactive({
         req(mldf())
-        
         mldf() %>%
         group_by(team) %>%
         summarize(
@@ -577,7 +582,7 @@ server <- function(input, output, session) {
                                          "robot_net_score" = "Net", 
                                          "robot_proc_score" = "Processor")
             )+
-            theme_bw()+
+            theme_bw() +
             coord_flip()+
             {if (funny_mode()) coord_polar(theta = "y") else NULL}
     }
@@ -616,7 +621,6 @@ server <- function(input, output, session) {
         if(is.na(temp_1) | is.na(temp_2)){ return(priority_matches)}
         teams_next_next_match = match_schedule[temp_2,]
         for (team in teams_next_next_match){
-            #browser()
             if (team != 449 & team!=temp_2){
                 team_next_next_match = which(match_schedule == team, arr.ind = TRUE)[,1]
                 team_next_next_match = sort(team_next_next_match)
@@ -740,8 +744,8 @@ server <- function(input, output, session) {
     
     boxplot_graph_alliance <- function(raw, red_alliance = c(params$red1, params$red2, params$red3), 
                                        blue_alliance = c(params$blue1, params$blue2, params$blue3)) {
-        boxplot <- raw %>%
-            filter(team %in% c(blue_alliance,red_alliance)) %>%
+        boxplot <- raw |>
+            filter(team %in% c(blue_alliance,red_alliance)) |>
             mutate(team = factor(team, c(blue_alliance,red_alliance)))%>%
             
             mutate(total_coral_score = 
@@ -1320,7 +1324,7 @@ server <- function(input, output, session) {
             auto_coral_graph + labs(title = paste("Move + Auto Coral Summary - Match", selected_match))
         })
         
-        output$MATCH_alliance_algae_bar_graph_output <- renderPlotly({
+        output$MATCH_alliance_algae_bar_graph_output <- renderPlot({
             algae_graph <- algae_bar(match_data, red_teams, blue_teams)
             algae_graph + labs(title = paste("Algae Points Summary - Match", selected_match))
         })
@@ -1649,7 +1653,6 @@ server <- function(input, output, session) {
     
     #ALGAE POINTS GRAPH
     algae_bar_single <- function(raw, team_num) {
-        browser()
         algae <-  raw %>%
             filter(team == team_num) %>%
             group_by(team, ending) %>%
@@ -1836,7 +1839,14 @@ server <- function(input, output, session) {
     output$past_team_table <- renderDT({
         selected_team <- input$team_select
         team_past_data <- past_raw_team_data()[past_raw_team_data()$team == selected_team, ]
-        datatable(team_past_data, options = list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, scrollX = TRUE, scrollY = 500, pageLength = nrow(team_past_data)))
+        datatable(
+            team_past_data, 
+            options = 
+                list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, 
+                     scrollX = TRUE, scrollY = 500, 
+                     pageLength = nrow(team_past_data)),
+            editable = TRUE
+            )
     })
     
     #PAST DRIVER GRAPH
@@ -1921,19 +1931,7 @@ server <- function(input, output, session) {
     output$team_graph_output <- renderPlot({
         selected_team <- input$team_select
         
-        if (input$team_graph == "Overall Points Box Plot"){
-            boxplot_graph_single(raw(), selected_team)
-            } 
-        else if (input$team_graph == "Auto Bar Graph"){
-            auto_graph_single(raw(), selected_team)
-            } 
-        else if (input$team_graph == "Tele Bar Graph"){
-            tele_graph_single(raw(), selected_team)
-            } 
-        else if (input$team_graph == "Endgame Bar Graph"){
-            endgame_graph_single(raw(), selected_team)
-            } 
-        else if (input$team_graph == "Comments"){
+        if (input$team_graph == "Comments"){
             comment_table_single(raw(), selected_team)
         } 
         else if (input$team_graph == "Problems"){
@@ -1950,6 +1948,22 @@ server <- function(input, output, session) {
         } 
     })
     
+    output$boxplot_graph_single <- renderPlot({
+        selected_team <- input$team_select
+        boxplot_graph_single(raw(), selected_team)
+    })
+    output$auto_graph_single <- renderPlot({
+        selected_team <- input$team_select
+        auto_graph_single(raw(), selected_team)
+    })
+    output$tele_graph_single <- renderPlot({
+        selected_team <- input$team_select
+        tele_graph_single(raw(), selected_team)
+    })
+    output$endgame_graph_single <- renderPlot({
+        selected_team <- input$team_select
+        endgame_graph_single(raw(), selected_team)
+    })
     
     #COMPARE TEAMS CHOICE LOGIC
     output$compare_teams_graph_output <- renderPlot({
@@ -1973,15 +1987,15 @@ server <- function(input, output, session) {
     })
     
     output$scouter_graph_output <- renderPlotly({
-        scouter_graph_output(raw())
+        scout_graph(raw())
         })
     
     output$yapp_graph_output <- renderPlotly({
-        yapp_graph_output(raw())
+        yapp_graph(raw())
     })
     
     output$high_streak_output <- renderPlot({
-        high_streak_output(raw())
+        high_streak(raw())
     })
     
     output$team_image_output <- renderUI({
@@ -2061,38 +2075,40 @@ server <- function(input, output, session) {
     })
     
     #SCOUTERS
-    scouter_graph_output <- function(raw){
-        scout_df <- raw %>%
+    scout_graph <- function(raw){
+        scout_df <- raw |>
             mutate(
                 scout = toupper(scout),
                 scout = trimws(scout),
                 scout = gsub("[^[:alnum:]]", "", scout)
-            ) %>%
-            group_by(scout) %>%
-            summarise(count = n()) %>%
+            ) |>
+            group_by(scout) |>
+            summarise(count = n()) |>
             arrange(desc(count))
         
         scout_df$scout <- factor(scout_df$scout, levels = scout_df$scout)
         
-        temp <- ggplot(scout_df, aes(x = `scout`, y = count, text = paste("Scout: ", scout, "|| Matches Scouted:", count))) + 
+        temp <- ggplot(scout_df, aes(x = scout, y = count, text = paste("Scout: ", scout, "|| Matches Scouted:", count))) + 
             geom_bar(position = "stack", stat = "identity", fill = "coral3") + 
-            labs(title = "Scout Summary", 
-                 x = "Scouts", y = "Times Scouted") +
+            labs(
+                title = "Scout Summary", 
+                x = "Scouts", 
+                y = "Times Scouted",
+                caption = "abc") +
             theme_bw()
         
         ggplotly(temp, tooltip = "text")
     }
     
-    yapp_graph_output <- function(raw){
+    yapp_graph <- function(raw){
         yapp_df <- raw %>%
             mutate(
                 scout = toupper(scout),
                 scout = trimws(scout),
                 scout = gsub("[^[:alnum:]]", "", scout)
             ) %>%
-            group_by(scout) %>%
-            summarize(yapp = nchar(commentOpen)) %>%
-            summarize(yapp = mean(yapp)) %>%
+            group_by(scout) |>
+            summarize(yapp = mean(nchar(commentOpen))) |>
             arrange(desc(yapp))
         
         yapp_df$scout <- factor(yapp_df$scout, levels = yapp_df$scout)
@@ -2103,10 +2119,10 @@ server <- function(input, output, session) {
                  x = "Scouts", y = "Length of Comments") +
             theme_bw()
         
-        ggplotly(temp, tooltip = "text")
+        ggplotly(temp)
     }
     
-    high_streak_output <- function(raw){
+    high_streak <- function(raw){
         current_match = max(raw$match)
         all_matches <- 1:current_match
         streak_df <- raw %>%
@@ -2318,5 +2334,16 @@ server <- function(input, output, session) {
             write.csv(calculate_team_scores(), file, row.names = FALSE)
         }
     )
+    
+    output$raw_editable <- renderDT({
+        datatable(
+            raw(), 
+            options = 
+                list(dom = "ft", lengthChange = FALSE, rowNames = FALSE, 
+                     scrollX = TRUE, scrollY = 500, 
+                     pageLength = nrow(raw())),
+            editable = TRUE
+        )
+    })
 }
 shinyApp(ui, server)
