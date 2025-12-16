@@ -4,7 +4,12 @@ title: "post_match_prediction_accuracy"
 format: html
 ---
 
+# Scouting Predictive Accuracy against Statbotics
+
 ```{r}
+#| warning: false
+#| eval: false
+
 library(tidyverse)
 
 raw <- read.csv("../shinyapp/data_files/dchamp/data.csv")
@@ -75,10 +80,14 @@ for (i in 1:max(chosen_statbotics$match)){
     new_df[i,1] = i
     new_df[i,2] = match_by_match_prediction(i, chosen_statbotics, chosen_schedule)
 }
+
+saveRDS(new_df, file = "data/preds_comp.rds")
 #this takes forever by the way so have fun waiting for 80 seconds
 ```
 
 ```{r}
+new_df <- readRDS("data/preds_comp.rds")
+
 #NEWTON STATBOTICS GRAPH
 blair_red <- "#a7000a"
 
@@ -161,6 +170,8 @@ match_prediction(statbotics_newton, schedule_newton, priored_newton)
 match_prediction(statbotics_dchamp, schedule_dchamp, priored_dchamp)
 ```
 
+# LOOCV
+
 ```{r}
 library(glmnet)
 library(tidyverse)
@@ -192,7 +203,7 @@ calculate_priors <- function(data, match, event_code, opr, te){
 
 calculate_total_err <- function(raw, match_num, event_code, opr, te) {
     data <- raw[1:match_num, ]
-    exclusion <- 1:(match_num*2)
+    exclusion <- 1:(match_num * 2)
     probabilities <- data.frame(
         r1 = c(data$red1, data$blue1),
         r2 = c(data$red2, data$blue2),
@@ -210,7 +221,7 @@ calculate_total_err <- function(raw, match_num, event_code, opr, te) {
         as.integer(gsub("frc", "", raw$blue3)))
         )
     teams <- teams[order(teams)]
-    browser() 
+
     probabilities <- probabilities |>
         rowwise() |> 
         mutate(
@@ -220,11 +231,9 @@ calculate_total_err <- function(raw, match_num, event_code, opr, te) {
                 priors[[which.max(teams == as.integer(gsub("frc", "", r2)))]] +
                 priors[[which.max(teams == as.integer(gsub("frc", "", r3)))]]
         )
-    probabilities2 <- probabilities
-    probabilities2$priors <- as.character(probabilities2$priors) 
-    write.table(probabilities2, file = "data/priors.csv")
-    mean((probabilities$score - probabilities$predict_score)^2)
-    }
+
+    mean((probabilities$score - probabilities$predict_score) ^ 2)
+}
 
 event_code <- "2025chcmp"
 raw <- event_matches(event_code, match_type = "qual") |>
@@ -233,19 +242,17 @@ raw <- event_matches(event_code, match_type = "qual") |>
 up_to_match <- 20:length(raw$red1)
 opr <- coefficients(fit_event_lr(event_code))
 te <- team_events_sb(event = event_code)
-probability_list <- data.frame(event_code, up_to_match) |>
-    rowwise() |>
-    mutate(
-        #probability = calculate_total_err(raw, up_to_match, event_code, opr, te)
+
+for (i in seq_along(up_to_match)){
+    loocv_df <- cbind(
+        loocv_df, 
+        data.frame(raw, up_to_match[i], event_code, opr, te)
     )
+}
 
-probability = calculate_total_err(raw, 108, event_code, opr, te)
-#7:45 Newton
-#6:30 CHCMP
+loocv_df <- cbind(probability_list, event_code, up_to_match, probability)
 
-getwd()
-write.csv(select(probability_list, event_code, up_to_match, probability), file = "data/probability_LOOCV.csv")
-
+write.csv(loocv_df, file = "data/probability_LOOCV.csv")
 ```
 
 ```{r}
