@@ -247,10 +247,17 @@ epas <- data.frame(
     preelim = sapply(te, function(te){te$epa$stats$pre_elim})
 )
 
+loocv_df <- data.frame()
+
 for (i in seq_along(up_to_match)){
-    loocv_df <- cbind(
+    cat("i:", i, "\n")
+    loocv_df <- rbind(
         loocv_df, 
-        data.frame(raw, up_to_match[i], event_code, opr, te)
+        data.frame(
+            event_code, match_limit = up_to_match[i], 
+            mse = calculate_total_err(raw, up_to_match[i], 
+                                      event_code, opr, epas)
+        )
     )
 }
 
