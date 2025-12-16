@@ -184,24 +184,20 @@ prior_ridge <- function(X, y, lambda, beta_0) {
     solve(crossprod(X) + lambda, crossprod(X, y) + lambda %*% beta_0)
 }
 
-calculate_priors <- function(data, match, event_code, opr, te){
+calculate_priors <- function(data, match, event_code, opr, epas){
     design <- as.matrix(lineup_design_matrix(data))
     design <- design[-match, ]
     response <- c(data$red_score, data$blue_score)[-match]
-    start_epas <- sapply(te, function(te){te$epa$stats$start})
-    names(start_epas) <- sapply(te, function(te){te$team})
-    preelim_epas <- sapply(te, function(te){te$epa$stats$pre_elim})
-    names(preelim_epas) <- names(start_epas)
-    
+
     lambdas <- 10^seq(3, -2, by = -.1)
     cv_fit <- cv.glmnet(as.matrix(design), response, alpha = 0, nlambda = 1000)
     lambda <- cv_fit$lambda.min
     
-    priored <- prior_ridge(as.matrix(design), response, lambda, start_epas)[, 1]
-    comparison <- cbind(start_epas, preelim_epas, opr, priored)
+    priored <- prior_ridge(as.matrix(design), response, lambda, epas$start)[, 1]
+    comparison <- cbind(epas$start, epas$preelim, opr, priored)
 }
 
-calculate_total_err <- function(raw, match_num, event_code, opr, te) {
+calculate_total_err <- function(raw, match_num, event_code, opr, epas) {
     data <- raw[1:match_num, ]
     exclusion <- 1:(match_num * 2)
     probabilities <- data.frame(
@@ -225,7 +221,9 @@ calculate_total_err <- function(raw, match_num, event_code, opr, te) {
     probabilities <- probabilities |>
         rowwise() |> 
         mutate(
-            priors = list(calculate_priors(data, exclude, event_code, opr, te)),
+            priors = list(
+                calculate_priors(data, exclude, event_code, opr, epas)
+            ),
             predict_score =
                 priors[[which.max(teams == as.integer(gsub("frc", "", r1)))]] +
                 priors[[which.max(teams == as.integer(gsub("frc", "", r2)))]] +
@@ -242,6 +240,12 @@ raw <- event_matches(event_code, match_type = "qual") |>
 up_to_match <- 20:length(raw$red1)
 opr <- coefficients(fit_event_lr(event_code))
 te <- team_events_sb(event = event_code)
+# only need team number, start EPA, and post-quals EPA
+epas <- data.frame(
+    team = sapply(te, function(te){te$team}), 
+    start = sapply(te, function(te){te$epa$stats$start}), 
+    preelim = sapply(te, function(te){te$epa$stats$pre_elim})
+)
 
 for (i in seq_along(up_to_match)){
     loocv_df <- cbind(
@@ -249,8 +253,6 @@ for (i in seq_along(up_to_match)){
         data.frame(raw, up_to_match[i], event_code, opr, te)
     )
 }
-
-loocv_df <- cbind(probability_list, event_code, up_to_match, probability)
 
 write.csv(loocv_df, file = "data/probability_LOOCV.csv")
 ```
