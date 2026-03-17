@@ -282,7 +282,7 @@ p <- ggplot(read.csv("data/probability_dchamp.csv"), aes(x = up_to_match, y = pr
     labs(
         x = "Match",
         y = "Prediction Accuracy %",
-        title = "DChamp TBA Data up to Match X vs. GK Prediction Accuracy %"
+        title = "DChamp TBA Data up to Match X vs. Prediction Accuracy %"
     )
 
 q <- ggplot(read.csv("data/probability_newton.csv"), aes(x = up_to_match, y = probability, label = probability)) +
@@ -349,7 +349,7 @@ dchamp2024 <- read.csv("data/probability_2024chcmp.csv")
 #a(newton2025)
 
 p <- read.csv("data/probability_LOOCV.csv")
-ggplot(p, aes(x = up_to_match, y = `avg_LSE`)) + 
+ggplot(p, aes(x = match_limit, y = `mse`)) + 
     geom_point() + 
     labs(
         x = "Data Given up to Match", 

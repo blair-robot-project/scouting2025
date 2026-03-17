@@ -1,0 +1,19 @@
+Data Dictionary: 
+
+This dataset tracks Einstein representation by region in FRC from 2014 - 2025. 
+I selected 2014 as the start point because it starts the 4-team alliance era at the Championship, and because the event/alliances endpoint for TBA is available starting then.
+
+Fields: 
+`region` - (character) Country, or State/Province if Country is US or Canada
+`actual` - Number of Einstein appearances from that region
+`actual01` - Number of Einstein appearances as a captain or 1st round pick
+`actual23` - Number of Einstein appearances as a 2nd or 3rd round pick
+`expected` - Projected number of Einstein appearances given the region's size, assuming equal skill across regions. 
+`expected01` - As above, for captains/1st round picks
+`expected23` - As above, for 2nd/3rd round picks
+`diff` - `actual` - `expected`
+`diff01` - `actual01` - `expected01`
+`diff23` - `actual23` - `expected23`
+`ratio` - `actual` / `expected`
+`ratio01` - `actual01` / `expected01`
+`ratio23` - `actual23` / `expected23`

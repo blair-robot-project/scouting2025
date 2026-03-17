@@ -1,4 +1,4 @@
-"","event_code","up_to_match","avg_LSE"
+"","event_code","match_limit","mse"
 "1","2025chcmp",20,1084.54677
 "2","2025chcmp",21,1202.89334285714
 "3","2025chcmp",22,1172.96169318182

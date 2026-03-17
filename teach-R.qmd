@@ -124,3 +124,44 @@ Game Strategy Process: Identify who we think is going to play in the match. Take
     -   Use \|\> operator
 
     -   Pipes (either with "+" or "\|\>") require a new line
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+scout_selected = "BP"
+raw <- read.csv("shinyapp/data_files/all_data/data.csv")
+data <- raw |>
+    mutate(
+        scout = toupper(scout),
+        scout = trimws(scout),
+        scout = gsub("[^[:alnum:]]", "", scout)    
+    ) |>
+    filter(scout == scout_selected) |>
+    select(scout, match) |> 
+    rowwise() |>
+    mutate(
+        scouted = nrow(data[data$match < match, 1])
+    )
+
+
+ggplot(data, aes(x = match, y = scouted)) +
+    geom_line(color = "#a9000a") + 
+    theme_bw() + 
+    geom_vline(xintercept = 69) + 
+    geom_vline(xintercept = 122) + 
+    geom_vline(xintercept = 226) +
+    geom_vline(xintercept = 344) + 
+    annotate("text", x = 35, y = 150, label = "Glen Allen", color = "#a7000a") +
+    annotate("text", x = 95, y = 150, label = "Severn", color = "#a7000a") +
+    annotate("text", x = 175, y = 150, label = "DChamps", color = "#a7000a") +
+    annotate("text", x = 290, y = 100, label = "Newton", color = "#a7000a") + 
+    annotate("text", x = 355, y = 100, label = "CRI", color = "#a7000a") + 
+    labs(
+        title = paste("Matches scouted by", scout_selected, "over Reefscape"),
+        x = "Match",
+        y = "# of Matches Scouted"
+    )
+```
+
+\
+\

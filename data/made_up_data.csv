@@ -1,0 +1,201 @@
+scout,match,robot,team,start,show,move,auto_coral_L1_num,auto_coral_L2_num,auto_coral_L3_num,auto_coral_L4_num,robot_reef_removal,robot_algae_picked,robot_net_score,robot_net_miss,proc_score,coral_L1_num,coral_L2_num,coral_L3_num,coral_L4_num,coral_miss,climb_attempt,ending,climb_time,reef_fouls,defense,driver,dead,comments,comments2
+Tinbite,1,R1,483,Far,FALSE,TRUE,2,0,1,2,FALSE,TRUE,6,0,5,13,1,3,12,9,TRUE,D,FALSE,3,5,3,cs,"2, 3, 4, 5, 6, 0",sample
+Gabriel,1,B1,464,Middle,FALSE,TRUE,1,0,0,0,TRUE,FALSE,3,0,4,9,2,1,9,12,TRUE,No,FALSE,0,2,5,di,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,1,B2,489,Middle,FALSE,TRUE,0,2,0,2,TRUE,FALSE,2,0,5,1,11,0,7,3,TRUE,No,FALSE,0,5,4,di,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,1,B3,491,Far,FALSE,TRUE,2,1,0,2,TRUE,FALSE,0,0,7,7,5,9,5,7,TRUE,P,FALSE,5,2,1,ba,"4, 5, 6, 0",sample
+Mitchell,1,R3,471,Close,FALSE,TRUE,1,2,2,0,FALSE,TRUE,2,0,6,21,12,4,6,0,TRUE,D,TRUE,1,3,5,de,"2, 3, 4, 5, 6, 0",sample
+Mitchell,1,R1,473,Middle,FALSE,TRUE,2,2,1,1,FALSE,TRUE,1,0,3,13,0,2,9,4,TRUE,D,FALSE,1,4,4,t,"4, 5, 6, 0",sample
+Tinbite,2,R2,451,Close,FALSE,TRUE,0,0,1,1,TRUE,TRUE,8,1,8,15,0,0,11,10,TRUE,D,TRUE,2,5,1,NA,"5, 6, 0",sample
+Gabriel,2,R2,485,Far,FALSE,TRUE,2,0,0,0,TRUE,TRUE,5,1,0,20,12,5,0,1,TRUE,P,FALSE,4,5,3,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,2,B3,455,Far,FALSE,TRUE,1,2,2,1,FALSE,TRUE,2,0,3,12,5,6,10,10,FALSE,D,FALSE,3,1,1,t,"4, 5, 6, 0",sample
+Mitchell,2,B2,490,Close,TRUE,TRUE,1,1,0,2,FALSE,TRUE,0,0,7,12,2,8,11,5,TRUE,P,FALSE,4,5,4,ba,"5, 6, 0",sample
+Tinbite,2,B1,465,Middle,FALSE,TRUE,1,1,2,2,TRUE,FALSE,8,3,6,4,7,0,4,4,TRUE,P,TRUE,4,4,2,NA,0,sample
+Tinbite,2,R3,449,Middle,FALSE,TRUE,0,2,1,0,FALSE,FALSE,1,0,5,21,11,0,8,7,TRUE,D,TRUE,0,1,2,NA,0,sample
+Mitchell,3,B1,467,Close,FALSE,TRUE,1,0,1,1,FALSE,FALSE,1,0,2,17,12,10,1,6,TRUE,P,FALSE,1,3,2,di,"5, 6, 0",sample
+Sophia,3,R3,487,Close,FALSE,TRUE,0,2,0,1,TRUE,TRUE,5,0,4,11,5,3,9,11,TRUE,S,TRUE,3,2,4,t,0,sample
+Sophia,3,B2,491,Far,FALSE,TRUE,1,0,0,1,TRUE,FALSE,0,0,6,23,9,2,4,4,TRUE,D,FALSE,4,3,5,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,3,B3,483,Far,FALSE,TRUE,1,2,1,1,TRUE,FALSE,6,2,0,0,4,1,11,4,TRUE,No,FALSE,2,4,1,de,"5, 6, 0",sample
+Tinbite,3,R2,454,Middle,FALSE,TRUE,0,0,2,1,TRUE,TRUE,0,0,3,23,1,10,11,5,TRUE,No,TRUE,3,2,5,ba,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,3,B3,453,Close,FALSE,TRUE,2,2,1,0,FALSE,TRUE,6,1,9,20,8,1,8,9,TRUE,P,FALSE,0,3,4,di,0,sample
+Tinbite,4,B3,485,Close,FALSE,TRUE,1,1,1,2,TRUE,FALSE,9,0,6,21,10,11,2,7,TRUE,S,TRUE,3,2,1,NA,"4, 5, 6, 0",sample
+Sophia,4,R3,450,Middle,FALSE,TRUE,2,1,2,2,TRUE,TRUE,5,0,2,19,3,5,10,10,TRUE,S,FALSE,3,3,5,de,"5, 6, 0",sample
+Jack,4,R3,492,Far,TRUE,TRUE,0,1,0,2,TRUE,FALSE,4,0,1,22,6,0,9,5,TRUE,S,TRUE,2,1,2,di,"6, 0",sample
+Jack,4,B2,493,Far,FALSE,TRUE,1,0,1,1,FALSE,FALSE,8,2,5,20,6,5,2,6,TRUE,P,TRUE,1,2,3,ba,"4, 5, 6, 0",sample
+Jack,4,R2,470,Middle,FALSE,TRUE,2,2,0,0,FALSE,FALSE,2,0,9,15,3,0,5,2,TRUE,S,TRUE,3,2,1,di,0,sample
+Tinbite,4,B1,487,Middle,TRUE,TRUE,0,2,1,2,TRUE,FALSE,3,0,0,2,1,7,1,7,TRUE,P,FALSE,0,4,1,de,"2, 3, 4, 5, 6, 0",sample
+Jack,5,R3,487,Middle,FALSE,TRUE,0,0,0,2,FALSE,FALSE,1,0,7,5,12,5,7,4,TRUE,S,TRUE,0,2,1,cs,"3, 4, 5, 6, 0",sample
+Mitchell,5,R3,475,Middle,TRUE,TRUE,0,1,2,2,TRUE,FALSE,4,1,0,18,2,0,7,12,TRUE,D,FALSE,0,1,3,de,"5, 6, 0",sample
+Jack,5,B1,463,Close,TRUE,TRUE,1,0,2,2,FALSE,TRUE,1,0,6,2,0,10,6,11,TRUE,S,FALSE,1,2,2,de,0,sample
+Sophia,5,R1,486,Middle,FALSE,TRUE,0,0,2,2,TRUE,TRUE,0,0,8,1,2,0,4,10,TRUE,D,FALSE,3,5,4,NA,"4, 5, 6, 0",sample
+Jack,5,B1,453,Far,FALSE,TRUE,0,2,2,2,FALSE,TRUE,9,0,3,21,1,9,12,4,TRUE,S,FALSE,4,3,4,de,0,sample
+Tinbite,5,R1,456,Close,FALSE,TRUE,1,1,1,2,TRUE,FALSE,6,2,4,11,4,2,2,1,TRUE,No,TRUE,4,3,4,ba,"6, 0",sample
+Sophia,6,R2,470,Middle,FALSE,TRUE,1,0,2,2,FALSE,FALSE,8,3,9,0,0,6,7,5,TRUE,No,TRUE,0,2,2,di,"2, 3, 4, 5, 6, 0",sample
+Gabriel,6,B3,459,Far,FALSE,TRUE,1,2,1,1,FALSE,FALSE,5,0,9,8,6,11,1,3,TRUE,P,FALSE,3,5,5,ba,"3, 4, 5, 6, 0",sample
+Gabriel,6,R2,464,Far,FALSE,TRUE,0,0,2,0,FALSE,TRUE,1,0,2,22,0,5,6,8,TRUE,No,TRUE,4,3,3,cs,"3, 4, 5, 6, 0",sample
+Jack,6,B2,453,Close,FALSE,TRUE,0,0,2,2,TRUE,FALSE,0,0,0,21,10,5,12,10,TRUE,P,FALSE,2,1,1,t,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,6,R3,465,Close,FALSE,TRUE,0,1,2,2,TRUE,TRUE,8,3,2,21,0,12,7,7,FALSE,P,TRUE,0,3,5,NA,"3, 4, 5, 6, 0",sample
+Mitchell,6,B2,489,Middle,FALSE,TRUE,2,2,2,2,TRUE,TRUE,0,0,1,2,1,3,0,11,FALSE,P,TRUE,5,4,3,de,"5, 6, 0",sample
+Gabriel,7,R1,468,Far,FALSE,TRUE,0,1,0,0,FALSE,FALSE,4,0,3,20,1,0,11,7,TRUE,S,TRUE,4,5,2,de,0,sample
+Jack,7,R3,473,Middle,TRUE,TRUE,2,2,0,0,TRUE,FALSE,6,0,8,17,0,12,7,1,TRUE,P,TRUE,1,2,1,di,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,7,B1,496,Far,FALSE,TRUE,1,2,0,0,TRUE,FALSE,2,0,0,3,8,1,0,1,TRUE,P,FALSE,4,4,1,NA,"6, 0",sample
+Sophia,7,B2,463,Far,FALSE,TRUE,0,1,1,1,TRUE,TRUE,7,1,2,16,1,11,5,2,TRUE,P,FALSE,0,4,4,t,"2, 3, 4, 5, 6, 0",sample
+Tinbite,7,B3,481,Middle,FALSE,TRUE,0,2,0,0,FALSE,TRUE,7,1,0,8,6,1,1,11,TRUE,No,FALSE,1,3,2,t,"4, 5, 6, 0",sample
+Sophia,7,B2,488,Close,FALSE,TRUE,1,1,0,0,FALSE,FALSE,6,0,9,9,1,7,7,7,TRUE,S,FALSE,3,4,5,cs,"6, 0",sample
+Mitchell,8,B3,450,Far,FALSE,TRUE,0,1,1,0,FALSE,TRUE,1,0,9,24,8,7,7,8,TRUE,P,FALSE,1,1,5,de,"4, 5, 6, 0",sample
+Mitchell,8,B2,467,Middle,FALSE,TRUE,2,2,2,2,TRUE,FALSE,3,0,6,3,1,11,11,12,TRUE,S,TRUE,3,1,4,ba,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,8,B1,476,Close,FALSE,TRUE,0,0,1,0,FALSE,TRUE,7,1,1,8,4,5,2,9,TRUE,P,FALSE,2,2,3,di,"6, 0",sample
+Gabriel,8,B2,498,Far,FALSE,TRUE,2,1,2,2,FALSE,FALSE,7,2,2,19,8,9,12,8,TRUE,S,TRUE,3,1,2,cs,0,sample
+Sophia,8,R3,489,Close,FALSE,TRUE,0,1,0,0,TRUE,FALSE,1,0,0,17,3,4,11,9,TRUE,S,FALSE,3,4,2,di,"2, 3, 4, 5, 6, 0",sample
+Sophia,8,B3,468,Middle,FALSE,TRUE,1,2,2,2,TRUE,FALSE,3,0,3,16,4,8,3,0,TRUE,No,TRUE,2,1,2,cs,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,9,R3,477,Close,FALSE,TRUE,0,2,2,2,TRUE,TRUE,0,0,1,15,10,12,7,4,TRUE,S,TRUE,3,4,4,NA,"3, 4, 5, 6, 0",sample
+Tinbite,9,R2,497,Close,FALSE,TRUE,1,0,0,1,FALSE,FALSE,7,0,4,18,9,6,6,1,TRUE,No,TRUE,2,4,2,NA,"2, 3, 4, 5, 6, 0",sample
+Jack,9,R1,492,Middle,FALSE,TRUE,0,0,1,1,TRUE,FALSE,3,0,3,8,5,1,10,11,TRUE,D,FALSE,5,2,3,ba,"6, 0",sample
+Sophia,9,B1,459,Far,FALSE,TRUE,0,0,2,0,TRUE,TRUE,3,0,7,8,11,6,3,2,TRUE,P,TRUE,2,2,2,t,"5, 6, 0",sample
+Sophia,9,R2,496,Close,FALSE,TRUE,0,2,0,1,TRUE,FALSE,5,1,2,2,12,1,5,3,TRUE,P,FALSE,1,4,1,NA,"2, 3, 4, 5, 6, 0",sample
+Tinbite,9,B1,460,Close,FALSE,TRUE,1,2,1,0,FALSE,FALSE,1,0,1,14,12,1,6,2,TRUE,P,TRUE,3,3,4,ba,0,sample
+Tinbite,10,B3,456,Far,FALSE,TRUE,2,0,2,2,FALSE,FALSE,7,0,2,9,5,5,12,6,TRUE,P,FALSE,3,3,5,t,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,10,R3,482,Far,FALSE,TRUE,0,0,2,1,FALSE,FALSE,3,0,4,5,8,3,2,3,TRUE,P,TRUE,0,4,5,t,"5, 6, 0",sample
+Mitchell,10,R2,494,Middle,FALSE,TRUE,2,0,1,2,TRUE,TRUE,3,1,8,19,8,8,0,0,TRUE,S,FALSE,2,3,2,de,"6, 0",sample
+Jack,10,B1,457,Middle,FALSE,TRUE,0,0,1,2,TRUE,FALSE,6,1,2,1,8,3,3,8,TRUE,No,FALSE,4,5,2,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,10,B3,470,Far,FALSE,TRUE,1,2,0,1,FALSE,TRUE,3,0,2,9,10,6,7,7,TRUE,D,TRUE,1,5,3,di,"3, 4, 5, 6, 0",sample
+Jack,10,B2,475,Close,FALSE,TRUE,0,0,2,2,TRUE,FALSE,1,0,4,21,9,2,6,3,TRUE,S,TRUE,3,2,4,di,"5, 6, 0",sample
+Tinbite,11,B3,492,Close,FALSE,TRUE,0,1,2,0,TRUE,TRUE,3,0,2,20,5,10,0,10,TRUE,D,FALSE,5,4,3,NA,"3, 4, 5, 6, 0",sample
+Tinbite,11,B2,476,Middle,FALSE,TRUE,1,0,1,1,FALSE,TRUE,2,0,2,16,4,0,4,11,FALSE,No,FALSE,5,3,3,cs,0,sample
+Gabriel,11,B1,454,Close,FALSE,TRUE,1,0,0,2,FALSE,FALSE,0,0,8,10,0,10,12,3,TRUE,D,TRUE,5,5,2,t,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,11,R3,469,Middle,FALSE,TRUE,2,0,0,2,FALSE,TRUE,5,0,5,3,10,8,3,2,TRUE,P,FALSE,3,5,2,di,"4, 5, 6, 0",sample
+Jack,11,B3,474,Middle,FALSE,TRUE,2,0,1,2,TRUE,FALSE,9,3,5,19,9,0,4,6,TRUE,P,FALSE,0,5,5,cs,"3, 4, 5, 6, 0",sample
+Gabriel,11,R2,461,Close,FALSE,TRUE,1,1,0,1,FALSE,TRUE,0,0,9,15,7,7,10,9,TRUE,P,TRUE,1,2,3,de,"3, 4, 5, 6, 0",sample
+Gabriel,12,R1,449,Far,TRUE,TRUE,0,0,1,2,TRUE,TRUE,5,1,2,3,11,12,11,9,TRUE,P,TRUE,2,4,5,ba,"6, 0",sample
+Gabriel,12,B3,484,Far,FALSE,TRUE,1,0,1,1,TRUE,FALSE,7,3,4,14,5,2,4,8,TRUE,No,FALSE,1,5,2,t,"2, 3, 4, 5, 6, 0",sample
+Gabriel,12,R1,452,Far,FALSE,TRUE,1,0,1,2,TRUE,TRUE,1,0,9,10,3,0,9,1,TRUE,P,TRUE,4,1,2,de,"5, 6, 0",sample
+Tinbite,12,R2,474,Close,FALSE,TRUE,0,2,1,1,TRUE,TRUE,2,0,4,22,0,8,7,7,TRUE,No,FALSE,0,5,4,NA,"2, 3, 4, 5, 6, 0",sample
+Jack,12,B2,490,Close,FALSE,TRUE,1,0,1,0,TRUE,TRUE,4,0,4,12,4,11,10,9,TRUE,P,TRUE,3,4,2,t,"3, 4, 5, 6, 0",sample
+Gabriel,12,R2,461,Far,FALSE,TRUE,1,2,0,0,FALSE,TRUE,0,0,6,3,12,4,3,7,TRUE,S,FALSE,1,5,4,t,"4, 5, 6, 0",sample
+Gabriel,13,R2,496,Middle,FALSE,TRUE,0,0,0,0,FALSE,FALSE,8,2,0,1,2,1,12,0,TRUE,P,TRUE,2,5,4,cs,"6, 0",sample
+Gabriel,13,B3,479,Middle,FALSE,TRUE,2,2,1,2,TRUE,TRUE,5,0,6,1,5,7,2,4,TRUE,No,FALSE,0,3,5,t,"6, 0",sample
+Sophia,13,B2,495,Far,FALSE,TRUE,1,0,1,0,TRUE,TRUE,4,1,6,9,12,4,12,8,TRUE,P,FALSE,3,5,3,di,0,sample
+Jack,13,R1,457,Close,FALSE,TRUE,0,2,0,0,TRUE,TRUE,3,0,6,10,5,4,11,8,TRUE,P,FALSE,3,3,4,cs,"6, 0",sample
+Tinbite,13,R1,454,Close,FALSE,TRUE,0,1,1,2,FALSE,TRUE,6,2,8,6,4,5,12,4,FALSE,P,TRUE,5,3,3,cs,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,13,B3,497,Close,FALSE,TRUE,1,0,1,0,FALSE,FALSE,5,2,3,15,0,11,12,3,TRUE,No,TRUE,5,2,4,t,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,14,R3,498,Far,FALSE,TRUE,2,0,0,0,FALSE,TRUE,5,0,7,11,0,2,3,8,TRUE,D,FALSE,4,1,5,de,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,14,B2,469,Close,TRUE,FALSE,1,1,2,2,FALSE,FALSE,5,1,4,5,0,8,4,9,FALSE,D,TRUE,2,2,1,t,"3, 4, 5, 6, 0",sample
+Tinbite,14,B3,459,Far,FALSE,FALSE,1,2,0,1,TRUE,FALSE,6,2,3,11,6,6,5,7,TRUE,No,FALSE,3,4,5,ba,0,sample
+Tinbite,14,R1,458,Middle,FALSE,TRUE,0,0,0,1,FALSE,TRUE,4,1,5,11,12,3,0,4,TRUE,D,FALSE,2,1,5,ba,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,14,B3,473,Close,FALSE,TRUE,2,2,0,0,TRUE,TRUE,7,2,2,21,6,4,0,4,TRUE,P,TRUE,3,3,1,t,"4, 5, 6, 0",sample
+Jack,14,B1,474,Middle,FALSE,TRUE,1,2,1,1,TRUE,FALSE,8,0,1,5,8,5,3,12,TRUE,No,FALSE,4,3,1,NA,"5, 6, 0",sample
+Sophia,15,R2,488,Far,FALSE,TRUE,0,2,1,1,FALSE,TRUE,6,2,5,14,0,0,4,11,TRUE,P,TRUE,5,5,2,di,"2, 3, 4, 5, 6, 0",sample
+Gabriel,15,R3,466,Middle,FALSE,TRUE,1,0,2,2,TRUE,TRUE,8,0,4,24,1,5,0,11,FALSE,P,FALSE,5,5,5,NA,"5, 6, 0",sample
+Jack,15,B1,472,Far,TRUE,TRUE,2,1,1,2,FALSE,TRUE,4,0,6,15,8,0,9,4,TRUE,S,TRUE,3,1,3,di,"3, 4, 5, 6, 0",sample
+Jack,15,R1,473,Close,FALSE,TRUE,2,1,0,2,TRUE,FALSE,4,1,2,4,4,12,5,3,TRUE,S,FALSE,0,3,1,ba,"6, 0",sample
+Sophia,15,R3,466,Middle,FALSE,TRUE,1,1,1,2,FALSE,FALSE,0,0,3,21,9,9,8,3,FALSE,P,TRUE,5,4,1,de,"3, 4, 5, 6, 0",sample
+Gabriel,15,R1,483,Far,FALSE,TRUE,0,2,2,1,FALSE,TRUE,4,0,5,16,10,3,10,0,TRUE,P,FALSE,1,4,2,de,0,sample
+Tinbite,16,R3,481,Far,FALSE,TRUE,1,0,0,0,TRUE,TRUE,0,0,0,20,6,11,2,0,TRUE,P,FALSE,4,3,1,ba,"3, 4, 5, 6, 0",sample
+Sophia,16,R3,461,Far,FALSE,FALSE,2,1,1,1,FALSE,TRUE,7,2,5,7,6,8,1,10,TRUE,D,FALSE,1,4,1,t,"2, 3, 4, 5, 6, 0",sample
+Gabriel,16,R3,478,Close,FALSE,TRUE,0,0,1,2,FALSE,TRUE,8,3,7,18,10,4,10,3,TRUE,S,TRUE,1,4,4,t,"4, 5, 6, 0",sample
+Sophia,16,R3,480,Far,FALSE,TRUE,0,0,2,1,FALSE,TRUE,8,0,9,1,5,10,11,3,TRUE,D,TRUE,3,1,5,di,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,16,R1,495,Far,TRUE,TRUE,2,2,0,2,TRUE,FALSE,3,1,4,1,10,11,6,0,TRUE,S,FALSE,1,2,5,cs,"2, 3, 4, 5, 6, 0",sample
+Mitchell,16,B3,460,Far,TRUE,FALSE,2,2,0,0,FALSE,TRUE,2,0,0,13,12,1,3,0,TRUE,D,FALSE,5,1,1,cs,"6, 0",sample
+Sophia,17,R1,491,Middle,FALSE,TRUE,1,0,1,1,FALSE,TRUE,0,0,5,19,5,2,6,1,TRUE,P,TRUE,2,1,5,t,"3, 4, 5, 6, 0",sample
+Sophia,17,R3,489,Far,FALSE,TRUE,1,0,1,1,TRUE,TRUE,3,0,1,10,7,7,3,2,TRUE,P,TRUE,5,2,3,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,17,R1,482,Far,FALSE,TRUE,2,0,0,0,TRUE,FALSE,2,0,8,0,11,11,8,5,TRUE,S,FALSE,2,2,3,cs,"3, 4, 5, 6, 0",sample
+Mitchell,17,R3,457,Close,FALSE,TRUE,1,2,2,1,FALSE,TRUE,7,1,6,9,10,5,5,10,TRUE,D,TRUE,3,2,5,NA,0,sample
+Sophia,17,B2,497,Close,TRUE,TRUE,0,0,2,0,FALSE,TRUE,6,2,9,13,2,6,11,2,TRUE,No,TRUE,0,3,2,t,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,17,B2,486,Middle,FALSE,TRUE,0,0,1,1,FALSE,TRUE,3,0,1,9,7,2,8,7,TRUE,D,TRUE,2,1,5,de,0,sample
+Gabriel,18,B1,494,Close,FALSE,TRUE,1,2,0,0,TRUE,FALSE,8,2,1,10,1,6,12,5,TRUE,S,FALSE,0,2,5,de,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,18,R1,484,Far,FALSE,TRUE,1,2,0,0,TRUE,FALSE,7,3,9,20,0,7,7,3,TRUE,S,FALSE,4,2,1,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Mitchell,18,R3,472,Far,FALSE,TRUE,1,2,2,0,TRUE,TRUE,7,1,4,0,1,3,4,1,FALSE,S,FALSE,1,1,4,de,0,sample
+Mitchell,18,B1,452,Far,FALSE,TRUE,1,0,1,0,TRUE,TRUE,8,3,1,16,1,2,7,4,TRUE,P,TRUE,3,3,3,ba,"6, 0",sample
+Mitchell,18,R2,465,Middle,FALSE,TRUE,0,2,1,0,FALSE,FALSE,0,0,6,17,10,12,6,4,FALSE,No,TRUE,2,3,2,de,"3, 4, 5, 6, 0",sample
+Sophia,18,R3,488,Far,TRUE,TRUE,0,1,0,0,FALSE,TRUE,6,2,9,21,4,6,5,0,TRUE,D,TRUE,5,2,1,ba,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,19,R3,457,Close,FALSE,TRUE,0,1,0,0,FALSE,TRUE,6,0,6,13,8,7,12,5,FALSE,D,FALSE,3,3,4,de,"6, 0",sample
+Gabriel,19,R2,452,Middle,FALSE,TRUE,1,0,1,0,TRUE,TRUE,9,0,5,21,8,2,6,5,TRUE,D,FALSE,0,2,5,di,"6, 0",sample
+Mitchell,19,B1,478,Close,FALSE,TRUE,2,0,1,1,TRUE,FALSE,7,1,3,4,7,5,6,9,FALSE,No,FALSE,3,4,4,t,"3, 4, 5, 6, 0",sample
+Sophia,19,B2,488,Close,FALSE,TRUE,2,0,2,0,FALSE,TRUE,8,1,6,7,10,7,3,9,TRUE,S,FALSE,4,1,5,ba,"5, 6, 0",sample
+Tinbite,19,B2,495,Middle,TRUE,FALSE,1,2,1,0,TRUE,TRUE,0,0,6,2,10,0,3,12,TRUE,S,FALSE,4,2,1,t,"3, 4, 5, 6, 0",sample
+Tinbite,19,R2,478,Far,FALSE,TRUE,2,1,1,2,TRUE,TRUE,6,2,2,12,2,1,0,2,TRUE,S,FALSE,1,1,2,t,"2, 3, 4, 5, 6, 0",sample
+Mitchell,20,B3,484,Close,FALSE,TRUE,1,2,2,0,TRUE,TRUE,8,2,5,4,8,7,10,8,TRUE,D,TRUE,0,3,2,t,"3, 4, 5, 6, 0",sample
+Mitchell,20,B2,455,Close,FALSE,FALSE,1,2,1,2,FALSE,FALSE,4,1,7,20,8,10,2,3,TRUE,D,FALSE,3,5,4,di,0,sample
+Tinbite,20,B3,471,Middle,FALSE,TRUE,1,2,2,0,TRUE,FALSE,4,1,3,10,6,9,12,11,TRUE,S,TRUE,0,5,2,cs,"3, 4, 5, 6, 0",sample
+Tinbite,20,R3,456,Close,FALSE,TRUE,2,1,2,2,FALSE,TRUE,6,1,3,22,5,8,2,7,TRUE,S,FALSE,2,4,1,de,"4, 5, 6, 0",sample
+Jack,20,B3,450,Far,FALSE,FALSE,2,2,1,1,FALSE,FALSE,9,0,4,21,10,5,9,1,TRUE,P,TRUE,4,3,3,de,"2, 3, 4, 5, 6, 0",sample
+Jack,20,B1,462,Close,FALSE,TRUE,1,0,2,1,FALSE,TRUE,2,0,6,4,0,11,9,2,FALSE,P,FALSE,1,3,5,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,21,B1,494,Close,FALSE,TRUE,0,0,0,2,FALSE,TRUE,7,1,3,13,5,3,4,0,TRUE,No,TRUE,5,2,4,di,"4, 5, 6, 0",sample
+Gabriel,21,R1,472,Middle,FALSE,TRUE,0,0,1,1,FALSE,TRUE,5,1,9,21,5,4,2,6,TRUE,S,FALSE,5,2,5,ba,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,21,R2,467,Far,FALSE,TRUE,0,0,2,2,TRUE,TRUE,8,2,2,2,8,12,6,3,FALSE,S,TRUE,5,1,2,cs,"3, 4, 5, 6, 0",sample
+Jack,21,R2,464,Close,FALSE,TRUE,0,2,0,0,TRUE,TRUE,1,0,0,21,3,1,10,8,TRUE,D,FALSE,2,2,4,de,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,21,R2,451,Middle,FALSE,TRUE,2,0,2,2,FALSE,FALSE,4,1,3,18,4,10,12,7,FALSE,No,FALSE,2,3,1,de,"2, 3, 4, 5, 6, 0",sample
+Mitchell,21,B3,470,Close,FALSE,FALSE,2,1,0,0,TRUE,TRUE,8,2,3,6,10,10,8,5,TRUE,P,FALSE,0,5,5,t,"6, 0",sample
+Mitchell,22,R1,477,Middle,FALSE,TRUE,0,1,0,2,FALSE,TRUE,0,0,3,3,11,11,3,3,TRUE,S,FALSE,0,3,3,t,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,22,B2,482,Close,TRUE,TRUE,1,0,1,1,TRUE,FALSE,4,1,5,15,4,3,6,12,FALSE,D,TRUE,5,1,1,di,"2, 3, 4, 5, 6, 0",sample
+Mitchell,22,B3,472,Close,FALSE,TRUE,2,2,0,1,FALSE,FALSE,5,1,0,18,5,6,4,9,TRUE,D,FALSE,5,3,2,di,"5, 6, 0",sample
+Tinbite,22,R3,458,Close,FALSE,TRUE,0,0,2,1,FALSE,FALSE,4,0,0,20,9,9,0,8,TRUE,S,FALSE,2,2,2,ba,"5, 6, 0",sample
+Gabriel,22,B2,479,Close,TRUE,TRUE,2,1,1,2,FALSE,TRUE,6,0,9,3,8,2,8,9,TRUE,No,TRUE,2,2,3,de,"2, 3, 4, 5, 6, 0",sample
+Jack,22,R3,493,Close,FALSE,TRUE,0,0,0,0,FALSE,FALSE,2,0,4,20,3,10,8,6,TRUE,No,FALSE,1,3,1,cs,"4, 5, 6, 0",sample
+Tinbite,23,B3,483,Close,FALSE,TRUE,2,2,2,2,TRUE,TRUE,7,1,2,3,9,10,4,9,TRUE,S,TRUE,5,5,4,t,"1, 2, 3, 4, 5, 6, 0",sample
+Mitchell,23,R2,451,Close,FALSE,TRUE,1,0,1,0,TRUE,TRUE,3,0,0,5,11,10,1,9,TRUE,D,TRUE,3,1,2,de,"4, 5, 6, 0",sample
+Sophia,23,B2,466,Far,FALSE,TRUE,2,0,2,1,TRUE,FALSE,7,0,0,16,2,2,9,11,TRUE,P,TRUE,0,5,5,de,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,23,B1,482,Close,FALSE,TRUE,0,2,0,1,TRUE,FALSE,6,2,0,3,6,0,6,2,TRUE,S,TRUE,1,2,4,cs,"6, 0",sample
+Sophia,23,B3,492,Far,FALSE,TRUE,1,0,1,0,FALSE,FALSE,6,0,5,7,9,6,6,6,TRUE,D,TRUE,4,1,4,cs,"2, 3, 4, 5, 6, 0",sample
+Gabriel,23,B1,456,Middle,FALSE,TRUE,0,0,1,0,TRUE,TRUE,0,0,2,9,12,8,10,12,TRUE,S,FALSE,3,5,1,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,24,B1,460,Close,FALSE,TRUE,1,1,2,2,TRUE,FALSE,3,0,7,8,2,0,10,10,TRUE,S,FALSE,4,5,2,ba,0,sample
+Sophia,24,R2,478,Middle,FALSE,TRUE,1,1,0,0,FALSE,FALSE,2,0,3,3,7,8,0,10,TRUE,S,FALSE,0,2,5,ba,"2, 3, 4, 5, 6, 0",sample
+Jack,24,R1,486,Middle,FALSE,TRUE,1,2,1,0,TRUE,FALSE,6,0,3,12,0,8,11,2,TRUE,D,TRUE,0,5,4,t,0,sample
+Gabriel,24,B3,487,Far,FALSE,FALSE,1,0,0,0,TRUE,FALSE,9,2,5,19,6,6,11,2,TRUE,P,TRUE,3,3,1,di,"2, 3, 4, 5, 6, 0",sample
+Jack,24,B2,469,Far,FALSE,TRUE,2,2,2,0,FALSE,TRUE,7,3,3,7,1,2,11,8,TRUE,No,FALSE,4,3,5,di,"3, 4, 5, 6, 0",sample
+Gabriel,24,R3,451,Far,FALSE,FALSE,1,2,2,1,FALSE,TRUE,4,1,2,17,2,8,11,6,TRUE,No,TRUE,3,5,5,di,"3, 4, 5, 6, 0",sample
+Gabriel,25,R3,490,Middle,FALSE,TRUE,1,1,0,2,FALSE,TRUE,6,0,1,11,2,8,0,0,TRUE,No,TRUE,2,2,2,di,"5, 6, 0",sample
+Gabriel,25,R1,455,Middle,FALSE,TRUE,0,0,1,0,FALSE,FALSE,4,0,4,8,5,5,1,11,TRUE,No,FALSE,1,5,5,de,"4, 5, 6, 0",sample
+Sophia,25,R3,460,Far,FALSE,TRUE,1,1,1,2,FALSE,TRUE,6,2,9,14,9,2,5,6,TRUE,P,TRUE,1,1,1,cs,"4, 5, 6, 0",sample
+Tinbite,25,B1,497,Close,FALSE,TRUE,2,2,1,2,FALSE,TRUE,8,2,7,16,12,8,11,8,TRUE,D,TRUE,2,1,5,di,"4, 5, 6, 0",sample
+Gabriel,25,B2,480,Far,FALSE,TRUE,2,1,0,1,TRUE,FALSE,4,0,6,7,0,2,9,11,TRUE,No,TRUE,2,3,3,de,"3, 4, 5, 6, 0",sample
+Sophia,25,B1,476,Middle,FALSE,TRUE,1,2,0,0,FALSE,FALSE,9,3,6,11,11,10,7,2,TRUE,No,FALSE,1,2,5,cs,"6, 0",sample
+Sophia,26,R1,476,Close,FALSE,TRUE,2,2,0,0,FALSE,TRUE,2,0,1,16,8,0,0,1,TRUE,P,FALSE,5,3,1,ba,"3, 4, 5, 6, 0",sample
+Gabriel,26,R1,480,Close,FALSE,TRUE,0,0,2,2,TRUE,FALSE,0,0,9,18,5,10,7,0,TRUE,S,FALSE,3,5,5,t,"5, 6, 0",sample
+Sophia,26,B2,490,Close,FALSE,TRUE,2,2,0,0,FALSE,FALSE,3,0,7,18,6,7,10,11,TRUE,No,TRUE,2,2,1,t,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,26,B2,485,Far,FALSE,TRUE,1,2,1,1,FALSE,FALSE,0,0,6,8,0,11,9,4,TRUE,S,TRUE,0,4,5,t,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,26,R1,496,Far,FALSE,TRUE,1,2,2,2,TRUE,TRUE,7,0,0,10,2,12,0,7,FALSE,No,FALSE,5,1,1,de,"4, 5, 6, 0",sample
+Gabriel,26,B3,454,Far,FALSE,TRUE,0,2,0,1,TRUE,TRUE,2,0,8,22,1,12,6,7,TRUE,P,FALSE,0,3,3,de,"5, 6, 0",sample
+Sophia,27,R1,469,Far,FALSE,TRUE,2,2,0,2,TRUE,FALSE,9,3,8,15,5,2,8,5,TRUE,D,TRUE,3,1,3,de,"5, 6, 0",sample
+Mitchell,27,R1,485,Middle,FALSE,FALSE,0,2,1,0,FALSE,FALSE,0,0,5,7,12,11,10,5,TRUE,No,TRUE,1,3,3,di,"2, 3, 4, 5, 6, 0",sample
+Mitchell,27,B3,475,Middle,FALSE,TRUE,1,2,2,0,TRUE,TRUE,1,0,6,8,3,5,4,3,TRUE,D,FALSE,0,2,2,t,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,27,B3,459,Close,FALSE,TRUE,1,2,1,0,TRUE,FALSE,1,0,5,23,4,1,7,9,TRUE,D,TRUE,3,4,5,di,"4, 5, 6, 0",sample
+Mitchell,27,B2,498,Close,FALSE,TRUE,0,1,2,0,TRUE,TRUE,0,0,3,16,0,7,2,7,TRUE,P,FALSE,3,4,2,cs,"2, 3, 4, 5, 6, 0",sample
+Sophia,27,R1,479,Far,TRUE,TRUE,2,0,1,0,FALSE,FALSE,6,1,2,20,8,4,0,3,TRUE,No,FALSE,3,4,1,di,"4, 5, 6, 0",sample
+Gabriel,28,B2,493,Close,TRUE,TRUE,2,2,1,2,FALSE,TRUE,4,1,9,24,1,9,8,0,FALSE,S,FALSE,2,4,1,NA,"3, 4, 5, 6, 0",sample
+Tinbite,28,R1,477,Close,TRUE,TRUE,1,2,2,1,TRUE,FALSE,6,0,9,6,10,3,10,1,TRUE,D,TRUE,1,5,3,di,"4, 5, 6, 0",sample
+Mitchell,28,B1,452,Middle,FALSE,TRUE,0,1,0,0,TRUE,FALSE,6,1,2,18,9,1,8,2,TRUE,S,FALSE,3,3,2,ba,"2, 3, 4, 5, 6, 0",sample
+Mitchell,28,B2,455,Far,FALSE,TRUE,2,0,2,0,FALSE,FALSE,8,3,3,9,4,3,7,6,TRUE,P,TRUE,1,5,2,de,"5, 6, 0",sample
+Gabriel,28,B1,462,Far,FALSE,TRUE,1,1,0,0,TRUE,FALSE,2,0,6,9,4,9,4,8,TRUE,P,TRUE,3,3,3,t,0,sample
+Tinbite,28,R1,463,Middle,FALSE,FALSE,2,2,0,0,FALSE,FALSE,1,0,1,5,1,3,2,6,TRUE,No,FALSE,2,4,2,ba,"6, 0",sample
+Jack,29,B3,480,Middle,FALSE,FALSE,1,0,1,1,TRUE,TRUE,3,0,5,8,8,4,6,4,TRUE,D,TRUE,1,5,4,NA,"3, 4, 5, 6, 0",sample
+Jack,29,R1,486,Close,FALSE,TRUE,2,1,1,1,TRUE,FALSE,5,0,0,22,4,4,10,12,TRUE,P,FALSE,1,3,2,de,"2, 3, 4, 5, 6, 0",sample
+Gabriel,29,R1,477,Close,FALSE,TRUE,2,1,0,2,TRUE,FALSE,6,0,8,9,7,2,9,11,TRUE,No,FALSE,2,5,2,di,"6, 0",sample
+Gabriel,29,R1,449,Close,FALSE,TRUE,1,0,0,0,FALSE,FALSE,8,0,9,0,1,11,3,5,TRUE,No,TRUE,0,4,1,t,"6, 0",sample
+Tinbite,29,B2,471,Middle,FALSE,TRUE,1,2,1,0,TRUE,FALSE,6,2,9,18,9,1,11,5,TRUE,S,TRUE,3,2,5,NA,"2, 3, 4, 5, 6, 0",sample
+Mitchell,29,B3,462,Close,FALSE,TRUE,2,0,1,0,FALSE,TRUE,1,0,3,23,7,6,10,1,TRUE,No,FALSE,2,5,2,t,"5, 6, 0",sample
+Sophia,30,B2,449,Far,FALSE,TRUE,2,2,0,2,FALSE,FALSE,0,0,3,2,10,10,8,3,TRUE,S,FALSE,2,1,4,di,0,sample
+Tinbite,30,B3,467,Far,FALSE,TRUE,1,2,2,0,TRUE,TRUE,9,1,6,4,3,6,4,5,TRUE,S,FALSE,3,3,1,de,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,30,B2,471,Far,FALSE,TRUE,2,0,1,0,FALSE,FALSE,0,0,7,8,10,4,5,7,TRUE,P,FALSE,2,2,2,NA,"1, 2, 3, 4, 5, 6, 0",sample
+Gabriel,30,R1,491,Far,FALSE,FALSE,1,2,0,2,FALSE,TRUE,8,2,4,19,4,5,12,10,TRUE,No,TRUE,4,1,4,ba,0,sample
+Gabriel,30,B1,484,Far,FALSE,TRUE,1,0,0,2,TRUE,FALSE,2,0,8,24,10,8,11,5,TRUE,S,TRUE,4,2,1,ba,"6, 0",sample
+Mitchell,30,B1,475,Middle,FALSE,TRUE,0,0,0,2,TRUE,TRUE,7,3,3,18,8,8,1,9,TRUE,No,TRUE,0,4,3,de,"4, 5, 6, 0",sample
+Gabriel,31,B1,481,Far,FALSE,TRUE,0,1,0,0,FALSE,TRUE,0,0,1,14,9,6,4,6,TRUE,D,TRUE,4,5,3,t,"4, 5, 6, 0",sample
+Tinbite,31,B2,481,Close,FALSE,TRUE,2,1,2,1,TRUE,FALSE,9,4,1,13,11,6,10,11,TRUE,D,TRUE,2,1,1,de,"4, 5, 6, 0",sample
+Jack,31,R2,468,Far,FALSE,TRUE,1,1,0,0,FALSE,TRUE,2,0,6,9,7,3,0,7,TRUE,D,TRUE,4,5,4,cs,"3, 4, 5, 6, 0",sample
+Sophia,31,R3,462,Far,FALSE,TRUE,0,1,2,1,FALSE,TRUE,7,0,2,4,4,2,8,10,FALSE,P,TRUE,3,2,2,di,0,sample
+Sophia,31,R1,464,Middle,FALSE,TRUE,1,1,2,0,TRUE,FALSE,7,0,3,24,9,5,3,0,TRUE,S,TRUE,3,2,5,t,"2, 3, 4, 5, 6, 0",sample
+Mitchell,31,R2,495,Close,FALSE,TRUE,0,0,0,0,TRUE,TRUE,1,0,3,18,12,12,1,5,TRUE,D,FALSE,2,4,1,di,"3, 4, 5, 6, 0",sample
+Tinbite,32,B3,468,Far,FALSE,TRUE,1,0,2,0,TRUE,FALSE,1,0,3,5,11,10,8,7,FALSE,P,FALSE,2,2,3,di,"5, 6, 0",sample
+Sophia,32,B2,493,Middle,FALSE,TRUE,2,2,1,1,TRUE,FALSE,0,0,5,22,8,9,8,9,TRUE,S,TRUE,3,3,1,t,"6, 0",sample
+Gabriel,32,B3,450,Middle,FALSE,TRUE,1,0,2,1,TRUE,TRUE,1,0,1,24,8,9,0,4,TRUE,No,FALSE,0,4,4,de,"4, 5, 6, 0",sample
+Tinbite,32,R2,466,Close,FALSE,TRUE,0,1,0,0,FALSE,FALSE,4,0,2,21,3,5,9,2,FALSE,S,FALSE,4,1,2,NA,"5, 6, 0",sample
+Tinbite,32,B1,479,Middle,FALSE,TRUE,2,1,0,1,TRUE,FALSE,6,0,8,0,11,0,2,10,TRUE,P,FALSE,3,4,3,di,"5, 6, 0",sample
+Tinbite,32,R2,465,Middle,FALSE,TRUE,0,2,0,0,FALSE,TRUE,3,1,1,0,1,11,12,8,TRUE,P,FALSE,3,4,5,ba,"4, 5, 6, 0",sample
+Sophia,33,B1,494,Middle,FALSE,TRUE,0,0,1,2,TRUE,TRUE,0,0,0,9,2,5,8,3,TRUE,D,FALSE,1,5,2,NA,0,sample
+Gabriel,33,B2,461,Middle,FALSE,TRUE,0,0,1,0,TRUE,FALSE,9,0,5,17,9,9,12,7,TRUE,S,FALSE,2,2,2,t,"1, 2, 3, 4, 5, 6, 0",sample
+Jack,33,R1,458,Far,TRUE,TRUE,1,0,2,1,TRUE,TRUE,2,0,9,13,8,12,7,2,TRUE,No,FALSE,2,2,4,cs,"4, 5, 6, 0",sample
+Gabriel,33,B1,458,Far,FALSE,TRUE,0,2,2,0,TRUE,TRUE,8,1,1,6,7,10,6,8,TRUE,D,TRUE,0,2,5,ba,"3, 4, 5, 6, 0",sample
+Jack,33,R3,498,Close,FALSE,TRUE,2,2,2,0,TRUE,FALSE,1,0,5,8,4,10,4,10,TRUE,P,FALSE,5,1,3,de,"1, 2, 3, 4, 5, 6, 0",sample
+Sophia,33,R2,463,Close,FALSE,TRUE,1,0,0,2,FALSE,TRUE,4,1,3,10,8,7,5,5,TRUE,P,TRUE,5,2,2,t,"2, 3, 4, 5, 6, 0",sample
+Tinbite,34,R1,453,Far,FALSE,TRUE,2,1,1,1,TRUE,TRUE,4,1,0,6,0,12,1,9,FALSE,S,TRUE,0,5,3,de,"1, 2, 3, 4, 5, 6, 0",sample
+Tinbite,34,R2,474,Close,FALSE,FALSE,1,0,1,1,TRUE,FALSE,7,0,5,17,8,12,1,11,FALSE,D,FALSE,0,1,5,NA,0,sample

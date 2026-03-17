@@ -2319,7 +2319,6 @@ server <- function(input, output, session) {
             driver_rating_mean = input$weight_driver_rating_mean,
             defense_rating_mean = input$weight_defense_rating_mean
         )
-        
         weights_data(new_weights)
         removeModal()
     })

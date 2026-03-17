@@ -1,0 +1,56 @@
+---
+title: "scout_bias"
+format: html
+---
+
+```{r}
+library(tidyverse)
+blair_red <- "#a7000a"
+
+raw <- read.csv("../shinyapp/data_files/newton/data.csv")
+
+match_scores <- raw %>%
+    mutate(
+        total_score = 
+                    (coral_L1_num*2) + (coral_L2_num*3) + 
+                    (coral_L3_num*4) + (coral_L4_num*5) + 
+                    (auto_coral_L1_num*3) + (auto_coral_L2_num*4)+ 
+                    (auto_coral_L3_num*5)+ (auto_coral_L4_num*7) +
+                    (robot_net_score*4) + (proc_score*6) + 
+                    ifelse(ending =="D", 12, ifelse(ending=="S",6,ifelse(ending=="P", 2, 0))) +
+                    (move*3)
+    ) %>%
+    select(match, team, total_score, driver) %>%
+    filter (driver != 0)
+
+#0.6159 correlation
+
+ggplot(match_scores, aes(x = driver, y = total_score)) +
+    geom_point(alpha = 0.6) +  # Scatter plot
+    geom_smooth(method = "lm", se = TRUE, color = "blue") +  # Regression line
+    labs(title = "Correlation between Driver Ranking and Total Score",
+       x = "Driver Ranking", y = "Total Score")
+
+```
+
+```{r}
+library(tidyverse)
+blair_red <- "#a7000a"
+
+raw <- read.csv("../shinyapp/data_files/newton/data.csv")
+
+scout_bias <- raw %>%
+    filter (driver != 0) %>%
+    group_by(scout) %>%
+    summarise(avg_driver = round(mean(driver), digits = 2)) %>%
+    select(scout, avg_driver)
+
+
+ggplot(scout_bias, aes(x = `scout`, y = avg_driver)) + 
+            geom_point(alpha = 0.6) + 
+            labs(title = "Scouter Summary", 
+                 x = "Scouters", y = "Average Driver Ranking") +
+            theme_bw()
+        
+       
+```
