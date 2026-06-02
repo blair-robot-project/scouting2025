@@ -8,7 +8,6 @@ library(scales)
 library(shinyWidgets)
 library(tidyverse)
 library(shinythemes)
-library(patchwork)
 library(ggbeeswarm) # to make jitter plots  
 library(RColorBrewer) # for the colors 
 
